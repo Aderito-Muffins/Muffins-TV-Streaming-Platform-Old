@@ -1,29 +1,18 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-
-// Configuração do Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBpc3rVv535LsoA23HIzY6Nw7RJ12_XfIg",
-  authDomain: "muffins-tv.firebaseapp.com",
-  projectId: "muffins-tv",
-  storageBucket: "muffins-tv.appspot.com",
-  messagingSenderId: "91564806107",
-  appId: "1:91564806107:web:851c0ede7a03e420c0e1fe",
-  measurementId: "G-TTN3KF61MY"
-};
-
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
+import { app } from "./onlyfirebase.js";
+// Inicializar o Firebase Auth
 const auth = getAuth(app);
 
 // Função para verificar o estado de autenticação e atualizar o menu
-function updateMenu(user) {
+export function updateMenu(user) {
   const menu = document.getElementById('gen-account-menu');
   if (user) {
-    // Usuário está logado
+    // Recuperar dados do usuário armazenados no localStorage
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
     menu.innerHTML = `
       <li>
-        <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout (${userData.firstname} ${userData.lastname})</a>
       </li>
       <li>
         <a href="profile.html"><i class="fa fa-user"></i> Perfil</a>
@@ -50,7 +39,10 @@ function updateMenu(user) {
     // Adicionar evento de logout
     document.getElementById('logout').addEventListener('click', () => {
       signOut(auth).then(() => {
+        // Limpar os dados do localStorage ao desconectar
+        localStorage.removeItem('userData');
         alert("Você foi desconectado com sucesso.");
+        window.location.href = "log-in.html"; // Redirecionar para a página de login
       }).catch((error) => {
         console.error("Erro ao desconectar: ", error.message);
       });

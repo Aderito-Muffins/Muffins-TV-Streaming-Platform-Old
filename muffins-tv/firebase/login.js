@@ -1,20 +1,17 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { updateMenu } from "./header-login.js";
+import { app } from "./onlyfirebase.js";
+//import { updateMenu } from "../js/header-login.js";
+
+//login.js
 
 // Configuração do Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBpc3rVv535LsoA23HIzY6Nw7RJ12_XfIg",
-  authDomain: "muffins-tv.firebaseapp.com",
-  projectId: "muffins-tv",
-  storageBucket: "muffins-tv.appspot.com",
-  messagingSenderId: "91564806107",
-  appId: "1:91564806107:web:851c0ede7a03e420c0e1fe",
-  measurementId: "G-TTN3KF61MY"
-};
 
 // Inicializar Firebase
-const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+let user = null;  // Corrigido para 'let' ao invés de 'const'
 
 // Função para exibir erros no HTML
 function displayError(elementId, message) {
@@ -23,46 +20,52 @@ function displayError(elementId, message) {
     errorElement.textContent = message;
   }
 }
+
 function showLoading() {
   document.getElementById('gen-loading').style.display = 'block';
 }
+
 function hideLoading() {
   document.getElementById('gen-loading').style.display = 'none';
+}
+
+// Função para obter dados do Firestore com base no uid do usuário
+async function getUserData(uid) {
+  const userDocRef = doc(db, "users", uid);
+  try {
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      localStorage.setItem('userData', JSON.stringify(userData));
+      return userData;
+    } else {
+      console.log("Nenhum documento encontrado para o UID fornecido.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Erro ao obter os dados do Firestore:", error);
+    return null;
+  }
 }
 // Função para realizar o login
 function loginUser(email, password) {
   signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Login bem-sucedido
+    .then(async (userCredential) => {
+      const user = userCredential.user;
       alert("Login realizado com sucesso!");
-      // Redirecionar ou realizar outras ações após login
-      window.location.href = "index.html";
+
+      // Obter dados do usuário do Firestore e atualizar o menu
+      const userData = await getUserData(user.uid);
+      if (userData) {
+        updateMenu(user);
+      }
       
+      //window.location.href = "index.html";
     })
     .catch((error) => {
-      // Tratamento de erros específicos do Firebase
-      let errorMessage = "";
-      switch (error.code) {
-        case 'auth/invalid-email':
-          errorMessage = "O endereço de e-mail não é válido.";
-          break;
-        case 'auth/user-disabled':
-          errorMessage = "Este usuário foi desativado.";
-          break;
-        case 'auth/user-not-found':
-          errorMessage = "Não há nenhum registro de usuário correspondente a este identificador. O usuário pode ter sido excluído.";
-          break;
-        case 'auth/wrong-password':
-          errorMessage = "A senha é inválida ou o usuário não tem uma senha.";
-          break;
-        default:
-          errorMessage = "Ocorreu um erro ao fazer login.";
-          break;
-      }
-      displayError("login-errors", errorMessage);
+      console.error("Erro ao fazer login:", error.message);
     })
     .finally(() => {
-      // Esconder o loading após o processo de login
       hideLoading();
     });
 }
@@ -74,8 +77,10 @@ document.getElementById('pms_login').addEventListener('submit', (e) => {
   // Obter os dados do formulário
   const email = document.getElementById('user_login').value;
   const password = document.getElementById('user_pass').value;
+  
+  // Mostrar loading
   showLoading();
+  
   // Chamar a função de login
   loginUser(email, password);
-  
 });
