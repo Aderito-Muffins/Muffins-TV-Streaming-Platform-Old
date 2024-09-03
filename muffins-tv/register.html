@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="css/style.css" />
     <!-- Responsivo -->
     <link rel="stylesheet" href="css/responsive.css" />
+
+    <link rel="stylesheet" href="css/load.css" />
 <!--firebase-->
 
 </head>
@@ -34,6 +36,12 @@
         </div>
     </div>
     <!--=========== Loader =============-->
+    <!--=========== Loader =============-->
+    <div class="loader-container">
+      <div class="loader"></div>
+  </div>
+  <!--=========== Loader =============-->
+
 
     <!-- Registro -->
     <section class="position-relative pb-0">
@@ -53,13 +61,13 @@
                       <label for="pms_user_email">E-mail *</label>
                       <input id="pms_user_email" name="user_email" type="email" required>
                     </li>
-                    <li class="pms-field pms-first-name-field">
-                      <label for="pms_first_name">Primeiro Nome</label>
-                      <input id="pms_first_name" name="first_name" type="text">
+                    <li class="pms-field pms-user-email-field">
+                      <label for="pms_user_email">Telefone *</label>
+                      <input id="pms_user_phone" name="user_phone" type="phone" required>
                     </li>
-                    <li class="pms-field pms-last-name-field">
-                      <label for="pms_last_name">Sobrenome</label>
-                      <input id="pms_last_name" name="last_name" type="text">
+                    <li class="pms-field pms-first-name-field">
+                      <label for="pms_user_fullname"> Nome Completo</label>
+                      <input id="pms_user_fullname" name="fullname" type="text">
                     </li>
                     <li class="pms-field pms-pass1-field">
                       <label for="pms_pass1">Senha *</label>
@@ -113,7 +121,7 @@
 
     <script src="js/script.js"></script>
 
-    <script src="firebase/register.js" type="module"></script>
+    <script src="firebase/createLogin.js" type="module"></script>
 
 
    
