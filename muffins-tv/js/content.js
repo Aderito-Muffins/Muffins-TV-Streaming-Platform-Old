@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // Função para inicializar o Owl Carousel
-    function initializeCarousel() {
-        const carousel = $('#movie-carousel');
+    function initializeCarousel(carouselId, options) {
+        const carousel = $(carouselId);
         // Destroi o carrossel existente antes de recriá-lo
         if (carousel.hasClass('owl-loaded')) {
             carousel.trigger('destroy.owl.carousel');
@@ -9,61 +9,129 @@ $(document).ready(function () {
             carousel.find('.owl-stage-outer').children().unwrap();
         }
 
-        // Inicializa o carrossel
-        carousel.owlCarousel({
-            items: 1,
-            dots: false,
-            nav: true,
-            autoplay: true,
-            loop: true,
-            margin: 0
-        });
+        // Inicializa o carrossel com as opções especificadas
+        carousel.owlCarousel(options);
     }
 
-    // Função para criar o HTML do carrossel a partir dos dados
+    // Função para truncar texto baseado no limite de caracteres
+    function truncateText(text, limit) {
+        if (text.length > limit) {
+            return text.substring(0, limit) + '...';
+        }
+        return text;
+    }
+
+    // Função para criar o HTML do carrossel principal
     function createCarouselItems(movies) {
-        return movies.map(movie => `
-            <div class="item" style="background: url('${movie.coverUrl}'); background-size: cover; background-position: center;">
-                <div class="gen-movie-contain-style-2 h-100">
-                    <div class="container h-100">
-                        <div class="row flex-row-reverse align-items-center h-100">
-                            <div class="col-xl-6">
-                                <div class="gen-front-image">
-                                    <img src="${movie.coverUrl}" alt="imagem-banner-carrossel">
-                                    <a href="${movie.trailerUrl}" class="playBut popup-youtube popup-vimeo popup-gmaps">
-                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7" xml:space="preserve">
-                                            <polygon class="triangle" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
-                                            <circle class="circle" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"></circle>
-                                        </svg>
-                                        <span>Assistir Trailer</span>
-                                    </a>
+        return movies.map(movie => {
+            const title = truncateText(movie.title, 50); // Limita o título a 50 caracteres
+            const description = truncateText(movie.description, 150); // Limita a descrição a 150 caracteres
+
+            return `
+                <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
+                    <div class="gen-movie-contain-style-2 h-100">
+                        <div class="container h-100">
+                            <div class="row flex-row-reverse align-items-center h-100">
+                                <div class="col-xl-6">
+                                    <div class="gen-front-image">
+                                        <img src="${movie.cover}" alt="imagem-banner-carrossel">
+                                        ${movie.has_trailer ? `
+                                        <a href="${movie.share}" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7">
+                                                <polygon class="triangle" fill="none" stroke-width="7" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
+                                                <circle class="circle" fill="none" stroke-width="7" cx="106.8" cy="106.8" r="103.3"></circle>
+                                            </svg>
+                                            <span>Assistir Trailer</span>
+                                        </a>
+                                        ` : ''}
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="gen-tag-line"><span>${movie.is_favorite ? 'Mais Visto' : 'Em Alta'}</span></div>
+                                    <div class="gen-movie-info">
+                                        <h3>${title}</h3>
+                                    </div>
+                                    <div class="gen-movie-meta-holder">
+                                        <ul class="gen-meta-after-title">
+                                            <li class="gen-sen-rating"><span>${movie.age}</span></li>
+                                            <li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
+                                        </ul>
+                                        <p>${description}</p>
+                                        <div class="gen-meta-info">
+                                            <ul class="gen-meta-after-excerpt">
+                                                <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
+                                                <li><strong>Gênero :</strong> ${movie.category.map(c => `<span><a href="#">${c.title}</a></span>`).join(', ')}</li>
+                                                <li><strong>Tag :</strong> ${movie.tags ? movie.tags.map(t => `<span><a href="#">${t}</a></span>`).join(', ') : 'N/A'}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="gen-movie-action">
+                                        <div class="gen-btn-container">
+                                            <a href="${movie.share}" class="gen-button gen-button-dark">
+                                                <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6">
-                                <div class="gen-tag-line"><span>${movie.isMostViewed ? 'Mais Visto' : 'Em Alta'}</span></div>
-                                <div class="gen-movie-info">
-                                    <h3>${movie.title}</h3>
-                                </div>
-                                <div class="gen-movie-meta-holder">
-                                    <ul class="gen-meta-after-title">
-                                        <li class="gen-sen-rating"><span>${movie.ageRating}</span></li>
-                                        <li><img src="${movie.ratingImageUrl}" alt="imagem-avaliação"><span>${movie.rating}</span></li>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // Função para criar o HTML do carrossel de "All Time Hits"
+    function createAllTimeHitsItems(movies) {
+        return movies.map(movie => `
+            <div class="item">
+                <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${movie.genre.join(' movie_genre-')}">
+                    <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                        <div class="gen-movie-contain">
+                            <div class="gen-movie-img">
+                                <img src="${movie.coverUrl}" alt="owl-carousel-video-image">
+                                <div class="gen-movie-add">
+                                    <div class="wpulike wpulike-heart">
+                                        <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+                                            <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
+                                        </div>
+                                    </div>
+                                    <ul class="menu bottomRight">
+                                        <li class="share top">
+                                            <i class="fa fa-share-alt"></i>
+                                            <ul class="submenu">
+                                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="#" class="facebook"><i class="fab fa-instagram"></i></a></li>
+                                                <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
-                                    <p>${movie.description}</p>
-                                    <div class="gen-meta-info">
-                                        <ul class="gen-meta-after-excerpt">
-                                            <li><strong>Elenco :</strong> ${movie.cast.join(', ')}</li>
-                                            <li><strong>Gênero :</strong> ${movie.genre.map(g => `<span><a href="#">${g}</a></span>`).join(', ')}</li>
-                                            <li><strong>Tag :</strong> ${movie.tags.map(t => `<span><a href="#">${t}</a></span>`).join(', ')}</li>
-                                        </ul>
+                                    <div class="movie-actions--link_add-to-playlist dropdown">
+                                        <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
+                                        <div class="dropdown-menu mCustomScrollbar">
+                                            <div class="mCustomScrollBox">
+                                                <div class="mCSB_container">
+                                                    <a class="login-link" href="register.html">Sign in to add this movie to a playlist.</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="gen-movie-action">
-                                    <div class="gen-btn-container">
-                                        <a href="${movie.playUrl}" class="gen-button gen-button-dark">
-                                            <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
-                                        </a>
-                                    </div>
+                                    <a href="${movie.playUrl}" class="gen-button">
+                                        <i class="fa fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="gen-info-contain">
+                                <div class="gen-movie-info">
+                                    <h3><a href="${movie.playUrl}">${movie.title}</a></h3>
+                                </div>
+                                <div class="gen-movie-meta-holder">
+                                    <ul>
+                                        <li>${movie.duration}</li>
+                                        <li>${movie.genre.map(g => `<a href="#"><span>${g}</span></a>`).join(', ')}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +141,8 @@ $(document).ready(function () {
         `).join('');
     }
 
-    // Função principal para buscar dados e inicializar o carrossel
-    function loadMovies() {
+    // Função principal para buscar dados e inicializar os carrosséis
+    function loadMoviesMin() {
         fetch('http://localhost:3000/muffins/v1/contents/list-all', {
             method: 'GET',
             headers: {
@@ -90,13 +158,74 @@ $(document).ready(function () {
         .then(data => {
             if (data && data.contents) {
                 const movies = data.contents;
-                const carousel = $('#movie-carousel');
+                
+                // Adiciona os itens ao carrossel principal
+                $('#movie-carousel').html(createCarouselItems(movies));
+                initializeCarousel('#movie-carousel', {
+                    items: 1,
+                    dots: false,
+                    nav: true,
+                    autoplay: true,
+                    loop: true,
+                    margin: 0
+                });
 
-                // Adiciona os itens ao carrossel
-                carousel.html(createCarouselItems(movies));
+                // Adiciona os itens ao carrossel de "All Time Hits"
+                $('#all-time-hits-carousel').html(createAllTimeHitsItems(movies));
+                initializeCarousel('#all-time-hits-carousel', {
+                    items: 4,
+                    dots: false,
+                    nav: true,
+                    autoplay: false,
+                    loop: false,
+                    margin: 30
+                });
 
-                // Inicializa o carrossel
-                initializeCarousel();
+            } else {
+                console.error('Formato de dados inesperado:', data);
+            }
+        })
+        .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
+    }
+    function loadMoviesMax() {
+        fetch('http://localhost:3000/muffins/v1/films/full/list-all?limit=10', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.DetailFilms) {
+                const movies = data.DetailFilms;
+                
+                // Adiciona os itens ao carrossel principal
+                $('#movie-carousel').html(createCarouselItems(movies));
+                initializeCarousel('#movie-carousel', {
+                    items: 1,
+                    dots: false,
+                    nav: true,
+                    autoplay: true,
+                    loop: true,
+                    margin: 0
+                });
+
+                // Adiciona os itens ao carrossel de "All Time Hits"
+                $('#all-time-hits-carousel').html(createAllTimeHitsItems(movies));
+                initializeCarousel('#all-time-hits-carousel', {
+                    items: 4,
+                    dots: false,
+                    nav: true,
+                    autoplay: false,
+                    loop: false,
+                    margin: 30
+                });
+
             } else {
                 console.error('Formato de dados inesperado:', data);
             }
@@ -105,5 +234,6 @@ $(document).ready(function () {
     }
 
     // Carrega os filmes ao carregar a página
-    loadMovies();
+    loadMoviesMax();
+    loadMoviesMin();
 });
