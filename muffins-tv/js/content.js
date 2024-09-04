@@ -82,14 +82,14 @@ $(document).ready(function () {
     }
     
     // Função para criar o HTML do carrossel de "All Time Hits"
-    function createAllTimeHitsItems(movies) {
-        return movies.map(movie => `
+    function createAllTimeHitsItems(films) {
+        return films.map(film => `
             <div class="item">
-                <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${movie.genre.join(' movie_genre-')}">
+                <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${film.type.toLowerCase()}">
                     <div class="gen-carousel-movies-style-2 movie-grid style-2">
                         <div class="gen-movie-contain">
                             <div class="gen-movie-img">
-                                <img src="${movie.coverUrl}" alt="owl-carousel-video-image">
+                                <img src="${film.thumbnail}" alt="Movie Thumbnail">
                                 <div class="gen-movie-add">
                                     <div class="wpulike wpulike-heart">
                                         <div class="wp_ulike_general_class wp_ulike_is_not_liked">
@@ -101,8 +101,8 @@ $(document).ready(function () {
                                             <i class="fa fa-share-alt"></i>
                                             <ul class="submenu">
                                                 <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" class="facebook"><i class="fab fa-instagram"></i></a></li>
-                                                <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
+                                                <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
+                                                <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -118,19 +118,19 @@ $(document).ready(function () {
                                     </div>
                                 </div>
                                 <div class="gen-movie-action">
-                                    <a href="${movie.playUrl}" class="gen-button">
+                                    <a href="#" class="gen-button">
                                         <i class="fa fa-play"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="gen-info-contain">
                                 <div class="gen-movie-info">
-                                    <h3><a href="${movie.playUrl}">${movie.title}</a></h3>
+                                    <h3><a href="#">${film.title} (${film.titleEnglish})</a></h3>
                                 </div>
                                 <div class="gen-movie-meta-holder">
                                     <ul>
-                                        <li>${movie.duration}</li>
-                                        <li>${movie.genre.map(g => `<a href="#"><span>${g}</span></a>`).join(', ')}</li>
+                                        <li>${film.duration}</li>
+                                        <li><a href="#"><span>${film.type}</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -140,10 +140,10 @@ $(document).ready(function () {
             </div>
         `).join('');
     }
-
+    
     // Função principal para buscar dados e inicializar os carrosséis
     function loadMoviesMin() {
-        fetch('http://localhost:3000/muffins/v1/contents/list-all', {
+        fetch('http://localhost:3000/muffins/v1/films/mini/list-all?limit=10', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -156,20 +156,8 @@ $(document).ready(function () {
             return response.json();
         })
         .then(data => {
-            if (data && data.contents) {
-                const movies = data.contents;
-                
-                // Adiciona os itens ao carrossel principal
-                $('#movie-carousel').html(createCarouselItems(movies));
-                initializeCarousel('#movie-carousel', {
-                    items: 1,
-                    dots: false,
-                    nav: true,
-                    autoplay: true,
-                    loop: true,
-                    margin: 0
-                });
-
+            if (data && data.films) {
+                const movies = data.films;
                 // Adiciona os itens ao carrossel de "All Time Hits"
                 $('#all-time-hits-carousel').html(createAllTimeHitsItems(movies));
                 initializeCarousel('#all-time-hits-carousel', {
@@ -215,16 +203,6 @@ $(document).ready(function () {
                     margin: 0
                 });
 
-                // Adiciona os itens ao carrossel de "All Time Hits"
-                $('#all-time-hits-carousel').html(createAllTimeHitsItems(movies));
-                initializeCarousel('#all-time-hits-carousel', {
-                    items: 4,
-                    dots: false,
-                    nav: true,
-                    autoplay: false,
-                    loop: false,
-                    margin: 30
-                });
 
             } else {
                 console.error('Formato de dados inesperado:', data);
