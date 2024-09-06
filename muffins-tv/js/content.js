@@ -1,26 +1,53 @@
 $(document).ready(function () {
+    let offset = 0; // Variável para controlar o offset da paginação
+    let limit = 7; // Número de filmes a serem carregados a cada requisição
+    let page = 1
+    let sortBy = 'title'
+    let sortOrder = 'desc'
+
+
     // Função para inicializar o Owl Carousel
     function initializeCarousel(carouselId, options) {
         const carousel = $(carouselId);
-        // Destroi o carrossel existente antes de recriá-lo
         if (carousel.hasClass('owl-loaded')) {
             carousel.trigger('destroy.owl.carousel');
             carousel.removeClass('owl-loaded');
             carousel.find('.owl-stage-outer').children().unwrap();
         }
-
-        // Inicializa o carrossel com as opções especificadas
         carousel.owlCarousel(options);
     }
 
     // Função para truncar texto baseado no limite de caracteres
     function truncateText(text, limit) {
-        if (text.length > limit) {
-            return text.substring(0, limit) + '...';
-        }
-        return text;
+        return text.length > limit ? text.substring(0, limit) + '...' : text;
     }
 
+     // Função para carregar mais filmes ao clicar no botão de navegação
+    function loadMoreMovies() {
+        fetch(`http://localhost:3000/muffins/v1/films/full/list-all?limit=${limit}&offset=${offset}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.DetailFilms) {
+                const movies = data.DetailFilms;
+                const newItemsHTML = createCarouselItems(movies);
+                $('#movie-carousel').trigger('add.owl.carousel', [$(newItemsHTML)]).trigger('refresh.owl.carousel');
+                offset += limit; // Atualiza o offset para a próxima requisição
+            } else {
+                console.error('Formato de dados inesperado:', data);
+            }
+        })
+        .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
+    }
     // Função para criar o HTML do carrossel principal
     function createCarouselItems(movies) {
         return movies.map(movie => {
@@ -61,7 +88,7 @@ $(document).ready(function () {
                                             <ul class="gen-meta-after-excerpt">
                                                 <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
                                                 <li><strong>Gênero :</strong> ${movie.category.map(c => `<span><a href="#">${c.title}</a></span>`).join(', ')}</li>
-                                                <li><strong>Tag :</strong> ${movie.tags ? movie.tags.map(t => `<span><a href="#">${t}</a></span>`).join(', ') : 'N/A'}</li>
+                                                <li><strong>Lancamento :</strong> ${movie.published_year} </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -143,7 +170,7 @@ $(document).ready(function () {
     
     // Função principal para buscar dados e inicializar os carrosséis
     function loadMoviesMin() {
-        fetch('http://localhost:3000/muffins/v1/films/mini/list-all?limit=10', {
+        fetch('http://localhost:3000/muffins/v1/films/mini/list-all?limit=10?offset=0', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -176,7 +203,7 @@ $(document).ready(function () {
         .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
     }
     function loadMoviesMax() {
-        fetch('http://localhost:3000/muffins/v1/films/full/list-all?limit=10', {
+        fetch(`http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

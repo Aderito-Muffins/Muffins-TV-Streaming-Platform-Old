@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
-    background: rgba(255, 255, 255, 0.8); /* Fundo branco com opacidade */
+    background: rgba(8, 7, 20, 0.8); /* Fundo branco com opacidade */
     z-index: 1000; /* Garante que o loader fique acima do conteúdo */
     display: none; /* Inicialmente oculto */
   }
@@ -17,7 +17,7 @@
     width: 40px;
     height: 40px;
     position: relative;
-    --c: no-repeat linear-gradient(#25b09b 0 0);
+    --c: no-repeat linear-gradient(#ff9800 0 0);
     background:
       var(--c) center/100% 10px,
       var(--c) center/10px 100%;
