@@ -1,40 +1,48 @@
-const baseUrl = 'http://localhost:3000/muffins/v1/films/full/list-all'; // Substitua pela URL real da sua API
+const baseUrl = 'http://localhost:3000/muffins/v1/films/genre'; // Substitua pela URL real da sua API
 
-// Variáveis globais para controle de página e limite
+// Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
 const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário
+let genre = getGenreFromURL() || 'Action'; // Gênero inicial selecionado
 
+// Função para mostrar e ocultar o loader
 function showLoading() {
     document.querySelector('.loader-container').style.display = 'flex';
-  }
-  
-  function hideLoading() {
-    document.querySelector('.loader-container').style.display = 'none';
-  }
+}
 
-// Função para carregar filmes com base nos parâmetros de página
-async function loadFilms(page = 1) {
-    showLoading()
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
+
+// Função para capturar o parâmetro "genre" da URL
+function getGenreFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('genre');
+}
+
+// Função para carregar filmes com base nos parâmetros de página e gênero
+async function loadFilms(page = 1, selectedGenre = genre) {
+    genre = selectedGenre; // Atualiza o gênero global com o selecionado
+    showLoading();
     try {
-        // Montando a URL de requisição com os parâmetros de paginação
-        const url = `${baseUrl}?limit=${limit}&page=${page}&sortBy=title&sortOrder=asc`; // Adicione outros parâmetros, se necessário
+        // Montando a URL de requisição com os parâmetros de paginação e gênero
+        const url = `${baseUrl}/${genre}?limit=${limit}&page=${page}`;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
-        if (data.error_code === 0) {
-            displayFilms(data.DetailFilms); // Chama a função para exibir filmes
-            updatePagination(data.totalPages, page); // Atualiza a paginação
+        if (data.code === 0) { // Verifica se o código de sucesso é retornado
+            displayFilms(data.data.films); // Chama a função para exibir filmes
+            updatePagination(Math.ceil(data.data.total / limit), page); // Atualiza a paginação
         } else {
-            hideLoading();
-            console.error(data.msg);
+            console.error(data.message);
         }
     } catch (error) {
-        hideLoading()
         console.error('Erro ao carregar filmes:', error);
+    } finally {
+        hideLoading();
     }
-    hideLoading();
 }
 
 // Função para exibir filmes no HTML
@@ -50,7 +58,6 @@ function displayFilms(films) {
 
     // Loop para adicionar cada filme ao container
     films.forEach(film => {
-      //  console.log(film.thumb);
         const filmHTML = `
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
@@ -73,7 +80,7 @@ function displayFilms(films) {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>${film.duration}</li>
-                                    <li><a href="genre.html?genre=${film.category[1].title}"><span>${film.category[1].title}</span></a></li>
+                                    <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -84,6 +91,16 @@ function displayFilms(films) {
         container.insertAdjacentHTML('beforeend', filmHTML);
     });
 }
+
+// Função para capturar cliques nos links de gênero
+document.querySelectorAll('.genre-link').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const selectedGenre = this.getAttribute('data-genre');
+        currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
+        loadFilms(currentPage, selectedGenre); // Carrega filmes do gênero selecionado
+    });
+});
 
 // Função para atualizar a paginação
 function updatePagination(totalPages, currentPage) {
@@ -96,13 +113,29 @@ function updatePagination(totalPages, currentPage) {
     // Limpar a paginação existente
     paginationContainer.innerHTML = '';
 
+    // Adicionar botão para "Primeira Página"
+    if (currentPage > 1) {
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">First</a></li>`;
+    }
+
     // Adicionar botão de página anterior
     if (currentPage > 1) {
-        paginationContainer.innerHTML += `<li><a class="prev page-numbers" id='prevPage' href="#">Prev Page</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="prev page-numbers" id='prevPage' href="#">Prev</a></li>`;
+    }
+
+    // Mostrar no máximo 5 páginas ao redor da página atual
+    const maxPagesToShow = 5;
+    const half = Math.floor(maxPagesToShow / 2);
+    let startPage = Math.max(currentPage - half, 1);
+    let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+
+    // Ajustar o startPage quando há poucas páginas no final
+    if (endPage - startPage < maxPagesToShow - 1) {
+        startPage = Math.max(endPage - maxPagesToShow + 1, 1);
     }
 
     // Adicionar botões de página
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = startPage; i <= endPage; i++) {
         if (i === currentPage) {
             paginationContainer.innerHTML += `<li><span class="page-numbers current">${i}</span></li>`;
         } else {
@@ -112,7 +145,12 @@ function updatePagination(totalPages, currentPage) {
 
     // Adicionar botão de próxima página
     if (currentPage < totalPages) {
-        paginationContainer.innerHTML += `<li><a class="next page-numbers" id='nextPage' href="#">Next page</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="next page-numbers" id='nextPage' href="#">Next</a></li>`;
+    }
+
+    // Adicionar botão para "Última Página"
+    if (currentPage < totalPages) {
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="${totalPages}">Last</a></li>`;
     }
 
     // Adicionar eventos para os botões de paginação
@@ -120,6 +158,7 @@ function updatePagination(totalPages, currentPage) {
         button.addEventListener('click', (event) => {
             event.preventDefault();
             const page = event.target.getAttribute('data-page');
+
             if (page) {
                 loadFilms(parseInt(page));
             } else if (event.target.id === 'prevPage') {
@@ -144,5 +183,5 @@ function prevPage() {
     }
 }
 
-// Carregar os filmes na primeira vez que a página é aberta
+// Carregar os filmes na primeira vez que a página é aberta com o gênero capturado da URL
 loadFilms(currentPage);
