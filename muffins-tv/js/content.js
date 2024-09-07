@@ -21,37 +21,11 @@ $(document).ready(function () {
         return text.length > limit ? text.substring(0, limit) + '...' : text;
     }
 
-     // Função para carregar mais filmes ao clicar no botão de navegação
-    function loadMoreMovies() {
-        fetch(`http://localhost:3000/muffins/v1/films/full/list-all?limit=${limit}&offset=${offset}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro na requisição: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data && data.DetailFilms) {
-                const movies = data.DetailFilms;
-                const newItemsHTML = createCarouselItems(movies);
-                $('#movie-carousel').trigger('add.owl.carousel', [$(newItemsHTML)]).trigger('refresh.owl.carousel');
-                offset += limit; // Atualiza o offset para a próxima requisição
-            } else {
-                console.error('Formato de dados inesperado:', data);
-            }
-        })
-        .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
-    }
     // Função para criar o HTML do carrossel principal
     function createCarouselItems(movies) {
         return movies.map(movie => {
             const title = truncateText(movie.title, 50); // Limita o título a 50 caracteres
-            const description = truncateText(movie.brief, 150); // Limita a descrição a 150 caracteres
+            const description = truncateText(movie.description, 150); // Limita a descrição a 150 caracteres
 
             return `
                 <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
@@ -82,7 +56,7 @@ $(document).ready(function () {
                                             <li class="gen-sen-rating"><span>${movie.age}</span></li>
                                             <li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
                                         </ul>
-                                        ${description}
+                                        <p>${description}</p>
                                         <div class="gen-meta-info">
                                             <ul class="gen-meta-after-excerpt">
                                                 <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
@@ -106,7 +80,7 @@ $(document).ready(function () {
             `;
         }).join('');
     }
-    
+
     // Função para criar o HTML do carrossel de "All Time Hits"
     function createAllTimeHitsItems(films) {
         return films.map(film => `
@@ -115,11 +89,7 @@ $(document).ready(function () {
                     <div class="gen-carousel-movies-style-2 movie-grid style-2">
                         <div class="gen-movie-contain">
                             <div class="gen-movie-img">
-<<<<<<< HEAD
                                 <img src="${film.thumb}" alt="Movie Thumbnail">
-=======
-                                <img src="${film.thumbnail}" alt="Movie Thumbnail">
->>>>>>> parent of 71b979b (fix)
                                 <div class="gen-movie-add">
                                     <div class="wpulike wpulike-heart">
                                         <div class="wp_ulike_general_class wp_ulike_is_not_liked">
@@ -155,12 +125,12 @@ $(document).ready(function () {
                             </div>
                             <div class="gen-info-contain">
                                 <div class="gen-movie-info">
-                                    <h3><a href="#">${film.title} (${film.titleEnglish})</a></h3>
+                                    <h3><a href="#">${film.title} (${film.title_original})</a></h3>
                                 </div>
                                 <div class="gen-movie-meta-holder">
                                     <ul>
                                         <li>${film.duration}</li>
-                                        <li><a href="#"><span>${film.type}</span></a></li>
+                                        <li><a href="#"><span>${film.hd_mode}</span></a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -170,10 +140,10 @@ $(document).ready(function () {
             </div>
         `).join('');
     }
-    
-    // Função principal para buscar dados e inicializar os carrosséis
-    function loadMoviesMin() {
-        fetch('http://localhost:3000/muffins/v1/films/mini/list-all?limit=10?offset=0', {
+
+    // Função para buscar e carregar filmes de acordo com as rotas criadas
+    function fetchAndLoadMovies(url, processData) {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -186,54 +156,8 @@ $(document).ready(function () {
             return response.json();
         })
         .then(data => {
-            if (data && data.films) {
-                const movies = data.films;
-                // Adiciona os itens ao carrossel de "All Time Hits"
-                $('#all-time-hits-carousel').html(createAllTimeHitsItems(movies));
-                initializeCarousel('#all-time-hits-carousel', {
-                    items: 4,
-                    dots: false,
-                    nav: true,
-                    autoplay: false,
-                    loop: false,
-                    margin: 30
-                });
-
-            } else {
-                console.error('Formato de dados inesperado:', data);
-            }
-        })
-        .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
-    }
-    function loadMoviesMax() {
-        fetch(`http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Erro na requisição: ' + response.statusText);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data && data.DetailFilms) {
-                const movies = data.DetailFilms;
-                
-                // Adiciona os itens ao carrossel principal
-                $('#movie-carousel').html(createCarouselItems(movies));
-                initializeCarousel('#movie-carousel', {
-                    items: 1,
-                    dots: false,
-                    nav: true,
-                    autoplay: true,
-                    loop: true,
-                    margin: 0
-                });
-
-
+            if (data && data.data && data.data.films) {
+                processData(data.data.films);
             } else {
                 console.error('Formato de dados inesperado:', data);
             }
@@ -257,7 +181,7 @@ $(document).ready(function () {
     }
 
     function loadAllTimeHits() {
-        fetchAndLoadMovies('http://localhost:3000/muffins/v1/films/recent?limit=10', films => {
+        fetchAndLoadMovies('http://localhost:3000/muffins/v1/films/featured?limit=10', films => {
             $('#all-time-hits-carousel').html(createAllTimeHitsItems(films));
             initializeCarousel('#all-time-hits-carousel', {
                 items: 4,

@@ -1,49 +1,113 @@
 <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
-    <div class="gen-bottom-header">
+   <div class="gen-bottom-header">
        <div class="container">
-          <div class="row">
-             <div class="col-lg-12">
-                <nav class="navbar navbar-expand-lg navbar-light">
-                   <a class="navbar-brand" href="#">
-                      <img class="img-fluid logo" src="images/logo-1.png" alt="streamlab-image">
-                   </a>
-                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <div id="gen-menu-contain" class="gen-menu-contain">
-                         <ul id="gen-main-menu" class="navbar-nav ml-auto">
-                            <li class="menu-item active">
-                               <a href="#" aria-current="page">Início</a>
-                               <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                               <ul class="sub-menu">
-                                  <li class="menu-item active">
-                                     <a href="index.html" aria-current="page">Principal</a>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="movies-home.html" aria-current="page">Filmes</a>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="tv-shows-home.html" aria-current="page">Programas de TV</a>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="video-home.html" aria-current="page">Vídeos</a>
-                                  </li>
+           <div class="row">
+               <div class="col-lg-12">
+                   <nav class="navbar navbar-expand-lg navbar-light">
+                       <a class="navbar-brand" href="#">
+                           <img class="img-fluid logo" src="images/logo-1.png" alt="streamlab-image">
+                       </a>
+                       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                           <div id="gen-menu-contain" class="gen-menu-contain">
+                               <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                                   <!-- Menu Início -->
+                                   <li class="menu-item active">
+                                       <a href="index.html">Início</a>
+                                   </li>
+
+                                   <!-- Menu Filmes com gêneros -->
+                                   <li class="menu-item">
+                                       <a href="#">Filmes</a>
+                                       <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                       <ul class="sub-menu">
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Action">Ação</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Comedy">Comédia</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Drama">Drama</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Horror">Terror</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Romance">Romance</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Sci-Fi">Ficção Científica</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="movies-pagination.html?genre=Documentary">Documentário</a>
+                                           </li>
+                                       </ul>
+                                   </li>
+
+                                   <!-- Menu Programas de TV -->
+                                   <li class="menu-item">
+                                       <a href="#">Programas de TV</a>
+                                       <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                       <ul class="sub-menu">
+                                           <li class="menu-item">
+                                               <a href="tv-shows.html?genre=all">Todos os Programas</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="tv-shows.html?genre=comedy">Comédia</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="tv-shows.html?genre=drama">Drama</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="tv-shows.html?genre=documentary">Documentário</a>
+                                           </li>
+                                       </ul>
+                                   </li>
+
+                                   <!-- Menu Vídeos -->
+                                   <li class="menu-item">
+                                       <a href="#">Vídeos</a>
+                                       <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                       <ul class="sub-menu">
+                                           <li class="menu-item">
+                                               <a href="videos.html?type=all">Todos os Vídeos</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="videos.html?type=music">Música</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="videos.html?type=sports">Esportes</a>
+                                           </li>
+                                           <li class="menu-item">
+                                               <a href="videos.html?type=documentary">Documentários</a>
+                                           </li>
+                                       </ul>
+                                   </li>
+
+                                   <!-- Menu Conta do Usuário -->
+                                   <li class="menu-item">
+                                       <a href="javascript:void(0)" id="gen-user-btn"><i class="fa fa-user"></i> Conta</a>
+                                       <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                       <ul class="sub-menu">
+                                           <li><a href="log-in.html"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                                           <li><a href="register.html"><i class="fa fa-user"></i> Registrar</a></li>
+                                           <li><a href="library.html"><i class="fa fa-indent"></i> Biblioteca</a></li>
+                                           <li><a href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a></li>
+                                       </ul>
+                                   </li>
                                </ul>
-<<<<<<< HEAD
                            </div>
                        </div>
                        <div class="gen-header-info-box">
-                        <div class="gen-menu-search-block d-flex align-items-center">
-                            <a href="javascript:void(0)" id="gen-search-btn" class="text-white mr-3"><i class="fa fa-search"></i></a>
-                            <div class="gen-search-form" style="display: none;">
-                                <form id="search-form" role="search" method="get" class="search-form d-flex">
-                                    <input type="search" class="form-control search-field" placeholder="Pesquisar..." name="s">
-                                    <button type="submit" class="btn btn-primary search-submit"><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Contêiner para exibir os resultados da pesquisa -->
-                    <div class="row_Movies"></div>
+                           <div class="gen-menu-search-block">
+                               <a href="javascript:void(0)" id="gen-seacrh-btn"><i class="fa fa-search"></i></a>
+                               <div class="gen-search-form">
+                                   <form role="search" method="get" class="search-form" action="#">
+                                       <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
+                                       <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
+                                   </form>
+                               </div>
+                           </div>
                            <div class="gen-btn-container">
                                <a href="register.html" class="gen-button">
                                    <div class="gen-button-block">
@@ -53,268 +117,14 @@
                                </a>
                            </div>
                        </div>
-                       <button class="navbar-toggler d-block d-lg-none" type="button" data-toggle="collapse"
-                       data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                       aria-expanded="false" aria-label="Toggle navigation">
-                       <i class="fas fa-bars"></i>
-                   </button>
+                       <button class="navbar-toggler" type="button" data-toggle="collapse"
+                           data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                           aria-expanded="false" aria-label="Toggle navigation">
+                           <i class="fas fa-bars"></i>
+                       </button>
                    </nav>
                </div>
            </div>
        </div>
    </div>
-   
-   <!-- <script src="../js/content/search.js"></script> -->
 </header>
-=======
-                            </li>
-                            <li class="menu-item">
-                               <a href="#">Filmes</a>
-                               <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                               <ul class="sub-menu">
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Lista de Filmes</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="movies-load-more.html">Ver mais</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="movies-infinite-scroll.html">Rolagem infinita</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="movies-pagination.html">Paginação</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Estilos de Filmes</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="movies-style-1.html">Estilo 1</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="movies-style-2.html">Estilo 2</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="movies-style-3.html">Estilo 3</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="single-movie.html">Filme Único</a>
-                                  </li>
-                               </ul>
-                            </li>
-                            <li class="menu-item">
-                               <a href="#">Programas de TV</a>
-                               <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                               <ul class="sub-menu">
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Lista de Programas de TV</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="tv-shows-load-more.html">Carregar mais</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="tv-shows-infinite-scroll.html">Rolagem infinita</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="tv-shows-pagination.html">Paginação</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Estilos de Programas de TV</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="tv-shows-style-1.html">Estilo 1</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="tv-shows-style-2.html">Estilo 2</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="tv-shows-style-3.html">Estilo 3</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="single-tv-shows.html">Programa de TV Único</a>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="single-episode.html">Episódio Único</a>
-                                  </li>
-                               </ul>
-                            </li>
-                            <li class="menu-item">
-                               <a href="#">Vídeos</a>
-                               <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                               <ul class="sub-menu">
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Vídeos</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="video-load-more.html">Carregar mais</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="video-infinite-scroll.html">Rolagem infinita</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="video-pagination.html">Paginação</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Estilos de Vídeos</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="videos-style-1.html">Estilo 1</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="videos-style-2.html">Estilo 2</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="videos-style-3.html">Estilo 3</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="single-videos.html">Vídeo Único</a>
-                                  </li>
-                               </ul>
-                            </li>
-                            <li class="menu-item">
-                               <a href="#">Páginas</a>
-                               <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                               <ul class="sub-menu">
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Blog</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item menu-item-has-children">
-                                           <a href="#">Blog com Sidebar</a>
-                                           <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                           <ul class="sub-menu">
-                                              <li class="menu-item">
-                                                 <a href="blog-left-sidebar.html">Blog com sidebar à esquerda</a>
-                                              </li>
-                                              <li class="menu-item">
-                                                 <a href="blog-right-sidebar.html">Blog com sidebar à direita</a>
-                                              </li>
-                                           </ul>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item menu-item-has-children">
-                                     <a href="#">Preços</a>
-                                     <i class="fa fa-chevron-down gen-submenu-icon"></i>
-                                     <ul class="sub-menu">
-                                        <li class="menu-item">
-                                           <a href="pricing-style-1.html">Estilo 1</a>
-                                        </li>
-                                        <li class="menu-item">
-                                           <a href="pricing-style-2.html">Estilo 2</a>
-                                        </li>
-                                     </ul>
-                                  </li>
-                                  <li class="menu-item">
-                                     <a href="contact-us.html">Contacte-nos</a>
-                                  </li>
-                                  <li class="menu-item">
-                                    <a href="terms-and-privacy.html">Termos e Políticas de Privacidades</a>
-                                 </li>
-                               </ul>
-                            </li>
-                         </ul>
-                      </div>
-                   </div>
-                   <div class="gen-header-info-box">
-                      <div class="gen-menu-search-block">
-                         <a href="javascript:void(0)" id="gen-seacrh-btn"><i class="fa fa-search"></i></a>
-                         <div class="gen-search-form">
-                            <form role="search" method="get" class="search-form" action="#">
-                               <label>
-                                  <span class="screen-reader-text"></span>
-                                  <input type="search" class="search-field" placeholder="Pesquisar …" value=""
-                                     name="s">
-                               </label>
-                               <button type="submit" class="search-submit"><span
-                                     class="screen-reader-text"></span></button>
-                            </form>
-                         </div>
-                      </div>
-                      <div class="gen-account-holder">
-                         <a href="javascript:void(0)" id="gen-user-btn"><i class="fa fa-user"></i></a>
-                         <div class="gen-account-menu " id="gen-account-menu">
-                            <ul class="gen-account-menu">
-                               <!-- Menu PMS -->
-                               <li>
-                                  <a href="log-in.html"><i class="fas fa-sign-in-alt"></i>
-                                     Login </a>
-                               </li>
-                               <li>
-                                  <a href="register.html"><i class="fa fa-user"></i>
-                                     Registrar </a>
-                               </li>
-                               <!-- Menu Biblioteca -->
-                               <li>
-                                  <a href="library.html">
-                                     <i class="fa fa-indent"></i>
-                                     Biblioteca </a>
-                               </li>
-                               <li>
-                                  <a href="library.html"><i class="fa fa-list"></i>
-                                     Playlist de Filmes </a>
-                               </li>
-                               <li>
-                                  <a href="library.html"><i class="fa fa-list"></i>
-                                     Playlist de Programas de TV </a>
-                               </li>
-                               <li>
-                                  <a href="library.html"><i class="fa fa-list"></i>
-                                     Playlist de Vídeos </a>
-                               </li>
-                               <li>
-                                  <a href="upload-video.html"> <i class="fa fa-upload"></i>
-                                     Enviar Vídeo </a>
-                               </li>
-                            </ul>
-                         </div>
-                      </div>
-                      <div class="gen-btn-container">
-                         <a href="register.html" class="gen-button">
-                            <div class="gen-button-block">
-                               <span class="gen-button-line-left"></span>
-                               <span class="gen-button-text">Assine</span>
-                            </div>
-                         </a>
-                      </div>
-                   </div>
-                   <button class="navbar-toggler" type="button" data-toggle="collapse"
-                      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                      aria-expanded="false" aria-label="Toggle navigation">
-                      <i class="fas fa-bars"></i>
-                   </button>
-                </nav>
-             </div>
-          </div>
-       </div>
-    </div>
- </header>
- <script>
-   function userLogout() {
-        localStorage.removeItem('userData');
-        window.location.href = "index.html";
-    }
-
-   </script>
-
-
-
- 
->>>>>>> parent of 71b979b (fix)
