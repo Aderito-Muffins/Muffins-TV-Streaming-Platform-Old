@@ -8,12 +8,12 @@
     <meta name="author" content="MUFFINS TV" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>MUFFINS TV - Filmes, Series e Animes</title>
-    
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="images/favicon.ico">
-      <!-- Adicionando o script -->
-      <script src="js/header.js" defer></script>
-      <!-- CSS bootstrap-->
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- Adicionando o script -->
+    <script src="js/header.js" defer></script>
+    <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!--  Style -->
@@ -33,7 +33,7 @@
     <!--=========== Loader =============-->
 
     <!--========== Header ==============-->
-         <!--========== Header ==============-->
+    <!--========== Header ==============-->
 
     <!-- Single movie Start -->
     <section class="gen-section-padding-3 gen-single-movie">
@@ -45,8 +45,7 @@
                             <div class="col-lg-12">
                                 <div class="gen-video-holder">
                                     <!-- Elemento iframe será preenchido dinamicamente -->
-                                    <iframe width="100%" height="550px" src="" id="film-trailer"
-                                        frameborder="0"
+                                    <iframe width="100%" height="550px" src="" id="film-trailer" frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen></iframe>
                                 </div>
@@ -64,19 +63,39 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <p>Streamlab</p>
+                                    <p class="gen-description">muffins</p>
                                     <div class="gen-after-excerpt">
                                         <div class="gen-extra-data">
                                             <ul>
                                                 <li>
                                                     <!-- Linguagem do filme -->
-                                                    <span>Linguagem :</span>
+                                                    <span>Regiao :</span>
                                                     <span id="film-language">Idioma</span>
                                                 </li>
                                                 <li>
                                                     <!-- Legendas do filme -->
-                                                    <span>Legenda :</span>
-                                                    <span id="film-subtitles">Legenda</span>
+                                                    <span>Genero :</span>
+                                                    <span id="film-genre">NULL</span>
+                                                </li>
+                                                <li>
+                                                    <!-- Legendas do filme -->
+                                                    <span>Elenco :</span>
+                                                    <span id="film-actors"></span>
+                                                </li>
+                                                <li>
+                                                    <!-- Legendas do filme -->
+                                                    <span>Duracao :</span>
+                                                    <span id="film-duration">0</span>
+                                                </li>
+                                                <li>
+                                                    <!-- Legendas do filme -->
+                                                    <span>Qualidade :</span>
+                                                    <span id="film-quantity">NULL</span>
+                                                </li>
+                                                <li>
+                                                    <!-- Legendas do filme -->
+                                                    <span>Lancamento :</span>
+                                                    <span id="film-year">NULL</span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -194,7 +213,7 @@
     <!-- Single movie End -->
 
     <!-- footer start -->
-     
+
     <!-- footer End -->
 
     <!-- Back-to-Top start -->
@@ -236,8 +255,7 @@
                             <div class="col-lg-12">
                                 <div class="gen-video-holder">
                                     <!-- Elemento iframe será preenchido dinamicamente -->
-                                    <iframe width="100%" height="550px" src="" id="film-trailer"
-                                        frameborder="0"
+                                    <iframe width="100%" height="550px" src="" id="film-trailer" frameborder="0"
                                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                         allowfullscreen></iframe>
                                 </div>
@@ -280,53 +298,68 @@
             </div>
         </div>
     </section>
-    
+
     <script>
         function getGenreFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('id');
-}
-    // Função para buscar o filme da API e adicionar ao HTML
-    async function fetchAndDisplayFilm() {
-        try {
-            // Faz a requisição para a API para obter o filme
-            const response = await fetch(`http://localhost:3000/muffins/v1/films/id/${getGenreFromURL()}`); // Endpoint de exemplo, ajuste conforme necessário
-            const result = await response.json();
-    
-            if (result.code !== 0) {
-                console.error('Erro ao buscar o filme:', result.message);
-                return;
-            }
-    
-            const film = result.data;
-    
-            // Atualiza o título do filme
-            document.querySelector('.gen-title').textContent = film.title || 'Título não disponível';
-            
-            // Atualiza a classificação etária do filme
-            document.querySelector('.gen-sen-rating').textContent = film.age || 'N/A';
-            
-            // Atualiza o número de visualizações do filme
-            document.querySelector('.gen-single-meta-holder .fas.fa-eye + span').textContent = `${film.views || 0} Views`;
-            
-            // Atualiza o URL do trailer do filme
-            document.querySelector('#film-trailer').src = `https://www.youtube.com/embed/${film.trailer_id}`;
-            
-            // Atualiza a linguagem do filme
-            document.querySelector('#film-language').textContent = film.nation || 'N/A';
-            
-            // Atualiza as legendas do filme
-            document.querySelector('#film-subtitles').textContent = film.sub_mode && film.sub_mode.length > 0 ? film.sub_mode.map(sub => sub.title).join(', ') : 'N/A';
-    
-        } catch (error) {
-            console.error('Erro ao buscar o filme:', error);
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id');
         }
-    }
-    
-    // Chamar a função ao carregar a página
-    window.onload = fetchAndDisplayFilm;
+        // Função para buscar o filme da API e adicionar ao HTML
+        async function fetchAndDisplayFilm() {
+            try {
+                // Faz a requisição para a API para obter o filme
+                const response = await fetch(`http://localhost:3000/muffins/v1/films/id/${getGenreFromURL()}`); // Endpoint de exemplo, ajuste conforme necessário
+                const result = await response.json();
+
+                if (result.code !== 0) {
+                    console.error('Erro ao buscar o filme:', result.message);
+                    return;
+                }
+
+                const film = result.data;
+
+                // Atualiza o título do filme
+                document.querySelector('.gen-title').textContent = film.title || 'Título não disponível';
+
+                document.querySelector('.gen-description').textContent = film.brief || 'Título não disponível';
+
+                // Atualiza a classificação etária do filme
+                document.querySelector('.gen-sen-rating').textContent = film.age || 'N/A';
+
+                // Atualiza o número de visualizações do filme
+                document.querySelector('.gen-single-meta-holder .fas.fa-eye + span').textContent = `${film.views || 0} Views`;
+
+                // Atualiza o URL do trailer do filme
+                document.querySelector('#film-trailer').src = `https://www.youtube.com/embed/${film.trailer_id}`;
+
+                // Atualiza a linguagem do filme
+                document.querySelector('#film-language').textContent = film.nation || 'N/A';
+
+                // Atualiza as legendas do filme
+                document.querySelector('#film-subtitles').textContent = film.sub_mode && film.sub_mode.length > 0 ? film.sub_mode.map(sub => sub.title).join(', ') : 'N/A';
+
+                // Atualiza a linguagem do filme
+                document.querySelector('#film-duration').textContent = film.duration || 'N/A';
+
+                // Atualiza as legendas do filme
+                document.querySelector('#film-year').textContent = film.published_year
+
+                document.querySelector('#film-quality').textContent = film.hd_mode || 'N/A';
+
+                document.querySelector('#film-actors').textContent = film.actors && film.actors.length > 0 
+    ? film.actors.map(actor => actor.title).join(', ') 
+    : 'N/A';
+
+
+            } catch (error) {
+                console.error('Erro ao buscar o filme:', error);
+            }
+        }
+
+        // Chamar a função ao carregar a página
+        window.onload = fetchAndDisplayFilm;
     </script>
-    
+
 
 
 </body>
