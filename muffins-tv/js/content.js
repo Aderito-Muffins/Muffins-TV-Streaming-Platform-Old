@@ -1,17 +1,9 @@
 $(document).ready(function () {
     let offset = 0; // Variável para controlar o offset da paginação
-<<<<<<< HEAD
     let limit = 13; // Número de filmes a serem carregados a cada requisição
     let page = 1;
     let sortBy = 'title';
     let sortOrder = 'desc';
-=======
-    let limit = 7; // Número de filmes a serem carregados a cada requisição
-    let page = 1
-    let sortBy = 'title'
-    let sortOrder = 'desc'
-
->>>>>>> parent of 71b979b (fix)
 
     // Função para inicializar o Owl Carousel
     function initializeCarousel(carouselId, options) {
@@ -249,7 +241,6 @@ $(document).ready(function () {
         .catch(error => console.error('Erro ao buscar dados dos filmes:', error));
     }
 
-<<<<<<< HEAD
     // Funções de Carregamento Específicas
     function loadRecentMovies() {
         fetchAndLoadMovies(`http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}`, movies => {
@@ -282,9 +273,4 @@ $(document).ready(function () {
     // Inicialização de Carregamento ao Carregar a Página
     loadRecentMovies();
     loadAllTimeHits();
-=======
-    // Carrega os filmes ao carregar a página
-    loadMoviesMax();
-    loadMoviesMin();
->>>>>>> parent of 71b979b (fix)
 });
