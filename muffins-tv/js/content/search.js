@@ -1,3 +1,4 @@
+@ -1,97 +0,0 @@
 document.addEventListener("DOMContentLoaded", function() {
     const searchButton = document.getElementById('gen-search-btn');
     const searchForm = document.querySelector('.gen-search-form');
