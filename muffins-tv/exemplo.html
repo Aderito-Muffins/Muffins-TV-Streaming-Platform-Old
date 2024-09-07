@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series Animes" />
+    <meta name="author" content="MUFFINS TV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MUFFINS TV - Filmes, Series e Animes</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" />
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/load.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="gen-loading">
+        <div id="gen-loading-center">
+            <img src="images/logo-1.png" alt="loading">
+        </div>
+    </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!-- Loader End -->
+
+    <!-- Header Start -->
+    <header class="gen-header d-flex justify-content-between align-items-center p-3 bg-dark text-white">
+        <div class="gen-header-logo">
+            <a href="index.html"><img class="img-fluid" src="images/logo-1.png" alt="MUFFINS TV Logo"></a>
+        </div>
+        <div class="gen-menu-search-block d-flex align-items-center">
+            <a href="javascript:void(0)" id="gen-search-btn" class="text-white mr-3"><i class="fa fa-search"></i></a>
+            <div class="gen-search-form" style="display: none;">
+                <form id="search-form" role="search" method="get" class="search-form d-flex">
+                    <input type="search" class="form-control search-field" placeholder="Pesquisar..." name="s">
+                    <button type="submit" class="btn btn-primary search-submit"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Breadcrumb Start -->
+    <div class="gen-breadcrumb py-5" style="background-image: url('images/background/asset-25.jpeg');">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav aria-label="breadcrumb">
+                        <div class="gen-breadcrumb-title text-white">
+                            <h1>Movies</h1>
+                        </div>
+                        <div class="gen-breadcrumb-container">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i
+                                            class="fas fa-home mr-2"></i>Home</a></li>
+                                <li class="breadcrumb-item active">Movie</li>
+                            </ol>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Movies Section Start -->
+    <section class="gen-section-padding-3">
+        <div class="container">
+            <div class="row row_Movies"> <!-- Filmes serão injetados aqui pelo JavaScript --> </div>
+            <!-- Pagination Start -->
+            <div class="col-lg-12 d-flex justify-content-center mt-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination page-numbers">
+                        <!-- Paginação será preenchida dinamicamente -->
+                    </ul>
+                </nav>
+            </div>
+            <!-- Pagination End -->
+        </div>
+    </section>
+    <!-- Movies Section End -->
+
+    <!-- Footer Start -->
+    <footer class="bg-dark text-white p-3 text-center">
+        <p>&copy; 2024 MUFFINS TV - Todos os direitos reservados.</p>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Back-to-Top Start -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+    <!-- Back-to-Top End -->
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchButton = document.getElementById('gen-search-btn');
+            const searchForm = document.querySelector('.gen-search-form');
+            const formElement = document.getElementById('search-form');
+            const searchField = formElement.querySelector('.search-field');
+            const resultContainer = document.querySelector('.row_Movies');
+
+            // Toggle search form visibility
+            searchButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'block' : 'none';
+            });
+
+            // Hide search form when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!searchForm.contains(event.target) && !searchButton.contains(event.target)) {
+                    searchForm.style.display = 'none';
+                }
+            });
+
+            // Handle search form submission
+            formElement.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const title = searchField.value;
+                searchFilms(title);
+            });
+
+            // Fetch films from API
+            async function searchFilms(title) {
+                try {
+                    const response = await fetch(`/films/search?title=${encodeURIComponent(title)}`);
+                    const data = await response.json();
+                    if (data.code === 0) {
+                        displayFilms(data.data.films);
+                    } else {
+                        console.error(data.message);
+                    }
+                } catch (error) {
+                    console.error('Error fetching films:', error);
+                }
+            }
+
+            // Display films in HTML
+            function displayFilms(films) {
+                if (!resultContainer) {
+                    console.error('Elemento .row_Movies não encontrado');
+                    return;
+                }
+                resultContainer.innerHTML = '';
+                films.forEach(film => {
+                    const filmHTML = `
+                        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                            <div class="card movie-card h-100">
+                                <img src="${film.thumb}" class="card-img-top" alt="${film.title}">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">${film.title}</h5>
+                                    <p class="card-text">${film.duration}</p>
+                                    <p class="card-text">${film.category[0]?.title || 'N/A'}</p>
+                                    <a href="single-movie.html?id=${film.externalId}" class="btn btn-primary mt-auto">Assistir Agora</a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    resultContainer.insertAdjacentHTML('beforeend', filmHTML);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

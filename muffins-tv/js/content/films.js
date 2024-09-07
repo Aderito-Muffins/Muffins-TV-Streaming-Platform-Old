@@ -168,6 +168,7 @@ function updatePagination(totalPages, currentPage) {
             }
         });
     });
+    
 }
 
 // Funções para Paginação

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series Animes" />
+    <meta name="author" content="MUFFINS TV" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MUFFINS TV - Filmes, Series e Animes</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/load.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<body>
+
+    <!-- Loader -->
+    <div id="gen-loading">
+        <div id="gen-loading-center">
+            <img src="images/logo-1.png" alt="loading">
+        </div>
+    </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!-- Loader End -->
+
+    <!-- Header -->
+    <!-- Incluir seu header aqui -->
+    <!-- Header End -->
+
+    <!-- Breadcrumb -->
+    <div class="gen-breadcrumb" style="background-image: url('images/background/asset-25.jpeg');">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav aria-label="breadcrumb">
+                        <div class="gen-breadcrumb-title">
+                            <h1>Pesquisar Filmes</h1>
+                        </div>
+                        <div class="gen-breadcrumb-container">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html"><i class="fas fa-home mr-2"></i>Home</a></li>
+                                <li class="breadcrumb-item active">Pesquisar Filmes</li>
+                            </ol>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Section de Pesquisa -->
+    <section class="gen-section-padding-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <!-- Contêiner para os filmes -->
+                        <div class="row movie-results"> <!-- Filme pesquisado aparecerá aqui -->
+                            <!-- Conteúdo dos filmes será injetado aqui -->
+                        </div>
+                        
+                        <!-- Paginação -->
+                        <div class="col-lg-12 col-md-12">
+                            <div class="pagination-container">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section de Pesquisa End -->
+
+    <!-- Footer -->
+    <!-- Incluir seu footer aqui -->
+    <!-- Footer End -->
+
+    <!-- Back-to-Top -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+    <!-- Back-to-Top End -->
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- Script para Pesquisa e Paginação -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchButton = document.getElementById('gen-search-btn');
+        const searchForm = document.querySelector('.gen-search-form');
+        const formElement = document.getElementById('search-form');
+        const searchField = formElement.querySelector('.search-field');
+        const resultContainer = document.querySelector('.movie-results');
+        const paginationContainer = document.querySelector('.pagination');
+        let currentPage = 1; // Página atual
+
+        // Mostrar/Ocultar Formulário de Pesquisa
+        searchButton.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'block' : 'none';
+        });
+
+        // Ocultar Formulário ao clicar fora dele
+        document.addEventListener('click', function(event) {
+            if (!searchForm.contains(event.target) && !searchButton.contains(event.target)) {
+                searchForm.style.display = 'none';
+            }
+        });
+
+        // Submissão de Pesquisa
+        formElement.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            currentPage = 1; // Reseta para a primeira página
+            searchFilms(searchField.value, currentPage);
+        });
+
+        // Função de Busca de Filmes
+        async function searchFilms(title, page) {
+            try {
+                const response = await fetch(`/films/search?title=${encodeURIComponent(title)}&page=${page}`);
+                const data = await response.json();
+
+                if (data.code === 0) { 
+                    displayFilms(data.data.films);
+                    updatePagination(data.data.total, page); 
+                } else {
+                    console.error(data.message);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar filmes:', error);
+            }
+        }
+
+        // Exibir Filmes no HTML
+        function displayFilms(films) {
+            resultContainer.innerHTML = ''; 
+            films.forEach(film => {
+                const filmHTML = `
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                        <div class="card movie-card h-100">
+                            <img src="${film.thumb}" class="card-img-top" alt="${film.title}">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">${film.title}</h5>
+                                <p class="card-text">${film.duration}</p>
+                                <p class="card-text">${film.category[0]?.title || 'N/A'}</p>
+                                <a href="single-movie.html?id=${film.externalId}" class="btn btn-primary mt-auto">Assistir Agora</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultContainer.insertAdjacentHTML('beforeend', filmHTML);
+            });
+        }
+
+        // Atualizar Paginação
+        function updatePagination(total, currentPage) {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(total / 10); // Supondo 10 itens por página
+
+            // Botão de Página Anterior
+            if (currentPage > 1) {
+                paginationContainer.innerHTML += `<li class="page-item"><a class="page-link" href="#" data-page="${currentPage - 1}">Anterior</a></li>`;
+            }
+
+            // Botões de Páginas
+            for (let i = 1; i <= totalPages; i++) {
+                paginationContainer.innerHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
+            }
+
+            // Botão de Próxima Página
+            if (currentPage < totalPages) {
+                paginationContainer.innerHTML += `<li class="page-item"><a class="page-link" href="#" data-page="${currentPage + 1}">Próxima</a></li>`;
+            }
+
+            // Adicionar Evento aos Botões de Paginação
+            paginationContainer.querySelectorAll('.page-link').forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const page = parseInt(this.getAttribute('data-page'));
+                    searchFilms(searchField.value, page);
+                });
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

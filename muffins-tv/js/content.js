@@ -1,6 +1,6 @@
 $(document).ready(function () {
     let offset = 0; // Variável para controlar o offset da paginação
-    let limit = 7; // Número de filmes a serem carregados a cada requisição
+    let limit = 13; // Número de filmes a serem carregados a cada requisição
     let page = 1;
     let sortBy = 'title';
     let sortOrder = 'desc';
@@ -25,7 +25,7 @@ $(document).ready(function () {
     function createCarouselItems(movies) {
         return movies.map(movie => {
             const title = truncateText(movie.title, 50); // Limita o título a 50 caracteres
-            const description = truncateText(movie.description, 150); // Limita a descrição a 150 caracteres
+            const description = truncateText(movie.brief, 150); // Limita a descrição a 150 caracteres
 
             return `
                 <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
@@ -56,7 +56,7 @@ $(document).ready(function () {
                                             <li class="gen-sen-rating"><span>${movie.age}</span></li>
                                             <li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
                                         </ul>
-                                        <p>${description}</p>
+                                        ${description}
                                         <div class="gen-meta-info">
                                             <ul class="gen-meta-after-excerpt">
                                                 <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
@@ -89,7 +89,7 @@ $(document).ready(function () {
                     <div class="gen-carousel-movies-style-2 movie-grid style-2">
                         <div class="gen-movie-contain">
                             <div class="gen-movie-img">
-                                <img src="${film.small_thumb_url}" alt="Movie Thumbnail">
+                                <img src="${film.thumb}" alt="Movie Thumbnail">
                                 <div class="gen-movie-add">
                                     <div class="wpulike wpulike-heart">
                                         <div class="wp_ulike_general_class wp_ulike_is_not_liked">
@@ -181,7 +181,7 @@ $(document).ready(function () {
     }
 
     function loadAllTimeHits() {
-        fetchAndLoadMovies('http://localhost:3000/muffins/v1/films/featured?limit=10', films => {
+        fetchAndLoadMovies('http://localhost:3000/muffins/v1/films/recent?limit=10', films => {
             $('#all-time-hits-carousel').html(createAllTimeHitsItems(films));
             initializeCarousel('#all-time-hits-carousel', {
                 items: 4,
