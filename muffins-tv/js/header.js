@@ -79,6 +79,31 @@ document.addEventListener("DOMContentLoaded", function () {
             if (userData) {
                 updateAuthenticatedMenu(JSON.parse(userData));
             }
+
+            // Configurar o botão de busca e o formulário de pesquisa após o carregamento do cabeçalho
+            const searchButton = document.getElementById('gen-search-btn');
+            const searchForm = document.querySelector('#search-form');
+
+            if (searchButton && searchForm) {
+                searchButton.addEventListener('click', function() {
+                    if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+                        searchForm.style.display = 'flex';
+                    } else {
+                        searchForm.style.display = 'none';
+                    }
+                });
+
+                // Configurar o comportamento do formulário de pesquisa
+                const searchFormElement = document.querySelector('#search-form form');
+                if (searchFormElement) {
+                    searchFormElement.addEventListener('submit', function(event) {
+                        event.preventDefault(); // Impede o envio padrão do formulário
+                        const searchValue = searchFormElement.querySelector('.search-field').value;
+                        const searchUrl = `movies-founds.html?s=${encodeURIComponent(searchValue)}`;
+                        window.location.href = searchUrl;
+                    });
+                }
+            }
         });
 
         // Carregar o footer

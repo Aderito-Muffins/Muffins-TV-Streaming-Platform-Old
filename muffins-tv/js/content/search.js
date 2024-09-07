@@ -1,98 +1,187 @@
-@ -1,97 +0,0 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const searchButton = document.getElementById('gen-search-btn');
-    const searchForm = document.querySelector('.gen-search-form');
-    const formElement = document.getElementById('search-form');
-    const searchField = formElement.querySelector('.search-field');
-    const resultContainer = document.querySelector('.row_Movies');
+const baseUrl = 'http://localhost:3000/muffins/v1/films/search'; // Substitua pela URL real da sua API
 
-    // Adicionar um evento de clique ao botão de busca
-    searchButton.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevenir o comportamento padrão
-        // Alternar a visibilidade do formulário de busca
-        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
-            searchForm.style.display = 'block'; // Mostrar o campo de pesquisa
+// Variáveis globais para controle de página, limite e gênero
+let currentPage = 1;
+const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário
+let genre = getGenreFromURL() || 'Action'; // Gênero inicial selecionado
+
+// Função para mostrar e ocultar o loader
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
+
+// Função para capturar o parâmetro "genre" da URL
+function getGenreFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('s');
+}
+
+// Função para carregar filmes com base nos parâmetros de página e gênero
+async function loadFilms(page = 1, selectedGenre = genre) {
+    genre = selectedGenre; // Atualiza o gênero global com o selecionado
+    showLoading();
+    try {
+        // Montando a URL de requisição com os parâmetros de paginação e gênero
+        const url = `${baseUrl}?title=${genre}&limit=${limit}&page=${page}`;
+
+        // Fazendo a requisição para a API
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.code === 0) { // Verifica se o código de sucesso é retornado
+            displayFilms(data.data.films); // Chama a função para exibir filmes
+            updatePagination(Math.ceil(data.data.total / limit), page); // Atualiza a paginação
         } else {
-            searchForm.style.display = 'none'; // Ocultar o campo de pesquisa
+            console.error(data.message);
         }
-    });
+    } catch (error) {
+        console.error('Erro ao carregar filmes:', error);
+    } finally {
+        hideLoading();
+    }
+}
 
-    // Adicionar um evento de clique fora do campo de pesquisa para fechá-lo
-    document.addEventListener('click', function(event) {
-        if (!searchForm.contains(event.target) && !searchButton.contains(event.target)) {
-            searchForm.style.display = 'none'; // Ocultar o campo de pesquisa se o clique for fora dele
-        }
-    });
-
-    // Adicionar evento de submissão ao formulário de pesquisa
-    formElement.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevenir a submissão padrão do formulário
-
-        const title = searchField.value; // Capturar o valor do campo de pesquisa
-
-        // Fazer a chamada para a API de busca de filmes
-        searchFilms(title);
-    });
-
-    // Função para buscar filmes da API
-    async function searchFilms(title) {
-        try {
-            const response = await fetch(`/films/search?title=${encodeURIComponent(title)}`);
-            const data = await response.json();
-
-            if (data.code === 0) { // Se a busca foi bem-sucedida
-                displayFilms(data.data.films); // Exibir os filmes retornados
-            } else {
-                console.error(data.message);
-            }
-        } catch (error) {
-            console.error('Error fetching films:', error);
-        }
+// Função para exibir filmes no HTML
+function displayFilms(films) {
+    const container = document.querySelector('.movie-results');
+    if (!container) {
+        console.error('Elemento .row_Movies não encontrado');
+        return;
     }
 
-    // Função para exibir filmes no HTML
-    function displayFilms(films) {
-        if (!resultContainer) {
-            console.error('Elemento .row_Movies não encontrado');
-            return;
-        }
+    // Limpar conteúdo existente
+    container.innerHTML = '';
 
-        // Limpar o contêiner existente
-        resultContainer.innerHTML = '';
-
-        // Loop para adicionar cada filme ao contêiner
-        films.forEach(film => {
-            const filmHTML = `
-                <div class="col-xl-3 col-lg-4 col-md-6">
-                    <div class="gen-carousel-movies-style-3 movie-grid style-3">
-                        <div class="gen-movie-contain">
-                            <div class="gen-movie-img">
-                                <img src="${film.thumb}" alt="${film.title}">
-                                <div class="gen-movie-add">
-                                    <!-- Ações do filme como curtidas, compartilhamento, etc. -->
-                                </div>
-                                <div class="gen-movie-action">
-                                    <a href="single-movie.html?id=${film.externalId}" class="gen-button">
-                                        <i class="fa fa-play"></i>
-                                    </a>
-                                </div>
+    // Loop para adicionar cada filme ao container
+    films.forEach(film => {
+        const filmHTML = `
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="gen-carousel-movies-style-3 movie-grid style-3">
+                    <div class="gen-movie-contain">
+                        <div class="gen-movie-img">
+                            <img src="${film.thumb}" alt="${film.title}">
+                            <div class="gen-movie-add">
+                                <!-- Ações do filme como curtidas, compartilhamento, etc. -->
                             </div>
-                            <div class="gen-info-contain">
-                                <div class="gen-movie-info">
-                                    <h3><a href="single-movie.html?id=${film.externalId}">${film.title}</a></h3>
-                                </div>
-                                <div class="gen-movie-meta-holder">
-                                    <ul>
-                                        <li>${film.duration}</li>
-                                        <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
-                                    </ul>
-                                </div>
+                            <div class="gen-movie-action">
+                                <a href="single-movie.html?id=${film.externalId}" class="gen-button">
+                                    <i class="fa fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="gen-info-contain">
+                            <div class="gen-movie-info">
+                                <h3><a href="single-movie.html?id=${film.externalId}">${film.title}</a></h3>
+                            </div>
+                            <div class="gen-movie-meta-holder">
+                                <ul>
+                                    <li>${film.duration}</li>
+                                    <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            `;
-            resultContainer.insertAdjacentHTML('beforeend', filmHTML);
-        });
-    }
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', filmHTML);
+    });
+}
+
+// Função para capturar cliques nos links de gênero
+document.querySelectorAll('.genre-link').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const selectedGenre = this.getAttribute('data-genre');
+        currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
+        loadFilms(currentPage, selectedGenre); // Carrega filmes do gênero selecionado
+    });
 });
+
+// Função para atualizar a paginação
+function updatePagination(totalPages, currentPage) {
+    const paginationContainer = document.querySelector('.page-numbers');
+    if (!paginationContainer) {
+        console.error('Elemento de paginação não encontrado');
+        return;
+    }
+
+    // Limpar a paginação existente
+    paginationContainer.innerHTML = '';
+
+    // Adicionar botão para "Primeira Página"
+    if (currentPage > 1) {
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">First</a></li>`;
+    }
+
+    // Adicionar botão de página anterior
+    if (currentPage > 1) {
+        paginationContainer.innerHTML += `<li><a class="prev page-numbers" id='prevPage' href="#">Prev</a></li>`;
+    }
+
+    // Mostrar no máximo 5 páginas ao redor da página atual
+    const maxPagesToShow = 5;
+    const half = Math.floor(maxPagesToShow / 2);
+    let startPage = Math.max(currentPage - half, 1);
+    let endPage = Math.min(startPage + maxPagesToShow - 1, totalPages);
+
+    // Ajustar o startPage quando há poucas páginas no final
+    if (endPage - startPage < maxPagesToShow - 1) {
+        startPage = Math.max(endPage - maxPagesToShow + 1, 1);
+    }
+
+    // Adicionar botões de página
+    for (let i = startPage; i <= endPage; i++) {
+        if (i === currentPage) {
+            paginationContainer.innerHTML += `<li><span class="page-numbers current">${i}</span></li>`;
+        } else {
+            paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="${i}">${i}</a></li>`;
+        }
+    }
+
+    // Adicionar botão de próxima página
+    if (currentPage < totalPages) {
+        paginationContainer.innerHTML += `<li><a class="next page-numbers" id='nextPage' href="#">Next</a></li>`;
+    }
+
+    // Adicionar botão para "Última Página"
+    if (currentPage < totalPages) {
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="${totalPages}">Last</a></li>`;
+    }
+
+    // Adicionar eventos para os botões de paginação
+    document.querySelectorAll('.page-numbers a').forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const page = event.target.getAttribute('data-page');
+
+            if (page) {
+                loadFilms(parseInt(page));
+            } else if (event.target.id === 'prevPage') {
+                prevPage();
+            } else if (event.target.id === 'nextPage') {
+                nextPage();
+            }
+        });
+    });
+}
+
+// Funções para Paginação
+function nextPage() {
+    currentPage++;
+    loadFilms(currentPage);
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        loadFilms(currentPage);
+    }
+}
+
+// Carregar os filmes na primeira vez que a página é aberta com o gênero capturado da URL
+loadFilms(currentPage);
