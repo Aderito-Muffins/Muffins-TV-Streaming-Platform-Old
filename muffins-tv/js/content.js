@@ -25,7 +25,7 @@ $(document).ready(function () {
     function createCarouselItems(movies) {
         return movies.map(movie => {
             const title = truncateText(movie.title, 50); // Limita o título a 50 caracteres
-            const description = truncateText(movie.description, 150); // Limita a descrição a 150 caracteres
+            const description = truncateText(movie.brief, 150); // Limita a descrição a 150 caracteres
 
             return `
                 <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
@@ -36,7 +36,7 @@ $(document).ready(function () {
                                     <div class="gen-front-image">
                                         <img src="${movie.cover}" alt="imagem-banner-carrossel">
                                         ${movie.has_trailer ? `
-                                        <a href="${movie.share}" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                        <a href="/single-movie.html?id=${movie.externalId}" class="playBut popup-youtube popup-vimeo popup-gmaps">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7">
                                                 <polygon class="triangle" fill="none" stroke-width="7" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
                                                 <circle class="circle" fill="none" stroke-width="7" cx="106.8" cy="106.8" r="103.3"></circle>
@@ -67,7 +67,7 @@ $(document).ready(function () {
                                     </div>
                                     <div class="gen-movie-action">
                                         <div class="gen-btn-container">
-                                            <a href="${movie.share}" class="gen-button gen-button-dark">
+                                            <a href="/single-movie.html?id=${movie.externalId}" class="gen-button gen-button-dark">
                                                 <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
                                             </a>
                                         </div>

@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="css/style.css" />
     <!--  Responsive -->
     <link rel="stylesheet" href="css/responsive.css" />
+    <!--  Responsive -->
+    <link rel="stylesheet" href="css/player.css" />
 </head>
 
 <body>
@@ -43,12 +45,22 @@
                     <div class="gen-single-movie-wrapper style-1">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="gen-video-holder">
-                                    <!-- Elemento iframe será preenchido dinamicamente -->
-                                    <iframe width="100%" height="550px" src="" id="film-trailer" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
+                                <div class="gen-video-holder" id="gen-video-holder"
+                                    style="background-size: cover; background-position: center;">
+                                    <!-- Player de vídeo para assistir ao filme -->
+                                    <video id="movie-player" class="gen-video-player" width="100%" height="550px"
+                                        controls style="display: none;">
+                                        <!-- A fonte do vídeo será configurada dinamicamente pelo JavaScript -->
+                                        Seu navegador não suporta o elemento de vídeo.
+                                    </video>
+
+                                    <!-- Botão para assistir ao filme -->
+                                    <button id="watch-movie-btn" class="gen-button">Assistir Filme</button>
+                                    <!-- Botão para assistir ao trailer -->
+                                    <button id="watch-trailer-btn" class="gen-button">Trailer</button>
                                 </div>
+
+
                                 <div class="gen-single-movie-info">
                                     <!-- Título do filme -->
                                     <h2 class="gen-title">Título do Filme</h2>
@@ -90,7 +102,7 @@
                                                 <li>
                                                     <!-- Legendas do filme -->
                                                     <span>Qualidade :</span>
-                                                    <span id="film-quantity">NULL</span>
+                                                    <span id="film-quality">NULL</span>
                                                 </li>
                                                 <li>
                                                     <!-- Legendas do filme -->
@@ -100,7 +112,7 @@
                                             </ul>
                                         </div>
                                         <div class="gen-socail-share">
-                                            <h4 class="align-self-center">Social Share :</h4>
+                                            <h4 class="align-self-center">Compartilhe :</h4>
                                             <ul class="social-inner">
                                                 <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
                                                 </li>
@@ -246,122 +258,7 @@
 
     <script src="js/script.js"></script>
 
-    <section class="gen-section-padding-3 gen-single-movie">
-        <div class="container">
-            <div class="row no-gutters">
-                <div class="col-lg-12">
-                    <div class="gen-single-movie-wrapper style-1">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="gen-video-holder">
-                                    <!-- Elemento iframe será preenchido dinamicamente -->
-                                    <iframe width="100%" height="550px" src="" id="film-trailer" frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen></iframe>
-                                </div>
-                                <div class="gen-single-movie-info">
-                                    <!-- Título do filme -->
-                                    <h2 class="gen-title">Título do Filme</h2>
-                                    <div class="gen-single-meta-holder">
-                                        <ul>
-                                            <!-- Classificação do filme -->
-                                            <li class="gen-sen-rating">Classificação</li>
-                                            <li>
-                                                <i class="fas fa-eye"></i>
-                                                <!-- Visualizações do filme -->
-                                                <span>0 Views</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <p>Streamlab</p>
-                                    <div class="gen-after-excerpt">
-                                        <div class="gen-extra-data">
-                                            <ul>
-                                                <li>
-                                                    <!-- Linguagem do filme -->
-                                                    <span>Linguagem :</span>
-                                                    <span id="film-language">Idioma</span>
-                                                </li>
-                                                <li>
-                                                    <!-- Legendas do filme -->
-                                                    <span>Legenda :</span>
-                                                    <span id="film-subtitles">Legenda</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function getGenreFromURL() {
-            const params = new URLSearchParams(window.location.search);
-            return params.get('id');
-        }
-        // Função para buscar o filme da API e adicionar ao HTML
-        async function fetchAndDisplayFilm() {
-            try {
-                // Faz a requisição para a API para obter o filme
-                const response = await fetch(`http://localhost:3000/muffins/v1/films/id/${getGenreFromURL()}`); // Endpoint de exemplo, ajuste conforme necessário
-                const result = await response.json();
-
-                if (result.code !== 0) {
-                    console.error('Erro ao buscar o filme:', result.message);
-                    return;
-                }
-
-                const film = result.data;
-
-                // Atualiza o título do filme
-                document.querySelector('.gen-title').textContent = film.title || 'Título não disponível';
-
-                document.querySelector('.gen-description').textContent = film.brief || 'Título não disponível';
-
-                // Atualiza a classificação etária do filme
-                document.querySelector('.gen-sen-rating').textContent = film.age || 'N/A';
-
-                // Atualiza o número de visualizações do filme
-                document.querySelector('.gen-single-meta-holder .fas.fa-eye + span').textContent = `${film.views || 0} Views`;
-
-                // Atualiza o URL do trailer do filme
-                document.querySelector('#film-trailer').src = `https://www.youtube.com/embed/${film.trailer_id}`;
-
-                // Atualiza a linguagem do filme
-                document.querySelector('#film-language').textContent = film.nation || 'N/A';
-
-                // Atualiza as legendas do filme
-                document.querySelector('#film-subtitles').textContent = film.sub_mode && film.sub_mode.length > 0 ? film.sub_mode.map(sub => sub.title).join(', ') : 'N/A';
-
-                // Atualiza a linguagem do filme
-                document.querySelector('#film-duration').textContent = film.duration || 'N/A';
-
-                // Atualiza as legendas do filme
-                document.querySelector('#film-year').textContent = film.published_year
-
-                document.querySelector('#film-quality').textContent = film.hd_mode || 'N/A';
-
-                document.querySelector('#film-actors').textContent = film.actors && film.actors.length > 0 
-    ? film.actors.map(actor => actor.title).join(', ') 
-    : 'N/A';
-
-
-            } catch (error) {
-                console.error('Erro ao buscar o filme:', error);
-            }
-        }
-
-        // Chamar a função ao carregar a página
-        window.onload = fetchAndDisplayFilm;
-    </script>
-
-
+    <script src="js/content/player.js"></script>
 
 </body>
-
 </html>
