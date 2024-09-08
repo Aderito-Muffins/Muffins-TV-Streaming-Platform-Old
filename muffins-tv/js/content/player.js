@@ -67,7 +67,7 @@ function displayFilmDetails(film) {
     const actorsElement = document.querySelector('#film-actors');
     const genreElement = document.querySelector('#film-genre');
     const btPlay = document.querySelector('.vjs-icon-placeholder')
-    
+
 
     // Atualiza o conteúdo dos elementos, se eles existirem
     if (titleElement) titleElement.textContent = film.title || 'Título não disponível';
@@ -96,6 +96,9 @@ function setupVideoPlayer(film) {
     const watchMovieButton = document.getElementById('watch-movie-btn');
     const watchTrailerButton = document.getElementById('watch-trailer-btn');
     const videoHolder = document.getElementById('gen-video-holder');
+
+    moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
+
 
     if (watchMovieButton) {
         watchMovieButton.addEventListener('click', function () {
@@ -131,9 +134,22 @@ function setupVideoPlayer(film) {
 
     if (watchTrailerButton) {
         watchTrailerButton.addEventListener('click', function () {
-            window.open(film.trailerUrl, '_blank'); // Redireciona para o trailer no YouTube
+            // Obtém o título do filme
+            const title = film.title;
+            if (title) {
+                // Cria a URL de pesquisa do YouTube
+                const searchQuery = encodeURIComponent(`${title} trailer`);
+                const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
+                
+                // Abre a URL de pesquisa em uma nova aba
+                window.open(youtubeSearchUrl, '_blank');
+            } else {
+                // Se o título não estiver disponível, exibe uma mensagem de erro ou faz algo alternativo
+                alert('Título do filme não disponível para pesquisa.');
+            }
         });
     }
+    
 }
 
 

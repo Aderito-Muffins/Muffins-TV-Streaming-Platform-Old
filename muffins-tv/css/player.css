@@ -1,11 +1,25 @@
 /* Estilos para o player de vídeo */
-.gen-video-player {
+.gen-video-player .movie-player_html5_api{
     width: 100%;
     height: 100%;
     border: none;
-    background-color: #000; /* Fundo preto para o player de vídeo */
+    background-color: rgb(0, 0, 0)b1b; /* Fundo preto para o player de vídeo */
     display: none; /* Player inicialmente oculto */
     max-height: 550px; /* Limita a altura máxima do player */
+}
+
+.video-logo {
+    position: absolute; /* Posiciona a logo de forma absoluta em relação ao contêiner */
+    top: 10px; /* Ajuste a posição vertical da logo */
+    left: 10px; /* Ajuste a posição horizontal da logo */
+    width: 100px; /* Ajuste o tamanho da logo */
+    height: auto; /* Mantém a proporção da logo */
+    z-index: 10; /* Garante que a logo fique acima do player de vídeo */
+    opacity: 0.8; /* Torna a logo um pouco transparente, se desejado */
+}
+
+.vjs-big-play-button {
+    display: none !important;
 }
 
 /* Estilos para o contêiner do vídeo */
@@ -17,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #000; /* Fallback para o caso de não haver imagem de capa */
+    background-color: #000000; /* Fallback para o caso de não haver imagem de capa */
     overflow: hidden; /* Garante que o conteúdo excessivo seja oculto */
 }
 
@@ -38,7 +52,7 @@
 
 /* Efeito hover para os botões */
 .gen-button:hover {
-    background-color: #b20710; /* Cor ao passar o mouse */
+    background-color: #020a2c/* Cor ao passar o mouse */
 }
 
 /* Posicionamento específico dos botões */
