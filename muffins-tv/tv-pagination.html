@@ -12,7 +12,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <!-- Adicionando o script -->
-    <script src="js/header.js" defer></script>
+    
     <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -21,6 +21,7 @@
     <!--  Responsive -->
     <link rel="stylesheet" href="css/responsive.css" />
     <link rel="stylesheet" href="css/load.css" />
+    <link rel="stylesheet" href="css/tvs.css" />
 </head>
 
 <body>
@@ -65,32 +66,33 @@
     <!-- breadcrumb -->
 
     <!-- Section-1 Start -->
-    <section class="gen-section-padding-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <!-- Contêiner para os filmes -->
-                        <div class="row row_Movies"> <!-- Certifique-se de que a classe está correta -->
-                            <!-- Conteúdo dos filmes será injetado aqui -->
-                        </div>
-                        
-                        <!-- Paginação -->
-                        <div class="col-lg-12 col-md-12">
-                            <div class="gen-pagination">
-                                <nav aria-label="Page navigation">
-                                    <ul class="page-numbers">
-                                        <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        
+<section class="gen-section-padding-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Contêiner para os filmes -->
+                    <div class="row row_Movies" id="movies-container"> <!-- Adicionado ID para manipulação com JavaScript -->
+                        <!-- Conteúdo dos filmes será injetado aqui -->
                     </div>
+
+                    <!-- Paginação -->
+                    <div class="col-lg-12 col-md-12">
+                        <div class="gen-pagination">
+                            <nav aria-label="Page navigation">
+                                <ul class="page-numbers" id="pagination-container">
+                                    <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
     
 
     <!-- Section-1 End -->
@@ -128,7 +130,8 @@
     <script src="js/streamlab-core.js"></script>
 
     <script src="js/script.js"></script>
-    <script src="js/content/films.js"></script>
+    <script src="js/content/tvs.js"></script>
+    <script src="js/header.js" defer></script>
 
 
 </body>

@@ -1,9 +1,8 @@
-const baseUrl = 'http://localhost:3000/muffins/v1/films/genre'; // Substitua pela URL real da sua API
+const baseUrl = 'http://localhost:3000/muffins/v1/tv/list'; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
-const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário
-let genre = getGenreFromURL() || 'Action'; // Gênero inicial selecionado
+const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário// Gênero inicial selecionado
 
 // Função para mostrar e ocultar o loader
 function showLoading() {
@@ -15,26 +14,21 @@ function hideLoading() {
 }
 
 // Função para capturar o parâmetro "genre" da URL
-function getGenreFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('genre');
-}
 
 // Função para carregar filmes com base nos parâmetros de página e gênero
-async function loadFilms(page = 1, selectedGenre = genre) {
-    genre = selectedGenre; // Atualiza o gênero global com o selecionado
+async function loadFilms(page = 1) { // Atualiza o gênero global com o selecionado
     showLoading();
     try {
         // Montando a URL de requisição com os parâmetros de paginação e gênero
-        const url = `${baseUrl}/${genre}?limit=${limit}&page=${page}`;
+        const url = `${baseUrl}?limit=${limit}&page=${page}`;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
-            displayFilms(data.data.films); // Chama a função para exibir filmes
-            updatePagination(Math.ceil(data.data.total / limit), page); // Atualiza a paginação
+            displayFilms(data.data); // Chama a função para exibir filmes
+            updatePagination(Math.ceil(data.totalPages / limit), page); // Atualiza a paginação
         } else {
             console.error(data.message);
         }
@@ -47,7 +41,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
 
 // Função para exibir filmes no HTML
 function displayFilms(films) {
-    const container = document.querySelector('.row_Movies');
+    const container = document.getElementById('movies-container');
     if (!container) {
         console.error('Elemento .row_Movies não encontrado');
         return;
@@ -59,28 +53,28 @@ function displayFilms(films) {
     // Loop para adicionar cada filme ao container
     films.forEach(film => {
         const filmHTML = `
-            <div class="col-xl-3 col-lg-4 col-md-6">
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
                         <div class="gen-movie-img">
-                            <img src="${film.thumb}" alt="${film.title}">
+                            <img src="${film.thumb}" alt="${film.title}" loading="lazy">
                             <div class="gen-movie-add">
                                 <!-- Ações do filme como curtidas, compartilhamento, etc. -->
                             </div>
                             <div class="gen-movie-action">
-                                <a href="single-movie.html?id=${film.externalId}" class="gen-button">
+                                <a href="single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="gen-info-contain">
                             <div class="gen-movie-info">
-                                <h3><a href="single-movie.html?id=${film.externalId}">${film.title}</a></h3>
+                                <h3><a href="single-tv.html?id=${film.id}&title=${film.title}">${film.title}</a></h3>
                             </div>
                             <div class="gen-movie-meta-holder">
                                 <ul>
-                                    <li>${film.duration}</li>
-                                    <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
+                                    <li>${film.duration || 'Duração Indisponível'}</li>
+                                    <li><a href="genre.html?genre=N/A"><span>Gênero Indisponível</span></a></li>
                                 </ul>
                             </div>
                         </div>
