@@ -30,19 +30,19 @@ async function fetchMovieDetails(id) {
 
 async function fetchContentDetails(id) {
     try {
-        const response = await fetch(`${baseApiUrl}/content/fileid/${id}`);
+        const response = await fetch(`${baseApiUrl}films/external/${id}`);
         if (!response.ok) {
-            throw new Error('Erro ao buscar files do filme');
+            throw new Error('Erro ao buscar arquivos do filme');
         }
 
         const result = await response.json();
         if (result.code !== 0) {
-            throw new Error(result.message || 'Erro ao buscar o conteudo');
+            throw new Error(result.message || 'Erro ao buscar o conteúdo');
         }
 
         return result.data;
     } catch (error) {
-        console.error('Erro ao buscar o conteudo:', error);
+        console.error('Erro ao buscar o conteúdo:', error);
         return null;
     }
 }
@@ -66,6 +66,8 @@ function displayFilmDetails(film) {
     const qualityElement = document.querySelector('#film-quality');
     const actorsElement = document.querySelector('#film-actors');
     const genreElement = document.querySelector('#film-genre');
+    const btPlay = document.querySelector('.vjs-icon-placeholder')
+    
 
     // Atualiza o conteúdo dos elementos, se eles existirem
     if (titleElement) titleElement.textContent = film.title || 'Título não disponível';
@@ -87,25 +89,42 @@ function displayFilmDetails(film) {
     }
 }
 
-// Função para configurar o player de vídeo
+// Função para configurar o player de vídeo usando Video.js
+// Função para configurar o player de vídeo usando Video.js
 function setupVideoPlayer(film) {
     const moviePlayer = document.getElementById('movie-player');
-    const videoHolder = document.getElementById('gen-video-holder');
-
     const watchMovieButton = document.getElementById('watch-movie-btn');
     const watchTrailerButton = document.getElementById('watch-trailer-btn');
+    const videoHolder = document.getElementById('gen-video-holder');
 
     if (watchMovieButton) {
         watchMovieButton.addEventListener('click', function () {
-            if (moviePlayer) {
-                const sourceElement = document.createElement('source');
-                sourceElement.src = film.url; // URL do filme obtida da API
-                sourceElement.type = 'video/mp4';
-                moviePlayer.appendChild(sourceElement);
+            if (moviePlayer && videoHolder) {
+                // Inicializa o Video.js player, se ainda não estiver inicializado
+                const player = videojs(moviePlayer);
 
-                videoHolder.style.backgroundImage = 'none'; // Remove a imagem de capa
-                moviePlayer.style.display = 'block'; // Exibe o player de vídeo
-                moviePlayer.play(); // Inicia a reprodução do filme
+                // Verifica a URL e o tipo de mídia
+                const mediaUrl = film.media_url;
+                const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
+                    mediaUrl.includes('.mpd') ? 'application/dash+xml' : 'video/mp4';
+
+               // Verifique se a URL da mídia está correta
+
+                // Atualiza a fonte do player
+                player.src({ src: mediaUrl, type: sourceType });
+
+                // Exibe o player de vídeo
+                moviePlayer.style.display = 'block'; // Torna o player visível
+                videoHolder.style.backgroundImage = 'none'; // Remove o plano de fundo
+
+                // Esconde os botões de assistir ao filme e trailer
+                watchMovieButton.style.display = 'none';
+                watchTrailerButton.style.display = 'none';
+
+                // Força a reprodução
+                player.ready(function () {
+                    player.play();
+                });
             }
         });
     }
@@ -116,6 +135,7 @@ function setupVideoPlayer(film) {
         });
     }
 }
+
 
 // Inicialização ao carregar o DOM
 document.addEventListener("DOMContentLoaded", async function () {
