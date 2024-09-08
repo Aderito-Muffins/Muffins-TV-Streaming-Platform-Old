@@ -2,12 +2,33 @@ document.addEventListener("DOMContentLoaded", async function () {
     let offset = 0;
     let limit = 13;
     let page = 1;
-    let sortBy = 'title';
-    let sortOrder = 'desc';
+
+    function setWithExpiry(key, value, ttl) {
+        const now = new Date();
+        const item = {
+            value: value,
+            expiry: now.getTime() + ttl
+        };
+        localStorage.setItem(key, JSON.stringify(item));
+    }
+
+    function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key);
+        if (!itemStr) return null;
+
+        const item = JSON.parse(itemStr);
+        const now = new Date();
+
+        if (now.getTime() > item.expiry) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return item.value;
+    }
 
     function initializeCarousel(carouselId, options) {
         const carousel = document.querySelector(carouselId);
-        if (carousel) {  // Verifica se o elemento existe
+        if (carousel) {
             if (carousel.classList.contains('owl-loaded')) {
                 $(carousel).trigger('destroy.owl.carousel');
                 carousel.classList.remove('owl-loaded');
@@ -28,61 +49,60 @@ document.addEventListener("DOMContentLoaded", async function () {
     function createCarouselItems(movies) {
         if (!Array.isArray(movies)) {
             console.error('O objeto de filmes não é um array:', movies);
-            return ''; // Retorna string vazia para evitar erro
+            return '';
         }
         return movies.map(movie => {
             const title = truncateText(movie.title, 50);
             const description = truncateText(movie.brief, 150);
             return `
-               <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
-<div class="gen-movie-contain-style-2 h-100">
-<div class="container h-100">
-<div class="row flex-row-reverse align-items-center h-100">
-<div class="col-xl-6">
-<div class="gen-front-image">
-<img src="${movie.cover}" alt="imagem-banner-carrossel">
-${movie.has_trailer ? `
-<a href="/single-movie.html?id=${movie.externalId}" class="playBut popup-youtube popup-vimeo popup-gmaps">
-<svg xmlns="http://www.w3.org/2000/svg" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7">
-<polygon class="triangle" fill="none" stroke-width="7" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
-<circle class="circle" fill="none" stroke-width="7" cx="106.8" cy="106.8" r="103.3"></circle>
-</svg>
-<span>Assistir Trailer</span>
-</a>
-` : ''}
-</div>
-</div>
-<div class="col-xl-6">
-<div class="gen-tag-line"><span>${movie.is_favorite ? 'Mais Visto' : 'Em Alta'}</span></div>
-<div class="gen-movie-info">
-<h3>${title}</h3>
-</div>
-<div class="gen-movie-meta-holder">
-<ul class="gen-meta-after-title">
-<li class="gen-sen-rating"><span>${movie.age}</span></li>
-<li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
-</ul>
-<p>${description}</p>
-<div class="gen-meta-info">
-<ul class="gen-meta-after-excerpt">
-<li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
-<li><strong>Gênero :</strong> ${movie.category.map(c => `<span><a href="#">${c.title}</a></span>`).join(', ')}</li>
-<li><strong>Lancamento :</strong> ${movie.published_year} </li>
-</ul>
-</div>
-</div>
-<div class="gen-movie-action">
-<div class="gen-btn-container">
-<a href="/single-movie.html?id=${movie.externalId}" class="gen-button gen-button-dark">
-<i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
-</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+             <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
+                <div class="gen-movie-contain-style-2 h-100">
+                    <div class="container h-100">
+                        <div class="row flex-row-reverse align-items-center h-100">
+                            <div class="col-xl-6">
+                                <div class="gen-front-image">
+                                    <img src="${movie.cover}" alt="imagem-banner-carrossel">
+                                    ${movie.has_trailer ? `
+                                    <a href="/single-movie.html?id=${movie.externalId}" class="playBut popup-youtube popup-vimeo popup-gmaps">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7">
+                                            <polygon class="triangle" fill="none" stroke-width="7" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
+                                            <circle class="circle" fill="none" stroke-width="7" cx="106.8" cy="106.8" r="103.3"></circle>
+                                        </svg>
+                                        <span>Assistir Trailer</span>
+                                    </a>` : ''}
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="gen-tag-line"><span>${movie.is_favorite ? 'Mais Visto' : 'Em Alta'}</span></div>
+                                <div class="gen-movie-info">
+                                    <h3>${title}</h3>
+                                </div>
+                                <div class="gen-movie-meta-holder">
+                                    <ul class="gen-meta-after-title">
+                                        <li class="gen-sen-rating"><span>${movie.age}</span></li>
+                                        <li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
+                                    </ul>
+                                    <p>${description}</p>
+                                    <div class="gen-meta-info">
+                                        <ul class="gen-meta-after-excerpt">
+                                            <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
+                                            <li><strong>Gênero :</strong> ${movie.category.map(c => `<span><a href="#">${c.title}</a></span>`).join(', ')}</li>
+                                            <li><strong>Lancamento :</strong> ${movie.published_year} </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="gen-movie-action">
+                                    <div class="gen-btn-container">
+                                        <a href="/single-movie.html?id=${movie.externalId}" class="gen-button gen-button-dark">
+                                            <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             `;
         }).join('');
     }
@@ -90,63 +110,63 @@ ${movie.has_trailer ? `
     function createAllTimeHitsItems(films) {
         if (!Array.isArray(films)) {
             console.error('O objeto de filmes não é um array:', films);
-            return ''; // Retorna string vazia para evitar erro
+            return '';
         }
         return films.map(film => `
-           <div class="item">
-<div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${film.type.toLowerCase()}">
-<div class="gen-carousel-movies-style-2 movie-grid style-2">
-<div class="gen-movie-contain">
-<div class="gen-movie-img">
-<img src="${film.thumb}" alt="Movie Thumbnail">
-<div class="gen-movie-add">
-<div class="wpulike wpulike-heart">
-<div class="wp_ulike_general_class wp_ulike_is_not_liked">
-<button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-</div>
-</div>
-<ul class="menu bottomRight">
-<li class="share top">
-<i class="fa fa-share-alt"></i>
-<ul class="submenu">
-<li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-<li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
-<li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-</ul>
-</li>
-</ul>
-<div class="movie-actions--link_add-to-playlist dropdown">
-<a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
-<div class="dropdown-menu mCustomScrollbar">
-<div class="mCustomScrollBox">
-<div class="mCSB_container">
-<a class="login-link" href="register.html">Sign in to add this movie to a playlist.</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="gen-movie-action">
-<a href="/single-movie.html?id=${film.externalId}" class="gen-button">
-<i class="fa fa-play"></i>
-</a>
-</div>
-</div>
-<div class="gen-info-contain">
-<div class="gen-movie-info">
-<h3><a href="#">${film.title} (${film.title_original})</a></h3>
-</div>
-<div class="gen-movie-meta-holder">
-<ul>
-<li>${film.duration}</li>
-<li><a href="#"><span>${film.hd_mode}</span></a></li>
-</ul>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+        <div class="item">
+            <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${film.type.toLowerCase()}">
+                <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                    <div class="gen-movie-contain">
+                        <div class="gen-movie-img">
+                            <img src="${film.thumb}" alt="Movie Thumbnail">
+                            <div class="gen-movie-add">
+                                <div class="wpulike wpulike-heart">
+                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
+                                    </div>
+                                </div>
+                                <ul class="menu bottomRight">
+                                    <li class="share top">
+                                        <i class="fa fa-share-alt"></i>
+                                        <ul class="submenu">
+                                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="movie-actions--link_add-to-playlist dropdown">
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
+                                    <div class="dropdown-menu mCustomScrollbar">
+                                        <div class="mCustomScrollBox">
+                                            <div class="mCSB_container">
+                                                <a class="login-link" href="register.html">Sign in to add this movie to a playlist.</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gen-movie-action">
+                                <a href="/single-movie.html?id=${film.externalId}" class="gen-button">
+                                    <i class="fa fa-play"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="gen-info-contain">
+                            <div class="gen-movie-info">
+                                <h3><a href="#">${film.title} (${film.title_original})</a></h3>
+                            </div>
+                            <div class="gen-movie-meta-holder">
+                                <ul>
+                                    <li>${film.duration}</li>
+                                    <li><a href="#"><span>${film.hd_mode}</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         `).join('');
     }
 
@@ -164,8 +184,7 @@ ${movie.has_trailer ? `
             }
 
             const data = await response.json();
-
-            if (data && data.code === 0 && Array.isArray(data.data)) {
+            if (data && data.code === 0) {
                 return data.data;
             } else {
                 console.error('Formato de dados inesperado ou dados não são um array:', data);
@@ -177,7 +196,20 @@ ${movie.has_trailer ? `
         }
     }
 
-    async function loadMovies(url, callback) {
+    async function loadMoviesWithCache(url, key, callback) {
+        const cachedData = getWithExpiry(key);
+        if (cachedData) {
+            callback(cachedData);
+        } else {
+            const data = await fetchAndProcessData(url);
+            if (data) {
+                setWithExpiry(key, data, 600000);
+                callback(data);
+            }
+        }
+    }
+
+    async function loadMovies(url, callback, storageKey) {
         const data = await fetchAndProcessData(url);
         if (data) callback(data);
     }
@@ -192,33 +224,50 @@ ${movie.has_trailer ? `
         }
     }
 
-    async function loadRecentMovies() {
-        await loadMovies(`http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}`, movies => {
-            updateDOM('#movie-carousel', createCarouselItems(movies), {
-                items: 1,
-                dots: false,
-                nav: true,
-                autoplay: true,
-                loop: true,
-                margin: 0
-            });
+    function updateCarousel(movies) {
+        const allTimeHitsHtml = createAllTimeHitsItems(movies);
+        updateDOM("#all-time-hits-carousel", allTimeHitsHtml, {
+            loop: true,
+            dots: false,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            margin: 30,
+            responsive: {
+                0: { items: 1, nav: true },
+                576: { items: 2, nav: false },
+                768: { items: 3, nav: true, loop: true },
+                992: { items: 4, nav: true, loop: true },
+                1200: { items: 5, nav: true, loop: true }
+            }
         });
+    }
+
+    function updateBannerCarousel(data) {
+        const carouselHtml = createCarouselItems(data);
+        updateDOM("#movie-carousel", carouselHtml, {
+            loop: true,
+            dots: false,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            margin: 30,
+            items: 1,
+            animateIn: 'fadeIn',
+            animateOut: 'fadeOut'
+        });
+    }
+
+    async function loadBannerMovies() {
+        const bannerUrl = `http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}&offset=${offset}`;
+        loadMoviesWithCache(bannerUrl, 'bannerCache', updateBannerCarousel);
     }
 
     async function loadAllTimeHits() {
-        await loadMovies('http://localhost:3000/muffins/v1/films/featured?limit=10&offset=1', films => {
-            updateDOM('#all-time-hits-carousel', createAllTimeHitsItems(films), {
-                items: 4,
-                dots: false,
-                nav: true,
-                autoplay: false,
-                loop: false,
-                margin: 30
-            });
-        });
+        const url = `http://localhost:3000/muffins/v1/films/featured?limit=${limit}&page=${page}&offset=${offset}`;
+        loadMoviesWithCache(url, 'allTimeHitsCache', updateCarousel);
     }
 
-    // Inicialização de Carregamento ao Carregar a Página
-    loadRecentMovies();
+    loadBannerMovies();
     loadAllTimeHits();
 });
