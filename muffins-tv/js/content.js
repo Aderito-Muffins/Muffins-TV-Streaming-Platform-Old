@@ -3,29 +3,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     let limit = 13;
     let page = 1;
 
-    function setWithExpiry(key, value, ttl) {
-        const now = new Date();
-        const item = {
-            value: value,
-            expiry: now.getTime() + ttl
-        };
-        localStorage.setItem(key, JSON.stringify(item));
-    }
-
-    function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key);
-        if (!itemStr) return null;
-
-        const item = JSON.parse(itemStr);
-        const now = new Date();
-
-        if (now.getTime() > item.expiry) {
-            localStorage.removeItem(key);
-            return null;
-        }
-        return item.value;
-    }
-
     function initializeCarousel(carouselId, options) {
         const carousel = document.querySelector(carouselId);
         if (carousel) {
@@ -179,7 +156,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
         return films.map(film => `
         <div class="item">
-            <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${film.type.toLowerCase()}">
+            <div class="movie type-movie status-publish has-post-thumbnail hentry ">
                 <div class="gen-carousel-movies-style-2 movie-grid style-2">
                     <div class="gen-movie-contain">
                         <div class="gen-movie-img">
@@ -212,7 +189,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 </div>
                             </div>
                             <div class="gen-movie-action">
-                                <a href="/single-tv.html?id=${film.id}" class="gen-button">
+                                <a href="/single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
@@ -259,39 +236,9 @@ document.addEventListener("DOMContentLoaded", async function () {
             return [];
         }
     }
-
-    async function loadMoviesWithCache(url, key, callback) {
-        let cachedData = getWithExpiry(key);
-        
-        // Verificação se os dados em cache contêm imagens válidas
-        const hasValidImages = cachedData && Array.isArray(cachedData) && 
-                               cachedData.every(movie => movie.cover && movie.thumb && 
-                                                        movie.cover.trim() !== '' && movie.thumb.trim() !== '');
-        
-        // Se os dados em cache existirem e forem válidos, executa o callback com esses dados
-        
-        if (cachedData && hasValidImages) {
-            callback(cachedData);
-        } else {
-            // Caso contrário, faz uma nova requisição ao servidor
-            const data = await fetchAndProcessData(url);
-            
-            // Verificação se os dados retornados do servidor contêm imagens válidas
-            const hasValidImagesFromServer = data && Array.isArray(data) && 
-                                             data.every(movie => movie.cover && movie.thumb && 
-                                                                 movie.cover.trim() !== '' && movie.thumb.trim() !== '');
-    
-            if (data && hasValidImagesFromServer) {
-                setWithExpiry(key, data, 600000); // Armazena os dados no cache por 10 minutos se as imagens forem válidas
-                callback(data);
-            } else {
-                console.error('Os dados retornados são inválidos ou não contêm as imagens necessárias.');
-            }
-        }
-    }
     
 
-    async function loadMovies(url, callback, storageKey) {
+    async function loadMovies(url, callback) {
         const data = await fetchAndProcessData(url);
         if (data) callback(data);
     }
@@ -361,17 +308,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function loadBannerMovies() {
         const bannerUrl = `http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMoviesWithCache(bannerUrl, 'bannerCache', updateBannerCarousel);
+        loadMovies(bannerUrl, updateBannerCarousel);
     }
 
     async function loadAllTimeHits() {
         const url = `http://localhost:3000/muffins/v1/films/featured?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMoviesWithCache(url, 'allTimeHitsCache', updateCarousel);
+        loadMovies(url, updateCarousel);
     }
 
     async function loadTv() {
         const url = `http://localhost:3000/muffins/v1/tv/list?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMoviesWithCache(url, 'tvItemsCache', updateTvCarousel);
+        loadMovies(url, updateTvCarousel);
     }
 
     loadBannerMovies();

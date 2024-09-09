@@ -28,7 +28,7 @@ async function loadFilms(page = 1) { // Atualiza o gênero global com o selecion
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
             displayFilms(data.data); // Chama a função para exibir filmes
-            updatePagination(Math.ceil(data.totalPages / limit), page); // Atualiza a paginação
+            updatePagination(data.totalPages, page); // Atualiza a paginação
         } else {
             console.error(data.message);
         }
@@ -90,9 +90,8 @@ function displayFilms(films) {
 document.querySelectorAll('.genre-link').forEach(link => {
     link.addEventListener('click', function (event) {
         event.preventDefault();
-        const selectedGenre = this.getAttribute('data-genre');
         currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
-        loadFilms(currentPage, selectedGenre); // Carrega filmes do gênero selecionado
+        loadFilms(currentPage); // Carrega filmes do gênero selecionado
     });
 });
 

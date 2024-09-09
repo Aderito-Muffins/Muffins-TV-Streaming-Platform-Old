@@ -1,0 +1,129 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: rgb(1, 1, 14);
+    color: #ff9800;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #ff9800;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+/* Loader */
+#gen-loading, .loader-container {
+    display: none;
+}
+
+/* Breadcrumb */
+.gen-breadcrumb {
+    background-size: cover;
+    background-position: center;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.gen-breadcrumb-title h1 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 0;
+}
+
+.gen-breadcrumb-container .breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.gen-breadcrumb-container .breadcrumb .breadcrumb-item a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.gen-breadcrumb-container .breadcrumb .breadcrumb-item.active {
+    color: #ddd;
+}
+
+/* Estilo para o Contêiner de Perfil do Usuário */
+.gen-user-profile, .gen-user-preferences {
+    background-color: #00000075;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gen-user-profile h2, .gen-user-preferences h2 {
+    font-size: 24px;
+    border-bottom: 2px solid #020516;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* Lista de Informações do Usuário */
+.list-group {
+    color: #ddd;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.list-group-item {
+    background-color: #00000075;
+    border: none;
+    border-bottom: 1px solid #ff99006e;
+    padding: 15px 0;
+    font-size: 16px;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Botão de Voltar ao Topo */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+}
+
+#back-to-top a {
+    background-color: #ff6600;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+#back-to-top a:hover {
+    background-color: #e65c00;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .gen-breadcrumb-title h1 {
+        font-size: 28px;
+    }
+
+    .gen-user-profile, .gen-user-preferences {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .gen-breadcrumb {
+        padding: 40px 0;
+    }
+
+    .gen-breadcrumb-title h1 {
+        font-size: 24px;
+    }
+}
