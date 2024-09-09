@@ -1,6 +1,3 @@
-// Função de validação de email
-
-
 function mostrarLoader() {
     document.querySelector('.loader-container').style.display = 'flex'; // Usa 'flex' para centralizar
 }
@@ -10,6 +7,29 @@ function esconderLoader() {
     document.querySelector('.loader-container').style.display = 'none'; // Oculta o loader
 }
 
+// Função para gerar ou recuperar o deviceId do navegador
+function getDeviceId() {
+    // Verifica se já existe um deviceId armazenado
+    let deviceId = localStorage.getItem('deviceId');
+    
+    if (!deviceId) {
+        // Se não existir, cria um novo identificador de dispositivo
+        deviceId = 'device-' + Math.random().toString(36).substr(2, 16);
+        localStorage.setItem('deviceId', deviceId); // Armazena no localStorage para uso futuro
+    }
+
+    return deviceId;
+}
+
+// Função para exibir erros no HTML
+function displayError(message) {
+    const errorElement = document.getElementById('form-errors');
+    if (errorElement) {
+        errorElement.textContent = message;
+    }
+}
+
+// Função de validação de email
 function isValidEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
@@ -27,29 +47,23 @@ function isValidUsername(username) {
     return re.test(username);
 }
 
-// Função para exibir erros no HTML
-function displayError(message) {
-    const errorElement = document.getElementById('form-errors');
-    if (errorElement) {
-        errorElement.textContent = message;
-    }
-}
-
 // Função para criar o login e armazenar dados usando sua API
 async function createLogin(email, password, username, fullname, phone) {
     try {
+        const deviceId = getDeviceId(); // Obtém o deviceId
         const bodyData = {
-            fullname: fullname,
+            fullName: fullname,
             email: email,
             username: username,
-            perfilUrl: '', // Ajuste conforme necessário
+          //  perfilUrl: '', // Ajuste conforme necessário
             pass: password,
-            phone: phone
+            phone: phone,
+            deviceId: deviceId // Adiciona o deviceId ao corpo da requisição
         };
 
         console.log("Dados enviados:", bodyData); // Log para depuração
 
-        const response = await fetch('http://localhost:3000/muffins/v1/users/register', { // Verifique se a URL está correta
+        const response = await fetch('http://localhost:3000/muffins/v1/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -63,6 +77,9 @@ async function createLogin(email, password, username, fullname, phone) {
             esconderLoader();
             alert("Você foi registrado com sucesso!");
             document.getElementById("pms_register-form").reset(); // Limpar o formulário
+            
+            // Armazena o token de autenticação no localStorage
+            localStorage.setItem('authToken', data.token); 
         } else {
             esconderLoader();
             console.error("Erro da API:", data); // Log de erro
@@ -89,19 +106,36 @@ document.getElementById('pms_register-form').addEventListener('submit', (e) => {
     const fullname = document.getElementById('pms_user_fullname').value;
     const phone = document.getElementById('pms_user_phone').value;
 
+    // Validar campos obrigatórios
+    if (!isValidEmail(email)) {
+        displayError("Por favor, insira um email válido.");
+        esconderLoader();
+        return;
+    }
+
+    if (!isValidPassword(password)) {
+        displayError("A senha deve conter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas, números e caracteres especiais.");
+        esconderLoader();
+        return;
+    }
+
+    if (!isValidUsername(username)) {
+        displayError("O nome de usuário deve ter entre 3 e 20 caracteres, contendo apenas letras, números ou sublinhados.");
+        esconderLoader();
+        return;
+    }
 
     // Validar se as senhas coincidem
     if (password !== document.getElementById('pms_pass2').value) {
         displayError("As senhas não coincidem.");
-        esconderLoader()
+        esconderLoader();
         return;
     }
-
 
     // Validar campos obrigatórios
     if (!email || !password || !username) {
         displayError("Por favor, preencha todos os campos obrigatórios.");
-        esconderLoader()
+        esconderLoader();
         return;
     }
 

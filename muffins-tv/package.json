@@ -4,6 +4,7 @@
     "gulp-replace": "^1.1.4"
   },
   "dependencies": {
-    "firebase": "^10.12.5"
+    "firebase": "^10.12.5",
+    "jwt-decode": "^4.0.0"
   }
 }

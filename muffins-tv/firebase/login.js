@@ -1,3 +1,4 @@
+// Função para exibir erros no HTML
 
 function displayError(elementId, message) {
   const errorElement = document.getElementById(elementId);
@@ -6,58 +7,59 @@ function displayError(elementId, message) {
   }
 }
 
+// Função para mostrar o loader
 function showLoading() {
   document.querySelector('.loader-container').style.display = 'flex';
 }
 
+// Função para esconder o loader
 function hideLoading() {
   document.querySelector('.loader-container').style.display = 'none';
 }
 
-// Função para obter dados do Firestore com base no uid do usuário
-
 // Função para realizar o login
 async function loginUser(email, password) {
   try {
-      const bodyData = {
-          email: email,
-          pass: password
-      };
+    const bodyData = {
+      email: email,
+      pass: password
+    };
 
-      console.log("Dados enviados:", bodyData); // Log para depuração
+    console.log("Dados enviados:", bodyData); // Log para depuração
 
-      const response = await fetch('http://localhost:3000/muffins/v1/users/login', { // Verifique se a URL está correta
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(bodyData)
-      });
+    const response = await fetch('http://localhost:3000/muffins/v1/users/login', { // Verifique se a URL está correta
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(bodyData)
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok) {
-          hideLoading();
-          alert("Login Feito com sucesso");
-          document.getElementById("pms_login").reset();
-         
-          localStorage.setItem('userData', JSON.stringify(data.user));
-
-          window.location.href= "/index.html"
-
-          // Limpar o formulário
-      } else {
-          hideLoading();
-          console.error("Erro da API:", data); // Log de erro
-          displayError(data.msg || "Ocorreu um erro ao fazer o cadastro.");
-      }
-  } catch (error) {
+    if (response.ok) {
       hideLoading();
-      console.error('Erro de requisição:', error); // Log de erro
-      displayError("Ocorreu um erro ao fazer o cadastro.");
+      alert("Login feito com sucesso!");
+
+      // Armazena os dados do usuário e token no localStorage
+      localStorage.setItem('token', data.token);
+
+      // Redireciona para a página principal
+      window.location.href = "/index.html";
+
+      // Limpa o formulário de login
+      document.getElementById("pms_login").reset();
+    } else {
+      hideLoading();
+      console.error("Erro da API:", data); // Log de erro
+      displayError('form-errors', data.msg || "Ocorreu um erro ao fazer o login.");
+    }
+  } catch (error) {
+    hideLoading();
+    console.error('Erro de requisição:', error); // Log de erro
+    displayError('form-errors', "Ocorreu um erro ao fazer o login.");
   }
 }
-
 
 // Adicionar evento ao formulário de login
 document.getElementById('pms_login').addEventListener('submit', (e) => {
@@ -75,3 +77,42 @@ document.getElementById('pms_login').addEventListener('submit', (e) => {
 });
 
 // Verifica o estado de login ao carregar a página
+window.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('token');
+  const currentPath = window.location.pathname;
+
+  // Verifique se o usuário está na página de login
+  const isLoginPage = currentPath.includes("/log-in.html");
+
+  if (token) {
+    try {
+      const decodedToken = jwt_decode(token);
+      const currentTime = Date.now() / 1000; // O timestamp atual em segundos
+
+      if (decodedToken.exp < currentTime) {
+        // Token expirado
+        localStorage.removeItem('token');
+        if (!isLoginPage) {
+          window.location.href = "/log-in.html"; // Redireciona para a página de login
+        }
+      } else {
+        // Token ainda válido
+        if (isLoginPage) {
+          window.location.href = "/index.html"; // Redireciona para a página principal
+        }
+      }
+    } catch (error) {
+      console.error("Erro ao decodificar o token:", error);
+      localStorage.removeItem('token');
+      if (!isLoginPage) {
+        window.location.href = "/log-in.html"; // Redireciona para a página de login se ocorrer um erro
+      }
+    }
+  } else {
+    // Nenhum token encontrado
+    if (!isLoginPage) {
+      window.location.href = "/log-in.html"; // Redireciona para a página de login
+    }
+  }
+});
+

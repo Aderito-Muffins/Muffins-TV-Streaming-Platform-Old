@@ -55,12 +55,35 @@ document.addEventListener("DOMContentLoaded", function () {
     // Função para carregar o header e o footer
     function loadHeaderAndFooter() {
         // Carregar o header
-        loadHtmlResource('html/header.html', 'header', 'gen-header', function (headerElement) {
-            const userData = localStorage.getItem('userData');
-            if (userData) {
-                updateAuthenticatedMenu(JSON.parse(userData));
-            }
+        loadHtmlResource('html/header.html', 'header', 'gen-header', async function (headerElement) {
+            const token = localStorage.getItem('token');
 
+            if (token) {
+                try {
+                    const response = await fetch('http://localhost:3000/muffins/v1/users/me', { // Corrija a URL aqui
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Inclua o token no cabeçalho
+                        }
+                    });
+    
+                    const data = await response.json();
+    
+                    if (data.code === 0) {
+                        // Atualizar o menu com os dados do usuário
+                        updateAuthenticatedMenu(data.user); // Passa os dados do usuário para a função de atualização
+                    } else {
+                        console.error("Error fetching user data:", data.message);
+                        // Tratar o caso onde a resposta contém um erro
+                    }
+                } catch (error) {
+                    console.error("Network error:", error);
+                    // Tratar erros de rede ou outros problemas
+                }
+            } else {
+                console.warn("No token found in localStorage.");
+            }
             // Configurar o botão de busca e o formulário de pesquisa após o carregamento do cabeçalho
             const searchButton = document.getElementById('gen-search-btn');
             const searchForm = document.querySelector('#search-form');
