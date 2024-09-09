@@ -80,14 +80,16 @@ document.addEventListener("DOMContentLoaded", async function () {
                                 <div class="gen-movie-meta-holder">
                                     <ul class="gen-meta-after-title">
                                         <li class="gen-sen-rating"><span>${movie.age}</span></li>
-                                        <li><img src="${movie.small_thumb_url}" alt="imagem-avaliação"><span>${movie.rating || 'N/A'}</span></li>
+                                         <li class="gen-pulished-year"><span> ${movie.published_year}<span></li>
+                                         <li class="gen-rating"><span> ${movie.rating || 'N/A'}</span></li>
+                
                                     </ul>
                                     <p>${description}</p>
                                     <div class="gen-meta-info">
                                         <ul class="gen-meta-after-excerpt">
                                             <li><strong>Elenco :</strong> ${movie.actors.map(a => a.title).join(', ')}</li>
                                             <li><strong>Gênero :</strong> ${movie.category.map(c => `<span><a href="#">${c.title}</a></span>`).join(', ')}</li>
-                                            <li><strong>Lancamento :</strong> ${movie.published_year} </li>
+                                         
                                         </ul>
                                     </div>
                                 </div>
@@ -197,17 +199,35 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function loadMoviesWithCache(url, key, callback) {
-        const cachedData = getWithExpiry(key);
-        if (cachedData) {
+        let cachedData = getWithExpiry(key);
+        
+        // Verificação se os dados em cache contêm imagens válidas
+        const hasValidImages = cachedData && Array.isArray(cachedData) && 
+                               cachedData.every(movie => movie.cover && movie.thumb && 
+                                                        movie.cover.trim() !== '' && movie.thumb.trim() !== '');
+        
+        // Se os dados em cache existirem e forem válidos, executa o callback com esses dados
+        
+        if (cachedData && hasValidImages) {
             callback(cachedData);
         } else {
+            // Caso contrário, faz uma nova requisição ao servidor
             const data = await fetchAndProcessData(url);
-            if (data) {
-                setWithExpiry(key, data, 600000);
+            
+            // Verificação se os dados retornados do servidor contêm imagens válidas
+            const hasValidImagesFromServer = data && Array.isArray(data) && 
+                                             data.every(movie => movie.cover && movie.thumb && 
+                                                                 movie.cover.trim() !== '' && movie.thumb.trim() !== '');
+    
+            if (data && hasValidImagesFromServer) {
+                setWithExpiry(key, data, 600000); // Armazena os dados no cache por 10 minutos se as imagens forem válidas
                 callback(data);
+            } else {
+                console.error('Os dados retornados são inválidos ou não contêm as imagens necessárias.');
             }
         }
     }
+    
 
     async function loadMovies(url, callback, storageKey) {
         const data = await fetchAndProcessData(url);

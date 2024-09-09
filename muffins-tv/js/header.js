@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 element.id = elementId;
                 element.innerHTML = data;
                 document.body.insertAdjacentElement(elementType === 'header' ? 'afterbegin' : 'beforeend', element);
-                if (callback) callback(element);
+                if (callback) callback(element)
             })
             .catch(error => {
                 console.error(`Erro ao carregar ${elementType}:`, error);
@@ -41,32 +41,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Função para atualizar o menu de usuário autenticado
     function updateAuthenticatedMenu(userData) {
-        const menu = document.getElementById('gen-account-menu');
+        const menu = document.getElementById('menu-acc');
         if (menu) {
             menu.innerHTML = `
-                <ul class="gen-account-menu">
-                    <li>
-                        <a onclick="userLogout();"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
-                    </li>
-                    <li>
-                        <a href="user-profile.html"><i class="fa fa-user"></i> Perfil</a>
-                    </li>
-                    <li>
-                        <a href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
-                    </li>
-                    <li>
-                        <a href="library.html"><i class="fa fa-list"></i> Playlist de Filmes</a>
-                    </li>
-                    <li>
-                        <a href="library.html"><i class="fa fa-list"></i> Playlist de Programas de TV</a>
-                    </li>
-                    <li>
-                        <a href="library.html"><i class="fa fa-list"></i> Playlist de Vídeos</a>
-                    </li>
-                    <li>
-                        <a href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a>
-                    </li>
-                </ul>
+<a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
+<a class="dropdown-item" href="user-profile.html"><i class="fa fa-user"></i> Perfil</a>
+<a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
+<a class="dropdown-item" href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a>
             `;
         }
     }

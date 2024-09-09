@@ -1,7 +1,15 @@
 /* Estilos personalizados */
+
+#header-point header {
+    position: relative; /* Garante que o header esteja na posição correta */
+    z-index: 10; /* Assegura que o header tenha uma prioridade de camada maior */
+    width: 100%; /* Faz o header ocupar toda a largura */
+  }
+  
 .gen-header-style-1 {
     background-color: #0a0e16; /* Cor de fundo para o header */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o header */
+    
 }
 
 .gen-button {
@@ -15,16 +23,22 @@
 .dropdown-menu {
     background-color: #0a0e16; /* Cor de fundo mais suave */
     border: 1px solid #0c1320; /* Borda para o menu */
-    border-radius: 0.25rem; /* Bordas arredondadas */
+    border-radius: 1.25rem; /* Bordas arredondadas */
     padding: 0; /* Remove o padding padrão */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o menu */
     max-height: 400px; /* Altura máxima do menu */
     overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+
+    -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
+    -moz-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
+    box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
+    background: #0a0e16;
+    z-index: 99; 
 }
 
 /* Estilo para itens do menu suspenso */
 .dropdown-menu .dropdown-item {
-    padding: 2px 2px; /* Espaçamento interno dos itens */
+    padding: 10px 10px; /* Espaçamento interno dos itens */
     font-size: 14px; /* Tamanho da fonte dos itens */
     color: #333; /* Cor do texto dos itens */
 }
@@ -36,6 +50,6 @@
 
 /* Estilo para o menu suspenso do item de filmes */
 #navbarDropdownFilms + .dropdown-menu {
-    min-width: 50px;
-    min-height: 50px /* Largura mínima do menu */
+    min-width: 100px;
+    min-height: 100px /* Largura mínima do menu */
 }

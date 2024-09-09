@@ -42,7 +42,9 @@ async function loginUser(email, password) {
           document.getElementById("pms_login").reset();
          
           localStorage.setItem('userData', JSON.stringify(data.user));
-          console.log(data.user)
+
+          window.location.href= "/index.html"
+
           // Limpar o formulário
       } else {
           hideLoading();
