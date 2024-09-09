@@ -1,8 +1,71 @@
+/* Estilo padrão para imagens de filmes */
 .gen-movie-img img {
-    width: 100%;
-    height: 200px;
+    width: 85%;
+    max-width: 100%;
+    height: auto; /* Mantém a proporção da imagem */
+    max-height: 480px;
     object-fit: cover;
     border-radius: 8px;
     display: block;
     margin: 0 auto;
+}
+
+/* Container de informações */
+.gen-info-contain {
+    border-radius: 8px;
+}
+
+/* Estilo padrão para imagens de TV */
+.gen-tv-img img {
+    width: 100%;
+    height: auto; /* Mantém a proporção da imagem */
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Media queries para diferentes tamanhos de tela */
+
+/* Para telas pequenas (celulares) */
+@media (max-width: 576px) {
+    .gen-movie-img img {
+        width: 100%;
+        height: auto; /* Adapta a altura automaticamente */
+        max-height: 320px;
+    }
+
+    .gen-tv-img img {
+        height: auto; /* Ajusta a altura conforme a largura */
+        max-height: 150px;
+    }
+}
+
+/* Para telas médias (tablets) */
+@media (min-width: 577px) and (max-width: 768px) {
+    .gen-movie-img img {
+        width: 90%;
+        height: auto; /* Ajusta a altura conforme a largura */
+        max-height: 400px;
+    }
+
+    .gen-tv-img img {
+        height: auto;
+        max-height: 180px;
+    }
+}
+
+/* Para telas grandes (desktops) */
+@media (min-width: 769px) {
+    .gen-movie-img img {
+        width: 85%;
+        height: auto; /* Mantém a proporção */
+        max-height: 480px;
+    }
+
+    .gen-tv-img img {
+        height: auto;
+        max-height: 200px;
+    }
 }

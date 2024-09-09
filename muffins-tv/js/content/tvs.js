@@ -56,7 +56,7 @@ function displayFilms(films) {
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
-                        <div class="gen-movie-img">
+                        <div class="gen-tv-img">
                             <img src="${film.thumb}" alt="${film.title}" loading="lazy">
                             <div class="gen-movie-add">
                                 <!-- Ações do filme como curtidas, compartilhamento, etc. -->
