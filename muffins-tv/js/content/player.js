@@ -29,8 +29,15 @@ async function fetchMovieDetails(id) {
 }
 
 async function fetchContentDetails(id) {
+    const token = localStorage.getItem('token')
     try {
-        const response = await fetch(`${baseApiUrl}films/external/${id}`);
+        const response = await fetch(`${baseApiUrl}films/external/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Inclua o token no cabeçalho
+            }
+    });
         if (!response.ok) {
             throw new Error('Erro ao buscar arquivos do filme');
         }
