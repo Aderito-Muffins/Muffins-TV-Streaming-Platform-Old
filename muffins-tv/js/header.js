@@ -71,8 +71,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     const data = await response.json();
     
                     if (data.code === 0) {
+                        const assinebt = document.getElementById('bt-assine');
                         // Atualizar o menu com os dados do usuário
-                        updateAuthenticatedMenu(data.user); // Passa os dados do usuário para a função de atualização
+                        updateAuthenticatedMenu(data.user);
+                        const special = data.user.specialPackage.isActive; // Verifica se o pacote especial está ativo
+                        const plan = data.user.subscriptionPlan !== 'Nenhum'; // Verifica se o plano de assinatura é diferente de 'Nenhum'
+                    
+                        
+                        // Se o pacote especial está ativo OU se há um plano de assinatura
+                        if (special || plan) {
+                            assinebt.style.display = 'none'; // Oculta o botão
+                        }
+                         // Passa os dados do usuário para a função de atualização
                     } else {
                         console.error("Error fetching user data:", data.message);
                         // Tratar o caso onde a resposta contém um erro
