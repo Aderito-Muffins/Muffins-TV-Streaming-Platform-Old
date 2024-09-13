@@ -164,6 +164,52 @@ h6 {
 /*=============================================== 
 HTML Tags 
 =================================================*/
+
+
+/* Estilo da div de mensagem de erro */
+/* Estilo da div de mensagem de erro */
+/* Estilo da div do container de erro */
+.error-container {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .error-message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .error-text {
+    flex: 1;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .close-button:hover {
+    color: #ddd;
+  }
+  
+
+
+
+
 a,
 .button {
     color: var(--primary-color);

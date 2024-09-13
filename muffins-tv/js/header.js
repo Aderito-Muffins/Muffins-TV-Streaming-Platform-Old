@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const menu = document.getElementById('menu-acc');
         if (menu) {
             menu.innerHTML = `
-<a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
+<a class="dropdown-item" id="user-Profile" href="#"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
 <a class="dropdown-item" href="user-profile.html"><i class="fa fa-user"></i> Perfil</a>
 <a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
 <a class="dropdown-item" href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a>
@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             // Configurar o botão de busca e o formulário de pesquisa após o carregamento do cabeçalho
             const searchButton = document.getElementById('gen-search-btn');
+            const signOut = document.getElementById('user-Profile');
             const searchForm = document.querySelector('#search-form');
 
             if (searchButton && searchForm) {
@@ -107,6 +108,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 });
 
+                if (signOut) {
+                    signOut.addEventListener('click', function() {
+                        // Exibe o diálogo de confirmação
+                        const userConfirmed = confirm("Você tem certeza que deseja sair?");
+                        
+                        if (userConfirmed) {
+                            // Remove o token se o usuário confirmar
+                            localStorage.removeItem('token');
+                            window.location.href = "/index.html";
+                        } else {
+                            // Ação cancelada, nenhuma mudança é feita
+                            console.log("Usuário cancelou o logout.");
+                        }
+                    });
+                }
+                
                 // Configurar o comportamento do formulário de pesquisa
                 const searchFormElement = document.querySelector('#search-form form');
                 if (searchFormElement) {

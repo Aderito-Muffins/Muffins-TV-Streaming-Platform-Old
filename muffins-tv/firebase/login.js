@@ -37,7 +37,7 @@ async function loginUser(email, password) {
 
     const data = await response.json();
 
-    if (response.ok) {
+    if (response.ok && data.code === 0) {
       hideLoading();
       alert("Login feito com sucesso!");
 
@@ -52,15 +52,31 @@ async function loginUser(email, password) {
     } else {
       hideLoading();
       console.error("Erro da API:", data); // Log de erro
-      displayError('form-errors', data.msg || "Ocorreu um erro ao fazer o login.");
+      showError(data.message);
     }
   } catch (error) {
     hideLoading();
     console.error('Erro de requisição:', error); // Log de erro
-    displayError('form-errors', "Ocorreu um erro ao fazer o login.");
+    showError(data.message);
   }
 }
 
+function showError(message) {
+  const errorContainer = document.getElementById('error-container');
+  const errorText = errorContainer.querySelector('.error-text');
+  const closeButton = errorContainer.querySelector('.close-button');
+
+  // Define o texto da mensagem de erro
+  errorText.textContent = message;
+
+  // Exibe o container de erro
+  errorContainer.style.display = 'block';
+
+  // Adiciona evento de clique ao botão de fechar
+  closeButton.addEventListener('click', function () {
+    errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+  });
+}
 // Adicionar evento ao formulário de login
 document.getElementById('pms_login').addEventListener('submit', (e) => {
   e.preventDefault();

@@ -99,6 +99,7 @@ document.querySelectorAll('.genre-link').forEach(link => {
         const selectedGenre = this.getAttribute('data-genre');
         currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
         loadFilms(currentPage, selectedGenre); // Carrega filmes do gênero selecionado
+        window.location.href = "#gen-section-padding-3";
     });
 });
 
@@ -158,16 +159,20 @@ function updatePagination(totalPages, currentPage) {
         button.addEventListener('click', (event) => {
             event.preventDefault();
             const page = event.target.getAttribute('data-page');
-
+    
             if (page) {
                 loadFilms(parseInt(page));
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Rolagem suave para o topo da página
             } else if (event.target.id === 'prevPage') {
                 prevPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (event.target.id === 'nextPage') {
                 nextPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     });
+    
 }
 
 // Funções para Paginação

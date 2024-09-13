@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="css/player.css" />
 
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" /> 
+    <link rel="stylesheet" href="css/load.css" />
 </head>
 
 <body>
@@ -35,7 +36,15 @@
         </div>
     </div>
     <!--=========== Loader =============-->
-
+    <div id="error-container" class="error-container" style="display: none;">
+        <div class="error-message">
+          <span class="error-text"></span>
+          <button class="close-button">x</button>
+        </div>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+    </div>
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
@@ -62,7 +71,7 @@
                                     Seu navegador não suporta o elemento de vídeo.
                                 </video>
                                 
-                                <img src="/images/logo-1.png" id="video-logo" alt="Logo" class="video-logo">
+                                <img src="images/logo-1.png" id="video-logo" alt="Logo" class="video-logo">
         
                                     <!-- Botão para assistir ao filme -->
                                     <button id="watch-movie-btn" class="gen-button">Assistir Filme</button>
@@ -253,8 +262,6 @@
     <!-- counter-js -->
     <script src="js/jquery.waypoints.min.js"></script>
     <script src="js/jquery.counterup.min.js"></script>
-
-    <script src="https://vjs.zencdn.net/7.11.4/video.min.js"></script>
     <!-- popper-js -->
     <script src="js/popper.min.js"></script>
     <script src="js/swiper-bundle.min.js"></script>

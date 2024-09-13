@@ -10,6 +10,7 @@ const filmId = getIdFromURL();
 
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
+    showLoading(); // Exibe o loader antes da requisição
     try {
         const response = await fetch(`${baseApiUrl}films/id/${id}`);
         if (!response.ok) {
@@ -18,40 +19,100 @@ async function fetchMovieDetails(id) {
 
         const result = await response.json();
         if (result.code !== 0) {
+            displayError(result.message);
             throw new Error(result.message || 'Erro ao buscar o filme');
         }
 
         return result.data;
     } catch (error) {
+        displayError(error.message || 'Erro ao buscar o filme');
         console.error('Erro ao buscar o filme:', error);
         return null;
+    } finally {
+        hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
 
 async function fetchContentDetails(id) {
-    const token = localStorage.getItem('token')
+    showLoading(); // Exibe o loader antes da requisição
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        displayError("Token de autenticação não encontrado. Por favor, faça login.");
+        console.warn("Tentativa de requisição sem token. Requer login do usuário.");
+        return null;
+    }
+
     try {
+        console.info(`Iniciando requisição para buscar detalhes do filme: ${id}`);
+
         const response = await fetch(`${baseApiUrl}films/external/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // Inclua o token no cabeçalho
+                'Authorization': `Bearer ${token}`
             }
-    });
-        if (!response.ok) {
-            throw new Error('Erro ao buscar arquivos do filme');
-        }
+        });
 
         const result = await response.json();
-        if (result.code !== 0) {
-            throw new Error(result.message || 'Erro ao buscar o conteúdo');
+
+        if ([401, 403, 500].includes(response.status)) {
+            handleError(result.message, 'Erro ao buscar arquivos do filme', response.status, id, token);
+            return null;
         }
 
+        if (result.code !== 0) {
+            handleError(result.message || 'Erro ao buscar o conteúdo', 'Erro no código de resposta da API', result.code, id, token);
+            return null;
+        }
+
+        if (!result.data.media_url) {
+            handleError(result.message || 'Conteúdo de filme indisponível, por favor, assista a outros', 'Mídia indisponível', result.code, id, token);
+            return null;
+        }
+
+        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
         return result.data;
+
     } catch (error) {
-        console.error('Erro ao buscar o conteúdo:', error);
+        displayError("Erro ao buscar o conteúdo. Tente novamente mais tarde.");
+        console.error({
+            message: 'Erro ao buscar o conteúdo.',
+            error: error.message,
+            stack: error.stack
+        });
         return null;
+    } finally {
+        hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
+}
+
+// Função de ajuda para exibir e logar erros
+function handleError(userMessage, logMessage, statusOrCode, id, token) {
+    displayError(userMessage);
+    console.warn({
+        message: logMessage,
+        statusOrCode: statusOrCode,
+        url: `${baseApiUrl}films/external/${id}`,
+        token: token.slice(0, 10) + '...' // Mostrar parte do token para segurança
+    });
+}
+
+function displayError(message) {
+    const errorContainer = document.getElementById('error-container');
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
+
+    // Define o texto da mensagem de erro
+    errorText.textContent = message;
+
+    // Exibe o container de erro
+    errorContainer.style.display = 'block';
+
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+        errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+    });
 }
 
 // Função para exibir os detalhes do filme no HTML
@@ -61,7 +122,6 @@ function displayFilmDetails(film) {
         return;
     }
 
-    // Verificações para garantir que os elementos existem antes de acessá-los
     const titleElement = document.querySelector('.gen-title');
     const descriptionElement = document.querySelector('.gen-description');
     const ratingElement = document.querySelector('.gen-sen-rating');
@@ -73,10 +133,8 @@ function displayFilmDetails(film) {
     const qualityElement = document.querySelector('#film-quality');
     const actorsElement = document.querySelector('#film-actors');
     const genreElement = document.querySelector('#film-genre');
-    const btPlay = document.querySelector('.vjs-icon-placeholder')
+    const btPlay = document.querySelector('.vjs-icon-placeholder');
 
-
-    // Atualiza o conteúdo dos elementos, se eles existirem
     if (titleElement) titleElement.textContent = film.title || 'Título não disponível';
     if (descriptionElement) descriptionElement.textContent = film.brief || 'Descrição não disponível';
     if (ratingElement) ratingElement.textContent = film.age || 'N/A';
@@ -89,15 +147,20 @@ function displayFilmDetails(film) {
     if (actorsElement) actorsElement.textContent = film.actors?.map(actor => actor.title).join(', ') || 'N/A';
     if (genreElement) genreElement.textContent = film.category?.map(category => category.title).join(', ') || 'N/A';
 
-    // Define a imagem de capa
     const videoHolder = document.getElementById('gen-video-holder');
     if (videoHolder) {
         videoHolder.style.backgroundImage = `url('${film.cover}')`;
     }
 }
 
-// Função para configurar o player de vídeo usando Video.js
-// Função para configurar o player de vídeo usando Video.js
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
+
 function setupVideoPlayer(film) {
     const moviePlayer = document.getElementById('movie-player');
     const watchMovieButton = document.getElementById('watch-movie-btn');
@@ -105,65 +168,62 @@ function setupVideoPlayer(film) {
     const videoHolder = document.getElementById('gen-video-holder');
 
     moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
+    const token = localStorage.getItem('token');
 
+    async function setupPlayer() {
+        const content = await fetchContentDetails(filmId);
+
+        const player = videojs(moviePlayer);
+
+        const mediaUrl = content.media_url;
+        const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
+            mediaUrl.includes('.mpd') ? 'application/dash+xml' : 'video/mp4';
+
+        player.src({ src: mediaUrl, type: sourceType });
+
+        moviePlayer.style.display = 'block';
+        videoHolder.style.backgroundImage = 'none';
+
+        watchMovieButton.style.display = 'none';
+        watchTrailerButton.style.display = 'none';
+
+        player.ready(function () {
+            player.play();
+        });
+    }
 
     if (watchMovieButton) {
         watchMovieButton.addEventListener('click', function () {
             if (moviePlayer && videoHolder) {
-                // Inicializa o Video.js player, se ainda não estiver inicializado
-                const player = videojs(moviePlayer);
-
-                // Verifica a URL e o tipo de mídia
-                const mediaUrl = film.media_url;
-                const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
-                    mediaUrl.includes('.mpd') ? 'application/dash+xml' : 'video/mp4';
-
-               // Verifique se a URL da mídia está correta
-
-                // Atualiza a fonte do player
-                player.src({ src: mediaUrl, type: sourceType });
-
-                // Exibe o player de vídeo
-                moviePlayer.style.display = 'block'; // Torna o player visível
-                videoHolder.style.backgroundImage = 'none'; // Remove o plano de fundo
-
-                // Esconde os botões de assistir ao filme e trailer
-                watchMovieButton.style.display = 'none';
-                watchTrailerButton.style.display = 'none';
-
-                // Força a reprodução
-                player.ready(function () {
-                    player.play();
-                });
+                if (token) {
+                    setupPlayer();
+                } else {
+                    window.location.href = "/log-in.html";
+                }
             }
         });
     }
 
     if (watchTrailerButton) {
         watchTrailerButton.addEventListener('click', function () {
-            // Obtém o título do filme
             const title = film.title;
             if (title) {
-                // Cria a URL de pesquisa do YouTube
                 const searchQuery = encodeURIComponent(`${title} trailer`);
                 const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
-                
-                // Abre a URL de pesquisa em uma nova aba
+
                 window.open(youtubeSearchUrl, '_blank');
             } else {
-                // Se o título não estiver disponível, exibe uma mensagem de erro ou faz algo alternativo
                 alert('Título do filme não disponível para pesquisa.');
             }
         });
     }
-    
 }
-
 
 // Inicialização ao carregar o DOM
 document.addEventListener("DOMContentLoaded", async function () {
+    showLoading();
     const film = await fetchMovieDetails(filmId);
-    const content = await fetchContentDetails(filmId);
     displayFilmDetails(film);
-    setupVideoPlayer(content);
+
+    setupVideoPlayer(film);
 });

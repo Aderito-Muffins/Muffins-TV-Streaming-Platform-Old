@@ -22,12 +22,23 @@ function getDeviceId() {
 }
 
 // Função para exibir erros no HTML
+
 function displayError(message) {
-    const errorElement = document.getElementById('form-errors');
-    if (errorElement) {
-        errorElement.textContent = message;
-    }
-}
+    const errorContainer = document.getElementById('error-container');
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
+  
+    // Define o texto da mensagem de erro
+    errorText.textContent = message;
+  
+    // Exibe o container de erro
+    errorContainer.style.display = 'block';
+  
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+      errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+    });
+  }
 
 // Função de validação de email
 function isValidEmail(email) {
@@ -73,7 +84,7 @@ async function createLogin(email, password, username, fullname, phone) {
 
         const data = await response.json();
 
-        if (response.ok) {
+        if (response.ok && data.code === 0) {
             esconderLoader();
             alert("Você foi registrado com sucesso!");
             document.getElementById("pms_register-form").reset(); // Limpar o formulário
@@ -83,7 +94,7 @@ async function createLogin(email, password, username, fullname, phone) {
         } else {
             esconderLoader();
             console.error("Erro da API:", data); // Log de erro
-            displayError(data.msg || "Ocorreu um erro ao fazer o cadastro.");
+            displayError(data.message || "Ocorreu um erro ao fazer o cadastro.");
         }
     } catch (error) {
         esconderLoader();
