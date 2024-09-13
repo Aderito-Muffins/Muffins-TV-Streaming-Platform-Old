@@ -1,6 +1,6 @@
 
 // URL base da API para obter os detalhes do filme
-const baseApiUrl = 'http://localhost:3000/muffins/v1/';
+const baseApiUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/';
 
 // Função para buscar os detalhes do filme da API
 async function aboutMe() {

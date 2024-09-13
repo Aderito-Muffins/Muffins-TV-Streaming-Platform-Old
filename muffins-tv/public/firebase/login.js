@@ -27,7 +27,7 @@ async function loginUser(email, password) {
 
     console.log("Dados enviados:", bodyData); // Log para depuração
 
-    const response = await fetch('http://localhost:3000/muffins/v1/users/login', { // Verifique se a URL está correta
+    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/login', { // Verifique se a URL está correta
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

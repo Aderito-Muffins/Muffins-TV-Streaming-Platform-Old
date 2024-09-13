@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (token) {
                 try {
-                    const response = await fetch('http://localhost:3000/muffins/v1/users/me', { // Corrija a URL aqui
+                    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/me', { // Corrija a URL aqui
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',

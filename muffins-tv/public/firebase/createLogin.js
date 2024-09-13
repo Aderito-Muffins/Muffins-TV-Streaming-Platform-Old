@@ -74,7 +74,7 @@ async function createLogin(email, password, username, fullname, phone) {
 
         console.log("Dados enviados:", bodyData); // Log para depuração
 
-        const response = await fetch('http://localhost:3000/muffins/v1/users/register', {
+        const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

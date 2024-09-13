@@ -307,17 +307,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     async function loadBannerMovies() {
-        const bannerUrl = `http://localhost:3000/muffins/v1/films/recent?limit=${limit}&page=${page}&offset=${offset}`;
+        const bannerUrl = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/recent?limit=${limit}&page=${page}&offset=${offset}`;
         loadMovies(bannerUrl, updateBannerCarousel);
     }
 
     async function loadAllTimeHits() {
-        const url = `http://localhost:3000/muffins/v1/films/featured?limit=${limit}&page=${page}&offset=${offset}`;
+        const url = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/featured?limit=${limit}&page=${page}&offset=${offset}`;
         loadMovies(url, updateCarousel);
     }
 
     async function loadTv() {
-        const url = `http://localhost:3000/muffins/v1/tv/list?limit=${limit}&page=${page}&offset=${offset}`;
+        const url = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/tv/list?limit=${limit}&page=${page}&offset=${offset}`;
         loadMovies(url, updateTvCarousel);
     }
 
