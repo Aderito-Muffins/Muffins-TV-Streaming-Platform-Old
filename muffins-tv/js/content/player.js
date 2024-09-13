@@ -121,6 +121,7 @@ function displayFilmDetails(film) {
         alert('Não foi possível carregar os detalhes do filme.');
         return;
     }
+    
 
     const titleElement = document.querySelector('.gen-title');
     const descriptionElement = document.querySelector('.gen-description');
