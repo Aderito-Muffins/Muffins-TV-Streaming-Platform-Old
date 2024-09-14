@@ -18,12 +18,26 @@ async function fetchMovieDetails(id) {
         }
 
         const result = await response.json();
+        
+        // Validações de erro na resposta da API
         if (result.code !== 0) {
             displayError(result.message);
             throw new Error(result.message || 'Erro ao buscar o filme');
         }
 
-        return result.data;
+        // Verifica se os dados retornados são válidos e se há itens no array
+        if (!result.data || result.data.length === 0) {
+            const message = 'Nenhum dado de filme disponível';
+            displayError(message);
+            throw new Error(message);
+        }
+
+        // Acessa o primeiro item do array
+        const movieData = result.data[0];
+
+        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
+        return movieData;
+
     } catch (error) {
         displayError(error.message || 'Erro ao buscar o filme');
         console.error('Erro ao buscar o filme:', error);
@@ -32,6 +46,8 @@ async function fetchMovieDetails(id) {
         hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
+
+
 
 async function fetchContentDetails(id) {
     showLoading(); // Exibe o loader antes da requisição
@@ -54,27 +70,44 @@ async function fetchContentDetails(id) {
             }
         });
 
+        if (!response.ok) {
+            // Lida com qualquer erro relacionado ao status HTTP
+            const errorMessage = `Erro HTTP: ${response.status}`;
+            handleError(`Erro ao buscar detalhes do filme. Status: ${response.status}`, errorMessage, response.status, id, token);
+            return null;
+        }
+
         const result = await response.json();
+        console.log(result);
 
-        if ([401, 403, 500].includes(response.status)) {
-            handleError(result.message, 'Erro ao buscar arquivos do filme', response.status, id, token);
-            return null;
-        }
-
+        // Validações de erro na resposta da API
         if (result.code !== 0) {
-            handleError(result.message || 'Erro ao buscar o conteúdo', 'Erro no código de resposta da API', result.code, id, token);
+            const message = result.message || 'Erro ao buscar o conteúdo';
+            handleError(message, 'Erro no código de resposta da API', result.code, id, token);
             return null;
         }
 
-        if (!result.data.media_url) {
-            handleError(result.message || 'Conteúdo de filme indisponível, por favor, assista a outros', 'Mídia indisponível', result.code, id, token);
+        // Verifica se os dados retornados são válidos e se há itens no array
+        if (!result.data || result.data.length === 0) {
+            const message = result.message || 'Conteúdo de filme indisponível, por favor, assista a outros';
+            handleError(message, 'Mídia indisponível', result.code, id, token);
             return null;
         }
 
-        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
-        return result.data;
+        // Acessa o primeiro item da lista
+        const movieData = result.data[0];
+
+        // Verifica se o primeiro item contém um media_url válido
+        if (!movieData.media_url || movieData.media_url === '') {
+            const message = 'Mídia indisponível para o filme selecionado.';
+            handleError(message, 'Mídia indisponível', result.code, id, token);
+            return null;
+        }
+
+        return movieData;
 
     } catch (error) {
+        // Captura e loga erros de rede ou execução
         displayError("Erro ao buscar o conteúdo. Tente novamente mais tarde.");
         console.error({
             message: 'Erro ao buscar o conteúdo.',
@@ -86,6 +119,8 @@ async function fetchContentDetails(id) {
         hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
+
+
 
 // Função de ajuda para exibir e logar erros
 function handleError(userMessage, logMessage, statusOrCode, id, token) {

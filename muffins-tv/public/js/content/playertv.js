@@ -8,6 +8,14 @@ function getTitleFromURL() {
     const params = new URLSearchParams(window.location.search);
     return params.get('title');
 }
+
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/';
 const filmId = getIdFromURL();
@@ -15,6 +23,7 @@ const title = getTitleFromURL();
 
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
+    showLoading(); // Exibe o loader antes da requisição
     try {
         const response = await fetch(`${baseApiUrl}tv/external/${id}`);
         if (!response.ok) {
@@ -22,18 +31,36 @@ async function fetchMovieDetails(id) {
         }
 
         const result = await response.json();
+        
+        // Validações de erro na resposta da API
         if (result.code !== 0) {
+            displayError(result.message || 'Erro ao buscar o filme');
             throw new Error(result.message || 'Erro ao buscar o filme');
         }
 
-        return result.data;
+        // Verifica se os dados retornados são válidos e se há itens no array
+        if (!result.data || result.data.length === 0) {
+            const message = 'Nenhum dado de filme disponível';
+            displayError(message);
+            throw new Error(message);
+        }
+
+        // Acessa o primeiro item do array
+        const movieData = result.data[0];
+
+        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
+        return movieData;
+
     } catch (error) {
+        displayError(error.message || 'Erro ao buscar o filme');
         console.error('Erro ao buscar o filme:', error);
         return null;
+    } finally {
+        hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
-
 async function fetchContentDetails(id) {
+    showLoading(); // Exibe o loader antes da requisição
     try {
         const response = await fetch(`${baseApiUrl}tv/external/${id}`);
         if (!response.ok) {
@@ -41,16 +68,35 @@ async function fetchContentDetails(id) {
         }
 
         const result = await response.json();
+        
+        // Validações de erro na resposta da API
         if (result.code !== 0) {
+            displayError(result.message || 'Erro ao buscar o conteúdo');
             throw new Error(result.message || 'Erro ao buscar o conteúdo');
         }
 
-        return result.data;
+        // Verifica se os dados retornados são válidos e se há itens no array
+        if (!result.data || result.data.length === 0) {
+            const message = 'Nenhum dado de conteúdo disponível';
+            displayError(message);
+            throw new Error(message);
+        }
+
+        // Acessa o primeiro item do array
+        const contentData = result.data[0];
+
+        console.info(`Detalhes do conteúdo obtidos com sucesso: ${id}`);
+        return contentData;
+
     } catch (error) {
+        displayError(error.message || 'Erro ao buscar o conteúdo');
         console.error('Erro ao buscar o conteúdo:', error);
         return null;
+    } finally {
+        hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
+
 
 // Função para exibir os detalhes do filme no HTML
 function displayFilmDetails(film) {
@@ -110,7 +156,6 @@ function setupVideoPlayer(film) {
             if (moviePlayer && videoHolder) {
                 // Inicializa o Video.js player, se ainda não estiver inicializado
                 const player = videojs(moviePlayer);
-
                 // Verifica a URL e o tipo de mídia
                 const mediaUrl = film.media_url;
                 const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :

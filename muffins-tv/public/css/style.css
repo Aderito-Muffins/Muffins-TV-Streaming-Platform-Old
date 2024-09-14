@@ -169,6 +169,44 @@ HTML Tags
 /* Estilo da div de mensagem de erro */
 /* Estilo da div de mensagem de erro */
 /* Estilo da div do container de erro */
+.success-container {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 255, 0, 0.8); /* Cor verde para sucesso */
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+}
+
+.success-message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.success-text {
+    flex: 1;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.close-button:hover {
+    color: #ddd;
+}
+
+
 .error-container {
     position: fixed;
     top: 10%;

@@ -1,3 +1,4 @@
+// Função para exibir o loader
 function mostrarLoader() {
     document.querySelector('.loader-container').style.display = 'flex'; // Usa 'flex' para centralizar
 }
@@ -22,7 +23,6 @@ function getDeviceId() {
 }
 
 // Função para exibir erros no HTML
-
 function displayError(message) {
     const errorContainer = document.getElementById('error-container');
     const errorText = errorContainer.querySelector('.error-text');
@@ -38,7 +38,7 @@ function displayError(message) {
     closeButton.addEventListener('click', function () {
       errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
     });
-  }
+}
 
 // Função de validação de email
 function isValidEmail(email) {
@@ -52,21 +52,32 @@ function isValidPassword(password) {
     return re.test(password);
 }
 
-// Função de validação de nome de usuário
-function isValidUsername(username) {
-    const re = /^[a-zA-Z0-9_]{3,20}$/;
-    return re.test(username);
+// Função para exibir o alerta de sucesso
+function displaySuccess(message) {
+    const successContainer = document.getElementById('success-container');
+    const successText = successContainer.querySelector('.success-text');
+    const closeButton = successContainer.querySelector('.close-button');
+  
+    // Define o texto da mensagem de sucesso
+    successText.textContent = message;
+  
+    // Exibe o container de sucesso
+    successContainer.style.display = 'block';
+  
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+      successContainer.style.display = 'none'; // Esconde o container de sucesso quando clicado
+    });
 }
 
+
 // Função para criar o login e armazenar dados usando sua API
-async function createLogin(email, password, username, fullname, phone) {
+async function createLogin(email, password, fullname, phone) {
     try {
         const deviceId = getDeviceId(); // Obtém o deviceId
         const bodyData = {
             fullName: fullname,
             email: email,
-            username: username,
-          //  perfilUrl: '', // Ajuste conforme necessário
             pass: password,
             phone: phone,
             deviceId: deviceId // Adiciona o deviceId ao corpo da requisição
@@ -86,11 +97,13 @@ async function createLogin(email, password, username, fullname, phone) {
 
         if (response.ok && data.code === 0) {
             esconderLoader();
-            alert("Você foi registrado com sucesso!");
+            localStorage.setItem('token', data.token);
+            displaySuccess(data.message);
             document.getElementById("pms_register-form").reset(); // Limpar o formulário
-            
+            setTimeout(() => {
+                window.location.href = "/index.html";
+            }, 4200);
             // Armazena o token de autenticação no localStorage
-            localStorage.setItem('authToken', data.token); 
         } else {
             esconderLoader();
             console.error("Erro da API:", data); // Log de erro
@@ -108,12 +121,10 @@ document.getElementById('pms_register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     mostrarLoader();
     // Limpar mensagens de erro anteriores
-    displayError('');
 
     // Obter os dados do formulário
     const email = document.getElementById('pms_user_email').value;
     const password = document.getElementById('pms_pass1').value;
-    const username = document.getElementById('pms_user_login').value;
     const fullname = document.getElementById('pms_user_fullname').value;
     const phone = document.getElementById('pms_user_phone').value;
 
@@ -130,12 +141,6 @@ document.getElementById('pms_register-form').addEventListener('submit', (e) => {
         return;
     }
 
-    if (!isValidUsername(username)) {
-        displayError("O nome de usuário deve ter entre 3 e 20 caracteres, contendo apenas letras, números ou sublinhados.");
-        esconderLoader();
-        return;
-    }
-
     // Validar se as senhas coincidem
     if (password !== document.getElementById('pms_pass2').value) {
         displayError("As senhas não coincidem.");
@@ -144,12 +149,12 @@ document.getElementById('pms_register-form').addEventListener('submit', (e) => {
     }
 
     // Validar campos obrigatórios
-    if (!email || !password || !username) {
+    if (!email || !password) {
         displayError("Por favor, preencha todos os campos obrigatórios.");
         esconderLoader();
         return;
     }
 
     // Chamar a função de criar login
-    createLogin(email, password, username, fullname, phone);
+    createLogin(email, password, fullname, phone);
 });

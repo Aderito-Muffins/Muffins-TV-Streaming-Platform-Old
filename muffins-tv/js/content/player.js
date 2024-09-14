@@ -175,6 +175,7 @@ function setupVideoPlayer(film) {
         const content = await fetchContentDetails(filmId);
 
         const player = videojs(moviePlayer);
+        console.log(content)
 
         const mediaUrl = content.media_url;
         const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
