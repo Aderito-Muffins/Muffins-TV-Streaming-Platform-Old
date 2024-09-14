@@ -101,7 +101,7 @@ async function createLogin(email, password, fullname, phone) {
             displaySuccess(data.message);
             document.getElementById("pms_register-form").reset(); // Limpar o formulário
             setTimeout(() => {
-                window.location.href = "/index.html";
+                window.location.href = "/log-in.html";
             }, 4200);
             // Armazena o token de autenticação no localStorage
         } else {
