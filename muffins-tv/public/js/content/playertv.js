@@ -23,13 +23,16 @@ const title = getTitleFromURL();
 
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
-    showLoading(); // Exibe o loader antes da requisição
+    showLoading();
+    const token = localStorage.getItem('token'); // Exibe o loader antes da requisição
     try {
-        const response = await fetch(`${baseApiUrl}tv/external/${id}`);
-        if (!response.ok) {
-            throw new Error('Erro ao buscar dados do filme');
-        }
-
+        const response = await fetch(`${baseApiUrl}tv/external/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+     });
         const result = await response.json();
         
         // Validações de erro na resposta da API
@@ -59,13 +62,33 @@ async function fetchMovieDetails(id) {
         hideLoading(); // Oculta o loader após a requisição, seja sucesso ou erro
     }
 }
+function displayError(message) {
+    const errorContainer = document.getElementById('error-container');
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
+
+    // Define o texto da mensagem de erro
+    errorText.textContent = message;
+
+    // Exibe o container de erro
+    errorContainer.style.display = 'block';
+
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+        errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+    });
+}
 async function fetchContentDetails(id) {
-    showLoading(); // Exibe o loader antes da requisição
+    showLoading();
+    const token = localStorage.getItem('token'); // Exibe o loader antes da requisição
     try {
-        const response = await fetch(`${baseApiUrl}tv/external/${id}`);
-        if (!response.ok) {
-            throw new Error('Erro ao buscar arquivos do filme');
-        }
+        const response = await fetch(`${baseApiUrl}tv/external/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+     });
 
         const result = await response.json();
         
@@ -89,7 +112,7 @@ async function fetchContentDetails(id) {
         return contentData;
 
     } catch (error) {
-        displayError(error.message || 'Erro ao buscar o conteúdo');
+        displayError(error || 'Erro ao buscar o conteúdo');
         console.error('Erro ao buscar o conteúdo:', error);
         return null;
     } finally {
@@ -100,10 +123,6 @@ async function fetchContentDetails(id) {
 
 // Função para exibir os detalhes do filme no HTML
 function displayFilmDetails(film) {
-    if (!film) {
-        alert('Não foi possível carregar os detalhes do filme.');
-        return;
-    }
 
     // Verificações para garantir que os elementos existem antes de acessá-los
     const titleElement = document.querySelector('.gen-title');
@@ -206,7 +225,6 @@ function setupVideoPlayer(film) {
 // Inicialização ao carregar o DOM
 document.addEventListener("DOMContentLoaded", async function () {
     const film = await fetchMovieDetails(filmId);
-    const content = await fetchContentDetails(filmId);
     displayFilmDetails(film);
-    setupVideoPlayer(content);
+    setupVideoPlayer(film);
 });

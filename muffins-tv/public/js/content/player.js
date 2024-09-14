@@ -39,7 +39,7 @@ async function fetchMovieDetails(id) {
         return movieData;
 
     } catch (error) {
-        displayError(error.message || 'Erro ao buscar o filme');
+        displayError(error || 'Erro ao buscar o filme');
         console.error('Erro ao buscar o filme:', error);
         return null;
     } finally {
@@ -70,15 +70,14 @@ async function fetchContentDetails(id) {
             }
         });
 
-        if (!response.ok) {
-            // Lida com qualquer erro relacionado ao status HTTP
-            const errorMessage = `Erro HTTP: ${response.status}`;
-            handleError(`Erro ao buscar detalhes do filme. Status: ${response.status}`, errorMessage, response.status, id, token);
-            return null;
-        }
+        // if (!response.ok) {
+        //     // Lida com qualquer erro relacionado ao status HTTP
+        //     const errorMessage = `Erro HTTP: ${response.status}`;
+        //     handleError(`Erro ao buscar detalhes do filme. Status: ${response.status}`, errorMessage, response.status, id, token);
+        //     return null;
+        // }
 
         const result = await response.json();
-        console.log(result);
 
         // Validações de erro na resposta da API
         if (result.code !== 0) {
