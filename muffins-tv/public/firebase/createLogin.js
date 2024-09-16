@@ -48,9 +48,10 @@ function isValidEmail(email) {
 
 // Função de validação de senha
 function isValidPassword(password) {
-    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const re = /^.{6,}$/;
     return re.test(password);
 }
+
 
 // Função para exibir o alerta de sucesso
 function displaySuccess(message) {

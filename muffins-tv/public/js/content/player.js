@@ -143,11 +143,17 @@ function displayError(message) {
     // Exibe o container de erro
     errorContainer.style.display = 'block';
 
+    // Fecha automaticamente após 4 segundos (4000 ms)
+    setTimeout(function () {
+        errorContainer.style.display = 'none';
+    }, 4000);
+
     // Adiciona evento de clique ao botão de fechar
     closeButton.addEventListener('click', function () {
         errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
     });
 }
+
 
 // Função para exibir os detalhes do filme no HTML
 function displayFilmDetails(film) {

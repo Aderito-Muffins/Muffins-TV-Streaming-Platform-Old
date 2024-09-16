@@ -39,15 +39,13 @@ function displayUserDetails(film) {
     // Atualizar os elementos com base na estrutura HTML fornecida
     const profileNameElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(1)'); // Nome
     const profileEmailElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(2)'); // Email
-    const profileUsernameElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(3)'); // Nome de Usuário
-    const profilePhoneElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(4)'); // Número de Telemóvel
-    const profileRegistrationDateElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(5)'); // Data de Cadastro
-    const profileLastLoginElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(6)'); // Último Login
+    const profilePhoneElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(3)'); // Número de Telemóvel
+    const profileRegistrationDateElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(4)'); // Data de Cadastro
+    const profileLastLoginElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(5)'); // Último Login
 
     // Atualiza o conteúdo dos elementos, se eles existirem
     if (profileNameElement) profileNameElement.innerHTML = `<strong>Nome:</strong> ${film.fullName || 'Nome não disponível'}`;
     if (profileEmailElement) profileEmailElement.innerHTML = `<strong>Email:</strong> ${film.email || 'Email não disponível'}`;
-    if (profileUsernameElement) profileUsernameElement.innerHTML = `<strong>Nome de Usuario:</strong> ${film.username || 'Nome de Usuário não disponível'}`;
     if (profilePhoneElement) profilePhoneElement.innerHTML = `<strong>Numero de Telemovel:</strong> ${film.phone || 'Número de Telemóvel não disponível'}`;
     if (profileRegistrationDateElement) profileRegistrationDateElement.innerHTML = `<strong>Data de Cadastro:</strong> ${film.registrationDate || 'Data de Cadastro não disponível'}`;
     if (profileLastLoginElement) profileLastLoginElement.innerHTML = `<strong>Último Login:</strong> ${film.lastLogin || 'Último Login não disponível'}`;

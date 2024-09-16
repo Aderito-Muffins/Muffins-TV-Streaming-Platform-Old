@@ -72,11 +72,17 @@ function showError(message) {
   // Exibe o container de erro
   errorContainer.style.display = 'block';
 
+  // Fecha automaticamente após 4 segundos (4000 ms)
+  setTimeout(function () {
+      errorContainer.style.display = 'none';
+  }, 4000);
+
   // Adiciona evento de clique ao botão de fechar
   closeButton.addEventListener('click', function () {
-    errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+      errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
   });
 }
+
 // Adicionar evento ao formulário de login
 document.getElementById('pms_login').addEventListener('submit', (e) => {
   e.preventDefault();
