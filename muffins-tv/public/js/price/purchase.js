@@ -7,6 +7,52 @@ function hideLoading() {
     document.querySelector('.loader-container').style.display = 'none';
 }
 
+// Funções para exibir mensagens de erro e sucesso
+function displayError(message) {
+    const errorContainer = document.getElementById('error-container');
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
+  
+    // Define o texto da mensagem de erro
+    errorText.textContent = message;
+  
+    // Exibe o container de erro
+    errorContainer.style.display = 'block';
+  
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+        errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+    });
+  
+    // Esconde o container de erro automaticamente após 3 segundos (3000 milissegundos)
+    setTimeout(function () {
+        errorContainer.style.display = 'none';
+    }, 3000);
+}
+
+function displaySuccess(message) {
+    const successContainer = document.getElementById('success-container');
+    const successText = successContainer.querySelector('.success-text');
+    const closeButton = successContainer.querySelector('.close-button');
+  
+    // Define o texto da mensagem de sucesso
+    successText.textContent = message;
+  
+    // Exibe o container de sucesso
+    successContainer.style.display = 'block';
+  
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+        successContainer.style.display = 'none'; // Esconde o container de sucesso quando clicado
+    });
+  
+    // Esconde o container de sucesso automaticamente após 3 segundos (3000 milissegundos)
+    setTimeout(function () {
+        successContainer.style.display = 'none';
+    }, 3000);
+}
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     showLoading(); // Exibe o loader ao iniciar o carregamento
 
@@ -36,9 +82,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             tableBody.innerHTML = planRowTemplate;
         } else {
             console.error('Erro ao buscar planos:', result.message);
+            displayError('Erro ao buscar planos: ' + result.message);
         }
     } catch (error) {
         console.error('Erro na requisição:', error);
+        displayError( 'Erro na requisição: ' + error.message);
     } finally {
         hideLoading(); // Esconde o loader após a operação, independentemente do resultado
     }
@@ -59,10 +107,16 @@ function closeMpesaModal() {
 }
 
 async function submitMpesa() {
+    const token = localStorage.getItem('token')
     const phoneNumber = document.getElementById('phoneNumber').value;
     const planId = document.getElementById('planId').value; // Obtém o planId do campo oculto
     const planName = document.getElementById('planName').textContent;
     const planPrice = document.getElementById('planPrice').textContent;
+
+    if(!token){
+    displayError( `token inexistente, faca o login novamente!`);
+    return
+    }
 
     if (phoneNumber) {
         const formattedPhoneNumber = `258${phoneNumber.replace(/^\+258/, '')}`; // Adiciona o prefixo e remove qualquer prefixo existente
@@ -80,20 +134,19 @@ async function submitMpesa() {
             });
 
             const result = await response.json();
-
             if (result.code === 0) {
-                alert(`Pagamento iniciado com sucesso para o número ${formattedPhoneNumber}, referente ao plano ${planName} no valor de ${planPrice}.`);
+                displaySuccess(result.message);
                 closeMpesaModal();
             } else {
-                alert(`Erro ao processar o pagamento: ${result.message}`);
+                displayError( `transação malsucedida`);
             }
         } catch (error) {
             console.error('Erro na requisição de pagamento:', error);
-            alert('Ocorreu um erro ao processar o pagamento. Por favor, tente novamente.');
+            displayError('Ocorreu um erro ao processar o pagamento. Por favor, tente novamente.');
         } finally {
             hideLoading(); // Esconde o loader após a operação, independentemente do resultado
         }
     } else {
-        alert('Por favor, insira um número de celular válido.');
+        displayError('Por favor, insira um número de celular válido.');
     }
 }
