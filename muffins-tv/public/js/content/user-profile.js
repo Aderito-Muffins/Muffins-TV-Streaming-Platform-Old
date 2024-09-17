@@ -56,12 +56,17 @@ function displayUserDetails(film) {
     const preferencesLanguageElement = document.querySelector('.gen-user-preferences .list-group-item:nth-child(3)'); // Idioma Preferido
     const preferencesSubscriptionElement = document.querySelector('.gen-user-preferences .list-group-item:nth-child(4)'); // Plano de Assinatura
     const preferencesSpecialPackageElement = document.querySelector('.gen-user-preferences .list-group-item:nth-child(5)'); // Pacote Especial
+    let planName = 'Nenhum'; // Alterado para 'let' para permitir reatribuição
 
+        console.log(film)
+    if (film.subscription && film.subscription.status === 'active') { // Usar '===' para comparação
+        planName = film.subscription.planName; // Atualiza o plano se a assinatura estiver ativa
+    }
     // Atualiza o conteúdo dos elementos, se eles existirem
     if (preferencesGenresElement) preferencesGenresElement.innerHTML = `<strong>Gêneros Favoritos:</strong> ${film.favoriteGenres?.join(', ') || 'Não definido'}`;
     if (preferencesNotificationsElement) preferencesNotificationsElement.innerHTML = `<strong>Notificações:</strong> ${film.notificationsEnabled ? 'Ativadas' : 'Desativadas'}`;
     if (preferencesLanguageElement) preferencesLanguageElement.innerHTML = `<strong>Idioma Preferido:</strong> ${film.preferredLanguage || 'Não definido'}`;
-    if (preferencesSubscriptionElement) preferencesSubscriptionElement.innerHTML = `<strong>Plano de Assinatura:</strong> ${film.subscriptionPlan || 'Nenhum'}`;
+    if (preferencesSubscriptionElement) preferencesSubscriptionElement.innerHTML = `<strong>Plano de Assinatura:</strong> ${planName}`;
     if (preferencesSpecialPackageElement) preferencesSpecialPackageElement.innerHTML = `<strong>Pacote Especial:</strong> ${film.specialPackage?.isActive ? `Activo ate ${film.specialPackage.expirationDate}` : 'Não Ativo'}`;
 
     

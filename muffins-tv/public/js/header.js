@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         // Atualizar o menu com os dados do usuário
                         updateAuthenticatedMenu(data.user);
                         const special = data.user.specialPackage.isActive; // Verifica se o pacote especial está ativo
-                        const plan = data.user.subscriptionPlan !== 'Nenhum'; // Verifica se o plano de assinatura é diferente de 'Nenhum'
+                        const plan = data.user.status !== 'active'; // Verifica se o plano de assinatura é diferente de 'Nenhum'
                     
                         
                         // Se o pacote especial está ativo OU se há um plano de assinatura

@@ -137,6 +137,9 @@ async function submitMpesa() {
             if (result.code === 0) {
                 displaySuccess(result.message);
                 closeMpesaModal();
+                setTimeout(() => {
+                    window.location.href = "/index.html";
+                }, 4200);
             } else {
                 displayError( `transação malsucedida`);
             }
