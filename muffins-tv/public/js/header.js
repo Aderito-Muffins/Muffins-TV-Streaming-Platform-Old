@@ -72,17 +72,24 @@ document.addEventListener("DOMContentLoaded", function () {
     
                     if (data.code === 0) {
                         const assinebt = document.getElementById('bt-assine');
-                        // Atualizar o menu com os dados do usuário
-                        updateAuthenticatedMenu(data.user);
-                        const special = data.user.specialPackage.isActive; // Verifica se o pacote especial está ativo
-                        const plan = data.user.status !== 'active'; // Verifica se o plano de assinatura é diferente de 'Nenhum'
-                    
                         
-                        // Se o pacote especial está ativo OU se há um plano de assinatura
-                        if (special || plan) {
-                            assinebt.style.display = 'none'; // Oculta o botão
+                        // Atualiza o menu com os dados do usuário
+                        updateAuthenticatedMenu(data.user);
+
+                        const { specialPackage, subscription } = data.user;
+                        const isSpecialActive = specialPackage.isActive;  // Verifica se o pacote especial está ativo
+                        const isPlanActive = subscription.status === 'active';  // Verifica se o plano de assinatura está ativo
+                        const textPlan = document.getElementById('text-Plan');
+                        
+                        // Exibe o nome do plano de assinatura se estiver ativo, ou o texto do pacote especial, ou o texto padrão
+                        if (isPlanActive) {
+                            textPlan.innerText = subscription.planName; // Mostra o nome do plano de assinatura
+                        } else if (isSpecialActive) {
+                            textPlan.innerText = 'ESPECIAL'; // Mostra o texto para o pacote especial se o plano não estiver ativo
+                        } else {
+                            textPlan.innerText = 'Assine'; // Caso nenhum esteja ativo, mantém o texto padrão
                         }
-                         // Passa os dados do usuário para a função de atualização
+                        
                     } else {
                         console.error("Error fetching user data:", data.message);
                         // Tratar o caso onde a resposta contém um erro

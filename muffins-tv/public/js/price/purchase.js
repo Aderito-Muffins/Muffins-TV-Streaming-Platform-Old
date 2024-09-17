@@ -126,7 +126,10 @@ async function submitMpesa() {
         try {
             const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/purchase/subscription', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
                 body: JSON.stringify({
                     msisdn: formattedPhoneNumber, // Usa o número formatado com o prefixo
                     planId: planId
