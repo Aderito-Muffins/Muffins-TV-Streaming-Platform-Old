@@ -9,36 +9,38 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
    <meta http-equiv="Content-Security-Policy" content="worker-src 'self' blob:;">
 
-
    <title>MUFFINS TV - Filmes, Series e Animes</title>
-   <script src="js/header.js" type="module" defer></script>
+
    <!-- Favicon -->
    <link rel="shortcut icon" href="images/favicon.ico">
-   <!-- CSS bootstrap-->
+   <!-- CSS bootstrap -->
    <link rel="stylesheet" href="css/bootstrap.min.css" />
-   <!--  Style -->
+   <!-- Custom Style -->
    <link rel="stylesheet" href="css/style.css" />
-   <!--  Responsive -->
+   <!-- Responsive Style -->
    <link rel="stylesheet" href="css/responsive.css" />
+   <link rel="stylesheet" href="css/load.css" />
 </head>
 
 <body>
-
    <!--==================== Loader =======================-->
    <div id="gen-loading">                                   
        <div id="gen-loading-center">                         
-     <img src="images/logo-1.png" alt="loading">        
-      </div>                                                
+           <img src="images/logo-1.png" alt="loading">        
+       </div>                                                 
    </div>
+   <div class="loader-container">
+      <div class="loader"></div>
+  </div>
    <!--====================== Loader ======================-->
+
    <div id="error-container" class="error-container" style="display: none;">
       <div class="error-message">
-        <span class="error-text"></span>
-        <button class="close-button">x</button>
+         <span class="error-text"></span>
+         <button class="close-button">x</button>
       </div>
-    </div>
-    
-   <!--========== Header ==============-->
+   </div>
+
    <!--========== Header ==============-->
 
    <!-- owl-carousel Banner Start -->
@@ -47,10 +49,8 @@
          <div class="row no-gutters">
             <div class="col-12">
                <div class="gen-banner-movies banner-style-2">
-                  <div id="movie-carousel" class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true"
-                     data-desk_num="1" data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1"
-                     data-autoplay="true" data-loop="true" data-margin="0">
-                     <!-- Movies will be injected here by JavaScript -->
+                  <div id="movie-carousel" class="owl-carousel owl-loaded owl-drag" ></div>
+                    
                   </div>
                </div>
             </div>
@@ -67,22 +67,22 @@
                <h4 class="gen-heading-title">Actuais & Mais assistidos</h4>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-               <div class="gen-movie-action">
-                  <div class="gen-btn-container text-right">
-                     <a href="movies-pagination.html?genre=Action" class="gen-button gen-button-flat">
-                        <span class="text">Ver Mais</span>
-                     </a>
-                  </div>
+               <div class="gen-movie-action text-right">
+                  <a href="movies-pagination.html?genre=Action" class="gen-button gen-button-flat">
+                     <span class="text">Ver Mais</span>
+                  </a>
                </div>
             </div>
          </div>
          <div class="row mt-3">
             <div class="col-12">
                <div class="gen-style-2">
-                  <!-- Carrossel de filmes (Owl Carousel) -->
-                  <div class="owl-carousel owl-theme" id="all-time-hits-carousel" data-dots="false" data-nav="true"
-                     data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1"
-                     data-autoplay="false" data-loop="false" data-margin="30">
+                  <div class="owl-carousel owl-theme" id="all-time-hits-carousel" 
+                       data-dots="false" data-nav="true"
+                       data-desk_num="4" data-lap_num="3" 
+                       data-tab_num="2" data-mob_num="1" 
+                       data-mob_sm="1" data-autoplay="false" 
+                       data-loop="false" data-margin="30">
                      <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
                   </div>
                </div>
@@ -91,217 +91,210 @@
       </div>
    </section>
    <!-- owl-carousel Videos Section-1 End -->
-
-   <!-- owl-carousel Videos Section-2 Start -->
    <section class="gen-section-padding-2">
-      <div class="container">
-         <div class="row">
-            <div class="col-xl-6 col-lg-6 col-md-6">
-               <h4 class="gen-heading-title">Melhores Programas de TV</h4>
-            </div>
-            <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-               <div class="gen-movie-action">
-                  <div class="gen-btn-container text-right">
-                     <a href="tv-pagination.html" class="gen-button gen-button-flat">
-                        <span class="text">Ver Mais</span>
-                     </a>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row mt-3">
-            <div class="col-12">
-               <div class="gen-style-2">
-                  <!-- Carrossel de filmes (Owl Carousel) -->
-                  <div class="owl-carousel owl-theme" id="tv-carossel" data-dots="false" data-nav="true"
-                     data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1"
-                     data-autoplay="false" data-loop="false" data-margin="30">
-                     <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
-   <!-- owl-carousel Videos Section-2 End -->
+    <div class="container">
+       <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+             <h4 class="gen-heading-title">Melhores Programas de TV</h4>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+             <div class="gen-movie-action">
+                <div class="gen-btn-container text-right">
+                   <a href="tv-pagination.html" class="gen-button gen-button-flat">
+                      <span class="text">Ver Mais</span>
+                   </a>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-3">
+          <div class="col-12">
+             <div class="gen-style-2">
+                <!-- Carrossel de filmes (Owl Carousel) -->
+                <div class="owl-carousel owl-theme" id="tv-carossel" data-dots="false" data-nav="true"
+                   data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1"
+                   data-autoplay="false" data-loop="false" data-margin="30">
+                   <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+   <!-- owl-carousel Histórico de Filmes Assistidos Start -->
 
-   <!-- Slick Slider start -->
 
-   <!-- Slick Slider End -->
-
-   <!-- owl-carousel Videos Section-3 Start -->
-   <!-- owl-carousel Videos Section-3 End -->
+   <section class="gen-section-padding-2">
+    <div class="container">
+       <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+             <h4 class="gen-heading-title">Historico de filmes assistidos</h4>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+             <div class="gen-movie-action text-right">
+                <a href="library.html" class="gen-button gen-button-flat">
+                   <span class="text">Ver Mais</span>
+                </a>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-3">
+          <div class="col-12">
+             <div class="gen-style-2">
+                <div class="owl-carousel owl-theme" id="movieshistory-carousel" 
+                     data-dots="false" data-nav="true"
+                     data-desk_num="4" data-lap_num="3" 
+                     data-tab_num="2" data-mob_num="1" 
+                     data-mob_sm="1" data-autoplay="false" 
+                     data-loop="false" data-margin="30">
+                   <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
+  <!-- owl-carousel Histórico de Filmes Assistidos End -->
 
    <!-- owl-carousel images Start -->
    <section class="pt-0 gen-section-padding-2 home-singal-silder">
-      <div class="container">
-         <div class="row">
-            <div class="col-12">
-               <div class="gen-banner-movies">
-                  <div class="owl-carousel owl-loaded owl-drag" id="addPost" data-dots="true" data-nav="false" data-desk_num="1"
-                     data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" data-autoplay="true"
-                     data-loop="true" data-margin="30">
-                     <!-- Os anúncios serão inseridos aqui pelo JavaScript -->
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
-
+    <div class="container">
+       <div class="row">
+          <div class="col-12">
+             <div class="gen-banner-movies">
+                <div class="owl-carousel owl-loaded owl-drag" id="addPost" data-dots="true" data-nav="false" data-desk_num="1"
+                   data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" data-autoplay="true"
+                   data-loop="true" data-margin="30">
+                   <!-- Os anúncios serão inseridos aqui pelo JavaScript -->
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </section>
    <!-- owl-carousel images End -->
-
-   <!-- owl-carousel Videos Section-4 Start -->
-   <!-- owl-carousel Videos Section-4 End -->
-
-   <!-- footer start -->
-   <!-- footer start -->
-
-   <!-- footer End -->
 
    <!-- Back-to-Top start -->
    <div id="back-to-top">
       <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
    </div>
    <!-- Back-to-Top end -->
+
+   <!-- JavaScript -->
+   <script src="js/jquery-3.6.0.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/owl.carousel.min.js"></script>
+   <script src="js/script.js"></script>
+   <script src="js/content.js"></script>
+   <script src="js/header.js"></script>
+   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129" crossorigin="anonymous"></script>
    <script>
-      const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/list-ads'; // Substitua pela URL real da sua API
+    const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/list-ads'; // Substitua pela URL real da sua API
 
-      // Função para mostrar e ocultar o loader
-      // function showLoading() {
-      //     document.querySelector('.loader-container').style.display = 'flex';
-      // }
+    // Função para mostrar e ocultar o loader
+    // function showLoading() {
+    //     document.querySelector('.loader-container').style.display = 'flex';
+    // }
 
-      // function hideLoading() {
-      //     document.querySelector('.loader-container').style.display = 'none';
-      // }
+    // function hideLoading() {
+    //     document.querySelector('.loader-container').style.display = 'none';
+    // }
 
-      // Função para carregar anúncios
-      async function loadAds() {
-    try {
-        // Fazendo a requisição para a API
-        const response = await fetch(baseUrl);
-        const data = await response.json();
+    // Função para carregar anúncios
+    async function loadAds() {
+  try {
+      // Fazendo a requisição para a API
+      const response = await fetch(baseUrl);
+      const data = await response.json();
 
-        if (data.code === 0) {
-            displayAds(data.ads); // Chama a função para exibir anúncios
-        } else {
-            console.error(data.message);
-        }
-    } catch (error) {
-        console.error('Erro ao carregar anúncios:', error);
-    }
+      if (data.code === 0) {
+          displayAds(data.ads); // Chama a função para exibir anúncios
+      } else {
+          console.error(data.message);
+      }
+  } catch (error) {
+      console.error('Erro ao carregar anúncios:', error);
+  }
 }
 
 // Função para exibir anúncios no HTML
 function displayAds(ads) {
-    const container = document.querySelector('#addPost');
-    if (!container) {
-        console.error('Elemento .owl-carousel não encontrado');
-        return;
-    }
+  const container = document.querySelector('#addPost');
+  if (!container) {
+      console.error('Elemento .owl-carousel não encontrado');
+      return;
+  }
 
-    // Limpar conteúdo existente
-    container.innerHTML = '';
+  // Limpar conteúdo existente
+  container.innerHTML = '';
 
-    // Variável para controlar o carregamento das imagens
-    let imagesLoaded = 0;
+  // Variável para controlar o carregamento das imagens
+  let imagesLoaded = 0;
 
-    // Função para inicializar o carrossel quando todas as imagens forem carregadas
-    function initializeCarousel() {
-        if (imagesLoaded === ads.length) {
-            // Inicializar o Owl Carousel após adicionar o conteúdo
-            $('#addPost').owlCarousel({
-                items: 1,
-                dots: true,
-                nav: false,
-                autoplay: true,
-                loop: true,
-                margin: 30
-            });
-        }
-    }
+  // Função para inicializar o carrossel quando todas as imagens forem carregadas
+  function initializeCarousel() {
+      if (imagesLoaded === ads.length) {
+          // Inicializar o Owl Carousel após adicionar o conteúdo
+          $('#addPost').owlCarousel({
+              items: 1,
+              dots: true,
+              nav: false,
+              autoplay: true,
+              loop: true,
+              margin: 30
+          });
+      }
+  }
 
-    // Loop para adicionar cada anúncio ao container
-    ads.forEach(ad => {
-        const adHTML = `
-        <div class="item" style="background-image: url(${ad.imageUrl})">
-            <div class="gen-movie-contain h-100">
-                <div class="container h-100">
-                    <div class="row align-items-center h-100">
-                        <div class="col-xl-6">
-                            <div class="gen-movie-info">
-                                <h3>${ad.title}</h3>
-                            </div>
-                            <div class="gen-movie-meta-holder">
-                                <p>${ad.description}</p>
-                            </div>
-                            <div class="gen-movie-action">
-                                <div class="gen-btn-container">
-                                    <a href="${ad.link}" class="gen-button gen-button-dark">
-                                        <span class="text">VER MAIS</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `;
+  // Loop para adicionar cada anúncio ao container
+  ads.forEach(ad => {
+      const adHTML = `
+      <div class="item" style="background-image: url(${ad.imageUrl})">
+          <div class="gen-movie-contain h-100">
+              <div class="container h-100">
+                  <div class="row align-items-center h-100">
+                      <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                              <h3>${ad.title}</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                              <p>${ad.description}</p>
+                          </div>
+                          <div class="gen-movie-action">
+                              <div class="gen-btn-container">
+                                  <a href="${ad.link}" class="gen-button gen-button-dark">
+                                      <span class="text">VER MAIS</span>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      `;
 
-        container.insertAdjacentHTML('beforeend', adHTML);
+      container.insertAdjacentHTML('beforeend', adHTML);
 
-        // Adicionar evento de carregamento para garantir que a imagem foi carregada
-        const img = new Image();
-        img.src = ad.imageUrl;
-        img.onload = function () {
-            imagesLoaded++;
-            initializeCarousel();
-        };
-        img.onerror = function () {
-            console.error('Erro ao carregar a imagem:', ad.imageUrl);
-            imagesLoaded++;
-            initializeCarousel();
-        };
-    });
+      // Adicionar evento de carregamento para garantir que a imagem foi carregada
+      const img = new Image();
+      img.src = ad.imageUrl;
+      img.onload = function () {
+          imagesLoaded++;
+          initializeCarousel();
+      };
+      img.onerror = function () {
+          console.error('Erro ao carregar a imagem:', ad.imageUrl);
+          imagesLoaded++;
+          initializeCarousel();
+      };
+  });
 }
 
 // Carregar os anúncios na primeira vez que a página é aberta
 loadAds();
 
-   </script>
-   <!-- js-min -->
-   <script src="js/jquery-3.6.0.min.js"></script>
-   <script src="js/asyncloader.min.js"></script>
-   <!-- JS bootstrap -->
-   <script src="js/bootstrap.min.js"></script>
-   <!-- owl-carousel -->
-   <script src="js/owl.carousel.min.js"></script>
-   <!-- counter-js -->
-   <script src="js/jquery.waypoints.min.js"></script>
-   <script src="js/jquery.counterup.min.js"></script>
-   <!-- popper-js -->
-   <script src="js/popper.min.js"></script>
-   <script src="js/swiper-bundle.min.js"></script>
-   <!-- Iscotop -->
-   <script src="js/isotope.pkgd.min.js"></script>
-
-   <script src="js/jquery.magnific-popup.min.js"></script>
-
-   <script src="js/slick.min.js"></script>
-
-   <script src="js/streamlab-core.js"></script>
-
-   <script src="js/script.js"></script>
-
-   <script src="js/content.js"></script>
-   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-     crossorigin="anonymous"></script>
-
-
-
+ </script>
 
 </body>
-
 </html>

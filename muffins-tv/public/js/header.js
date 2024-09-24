@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
 <a class="dropdown-item" id="user-Profile" href="#"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
 <a class="dropdown-item" href="user-profile.html"><i class="fa fa-user"></i> Perfil</a>
 <a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
-<a class="dropdown-item" href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a>
             `;
         }
     }
@@ -108,28 +107,53 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (searchButton && searchForm) {
                 searchButton.addEventListener('click', function() {
+                    // Alterna a exibição do formulário de busca
                     if (searchForm.style.display === 'none' || searchForm.style.display === '') {
                         searchForm.style.display = 'flex';
                     } else {
                         searchForm.style.display = 'none';
                     }
                 });
-
+            
                 if (signOut) {
-                    signOut.addEventListener('click', function() {
+                    // Declarar a função como assíncrona para usar await dentro dela
+                    signOut.addEventListener('click', async function() {
                         // Exibe o diálogo de confirmação
                         const userConfirmed = confirm("Você tem certeza que deseja sair?");
                         
                         if (userConfirmed) {
-                            // Remove o token se o usuário confirmar
-                            localStorage.removeItem('token');
-                            window.location.href = "/index.html";
+                            const token = localStorage.getItem('token'); // Obtém o token armazenado no localStorage
+                            
+                            try {
+                                // Faz a requisição para o logout
+                                const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/logout', { 
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Authorization': `Bearer ${token}` // Inclui o token no cabeçalho de autorização
+                                    }
+                                });
+            
+                                const data = await response.json();
+            
+                                // Se a resposta for bem-sucedida, remove o token
+                                if (response.ok) {
+                                    localStorage.removeItem('token');
+                                    window.location.href = "/index.html"; // Redireciona para a página inicial
+                                } else {
+                                    console.error("Erro no logout:", data.message || "Erro desconhecido");
+                                }
+                            } catch (error) {
+                                console.error("Erro de rede:", error); // Tratar erros de rede ou outros problemas
+                            }
                         } else {
                             // Ação cancelada, nenhuma mudança é feita
                             console.log("Usuário cancelou o logout.");
                         }
                     });
                 }
+            
+            
                 
                 // Configurar o comportamento do formulário de pesquisa
                 const searchFormElement = document.querySelector('#search-form form');

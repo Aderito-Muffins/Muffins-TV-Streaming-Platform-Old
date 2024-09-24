@@ -1,11 +1,20 @@
-
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/';
+
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex'; // Exibe o loader
+}
+
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none'; // Oculta o loader
+}
 
 // Função para buscar os detalhes do filme da API
 async function aboutMe() {
     const token = localStorage.getItem('token');
     try {
+        showLoading(); // Exibe o loader antes de iniciar a requisição
+
         const response = await fetch(`${baseApiUrl}users/me`, {
             method: 'GET',
             headers: {
@@ -13,26 +22,30 @@ async function aboutMe() {
                 'Authorization': `Bearer ${token}` // Inclua o token no cabeçalho
             }
         });
+
+        hideLoading(); // Oculta o loader após a resposta
+
         if (!response.ok) {
-            throw new Error('Erro ao buscar dados do filme');
+            throw new Error('Erro ao buscar dados do usuário');
         }
 
         const result = await response.json();
         if (result.code !== 0) {
-            throw new Error(result.message || 'Erro ao buscar o filme');
+            throw new Error(result.message || 'Erro ao buscar o usuário');
         }
 
         return result.user;
     } catch (error) {
-        console.error('Erro ao buscar o filme:', error);
+        hideLoading(); // Certifique-se de ocultar o loader mesmo em caso de erro
+        console.error('Erro ao buscar o usuário:', error);
         return null;
     }
 }
 
-// Função para exibir os detalhes do filme no HTML
-function displayUserDetails(film) {
-    if (!film) {
-        alert('Não foi possível carregar os detalhes do User.');
+// Função para exibir os detalhes do usuário no HTML
+function displayUserDetails(user) {
+    if (!user) {
+        alert('Não foi possível carregar os detalhes do usuário.');
         return;
     }
 
@@ -42,13 +55,14 @@ function displayUserDetails(film) {
     const profilePhoneElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(3)'); // Número de Telemóvel
     const profileRegistrationDateElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(4)'); // Data de Cadastro
     const profileLastLoginElement = document.querySelector('.gen-user-profile .list-group-item:nth-child(5)'); // Último Login
-
-    // Atualiza o conteúdo dos elementos, se eles existirem
-    if (profileNameElement) profileNameElement.innerHTML = `<strong>Nome:</strong> ${film.fullName || 'Nome não disponível'}`;
-    if (profileEmailElement) profileEmailElement.innerHTML = `<strong>Email:</strong> ${film.email || 'Email não disponível'}`;
-    if (profilePhoneElement) profilePhoneElement.innerHTML = `<strong>Numero de Telemovel:</strong> ${film.phone || 'Número de Telemóvel não disponível'}`;
-    if (profileRegistrationDateElement) profileRegistrationDateElement.innerHTML = `<strong>Data de Cadastro:</strong> ${film.registrationDate || 'Data de Cadastro não disponível'}`;
-    if (profileLastLoginElement) profileLastLoginElement.innerHTML = `<strong>Último Login:</strong> ${film.lastLogin || 'Último Login não disponível'}`;
+    
+    const formattedReg = new Date(user.registrationDate).toLocaleDateString('pt-PT');
+    const formattedLastLog = new Date(user.lastLogin).toLocaleDateString('pt-PT');
+    if (profileNameElement) profileNameElement.innerHTML = `<strong>Nome:</strong> ${user.fullName || 'Nome não disponível'}`;
+    if (profileEmailElement) profileEmailElement.innerHTML = `<strong>Email:</strong> ${user.email || 'Email não disponível'}`;
+    if (profilePhoneElement) profilePhoneElement.innerHTML = `<strong>Numero de Telemovel:</strong> ${user.phone || 'Número de Telemóvel não disponível'}`;
+    if (profileRegistrationDateElement) profileRegistrationDateElement.innerHTML = `<strong>Data de Cadastro:</strong> ${formattedReg || 'Data de Cadastro não disponível'}`;
+    if (profileLastLoginElement) profileLastLoginElement.innerHTML = `<strong>Último Login:</strong> ${formattedLastLog || 'Último Login não disponível'}`;
 
     // Atualizar preferências do usuário, se necessário
     const preferencesGenresElement = document.querySelector('.gen-user-preferences .list-group-item:nth-child(1)'); // Gêneros Favoritos
@@ -58,27 +72,47 @@ function displayUserDetails(film) {
     const preferencesSpecialPackageElement = document.querySelector('.gen-user-preferences .list-group-item:nth-child(5)'); // Pacote Especial
     let planName = 'Nenhum'; // Alterado para 'let' para permitir reatribuição
 
-        console.log(film)
-    if (film.subscription && film.subscription.status === 'active') { // Usar '===' para comparação
-        planName = film.subscription.planName; // Atualiza o plano se a assinatura estiver ativa
+    if (user.subscription && user.subscription.status === 'active') {
+        planName = user.subscription.planName; // Atualiza o plano se a assinatura estiver ativa
     }
-    // Atualiza o conteúdo dos elementos, se eles existirem
-    if (preferencesGenresElement) preferencesGenresElement.innerHTML = `<strong>Gêneros Favoritos:</strong> ${film.favoriteGenres?.join(', ') || 'Não definido'}`;
-    if (preferencesNotificationsElement) preferencesNotificationsElement.innerHTML = `<strong>Notificações:</strong> ${film.notificationsEnabled ? 'Ativadas' : 'Desativadas'}`;
-    if (preferencesLanguageElement) preferencesLanguageElement.innerHTML = `<strong>Idioma Preferido:</strong> ${film.preferredLanguage || 'Não definido'}`;
-    if (preferencesSubscriptionElement) preferencesSubscriptionElement.innerHTML = `<strong>Plano de Assinatura:</strong> ${planName}`;
-    if (preferencesSpecialPackageElement) preferencesSpecialPackageElement.innerHTML = `<strong>Pacote Especial:</strong> ${film.specialPackage?.isActive ? `Activo ate ${film.specialPackage.expirationDate}` : 'Não Ativo'}`;
-
     
-}
-
-// Função para configurar o player de vídeo usando Video.js
-// Função para configurar o player de vídeo usando Video.js
-
-
+    if (preferencesGenresElement) {
+        const favoriteGenres = user.preferences.favoriteGenres;
+        if (Array.isArray(favoriteGenres) && favoriteGenres.length > 0) {
+            preferencesGenresElement.innerHTML = `<strong>Gêneros Favoritos:</strong> ${favoriteGenres.join(', ')}`;
+        } else {
+            preferencesGenresElement.innerHTML = `<strong>Gêneros Favoritos:</strong> Não definido`;
+        }
+    }
+    
+    
+    if (preferencesNotificationsElement) {
+        preferencesNotificationsElement.innerHTML = `<strong>Notificações:</strong> ${user.preferences.notificationsEnabled ? 'Ativadas' : 'Desativadas'}`;
+    }
+    
+    if (preferencesLanguageElement) {
+        preferencesLanguageElement.innerHTML = `<strong>Idioma Preferido:</strong> ${user.preferences.preferredLanguage || 'Não definido'}`;
+    }
+    
+    if (preferencesSubscriptionElement) {
+        const expirationDate = user.subscription?.expirationDate; // Acesso seguro à data de expiração
+    
+        if (planName && expirationDate) {
+            const formattedExpirationDate = new Date(expirationDate).toLocaleDateString('pt-PT'); // Formata a data para 'dd/mm/aaaa'
+            preferencesSubscriptionElement.innerHTML = `<strong>Plano de Assinatura:</strong> ${planName} <br><strong>Data de Expiração:</strong> ${formattedExpirationDate}`;
+        } else if (planName === 'Nenhum' || planName === '' || planName === null) {
+            preferencesSubscriptionElement.innerHTML = `<strong>Plano de Assinatura:</strong> ${planName}`;
+        }
+    }
+    
+    if (preferencesSpecialPackageElement) {
+        const formatted = new Date(user.specialPackage.expirationDate).toLocaleDateString('pt-PT');
+        preferencesSpecialPackageElement.innerHTML = `<strong>Pacote Especial:</strong> ${user.specialPackage?.isActive ? `Ativo até ${formatted}` : 'Não Ativo'}`;
+    }
+    
+}    
 // Inicialização ao carregar o DOM
 document.addEventListener("DOMContentLoaded", async function () {
     const user = await aboutMe();
     displayUserDetails(user);
-
 });
