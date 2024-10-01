@@ -1,71 +1,152 @@
+/* Estilo para o botão de "Voltar ao topo" */
+
+
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+
+#back-to-top {
+    position: fixed;
+    bottom: 5px; /* Distância da parte inferior da tela */
+    right: 5px; /* Distância da parte direita da tela */
+    z-index: 1000; /* Mantém o botão acima dos outros elementos */
+    display: none; /* Oculto por padrão, até o usuário rolar a página */
+}
+
+#back-to-top a {
+    text-align: center;
+    display: block;
+    width: 50px; /* Tamanho do botão */
+    height: 50px; /* Tamanho do botão */
+    background-color: #333; /* Cor de fundo do botão */
+    color: white; /* Cor do ícone */
+    border-radius: 50%; /* Botão arredondado */
+    line-height: 50px; /* Centraliza o ícone verticalmente */
+    transition: background-color 0.3s ease; /* Suaviza a mudança de cor */
+}
+
+#back-to-top a:hover {
+    background-color: #555; /* Muda a cor ao passar o mouse */
+}
+
+/* Estilo do ícone */
+#back-to-top i {
+    font-size: 24px; /* Tamanho do ícone */
+}
+
+/* Mostrar o botão ao rolar a página */
+.show {
+    display: block !important;
+}
+
+
+
+
+/* Estilo padrão para o contêiner de filmes */
+.gen-movie-contain {
+    overflow: hidden; /* Evita que o conteúdo transborde */
+    border-radius: 8px; /* Borda arredondada */
+    margin-bottom: 20px; /* Espaçamento entre os filmes */
+    display: flex; /* Flexbox para alinhamento */
+    flex-direction: column; /* Coluna para manter a ordem dos filmes */
+    align-items: center; /* Centraliza os itens dentro do contêiner */
+}
+
 /* Estilo padrão para imagens de filmes */
 .gen-movie-img img {
-    width: 85%;
-    max-width: 100%;
+    width: 100%; /* Largura completa do contêiner */
     height: auto; /* Mantém a proporção da imagem */
-    max-height: 480px;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto;
+    object-fit: cover; /* Cobre a área do contêiner */
+    border-radius: 8px; /* Bordas arredondadas */
+    display: block; /* Para alinhamento adequado */
+    margin: 0 auto; /* Centraliza a imagem */
 }
 
 /* Container de informações */
 .gen-info-contain {
-    border-radius: 8px;
-}
-
-/* Estilo padrão para imagens de TV */
-.gen-tv-img img {
-    width: 100%;
-    height: auto; /* Mantém a proporção da imagem */
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-    margin: 0 auto;
+    padding: 10px; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
 }
 
 /* Media queries para diferentes tamanhos de tela */
 
 /* Para telas pequenas (celulares) */
 @media (max-width: 576px) {
-    .gen-movie-img img {
-        width: 100%;
-        height: auto; /* Adapta a altura automaticamente */
-        max-height: 320px;
+    .gen-movie-contain {
+        width: 80%; /* Largura total em celulares */
+ /* Permite quebrar para nova linha */
     }
 
-    .gen-tv-img img {
-        height: auto; /* Ajusta a altura conforme a largura */
-        max-height: 150px;
+    .gen-movie-contain > div {
+        flex: 1 0 10%; /* Tenta ocupar aproximadamente 25% da largura */
+        margin: 5px; /* Espaçamento entre colunas */
+    }
+
+    .gen-movie-img img {
+        max-height: 160px; /* Altura máxima para celulares */
+    }
+
+    .gen-info-contain {
+        font-size: 14px;
+        max-width: 85%;
+        border-radius: 8px;
+
+    }
+    #back-to-top a {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
     }
 }
 
 /* Para telas médias (tablets) */
 @media (min-width: 577px) and (max-width: 768px) {
-    .gen-movie-img img {
-        width: 90%;
-        height: auto; /* Ajusta a altura conforme a largura */
-        max-height: 400px;
+    .gen-movie-contain {
+        width: 100%; /* 50% da largura para tablets */
     }
 
-    .gen-tv-img img {
-        height: auto;
-        max-height: 180px;
+    .gen-movie-contain > div {
+        flex: 1 0 48%; /* Ocupa cerca de 50% da largura */
+        margin: 10px; /* Espaçamento entre colunas */
+    }
+
+    .gen-movie-img img {
+        max-height: 240px; /* Altura máxima para tablets */
+    }
+
+    .gen-info-contain {
+        font-size: 16px; /* Ajusta o tamanho da fonte */
     }
 }
 
 /* Para telas grandes (desktops) */
 @media (min-width: 769px) {
-    .gen-movie-img img {
-        width: 85%;
-        height: auto; /* Mantém a proporção */
-        max-height: 480px;
+    .gen-movie-contain {
+        width: 100%; /* 25% da largura para desktops */
     }
 
-    .gen-tv-img img {
-        height: auto;
-        max-height: 200px;
+    .gen-movie-contain > div {
+        flex: 1 0 23%; /* Ocupa cerca de 25% da largura */
+        margin: 10px; /* Espaçamento entre colunas */
+    }
+
+    .gen-movie-img img {
+        max-height: 300px; /* Altura máxima para desktops */
+    }
+
+    .gen-info-contain {
+        font-size: 18px; /* Tamanho de fonte maior para desktops */
     }
 }

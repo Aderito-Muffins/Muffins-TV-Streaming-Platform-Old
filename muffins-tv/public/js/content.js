@@ -39,8 +39,8 @@ document.addEventListener("DOMContentLoaded", async function () {
             return '';
         }
         return movies.map(movie => {
-            const title = truncateText(movie.title, 50);
-            const description = truncateText(movie.brief, 150);
+            const title = truncateText(movie.title, 20);
+            const description = truncateText(movie.brief, 100);
             return `
              <div class="item" style="background: url('${movie.cover}'); background-size: cover; background-position: center;">
                 <div class="gen-movie-contain-style-2 h-100">

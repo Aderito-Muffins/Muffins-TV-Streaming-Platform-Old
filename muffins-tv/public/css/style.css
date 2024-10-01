@@ -243,6 +243,19 @@ HTML Tags
   .close-button:hover {
     color: #ddd;
   }
+  /* Estilos para o formulário de pesquisa */
+#search-form {
+    position: fixed;
+    top: 60px; /* Ajuste de acordo com a altura do seu header */
+    right: 20px;
+    z-index: 1000;
+    display: none;
+    /* Outros estilos necessários */
+  }
+  
+  #search-form.active {
+    display: block;
+  }
   
 
 
@@ -2419,10 +2432,56 @@ header#gen-header .gen-bottom-header .navbar .navbar-brand img {
     height: 50px;
 }
 
+@media (max-width: 768px) {
+    header#gen-header .gen-bottom-header .navbar .navbar-brand img {
+        height: 40px;
+    }
+}
+
+@media (max-width: 576px) {
+    header#gen-header .gen-bottom-header .navbar .navbar-brand img {
+        height: 35px;
+    }
+}
+
+
+
+
+
+/* Garantir que o botão não seja ocultado */
+#bt-assine {
+    display: block !important; /* Garante que o botão sempre será visível */
+    margin-left: auto; /* Para alinhar à direita se necessário */
+}
+
+#bt-assine .gen-button {
+    padding: 10px 20px;
+    font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+}
+
+@media (max-width: 768px) {
+    /* Reduz o tamanho do botão em telas menores */
+    #bt-assine .gen-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Ajuste adicional para telas muito pequenas */
+    #bt-assine .gen-button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+
+
+
 /*===== Header Navbar Bar =====*/
 header#gen-header .gen-bottom-header {
     min-height: 90px;
 }
+
 
 header#gen-header .gen-bottom-header .navbar {
     padding: 0;

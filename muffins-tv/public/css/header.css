@@ -1,55 +1,116 @@
 /* Estilos personalizados */
-
 #header-point header {
-    position: relative; /* Garante que o header esteja na posição correta */
-    z-index: 10; /* Assegura que o header tenha uma prioridade de camada maior */
-    width: 100%; /* Faz o header ocupar toda a largura */
-  }
-  
+    position: relative; 
+    z-index: 10; 
+    width: 100%; 
+}
+
+/* Estilo do header */
 .gen-header-style-1 {
-    background-color: #0a0e16; /* Cor de fundo para o header */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para o header */
-    
+    background-color: #0a0e16; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilo do botão */
 .gen-button {
-    background-color: #ff9800; /* Cor de fundo do botão */
-    color: #0a0e16; /* Cor do texto */
-    padding: 5px 5px; /* Espaçamento do botão */
-    border-radius: 5px; /* Bordas arredondadas */
-    text-decoration: none; /* Remover sublinhado */
+    background-color: #ff9800; 
+    color: #0a0e16; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    text-decoration: none; 
+    transition: background-color 0.3s; 
 }
 
-.dropdown-menu {
-    background-color: #0a0e16; /* Cor de fundo mais suave */
-    border: 1px solid #0c1320; /* Borda para o menu */
-    border-radius: 1.25rem; /* Bordas arredondadas */
-    padding: 0; /* Remove o padding padrão */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para o menu */
-    max-height: 400px; /* Altura máxima do menu */
-    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+.gen-button:hover {
+    background-color: #e68a00; 
+}
 
-    -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
-    -moz-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
-    box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
-    background: #0a0e16;
+/* Estilo do menu suspenso */
+.dropdown-menu {
+    background-color: #0a0e16; 
+    border: 1px solid #0c1320; 
+    border-radius: 1.25rem; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    max-height: 400px; 
+    overflow-y: auto; 
     z-index: 99; 
 }
 
 /* Estilo para itens do menu suspenso */
 .dropdown-menu .dropdown-item {
-    padding: 10px 10px; /* Espaçamento interno dos itens */
-    font-size: 14px; /* Tamanho da fonte dos itens */
-    color: #333; /* Cor do texto dos itens */
+    padding: 10px 15px; 
+    font-size: 14px; 
+    color: #fff; 
+    transition: background-color 0.3s; 
 }
 
 .dropdown-menu .dropdown-item:hover {
-    background-color: #4b2d00; /* Cor de fundo ao passar o mouse */
-    color: #007bff; /* Cor do texto ao passar o mouse */
+    background-color: #4b2d00; 
+    color: #ffffff; 
 }
 
-/* Estilo para o menu suspenso do item de filmes */
-#navbarDropdownFilms + .dropdown-menu {
-    min-width: 100px;
-    min-height: 100px /* Largura mínima do menu */
+/* Estilos para listagem de filmes */
+.movie-list {
+    display: flex; /* Flexbox para alinhamento */
+    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha */
+    justify-content: space-between; /* Espaça os itens igualmente */
+    margin: 20px; /* Espaçamento em torno da lista */
+}
+
+.movie-item {
+    background-color: #1b1f24; /* Fundo dos itens */
+    border-radius: 10px; /* Bordas arredondadas */
+    margin: 10px; /* Espaçamento entre os itens */
+    width: calc(33% - 20px); /* Largura dos itens (3 itens por linha) */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra dos itens */
+    transition: transform 0.2s; /* Efeito de transformação */
+}
+
+.movie-item:hover {
+    transform: scale(1.05); /* Aumenta o tamanho ao passar o mouse */
+}
+
+.movie-image {
+    border-top-left-radius: 10px; /* Bordas arredondadas na parte superior */
+    border-top-right-radius: 10px; /* Bordas arredondadas na parte superior */
+    width: 100%; /* Imagem ocupa toda a largura do item */
+    height: auto; /* Altura automática para manter a proporção */
+}
+
+.movie-title {
+    padding: 10px; /* Espaçamento interno */
+    font-size: 18px; /* Tamanho da fonte */
+    color: #fff; /* Cor do texto */
+    text-align: center; /* Centraliza o texto */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .movie-item {
+        width: calc(50% - 20px); /* 2 itens por linha em dispositivos menores */
+    }
+}
+
+@media (max-width: 576px) {
+    .movie-item {
+        width: 100%; /* 1 item por linha em dispositivos muito pequenos */
+    }
+}
+
+/* Estilo do formulário de pesquisa */
+.gen-search-form {
+    display: flex; 
+    margin: 20px; /* Espaçamento em torno do formulário */
+}
+
+.search-field {
+    padding: 10px; /* Aumenta o espaçamento interno */
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    transition: border-color 0.3s; 
+    flex: 1; /* Faz o campo de busca ocupar todo o espaço disponível */
+}
+
+.search-field:focus {
+    border-color: #ff9800; 
 }

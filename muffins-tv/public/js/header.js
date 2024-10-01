@@ -59,104 +59,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (token) {
                 try {
-                    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/me', { // Corrija a URL aqui
+                    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/me', { 
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}` // Inclua o token no cabeçalho
+                            'Authorization': `Bearer ${token}`
                         }
                     });
-    
+
                     const data = await response.json();
-    
+
                     if (data.code === 0) {
                         const assinebt = document.getElementById('bt-assine');
-                        
                         // Atualiza o menu com os dados do usuário
                         updateAuthenticatedMenu(data.user);
 
                         const { specialPackage, subscription } = data.user;
-                        const isSpecialActive = specialPackage.isActive;  // Verifica se o pacote especial está ativo
-                        const isPlanActive = subscription.status === 'active';  // Verifica se o plano de assinatura está ativo
+                        const isSpecialActive = specialPackage.isActive;  
+                        const isPlanActive = subscription.status === 'active';  
                         const textPlan = document.getElementById('text-Plan');
-                        
-                        // Exibe o nome do plano de assinatura se estiver ativo, ou o texto do pacote especial, ou o texto padrão
+
                         if (isPlanActive) {
-                            textPlan.innerText = subscription.planName; // Mostra o nome do plano de assinatura
+                            textPlan.innerText = subscription.planName;
                         } else if (isSpecialActive) {
-                            textPlan.innerText = 'ESPECIAL'; // Mostra o texto para o pacote especial se o plano não estiver ativo
+                            textPlan.innerText = 'ESPECIAL';
                         } else {
-                            textPlan.innerText = 'Assine'; // Caso nenhum esteja ativo, mantém o texto padrão
+                            textPlan.innerText = 'Assine';
                         }
-                        
+
                     } else {
                         console.error("Error fetching user data:", data.message);
-                        // Tratar o caso onde a resposta contém um erro
                     }
                 } catch (error) {
                     console.error("Network error:", error);
-                    // Tratar erros de rede ou outros problemas
                 }
             } else {
                 console.warn("No token found in localStorage.");
             }
+
+            // Mover o formulário de pesquisa para fora do header
+            const searchForm = document.getElementById('search-form');
+            if (searchForm) {
+                document.body.appendChild(searchForm);
+            }
+
             // Configurar o botão de busca e o formulário de pesquisa após o carregamento do cabeçalho
             const searchButton = document.getElementById('gen-search-btn');
             const signOut = document.getElementById('user-Profile');
-            const searchForm = document.querySelector('#search-form');
 
             if (searchButton && searchForm) {
                 searchButton.addEventListener('click', function() {
-                    // Alterna a exibição do formulário de busca
-                    if (searchForm.style.display === 'none' || searchForm.style.display === '') {
-                        searchForm.style.display = 'flex';
-                    } else {
-                        searchForm.style.display = 'none';
-                    }
+                                        // Alterna a exibição do formulário de busca
+                                        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+                                            searchForm.style.display = 'flex';
+                                        } else {
+                                            searchForm.style.display = 'none';
+                                        }
+                    // Alterna a classe 'active' para mostrar/ocultar o formulário
+                    searchForm.classList.toggle('active');
                 });
-            
-                if (signOut) {
-                    // Declarar a função como assíncrona para usar await dentro dela
-                    signOut.addEventListener('click', async function() {
-                        // Exibe o diálogo de confirmação
-                        const userConfirmed = confirm("Você tem certeza que deseja sair?");
-                        
-                        if (userConfirmed) {
-                            const token = localStorage.getItem('token'); // Obtém o token armazenado no localStorage
-                            
-                            try {
-                                // Faz a requisição para o logout
-                                const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/logout', { 
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'Authorization': `Bearer ${token}` // Inclui o token no cabeçalho de autorização
-                                    }
-                                });
-            
-                                const data = await response.json();
-            
-                                // Se a resposta for bem-sucedida, remove o token
-                                if (response.ok) {
-                                    localStorage.removeItem('token');
-                                    window.location.href = "/index.html"; // Redireciona para a página inicial
-                                } else {
-                                    console.error("Erro no logout:", data.message || "Erro desconhecido");
-                                }
-                            } catch (error) {
-                                console.error("Erro de rede:", error); // Tratar erros de rede ou outros problemas
-                            }
-                        } else {
-                            // Ação cancelada, nenhuma mudança é feita
-                            console.log("Usuário cancelou o logout.");
-                        }
-                    });
-                }
-            
-            
-                
+
                 // Configurar o comportamento do formulário de pesquisa
-                const searchFormElement = document.querySelector('#search-form form');
+                const searchFormElement = searchForm.querySelector('form');
                 if (searchFormElement) {
                     searchFormElement.addEventListener('submit', function(event) {
                         event.preventDefault(); // Impede o envio padrão do formulário
@@ -165,6 +129,37 @@ document.addEventListener("DOMContentLoaded", function () {
                         window.location.href = searchUrl;
                     });
                 }
+            }
+
+            if (signOut) {
+                signOut.addEventListener('click', async function() {
+                    const userConfirmed = confirm("Você tem certeza que deseja sair?");
+                    if (userConfirmed) {
+                        const token = localStorage.getItem('token');
+                        try {
+                            const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/logout', { 
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            });
+
+                            const data = await response.json();
+
+                            if (response.ok) {
+                                localStorage.removeItem('token');
+                                window.location.href = "/index.html";
+                            } else {
+                                console.error("Erro no logout:", data.message || "Erro desconhecido");
+                            }
+                        } catch (error) {
+                            console.error("Erro de rede:", error);
+                        }
+                    } else {
+                        console.log("Usuário cancelou o logout.");
+                    }
+                });
             }
         });
 

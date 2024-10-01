@@ -1,94 +1,139 @@
 <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
   <link rel="stylesheet" href="./css/header.css" />
   <div class="gen-bottom-header">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand" href="#">
-            <img class="img-fluid logo" src="images/m.png" alt="streamlab-image">
-          </a>
-  
-          <!-- Botão responsivo para o menu -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-          </button>
-  
-          <!-- Menu colapsável -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul id="gen-main-menu" class="navbar-nav ml-auto">
-              <!-- Menu Início -->
-              <li class="nav-item active">
-                <a class="nav-link" href="index.html">Início</a>
-              </li>
-  
-              <!-- Menu Filmes com gêneros -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFilms" role="button" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false">Filmes</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownFilms">
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Action">Ação</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Comedy">Comédia</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Drama">Drama</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Horror">Terror</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Romance">Romance</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Sci-Fi">Ficção Científica</a>
-                  <a class="dropdown-item" href="movies-pagination.html?genre=Documentary">Documentário</a>
-                </div>
-              </li>
-  
-              <!-- Menu Filmes com gêneros -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="movies-pagination.html?genre=Animation" id="navbarDropdownFilms" role="button" >Animação</a>
-              </li>
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">
+          <img class="img-fluid logo" src="images/m.png" alt="streamlab-image">
+        </a>
 
-              <!-- Menu Programas de TV -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTVShows" role="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programas de TV</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownTVShows">
-                  <a class="dropdown-item" href="tv-pagination.html">Todos os Programas</a>
-                </div>
-              </li>
-  
-              <!-- Menu Conta do Usuário -->
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUserMenu" role="button"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Conta</a>
-                <div class="dropdown-menu" id="menu-acc"  aria-labelledby="navbarDropdownUserMenu">
-                  <a class="dropdown-item" href="log-in.html"><i class="fas fa-sign-in-alt"></i> Login</a>
-                  <a class="dropdown-item" href="register.html"><i class="fa fa-user"></i> Registrar</a>
-                  <a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
-                  <!-- <a class="dropdown-item" href="upload-video.html"><i class="fa fa-upload"></i> Enviar Vídeo</a> -->
-                </div>
-              </li>
-            </ul>
-          </div>
-  
-          <!-- Botão de Pesquisa -->
-          <div class="gen-header-info-box d-flex align-items-center">
-            <div class="gen-menu-search-block">
-              <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
-              <div class="gen-search-form" id="search-form" style="display: none;">
-                <form role="search" method="get" class="search-form" action="#">
-                  <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
-                  <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
-                </form>
+        <!-- Botão responsivo para o menu -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Menu colapsável -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul id="gen-main-menu" class="navbar-nav ml-auto">
+            <!-- Menu Início -->
+            <li class="nav-item active">
+              <a class="nav-link" href="index.html">Início</a>
+            </li>
+
+            <!-- Menu Filmes com gêneros -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownFilms" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">Filmes</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownFilms">
+                <a class="dropdown-item" href="movies-pagination.html?genre=Action">Ação</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Comedy">Comédia</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Drama">Drama</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Horror">Terror</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Romance">Romance</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Sci-Fi">Ficção Científica</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=Documentary">Documentário</a>
               </div>
-            </div>
-  
-            <!-- Botão de Assinatura -->
-            <div class="gen-btn-container ml-3" id="bt-assine">
-              <a href="pricing.html" class="gen-button">
+            </li>
+
+            <!-- Menu Filmes com gêneros -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="movies-pagination.html?genre=Animation" id="navbarDropdownFilms"
+                role="button">Animação</a>
+            </li>
+
+            <!-- Menu Programas de TV -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTVShows" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Programas de TV</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownTVShows">
+                <a class="dropdown-item" href="tv-pagination.html">Todos os Programas</a>
+              </div>
+            </li>
+
+            <li class="nav-item d-lg-none"> <!-- Classe d-lg-none para esconder em telas grandes -->
+              <a class="nav-link" href="pricing.html">
                 <div class="gen-button-block">
                   <span class="gen-button-line-left"></span>
                   <span class="gen-button-text" id="text-Plan">Assine</span>
                 </div>
               </a>
+            </li>
+
+            <!-- Menu Conta do Usuário -->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUserMenu" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> Conta</a>
+              <div class="dropdown-menu" id="menu-acc" aria-labelledby="navbarDropdownUserMenu">
+                <a class="dropdown-item" href="log-in.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a class="dropdown-item" href="register.html"><i class="fa fa-user"></i> Registrar</a>
+                <a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Botão de Pesquisa -->
+        <div class="gen-header-info-box d-flex align-items-center">
+          <div class="gen-menu-search-block">
+            <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
+            <div class="gen-search-form" id="search-form" style="display: none;">
+              <form role="search" method="get" class="search-form" action="#">
+                <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
+                <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
+              </form>
             </div>
           </div>
-        </nav>
-      </div>
+
+          <!-- Botão de Assinatura -->
+          <div class="gen-btn-container ml-3" id="bt-assine">
+            <a href="pricing.html" class="gen-button">
+              <div class="gen-button-block">
+                <span class="gen-button-line-left"></span>
+                <span class="gen-button-text" id="text-Plan">Assine</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </nav>
     </div>
-    
-  </header>
+  </div>
   
+<style>
+  /* Media Queries para responsividade */
+  @media (max-width: 768px) {
+    .navbar-collapse {
+      text-align: center;
+    }
+
+    .navbar-nav {
+      flex-direction: column;
+    }
+
+    .gen-header-info-box {
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    .gen-btn-container {
+      margin-top: 10px;
+    }
+
+    .gen-menu-search-block {
+      margin-left: 15px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .gen-header-info-box {
+      flex-direction: column;
+    }
+
+    .gen-btn-container {
+      margin-top: 5px;
+    }
+
+  }
+</style>
+
+</header>

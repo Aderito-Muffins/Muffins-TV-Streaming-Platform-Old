@@ -1,4 +1,4 @@
-const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/genre'; // Substitua pela URL real da sua API
+ const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/genre'; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
@@ -63,7 +63,7 @@ function displayFilms(films) {
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
                         <div class="gen-movie-img">
-                            <img src="${film.thumb}" alt="${film.title}">
+                            <img src="${film.cover}" alt="${film.title}">
                             <div class="gen-movie-add">
                                 <!-- Ações do filme como curtidas, compartilhamento, etc. -->
                             </div>

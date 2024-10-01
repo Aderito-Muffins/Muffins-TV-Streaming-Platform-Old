@@ -1,5 +1,4 @@
 // Função para exibir erros no HTML
-
 function displayError(elementId, message) {
   const errorElement = document.getElementById(elementId);
   if (errorElement) {
@@ -9,29 +8,24 @@ function displayError(elementId, message) {
 
 // Função para mostrar o loader
 function showLoading() {
-  document.querySelector('.loader-container').style.display = 'flex';
+  const loader = document.querySelector('.loader-container');
+  if (loader) loader.style.display = 'flex';
 }
 
 // Função para esconder o loader
 function hideLoading() {
-  document.querySelector('.loader-container').style.display = 'none';
+  const loader = document.querySelector('.loader-container');
+  if (loader) loader.style.display = 'none';
 }
 
 // Função para realizar o login
 async function loginUser(email, password) {
   try {
-    const bodyData = {
-      email: email,
-      pass: password
-    };
+    const bodyData = { email, pass: password };
 
-    console.log("Dados enviados:", bodyData); // Log para depuração
-
-    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/login', { // Verifique se a URL está correta
+    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bodyData)
     });
 
@@ -39,102 +33,79 @@ async function loginUser(email, password) {
 
     if (response.ok && data.code === 0) {
       hideLoading();
-      alert("Login feito com sucesso!");
-
-      // Armazena os dados do usuário e token no localStorage
       localStorage.setItem('token', data.token);
-
-      // Redireciona para a página principal
-      window.location.href = "/index.html";
-
-      // Limpa o formulário de login
-      document.getElementById("pms_login").reset();
+      window.location.href = "/index.html"; // Redireciona para a página principal
     } else {
-      hideLoading();
-      console.error("Erro da API:", data); // Log de erro
-      showError(data.message);
+      throw new Error(data.message || "Erro ao fazer login.");
     }
   } catch (error) {
     hideLoading();
-    console.error('Erro de requisição:', error); // Log de erro
-    showError(data.message);
+    console.error('Erro de requisição:', error);
+    showError(error.message || 'Erro inesperado.');
   }
 }
 
+// Função para exibir mensagens de erro
 function showError(message) {
   const errorContainer = document.getElementById('error-container');
-  const errorText = errorContainer.querySelector('.error-text');
-  const closeButton = errorContainer.querySelector('.close-button');
+  if (errorContainer) {
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
 
-  // Define o texto da mensagem de erro
-  errorText.textContent = message;
+    errorText.textContent = message;
+    errorContainer.style.display = 'block';
 
-  // Exibe o container de erro
-  errorContainer.style.display = 'block';
-
-  // Fecha automaticamente após 4 segundos (4000 ms)
-  setTimeout(function () {
+    setTimeout(() => {
       errorContainer.style.display = 'none';
-  }, 4000);
+    }, 4000);
 
-  // Adiciona evento de clique ao botão de fechar
-  closeButton.addEventListener('click', function () {
-      errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
-  });
+    closeButton.addEventListener('click', () => {
+      errorContainer.style.display = 'none';
+    });
+  }
 }
 
 // Adicionar evento ao formulário de login
 document.getElementById('pms_login').addEventListener('submit', (e) => {
   e.preventDefault();
 
-  // Obter os dados do formulário
   const email = document.getElementById('user_login').value;
   const password = document.getElementById('user_pass').value;
 
-  // Mostrar loading
-  showLoading();
-
-  // Chamar a função de login
-  loginUser(email, password);
+  if (email && password) {
+    showLoading();
+    loginUser(email, password);
+  } else {
+    showError('Preencha todos os campos.');
+  }
 });
 
 // Verifica o estado de login ao carregar a página
-window.addEventListener('DOMContentLoaded', () => {
-  const token = localStorage.getItem('token');
-  const currentPath = window.location.pathname;
+window.addEventListener('DOMContentLoaded', async () => {
+  setTimeout(() => {
+    const token = localStorage.getItem('token');
+    const currentPath = window.location.pathname;
+    const isLoginPage = currentPath.includes("/log-in");
 
-  // Verifique se o usuário está na página de login
-  const isLoginPage = currentPath.includes("/log-in.html");
+    if (token) {
+      try {
+        const decodedToken = jwt_decode(token);
+        const currentTime = Date.now() / 1000;
 
-  if (token) {
-    try {
-      const decodedToken = jwt_decode(token);
-      const currentTime = Date.now() / 1000; // O timestamp atual em segundos
-
-      if (decodedToken.exp < currentTime) {
-        // Token expirado
+        if (decodedToken.exp < currentTime) {
+          localStorage.removeItem('token');
+          if (!isLoginPage) window.location.href = "/log-in";
+        } else if (isLoginPage) {
+          window.location.href = "/index";
+        }
+      } catch (error) {
+        console.error("Erro ao decodificar o token:", error);
         localStorage.removeItem('token');
-        if (!isLoginPage) {
-          window.location.href = "/log-in.html"; // Redireciona para a página de login
-        }
-      } else {
-        // Token ainda válido
-        if (isLoginPage) {
-          window.location.href = "/index.html"; // Redireciona para a página principal
-        }
+        if (!isLoginPage) window.location.href = "/log-in";
       }
-    } catch (error) {
-      console.error("Erro ao decodificar o token:", error);
-      localStorage.removeItem('token');
-      if (!isLoginPage) {
-        window.location.href = "/log-in.html"; // Redireciona para a página de login se ocorrer um erro
-      }
+    } else if (!isLoginPage) {
+      window.location.href = "/log-in";
     }
-  } else {
-    // Nenhum token encontrado
-    if (!isLoginPage) {
-      window.location.href = "/log-in.html"; // Redireciona para a página de login
-    }
-  }
+  }, 500); // Pequeno atraso de 500ms
 });
 
