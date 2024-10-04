@@ -27,6 +27,7 @@
                 aria-haspopup="true" aria-expanded="false">Filmes</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownFilms">
                 <a class="dropdown-item" href="movies-pagination.html?genre=Action">Ação</a>
+                <a class="dropdown-item" href="movies-pagination.html?genre=War">Guerra</a>
                 <a class="dropdown-item" href="movies-pagination.html?genre=Comedy">Comédia</a>
                 <a class="dropdown-item" href="movies-pagination.html?genre=Drama">Drama</a>
                 <a class="dropdown-item" href="movies-pagination.html?genre=Horror">Terror</a>
@@ -36,11 +37,15 @@
               </div>
             </li>
 
-            <!-- Menu Filmes com gêneros -->
+            <!-- Menu Animação -->
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="movies-pagination.html?genre=Animation" id="navbarDropdownFilms"
-                role="button">Animação</a>
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTVShows" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Animação</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdownTVShows">
+                <a class="dropdown-item" href="movies-pagination.html?genre=Animation">Todos os Desenhos Animados</a>
+              </div>
             </li>
+
 
             <!-- Menu Programas de TV -->
             <li class="nav-item dropdown">
@@ -86,8 +91,8 @@
           </div>
 
           <!-- Botão de Assinatura -->
-          <div class="gen-btn-container ml-3" >
-            <a href="pricing.html" class="gen-button" id="bt-assine" >
+          <div class="gen-btn-container ml-3">
+            <a href="pricing.html" class="gen-button" id="bt-assine">
               <div class="gen-button-block" id="bt-assinev2">
                 <span class="gen-button-line-left"></span>
                 <span class="gen-button-text bt-assine-class" id="text-Plan">Assine</span>
@@ -98,42 +103,42 @@
       </nav>
     </div>
   </div>
-  
-<style>
-  /* Media Queries para responsividade */
-  @media (max-width: 768px) {
-    .navbar-collapse {
-      text-align: center;
+
+  <style>
+    /* Media Queries para responsividade */
+    @media (max-width: 768px) {
+      .navbar-collapse {
+        text-align: center;
+      }
+
+      .navbar-nav {
+        flex-direction: column;
+      }
+
+      .gen-header-info-box {
+        margin-top: 10px;
+        justify-content: center;
+      }
+
+      .gen-btn-container {
+        margin-top: 10px;
+      }
+
+      .gen-menu-search-block {
+        margin-left: 15px;
+      }
     }
 
-    .navbar-nav {
-      flex-direction: column;
-    }
+    @media (max-width: 576px) {
+      .gen-header-info-box {
+        flex-direction: column;
+      }
 
-    .gen-header-info-box {
-      margin-top: 10px;
-      justify-content: center;
-    }
+      .gen-btn-container {
+        margin-top: 5px;
+      }
 
-    .gen-btn-container {
-      margin-top: 10px;
     }
-
-    .gen-menu-search-block {
-      margin-left: 15px;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .gen-header-info-box {
-      flex-direction: column;
-    }
-
-    .gen-btn-container {
-      margin-top: 5px;
-    }
-
-  }
-</style>
+  </style>
 
 </header>

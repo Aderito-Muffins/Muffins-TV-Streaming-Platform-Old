@@ -80,6 +80,7 @@ function displayFilms(films) {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>${film.duration}</li>
+                                    <li>${film.published_year}</li>
                                     <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
                                 </ul>
                             </div>
