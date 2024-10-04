@@ -32,26 +32,41 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.ico">
     <!-- Adicionando o script -->
-    <script src="js/header.js" defer></script>
+
     <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!--  Style -->
     <link rel="stylesheet" href="css/style.css" />
     <!--  Responsive -->
+    <link rel="stylesheet" href="css/load.css" />
     <link rel="stylesheet" href="css/responsive.css" />
 </head>
 
 <body>
-
     <!--=========== Loader =============-->
     <div id="gen-loading">
         <div id="gen-loading-center">
             <img src="images/m.png" alt="loading">
         </div>
     </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
     <!--=========== Loader =============-->
-
+    <div id="error-container" class="error-container" style="display: none;">
+        <div class="error-message">
+          <span class="error-text"></span>
+          <button class="close-button">x</button>
+        </div>
+      </div>
+      <div id="success-container" class="success-container" style="display: none;">
+        <div class="success-message">
+            <span class="success-text">Seu registro foi bem-sucedido!</span>
+            <button class="close-button">&times;</button>
+        </div>
+    </div>
+    
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
@@ -63,14 +78,14 @@
                     <nav aria-label="breadcrumb">
                         <div class="gen-breadcrumb-title">
                             <h1>
-                                contact us
+                                Contacte-nos
                             </h1>
                         </div>
                         <div class="gen-breadcrumb-container">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html"><i
                                             class="fas fa-home mr-2"></i>Home</a></li>
-                                <li class="breadcrumb-item active">contact us</li>
+                                <li class="breadcrumb-item active">Contacte-nos</li>
                             </ol>
                         </div>
                     </nav>
@@ -109,7 +124,7 @@
                             <h3 class="pt-icon-box-title mb-2">
                                 <span>Contacte-nos</span>
                             </h3>
-                            <p class="gen-icon-box-description">(+258) 85-8782-674<br>(+258) 86-9644-359</p>
+                            <p class="gen-icon-box-description">(+258) 85-8782-674</p>
                         </div>
                     </div>
                 </div>
@@ -123,7 +138,7 @@
                             <h3 class="pt-icon-box-title mb-2">
                                 <span>Envie-nos um email</span>
                             </h3>
-                            <p class="gen-icon-box-description">mufumeaderito@gmail.com<br>muffinstv@gmail.com</p>
+                            <p class="gen-icon-box-description">muffinstv@gmail.com</p>
                         </div>
                     </div>
                 </div>
@@ -180,7 +195,99 @@
         <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Back-to-Top end -->
-
+    <script>
+        // Funções para mostrar e ocultar o loader
+        function mostrarLoader() {
+            document.querySelector('.loader-container').style.display = 'flex'; // Usa 'flex' para centralizar
+        }
+      
+        function esconderLoader() {
+            document.querySelector('.loader-container').style.display = 'none'; // Oculta o loader
+        }
+      
+        // Função para exibir erros no HTML
+        function displayError(message) {
+            const errorContainer = document.getElementById('error-container');
+            const errorText = errorContainer.querySelector('.error-text');
+            const closeButton = errorContainer.querySelector('.close-button');
+      
+            errorText.textContent = message;
+            errorContainer.style.display = 'block';
+      
+            setTimeout(function () {
+                errorContainer.style.display = 'none';
+            }, 4000);
+      
+            closeButton.addEventListener('click', function () {
+                errorContainer.style.display = 'none'; // Esconde o container de erro ao clicar no botão
+            });
+        }
+      
+        // Função para exibir alerta de sucesso
+        function displaySuccess(message) {
+            const successContainer = document.getElementById('success-container');
+            const successText = successContainer.querySelector('.success-text');
+            const closeButton = successContainer.querySelector('.close-button');
+      
+            successText.textContent = message;
+            successContainer.style.display = 'block';
+      
+            setTimeout(function () {
+                successContainer.style.display = 'none';
+            }, 4000);
+      
+            closeButton.addEventListener('click', function () {
+                successContainer.style.display = 'none'; // Esconde o container de sucesso ao clicar no botão
+            });
+        }
+      
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+      
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevenir o comportamento padrão de recarregar a página.
+      
+                mostrarLoader(); // Mostra o loader
+      
+                // Capturar os dados do formulário
+                const formData = new FormData(form);
+                const data = {
+                    name: formData.get("first_name"),
+                    email: formData.get("your-email"),
+                    phone: formData.get("your-Cell-phone"),
+                    venue: formData.get("your-Venue"),
+                    message: formData.get("your-message")
+                };
+      
+                // Enviar os dados para a API usando fetch
+                fetch("https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/contact", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json()) // Converte a resposta em JSON
+                .then(result => {
+                    esconderLoader(); // Esconde o loader
+      
+                    // Verifica o código da resposta (0 = sucesso, 1 = erro)
+                    if (result.code === 0) {
+                        displaySuccess(result.message); // Exibe a mensagem de sucesso da API
+                    } else {
+                        displayError(result.message); // Exibe a mensagem de erro da API
+                    }
+                })
+                .catch(error => {
+                    esconderLoader(); // Esconde o loader após erro
+                    displayError("Ocorreu um erro ao enviar o formulário. Tente novamente."); // Mensagem de erro padrão
+                    console.error(error);
+                });
+            });
+        });
+      </script>
+      
+      
     <!-- js-min -->
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/asyncloader.min.js"></script>
@@ -202,7 +309,7 @@
     <script src="js/slick.min.js"></script>
 
     <script src="js/streamlab-core.js"></script>
-
+    <script src="js/header.js"></script>
     <script src="js/script.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
      crossorigin="anonymous"></script>

@@ -34,7 +34,7 @@ async function loginUser(email, password) {
     if (response.ok && data.code === 0) {
       hideLoading();
       localStorage.setItem('token', data.token);
-      window.location.href = "/index.html"; // Redireciona para a página principal
+      window.location.href = "index.html"; // Redireciona para a página principal
     } else {
       throw new Error(data.message || "Erro ao fazer login.");
     }

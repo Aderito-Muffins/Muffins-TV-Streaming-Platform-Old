@@ -68,6 +68,8 @@ function displaySuccess(message) {
     successContainer.style.display = 'block';
     setTimeout(function () {
         successContainer.style.display = 'none';
+        window.location.href = "/index.html";
+
     }, 4000);
 
     closeButton.addEventListener('click', function () {
@@ -109,9 +111,10 @@ async function createLogin(email, password, fullname, phone) {
         const data = await response.json();
 
         if (response.ok && data.code === 0) {
-            esconderFormulario();
-            mostrarCode();
+            // esconderFormulario();
+            // mostrarCode();
             esconderLoader();
+            localStorage.setItem('token', data.token)
             displaySuccess(data.message);
         } else {
             esconderLoader();

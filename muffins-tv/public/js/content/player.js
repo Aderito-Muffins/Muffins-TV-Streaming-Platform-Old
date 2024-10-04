@@ -35,7 +35,6 @@ async function fetchMovieDetails(id) {
         // Acessa o primeiro item do array
         const movieData = result.data[0];
 
-        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
         return movieData;
 
     } catch (error) {
@@ -60,7 +59,6 @@ async function fetchContentDetails(id) {
     }
 
     try {
-        console.info(`Iniciando requisição para buscar detalhes do filme: ${id}`);
 
         const response = await fetch(`${baseApiUrl}films/external/${id}`, {
             method: 'GET',

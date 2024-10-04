@@ -51,7 +51,6 @@ async function fetchMovieDetails(id) {
         // Acessa o primeiro item do array
         const movieData = result.data[0];
 
-        console.info(`Detalhes do filme obtidos com sucesso: ${id}`);
         return movieData;
 
     } catch (error) {
@@ -113,8 +112,6 @@ async function fetchContentDetails(id) {
 
         // Acessa o primeiro item do array
         const contentData = result.data[0];
-
-        console.info(`Detalhes do conteúdo obtidos com sucesso: ${id}`);
         return contentData;
 
     } catch (error) {

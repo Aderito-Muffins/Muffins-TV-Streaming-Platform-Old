@@ -644,7 +644,7 @@ input[type="button"],
     line-height: 2;
     vertical-align: middle;
     border: none;
-    display: inline-block;
+    display: inline-block; 
     overflow: hidden;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -2450,8 +2450,8 @@ header#gen-header .gen-bottom-header .navbar .navbar-brand img {
 
 /* Garantir que o botão não seja ocultado */
 #bt-assine {
-    display: block !important; /* Garante que o botão sempre será visível */
-    margin-left: auto; /* Para alinhar à direita se necessário */
+    /* display: block !important; */
+    margin-left: auto; 
 }
 
 #bt-assine .gen-button {

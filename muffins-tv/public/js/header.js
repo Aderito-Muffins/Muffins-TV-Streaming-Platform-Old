@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Erro ao carregar o recurso: ' + url);
+                    throw new Error('Erro ao carregar o recurso');
                 }
                 return response.text();
             })
@@ -56,7 +56,23 @@ document.addEventListener("DOMContentLoaded", function () {
         // Carregar o header
         loadHtmlResource('html/header.html', 'header', 'gen-header', async function (headerElement) {
             const token = localStorage.getItem('token');
+            const currentPath = window.location.pathname; // Obter a URL da página atual
+            console.log(currentPath)
+            // Ocultar o botão "Assine" em todas as páginas com esses padrões no caminho da URL
+        // Ocultar o botão "Assine" em todas as páginas com esses padrões no caminho da URL
+        const pagesToHideButton = ['/single-movie', '/single-tv', '/pricing'];
 
+        // Verifica se o caminho da URL atual contém qualquer padrão da lista
+        if (pagesToHideButton.some(path => currentPath.includes(path))) {
+
+            // Seleciona o botão "Assine" pelo id 'bt-assine'
+            const subscribeButton = document.getElementById('bt-assine');
+            
+            if (subscribeButton) {
+                // Remover 'display: none' inline primeiro
+                subscribeButton.style.display = 'none'; // Ocultar o botão "Assine"
+            }
+        }
             if (token) {
                 try {
                     const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/me', { 
@@ -66,59 +82,60 @@ document.addEventListener("DOMContentLoaded", function () {
                             'Authorization': `Bearer ${token}`
                         }
                     });
-
+    
                     const data = await response.json();
-
-                    if (data.code === 0) {
-                        const assinebt = document.getElementById('bt-assine');
+    
+                    if (data.code === 0) { 
                         // Atualiza o menu com os dados do usuário
                         updateAuthenticatedMenu(data.user);
-
+                    
                         const { specialPackage, subscription } = data.user;
                         const isSpecialActive = specialPackage.isActive;  
                         const isPlanActive = subscription.status === 'active';  
-                        const textPlan = document.getElementById('text-Plan');
-
-                        if (isPlanActive) {
-                            textPlan.innerText = subscription.planName;
-                        } else if (isSpecialActive) {
-                            textPlan.innerText = 'ESPECIAL';
-                        } else {
-                            textPlan.innerText = 'Assine';
+                        const textPlans = document.getElementsByClassName('bt-assine-class');
+                    
+                        // Itera sobre os elementos encontrados
+                        for (let i = 0; i < textPlans.length; i++) {
+                            const textPlan = textPlans[i];
+                    
+                            if (isPlanActive) {
+                                textPlan.innerText = subscription.planName;
+                            } else if (isSpecialActive) {
+                                textPlan.innerText = 'ESPECIAL';
+                            } else {
+                                textPlan.innerText = 'Assine';
+                            }
                         }
-
                     } else {
                         console.error("Error fetching user data:", data.message);
                     }
                 } catch (error) {
                     console.error("Network error:", error);
                 }
-            } else {
-                console.warn("No token found in localStorage.");
-            }
-
+            } 
+    
             // Mover o formulário de pesquisa para fora do header
             const searchForm = document.getElementById('search-form');
             if (searchForm) {
                 document.body.appendChild(searchForm);
             }
-
+    
             // Configurar o botão de busca e o formulário de pesquisa após o carregamento do cabeçalho
             const searchButton = document.getElementById('gen-search-btn');
             const signOut = document.getElementById('user-Profile');
-
+    
             if (searchButton && searchForm) {
                 searchButton.addEventListener('click', function() {
-                                        // Alterna a exibição do formulário de busca
-                                        if (searchForm.style.display === 'none' || searchForm.style.display === '') {
-                                            searchForm.style.display = 'flex';
-                                        } else {
-                                            searchForm.style.display = 'none';
-                                        }
+                    // Alterna a exibição do formulário de busca
+                    if (searchForm.style.display === 'none' || searchForm.style.display === '') {
+                        searchForm.style.display = 'flex';
+                    } else {
+                        searchForm.style.display = 'none';
+                    }
                     // Alterna a classe 'active' para mostrar/ocultar o formulário
                     searchForm.classList.toggle('active');
                 });
-
+    
                 // Configurar o comportamento do formulário de pesquisa
                 const searchFormElement = searchForm.querySelector('form');
                 if (searchFormElement) {
@@ -130,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                 }
             }
-
+    
             if (signOut) {
                 signOut.addEventListener('click', async function() {
                     const userConfirmed = confirm("Você tem certeza que deseja sair?");
@@ -144,9 +161,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                     'Authorization': `Bearer ${token}`
                                 }
                             });
-
+    
                             const data = await response.json();
-
+    
                             if (response.ok) {
                                 localStorage.removeItem('token');
                                 window.location.href = "/index.html";
@@ -162,9 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         });
-
-        // Carregar o footer
-        loadHtmlResource('html/footer.html', 'footer', 'gen-footer');
     }
 
     // Carregar o header e footer ao carregar a página
