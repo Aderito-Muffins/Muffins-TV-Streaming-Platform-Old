@@ -175,7 +175,7 @@ function openMpesaModal() {
     
     // Preenche os detalhes do plano no modal M-Pesa
     document.getElementById("planNameMpesa").textContent = window.selectedPlan.name;
-    document.getElementById("planPriceMpesa").textContent = window.selectedPlan.price;
+    document.getElementById("planPriceMpesa").textContent = window.selectedPlan.price + ' MZN';
     document.getElementById("mpesaPlanId").value = window.selectedPlan.id;
 }
 
@@ -185,7 +185,7 @@ function openEmolaModal() {
     
     // Preenche os detalhes do plano no modal e-Mola
     document.getElementById("planNameEmola").textContent = window.selectedPlan.name;
-    document.getElementById("planPriceEmola").textContent = window.selectedPlan.price;
+    document.getElementById("planPriceEmola").textContent = window.selectedPlan.price + ' MZN';
     document.getElementById("emolaPlanId").value = window.selectedPlan.id;
 }
 
