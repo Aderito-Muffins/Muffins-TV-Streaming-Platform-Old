@@ -232,7 +232,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <div class="movie type-movie status-publish has-post-thumbnail hentry ">
                 <div class="gen-carousel-movies-style-2 movie-grid style-2">
                     <div class="gen-movie-contain">
-                        <div class="gen-movie-img">
+                        <div class="gen-tv-img">
                             <img src="${film.thumb}" alt="Movie Thumbnail">
                             <div class="gen-movie-add">
                                 <div class="wpulike wpulike-heart">

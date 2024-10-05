@@ -72,6 +72,16 @@ body {
     display: block; /* Para alinhamento adequado */
     margin: 0 auto; /* Centraliza a imagem */
 }
+.gen-tv-img img {
+    width: 100%; /* Largura máxima do container */
+    height: 200px; /* Defina uma altura fixa, ajuste conforme necessário */
+    object-fit: cover; /* Garante que a imagem seja cortada para caber, sem distorção */
+    object-position: center; /* Centraliza a imagem dentro do container */
+    border-radius: 8px;
+    display: block; 
+    margin: 0 auto;
+
+}
 
 /* Container de informações */
 .gen-info-contain {
@@ -95,6 +105,10 @@ body {
 
     .gen-movie-img img {
         max-height: 160px; /* Altura máxima para celulares */
+    }
+
+    .gen-tv-img img {
+        max-height: 100px; /* Altura máxima para celulares */
     }
 
     .gen-info-contain {
@@ -125,6 +139,9 @@ body {
     .gen-movie-img img {
         max-height: 240px; /* Altura máxima para tablets */
     }
+    .gen-tv-img img {
+        max-height: 160px; /* Altura máxima para celulares */
+    }
 
     .gen-info-contain {
         font-size: 16px; /* Ajusta o tamanho da fonte */
@@ -144,6 +161,10 @@ body {
 
     .gen-movie-img img {
         max-height: 300px; /* Altura máxima para desktops */
+    }
+
+    .gen-movie-img img {
+        max-height: 200px; /* Altura máxima para celulares */
     }
 
     .gen-info-contain {

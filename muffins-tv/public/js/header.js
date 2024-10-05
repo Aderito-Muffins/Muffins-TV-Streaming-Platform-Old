@@ -179,6 +179,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         });
+
+        loadHtmlResource('html/footer.html', 'footer', 'gen-footer', function(footerElement) {
+            console.log("Footer carregado com sucesso!");
+            // Adicionar outros comportamentos para o footer, se necessário
+        });
     }
 
     // Carregar o header e footer ao carregar a página

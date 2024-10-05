@@ -207,6 +207,51 @@
        </div>
     </div>
  </section>
+ <style>
+ .gen-tv-img img {
+   width: 100%; /* Largura máxima do container */
+   height: 150px; /* Defina uma altura fixa, ajuste conforme necessário */
+   object-fit: cover; /* Garante que a imagem seja cortada para caber, sem distorção */
+   object-position: center; /* Centraliza a imagem dentro do container */
+   border-radius: 8px;
+
+}
+</style>
+ <div class="ad-container">
+   <script type="text/javascript">
+      atOptions = {
+         'key' : '1522a0daaa06fcf3a606673514bd6d70',
+         'format' : 'iframe',
+         'params' : {}
+      };
+   </script>
+   <script type="text/javascript" src="//www.topcreativeformat.com/1522a0daaa06fcf3a606673514bd6d70/invoke.js"></script>
+</div>
+
+<div class="ad-container">
+   <script type="text/javascript">
+      atOptions = {
+         'key' : 'dea756c7257b37c329514ae8d1f62ba1',
+         'format' : 'iframe',
+         'params' : {}
+      };
+   </script>
+   <script type="text/javascript" src="//www.topcreativeformat.com/dea756c7257b37c329514ae8d1f62ba1/invoke.js"></script>
+</div>
+
+<style>
+.ad-container {
+    max-width: 100%; /* Para garantir que o anúncio se ajuste à largura da tela */
+    height: auto; /* A altura será proporcional ao conteúdo do iframe */
+    position: relative; /* Para manter o contexto de posicionamento */
+}
+
+.ad-container iframe {
+    width: 100%; /* O iframe ocupará 100% da largura do container */
+    height: auto; /* Altura automática para manter a proporção */
+}
+</style>
+
    <!-- owl-carousel images End -->
    <!-- Back-to-Top start -->
    <div id="back-to-top">
@@ -216,27 +261,45 @@
 
    <!-- JavaScript -->
    <script type="text/javascript">
-      atOptions = {
-         'key' : '1522a0daaa06fcf3a606673514bd6d70',
-         'format' : 'iframe',
-         'height' : 250,
-         'width' : 300,
-         'params' : {}
-      };
+      function adjustAdSize() {
+         var width = window.innerWidth;
+         var height1, height2;
+   
+         if (width < 600) { // Para telas menores
+            height1 = 200;
+            height2 = 90;
+         } else if (width < 1200) { // Para telas médias
+            height1 = 250;
+            height2 = 90;
+         } else { // Para telas grandes
+            height1 = 300;
+            height2 = 90;
+         }
+   
+         atOptions1 = {
+            'key' : '1522a0daaa06fcf3a606673514bd6d70',
+            'format' : 'iframe',
+            'height' : height1,
+            'width' : '100%', // Para ocupar 100% da largura do container
+            'params' : {}
+         };
+   
+         atOptions2 = {
+            'key' : 'dea756c7257b37c329514ae8d1f62ba1',
+            'format' : 'iframe',
+            'height' : height2,
+            'width' : '100%',
+            'params' : {}
+         };
+   
+         // Inicia os anúncios
+         // Aqui você chamaria a função para invocar os anúncios conforme necessário
+      }
+   
+      window.onload = adjustAdSize;
+      window.onresize = adjustAdSize; // Para ajustar quando a janela é redimensionada
    </script>
-   <script type="text/javascript" src="//www.topcreativeformat.com/1522a0daaa06fcf3a606673514bd6d70/invoke.js"></script>
-
-   <script type="text/javascript">
-      atOptions = {
-         'key' : 'dea756c7257b37c329514ae8d1f62ba1',
-         'format' : 'iframe',
-         'height' : 90,
-         'width' : 728,
-         'params' : {}
-      };
-   </script>
-   <script type="text/javascript" src="//www.topcreativeformat.com/dea756c7257b37c329514ae8d1f62ba1/invoke.js"></script>
-  
+   
   
   
    <script src="js/jquery-3.6.0.min.js"></script>
