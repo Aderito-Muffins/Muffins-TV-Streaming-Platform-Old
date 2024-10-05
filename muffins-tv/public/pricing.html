@@ -37,80 +37,98 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+    
 
 
     <style>
-        /* Estilo para o modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
+      /* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
 
-        .mpesa-logo {
-            display: block;
-            margin: 0 auto;
-            max-width: 150px;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-        }
+.modal-content {
+    background-color: #0a0e16;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+}
 
-        .modal-content {
-            background-color: #0a0e16;
-            padding: 20px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 500px;
-            margin: auto;
-        }
+.payment-logo {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 150px;
+    border-radius: 15px;
+}
 
-        .close {
-            float: right;
-            font-size: 24px;
-            cursor: pointer;
-        }
+.full-width {
+    width: 100%;
+    margin: 10px 0;
+}
 
-        /* Ajuste de tabela responsiva */
-        .table-responsive {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
+.modal-title {
+    text-align: center;
+    font-weight: bold;
+}
 
-        /* Estilos gerais para melhor responsividade */
-        @media (max-width: 768px) {
-            .breadcrumb {
-                font-size: 14px;
-            }
-            .gen-breadcrumb-title h1 {
-                font-size: 24px;
-            }
-            .gen-section-padding-3 {
-                padding: 20px 10px;
-            }
-            .modal-content {
-                width: 95%;
-            }
-        }
+/* Grid System */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        @media (max-width: 576px) {
-            .breadcrumb {
-                font-size: 12px;
-            }
-            .gen-breadcrumb-title h1 {
-                font-size: 20px;
-            }
-            .gen-comparison-table {
-                font-size: 14px;
-            }
-        }
+.row {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.col {
+    flex: 1;
+    text-align: center;
+}
+
+/* Buttons */
+.gen-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.gen-button:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+    }
+
+    .row {
+        flex-direction: column;
+    }
+
+    .col {
+        margin: 10px 0;
+    }
+}
+
     </style>
 </head>
 
@@ -183,27 +201,64 @@
         </div>
     </div>
 
-    <!-- Modal M-Pesa -->
-    <div id="mpesaModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeMpesaModal()">&times;</span>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4kqsgdUQwQsJAMyVebLw-La3HaXT3uSnt2Q&s" alt="M-Pesa" class="mpesa-logo">
-            <p>Você está prestes a assinar o seguinte plano:</p>
-            <div id="selectedPlanDetails">
-                <p><strong>Plano:</strong> <span id="planName"></span></p>
-                <p><strong>Preço:</strong> <span id="planPrice"></span></p>
+<!-- Modal de Escolha do Método de Pagamento -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content container">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <p class="modal-title">Escolha o método de pagamento:</p>
+        <div class="row">
+            <div class="col">
+                <button class="gen-button full-width" onclick="openMpesaModal()">M-Pesa</button>
             </div>
-            <p>Digite o seu número de celular:</p>
-            <input type="text" id="phoneNumber" placeholder="84XXXXXXX" required>
-            <input type="hidden" id="planId">
-            <button class="gen-button" onclick="submitMpesa()">Pagar com M-Pesa</button>
+            <div class="col">
+                <button class="gen-button full-width" onclick="openEmolaModal()">e-Mola</button>
+            </div>
         </div>
     </div>
+</div>
+
+<!-- Modal M-Pesa -->
+<div id="mpesaModal" class="modal">
+    <div class="modal-content container">
+        <span class="close" onclick="closeMpesaModal()">&times;</span>
+        <img src="/images/mpesa.png" alt="M-Pesa" class="payment-logo">
+        <p class="modal-title">Você está prestes a assinar o seguinte plano:</p>
+        <div id="selectedPlanDetailsMpesa">
+            <p><strong>Plano:</strong> <span id="planNameMpesa"></span></p>
+            <p><strong>Preço:</strong> <span id="planPriceMpesa"></span></p>
+        </div>
+        <p>Digite o seu número de celular:</p>
+        <input type="text" id="mpesaPhoneNumber" class="full-width" placeholder="84XXXXXXX" required>
+        <input type="hidden" id="mpesaPlanId">
+        <button class="gen-button full-width" onclick="submitMpesa()">Pagar com M-Pesa</button>
+    </div>
+</div>
+
+<!-- Modal e-Mola -->
+<div id="emolaModal" class="modal">
+    <div class="modal-content container">
+        <span class="close" onclick="closeEmolaModal()">&times;</span>
+        <img src="/images/emola.png" alt="e-Mola" class="payment-logo">
+        <p class="modal-title">Você está prestes a assinar o seguinte plano:</p>
+        <div id="selectedPlanDetailsEmola">
+            <p><strong>Plano:</strong> <span id="planNameEmola"></span></p>
+            <p><strong>Preço:</strong> <span id="planPriceEmola"></span></p>
+        </div>
+        <p>Digite o seu número de celular:</p>
+        <input type="text" id="emolaPhoneNumber" class="full-width" placeholder="86XXXXXXX" required>
+        <input type="hidden" id="emolaPlanId">
+        <button class="gen-button full-width" onclick="submitEmola()">Pagar com e-Mola</button>
+    </div>
+</div>
+
+
+
 
     <!-- Back to Top -->
     <div id="back-to-top">
         <a class="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
+
 
     <!-- JavaScript para carregar planos de forma assíncrona -->
     <script src="js/price/purchase.js"></script>
