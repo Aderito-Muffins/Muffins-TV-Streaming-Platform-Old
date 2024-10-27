@@ -19,22 +19,22 @@ function hideLoading() {
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/';
 const filmId = getIdFromURL();
-const title = getTitleFromURL();
+const title = getTitleFromURL(); 
 
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
     showLoading();
     const token = localStorage.getItem('token'); // Exibe o loader antes da requisição
     try {
-        const response = await fetch(`${baseApiUrl}tv/external/${id}`, {
+        const response = await fetch(`${baseApiUrl}sports/detail/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        });
+     });
         const result = await response.json();
-
+        
         // Validações de erro na resposta da API
         if (result.code !== 0) {
             displayError(result.message || 'Erro ao buscar o filme');
@@ -87,16 +87,16 @@ async function fetchContentDetails(id) {
     showLoading();
     const token = localStorage.getItem('token'); // Exibe o loader antes da requisição
     try {
-        const response = await fetch(`${baseApiUrl}tv/external/${id}`, {
+        const response = await fetch(`${baseApiUrl}sports/detail/${id}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        });
+     });
 
         const result = await response.json();
-
+        
         // Validações de erro na resposta da API
         if (result.code !== 0) {
             displayError(result.message || 'Erro ao buscar o conteúdo');
@@ -143,7 +143,7 @@ function displayFilmDetails(film) {
 
 
     // Atualiza o conteúdo dos elementos, se eles existirem
-    if (titleElement) titleElement.textContent = title || 'Título não disponível';
+    if (titleElement) titleElement.textContent = film.title || 'Título não disponível';
     if (descriptionElement) descriptionElement.textContent = film.brief || 'Descrição não disponível';
     if (ratingElement) ratingElement.textContent = film.age || 'N/A';
     if (viewsElement) viewsElement.textContent = `${film.views || 0} Views`;
@@ -158,7 +158,7 @@ function displayFilmDetails(film) {
     // Define a imagem de capa
     const videoHolder = document.getElementById('gen-video-holder');
     if (videoHolder) {
-        videoHolder.style.backgroundImage = `url('/images/background/muffinstvcover.jpg')`;
+        videoHolder.style.backgroundImage = `url(${film.thumb})`;
     }
 }
 
@@ -181,6 +181,7 @@ function setupVideoPlayer(film) {
             }
         });
     }
+
     if (watchMovie) {
         watchMovie.addEventListener('click', function () {
             if (moviePlayer && videoHolder) {

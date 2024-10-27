@@ -61,6 +61,11 @@
     left: 20px; /* Ajusta a margem esquerda */
 }
 
+#download-content-btn {
+    bottom: 20px; /* Posiciona o botão "Assistir Filme" na parte inferior */
+    left: 50%; /* Ajusta a margem esquerda */
+}
+
 #watch-trailer-btn {
     bottom: 20px; /* Posiciona o botão "Trailer" na parte inferior */
     right: 20px; /* Ajusta a margem direita */

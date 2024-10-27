@@ -203,6 +203,8 @@ function hideLoading() {
 function setupVideoPlayer(film) {
     const moviePlayer = document.getElementById('movie-player');
     const watchMovieButton = document.getElementById('watch-movie-btn');
+    const downloadContentButton = document.getElementById('download-content-btn');
+    const watchMovie = document.getElementById("playBut");
     const watchTrailerButton = document.getElementById('watch-trailer-btn');
     const videoHolder = document.getElementById('gen-video-holder');
 
@@ -223,8 +225,40 @@ function setupVideoPlayer(film) {
         moviePlayer.style.display = 'block';
         videoHolder.style.backgroundImage = 'none';
 
+
+        watchMovie.style.display = 'none';
         watchMovieButton.style.display = 'none';
         watchTrailerButton.style.display = 'none';
+        // downloadContentButton.style.display = 'none';
+
+
+        if (mediaUrl && downloadContentButton) {
+            downloadContentButton.style.display = 'inline-block'; // Exibe o botão de download
+            downloadContentButton.addEventListener('click', function () {
+                // Inicia o download usando a solução Blob
+                fetch(mediaUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error('Erro ao baixar o vídeo');
+                        return response.blob(); // Converte a resposta em um Blob
+                    })
+                    .then(blob => {
+                        const url = URL.createObjectURL(blob); // Cria um URL para o Blob
+                        const a = document.createElement('a'); // Cria um elemento <a>
+                        a.href = url; // Define o href para o URL do Blob
+                        a.download = film.title + '.mp4'; // Define o nome do arquivo para download
+                        document.body.appendChild(a); // Adiciona o elemento ao DOM
+                        a.click(); // Simula o clique no link
+                        a.remove(); // Remove o elemento <a> do DOM
+                        URL.revokeObjectURL(url); // Libera a memória do Blob
+                    })
+                    .catch(error => {
+                        displayError(error.message);
+                    });
+            });
+        }
+     else {
+            downloadContentButton.style.display = 'none'; // Esconde o botão de download se não houver URL
+        }
 
         player.ready(function () {
             player.play();
@@ -241,6 +275,19 @@ function setupVideoPlayer(film) {
                 }
             }
         });
+        
+    }
+    if (watchMovie) {
+        watchMovie.addEventListener('click', function () {
+            if (moviePlayer && videoHolder) {
+                if (token) {
+                    setupPlayer();
+                } else {
+                    window.location.href = "/log-in.html";
+                }
+            }
+        });
+        
     }
 
     if (watchTrailerButton) {

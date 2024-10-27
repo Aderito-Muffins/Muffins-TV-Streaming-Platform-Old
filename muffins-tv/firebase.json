@@ -25,6 +25,10 @@
       {
       "source": "/log-in",
       "destination": "/log-in.html"
+    },
+    {
+      "source": "/sports/home",
+      "destination": "/sport-home.html"
     }
     
     ],

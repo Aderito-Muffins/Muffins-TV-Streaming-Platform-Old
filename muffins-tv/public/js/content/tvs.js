@@ -1,8 +1,10 @@
 const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/tv/list'; // Substitua pela URL real da sua API
 
-// Variáveis globais para controle de página, limite e gênero
+// Variáveis globais para controle de página, limite, categoria e país
 let currentPage = 1;
-const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário// Gênero inicial selecionado
+const limit = 12; // Número de canais por página
+let category = getCategoryFromURL() ; // Categoria inicial selecionada
+let country = getCountryFromURL() ; // País inicial selecionado
 
 // Função para mostrar e ocultar o loader
 function showLoading() {
@@ -13,35 +15,52 @@ function hideLoading() {
     document.querySelector('.loader-container').style.display = 'none';
 }
 
-// Função para capturar o parâmetro "genre" da URL
+// Função para capturar o parâmetro "category" da URL
+function getCategoryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category');
+}
 
-// Função para carregar filmes com base nos parâmetros de página e gênero
-async function loadFilms(page = 1) { // Atualiza o gênero global com o selecionado
+// Função para capturar o parâmetro "country" da URL
+function getCountryFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('country');
+}
+
+// Função para carregar canais com base nos parâmetros de página, categoria e país
+async function loadChannels(page = 1, selectedCategory = category, selectedCountry = country) {
     showLoading();
     try {
-        // Montando a URL de requisição com os parâmetros de paginação e gênero
-        const url = `${baseUrl}?limit=${limit}&page=${page}`;
+        let url;
+        // Montando a URL de requisição com os parâmetros de paginação, categoria e país
+        if (selectedCountry) {
+            url = `${baseUrl}/country/${selectedCountry}?limit=${limit}&page=${page}`;
+        } else if (selectedCategory) {
+            url = `${baseUrl}/category/${selectedCategory}?limit=${limit}&page=${page}`;
+        } else {
+            url = `${baseUrl}?limit=${limit}&page=${page}`; // Para carregar todos os canais
+        }
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
-            displayFilms(data.data); // Chama a função para exibir filmes
-            updatePagination(data.totalPages, page); // Atualiza a paginação
+            displayChannels(data.data); // Chama a função para exibir canais
+            updatePagination(Math.ceil(data.totalItems / limit), page); // Atualiza a paginação
         } else {
             console.error(data.message);
         }
     } catch (error) {
-        console.error('Erro ao carregar filmes:', error);
+        console.error('Erro ao carregar canais:', error);
     } finally {
         hideLoading();
     }
 }
 
-// Função para exibir filmes no HTML
-function displayFilms(films) {
-    const container = document.getElementById('movies-container');
+// Função para exibir canais no HTML
+function displayChannels(channels) {
+    const container = document.querySelector('.row_Movies');
     if (!container) {
         console.error('Elemento .row_Movies não encontrado');
         return;
@@ -50,31 +69,32 @@ function displayFilms(films) {
     // Limpar conteúdo existente
     container.innerHTML = '';
 
-    // Loop para adicionar cada filme ao container
-    films.forEach(film => {
-        const filmHTML = `
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+    // Loop para adicionar cada canal ao container
+    channels.forEach(channel => {
+        const channelHTML = `
+            <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
-                            <img src="${film.thumb}" alt="${film.title}" loading="lazy">
+                            <img src="${channel.thumb}" alt="${channel.title}">
                             <div class="gen-movie-add">
-                                <!-- Ações do filme como curtidas, compartilhamento, etc. -->
+                                <!-- Ações do canal como curtidas, compartilhamento, etc. -->
                             </div>
                             <div class="gen-movie-action">
-                                <a href="single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
+                                <a href="single-tv.html?id=${channel.id}&title=${channel.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="gen-info-contain">
                             <div class="gen-movie-info">
-                                <h3><a href="single-tv.html?id=${film.id}&title=${film.title}">${film.title}</a></h3>
+                                <h3><a href="single-tv.html?id=${channel.id}&title=${channel.title}">${channel.title}</a></h3>
                             </div>
                             <div class="gen-movie-meta-holder">
                                 <ul>
-                                    <li>${film.duration || 'Duração Indisponível'}</li>
-                                    <li><a href="genre.html?genre=N/A"><span>Gênero Indisponível</span></a></li>
+                                    <li>${channel.language}</li>
+                                    <li>${channel.country}</li>
+                                    <li><a href="genre.html?genre=${channel.category[0]}"><span>${channel.category[0] || 'N/A'}</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -82,16 +102,29 @@ function displayFilms(films) {
                 </div>
             </div>
         `;
-        container.insertAdjacentHTML('beforeend', filmHTML);
+        container.insertAdjacentHTML('beforeend', channelHTML);
     });
 }
 
-// Função para capturar cliques nos links de gênero
-document.querySelectorAll('.genre-link').forEach(link => {
+// Função para capturar cliques nos links de categoria
+document.querySelectorAll('.category-link').forEach(link => {
     link.addEventListener('click', function (event) {
         event.preventDefault();
-        currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
-        loadFilms(currentPage); // Carrega filmes do gênero selecionado
+        const selectedCategory = this.getAttribute('data-category');
+        currentPage = 1; // Reinicia a página para 1 ao mudar a categoria
+        loadChannels(currentPage, selectedCategory); // Carrega canais da categoria selecionada
+        window.location.href = "#gen-section-padding-3"; // Rolagem para a seção
+    });
+});
+
+// Função para capturar cliques nos links de país
+document.querySelectorAll('.country-link').forEach(link => {
+    link.addEventListener('click', function (event) {
+        event.preventDefault();
+        const selectedCountry = this.getAttribute('data-country');
+        currentPage = 1; // Reinicia a página para 1 ao mudar o país
+        loadChannels(currentPage, category, selectedCountry); // Carrega canais do país selecionado
+        window.location.href = "#gen-section-padding-3"; // Rolagem para a seção
     });
 });
 
@@ -108,12 +141,12 @@ function updatePagination(totalPages, currentPage) {
 
     // Adicionar botão para "Primeira Página"
     if (currentPage > 1) {
-        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">First</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">Primeira</a></li>`;
     }
 
     // Adicionar botão de página anterior
     if (currentPage > 1) {
-        paginationContainer.innerHTML += `<li><a class="prev page-numbers" id='prevPage' href="#">Prev</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="prev page-numbers" id='prevPage' href="#">Anterior</a></li>`;
     }
 
     // Mostrar no máximo 5 páginas ao redor da página atual
@@ -138,12 +171,12 @@ function updatePagination(totalPages, currentPage) {
 
     // Adicionar botão de próxima página
     if (currentPage < totalPages) {
-        paginationContainer.innerHTML += `<li><a class="next page-numbers" id='nextPage' href="#">Next</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="next page-numbers" id='nextPage' href="#">Próxima</a></li>`;
     }
 
     // Adicionar botão para "Última Página"
     if (currentPage < totalPages) {
-        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="${totalPages}">Last</a></li>`;
+        paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="${totalPages}">Última</a></li>`;
     }
 
     // Adicionar eventos para os botões de paginação
@@ -153,11 +186,14 @@ function updatePagination(totalPages, currentPage) {
             const page = event.target.getAttribute('data-page');
 
             if (page) {
-                loadFilms(parseInt(page));
+                loadChannels(parseInt(page));
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Rolagem suave para o topo da página
             } else if (event.target.id === 'prevPage') {
                 prevPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (event.target.id === 'nextPage') {
                 nextPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     });
@@ -166,15 +202,15 @@ function updatePagination(totalPages, currentPage) {
 // Funções para Paginação
 function nextPage() {
     currentPage++;
-    loadFilms(currentPage);
+    loadChannels(currentPage);
 }
 
 function prevPage() {
     if (currentPage > 1) {
         currentPage--;
-        loadFilms(currentPage);
+        loadChannels(currentPage);
     }
 }
 
-// Carregar os filmes na primeira vez que a página é aberta com o gênero capturado da URL
-loadFilms(currentPage);
+// Carregar os canais na primeira vez que a página é aberta com a categoria e país capturados da URL
+loadChannels(currentPage); // Carrega os canais inicialmente com a categoria e país

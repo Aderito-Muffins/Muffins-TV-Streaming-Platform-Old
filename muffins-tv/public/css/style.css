@@ -472,9 +472,18 @@ select.form-control {
 Section 
 ==============================================*/
 
+
+
+
+
+
+
+
+
+
 section,
 .gen-section-padding {
-    padding: 130px 0px 130px 0px;
+    padding: 10px 0px 10px 0px;
 }
 
 .gen-section-padding-2 {
@@ -1281,6 +1290,14 @@ form#pms_edit-profile-form.pms-form ul.pms-form-fields-wrapper li:nth-child(6) {
         text-align: center;
     }
 }
+
+.nav-link:focus,
+.nav-link.active {
+  color: --primary-color; /* Cor do texto ao focar *//* Cor de fundo ao focar */
+  outline: none; /* Remove o contorno padrão */
+}
+
+
 
 
 /*================================================
@@ -6228,11 +6245,69 @@ Banner 3
 /*================================================
 Play Button
 ================================================*/
+
+.gen-front-anime-image {
+    position: relative;
+    display: flex;
+    border-radius: 10px; /* Alinhamento central */
+    justify-content: center;
+    align-items: center;
+    width: 40%; /* Ajuste o tamanho da imagem conforme necessário */
+    margin: 0 auto;
+}
+
+.gen-front-anime-image img{
+    border-radius: 10px; /* Alinhamento central */
+}
+
+
+.gen-front-anime-image:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--dark-color);
+    opacity: 0.4;
+    border-radius: 10px; /* Bordas arredondadas para um visual elegante */
+}
+
+.gen-front-anime-image a {
+    margin: auto;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gen-front-anime-image a svg {
+    height: 70px; /* Reduz o tamanho do ícone */
+    width: auto;
+}
+
+.gen-front-anime-image a span {
+    font-family: var(--title-fonts);
+    color: var(--white-color);
+    margin-top: 15px;
+    font-size: 18px; /* Tamanho de fonte reduzido */
+    display: block;
+    text-align: center; /* Centraliza o texto */
+}
+
+
+
+
+
+
 .gen-front-image {
     position: relative;
     display: inline-block;
     width: 100%;
 }
+
+
 
 .gen-front-image:before {
     content: "";
@@ -6245,6 +6320,8 @@ Play Button
     background: var(--dark-color);
     opacity: 0.4;
 }
+
+
 
 .gen-front-image a {
     margin: auto;

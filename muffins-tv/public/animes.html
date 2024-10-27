@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Meta tags de SEO -->
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="author" content="MUFFINS TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" 
+        content="
+            default-src *;
+            script-src * 'unsafe-inline' 'unsafe-eval';
+            style-src * 'unsafe-inline';
+            font-src *;
+            connect-src *;
+            img-src * data:;
+            media-src *;
+            object-src 'none';
+            frame-ancestors 'none';
+            worker-src * 'self' blob:;
+            child-src *;
+        ">
+
+    <title>MUFFINS TV - Filmes, Series e Animes</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <!-- CSS bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/load.css" />
+</head>
+
+<body>
+    <!--==================== Loader =======================-->
+    <div id="gen-loading">                                   
+        <div id="gen-loading-center">                         
+            <img src="images/m.png" alt="loading">        
+        </div>                                                 
+    </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!--====================== Loader ======================-->
+
+    <div id="error-container" class="error-container" style="display: none;">
+        <div class="error-message">
+            <span class="error-text"></span>
+            <button class="close-button">x</button>
+        </div>
+    </div>
+
+
+    <div class="content-container"></div>
+    <!--========== Header ==============-->
+    <!-- Banner Start -->
+    <!-- <section class="pt-0 pb-0">
+        <div class="container-fluid px-0">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="gen-banner-movies banner-style-2">
+                        <div id="movie-carousel" class="owl-carousel owl-loaded owl-drag"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Banner End -->
+
+    <!-- Section-1 Start -->
+    <!-- <section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">Actuais & Mais assistidos</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                    <div class="gen-movie-action text-right">
+                        <a href="movies-pagination.html?genre=Action" class="gen-button gen-button-flat">
+                            <span class="text">Ver Mais</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-theme" id="all-time-hits-carousel" 
+                            data-dots="false" data-nav="true"
+                            data-desk_num="4" data-lap_num="3" 
+                            data-tab_num="2" data-mob_num="1" 
+                            data-mob_sm="1" data-autoplay="false" 
+                            data-loop="false" data-margin="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+    <!-- Melhor Programas de TV Section -->
+    <!-- <section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">Melhores Programas de TV</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                    <div class="gen-movie-action text-right">
+                        <a href="tv-pagination.html" class="gen-button gen-button-flat">
+                            <span class="text">Ver Mais</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-theme" id="tv-carousel" data-dots="false" data-nav="true"
+                            data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1"
+                            data-mob_sm="1" data-autoplay="false" data-loop="false" data-margin="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Histórico de Filmes Assistidos -->
+    <!-- <section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="gen-heading-title">Histórico de filmes assistidos</h4>
+                    <div class="gen-movie-action text-right">
+                        <a href="library.html" class="gen-button gen-button-flat">
+                            <span class="text">Ver Mais</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-theme" id="movieshistory-carousel" 
+                            data-dots="false" data-nav="true"
+                            data-desk_num="4" data-lap_num="3" 
+                            data-tab_num="2" data-mob_num="1" 
+                            data-mob_sm="1" data-autoplay="false" 
+                            data-loop="false" data-margin="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Images Carousel -->
+    <!-- <section class="pt-0 gen-section-padding-2 home-single-slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="gen-banner-movies">
+                        <div class="owl-carousel owl-loaded owl-drag" id="addPost" data-dots="true" data-nav="false" 
+                            data-desk_num="1" data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" 
+                            data-autoplay="true" data-loop="true" data-margin="30">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Back-to-Top -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+
+    <!-- JavaScript -->
+
+      
+   <script src="js/jquery-3.6.0.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script src="js/owl.carousel.min.js"></script>
+   <script src="js/script.js"></script>
+   <script src="js/header.js"></script>
+   <script type="text/javascript" src="js/animehome.js"></script>
+
+    <!-- Inline CSS -->
+    <!-- <style>
+        .gen-tv-img img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px;
+        }
+        .ad-container {
+            max-width: 100%;
+            height: auto;
+            position: relative;
+        }
+        .ad-container iframe {
+            width: 100%;
+            height: auto;
+        }
+    </style> -->
+
+</body>
+</html>

@@ -68,7 +68,7 @@ body {
     width: 100%; /* Largura completa do contêiner */
     height: auto; /* Mantém a proporção da imagem */
     object-fit: cover; /* Cobre a área do contêiner */
-    border-radius: 8px; /* Bordas arredondadas */
+    border-radius: 5px; /* Bordas arredondadas */
     display: block; /* Para alinhamento adequado */
     margin: 0 auto; /* Centraliza a imagem */
 }
@@ -104,11 +104,11 @@ body {
     }
 
     .gen-movie-img img {
-        max-height: 160px; /* Altura máxima para celulares */
+        max-height: 480px; /* Altura máxima para celulares */
     }
 
     .gen-tv-img img {
-        max-height: 100px; /* Altura máxima para celulares */
+        max-height: 150px; /* Altura máxima para celulares */
     }
 
     .gen-info-contain {
@@ -137,7 +137,7 @@ body {
     }
 
     .gen-movie-img img {
-        max-height: 240px; /* Altura máxima para tablets */
+        max-height: 350px; /* Altura máxima para tablets */
     }
     .gen-tv-img img {
         max-height: 160px; /* Altura máxima para celulares */
@@ -164,7 +164,7 @@ body {
     }
 
     .gen-movie-img img {
-        max-height: 200px; /* Altura máxima para celulares */
+        max-height: 500px; /* Altura máxima para celulares */
     }
 
     .gen-info-contain {
