@@ -134,7 +134,7 @@
         async function fetchWatchedFilms() {
             showLoading(); // Exibe o loader ao iniciar a requisição
             try {
-                const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/all/watched', {
+                const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/films/all/watched', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token') // Inclui o token de autenticação

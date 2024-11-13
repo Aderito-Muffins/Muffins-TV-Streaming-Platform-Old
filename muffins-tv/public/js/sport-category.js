@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.button-text').textContent = 'Loading...';
 
             // Faz requisição para sua API usando o ID
-            const response = await fetch(`https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/sports/category/list/${categoryId}&limit=${limit}&offset=${offset}`);
+            const response = await fetch(`https://app.muffinstv.wuaze.com/muffins/v1/sports/category/list/${categoryId}&limit=${limit}&offset=${offset}`);
             const result = await response.json();
 
             if (result.code === 0 && result.data) {

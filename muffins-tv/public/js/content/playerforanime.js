@@ -1,7 +1,15 @@
-const baseUrl = "http://localhost:3000/muffins/v1";
+const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1";
 let StrangeUrl;
 let serverId = null;
 let epNumber = null;
+
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex';
+}
+
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
 
 const paymentModal = document.getElementById('paymentModal');
 const closeModal = document.getElementById('closeModal');
@@ -9,6 +17,7 @@ const closeModal = document.getElementById('closeModal');
 document.addEventListener("DOMContentLoaded", loadSeasonsAndEpisodes);
 
 async function loadSeasonsAndEpisodes() {
+    showLoading() 
     try {
         const urlParams = new URLSearchParams(window.location.search);
         const animeId = urlParams.get('animeId');
@@ -39,7 +48,10 @@ async function loadSeasonsAndEpisodes() {
         setupVideoPlayer();
     } catch (error) {
         console.error("Erro ao carregar temporadas e episódios:", error);
+    }finally {
+        hideLoading(); // Garante que o loading será escondido
     }
+ 
 }
 
 async function fetchAnimeData(animeId) {
@@ -53,6 +65,13 @@ function updateAnimeInfo(animeData) {
     const genresList = genres || "NULL";
     const runtimeValue = runtime || "0";
     const premieredValue = premiered || "NULL";
+    const moviePlayer = document.getElementById('movie-player');
+    moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
+
+    const videoHolder = document.getElementById('gen-video-holder');
+    if (videoHolder) {
+        videoHolder.style.backgroundImage = `url(${poster})`;
+    }
 
     document.querySelector(".gen-single-tv-show-info").innerHTML += `
         <h2 class="gen-title">${title}</h2>
@@ -99,7 +118,7 @@ async function createSeasonItems(seasons, activeAnimeId) {
                             </div>
                         </div>
                         <div class="gen-info-contain">
-                            <h3><a href="#">${season.title}</a></h3>
+                            <h6><a href="#">${season.title}</a></h3>
                         </div>
                     </div>
                 </div>
@@ -140,6 +159,9 @@ async function loadEpisodes(anime) {
 async function loadServers(epNumber) {
     try {
         const id = new URLSearchParams(new URL(StrangeUrl).search).get('id');
+        if (!epNumber) {
+            return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
+        }
         const serversResponse = await fetch(`${baseUrl}/anime/list/servers/${id}?ep=${epNumber}`);
         console.log(serversResponse)
         if (!serversResponse.ok) throw new Error('Erro ao carregar os servidores');
@@ -149,12 +171,91 @@ async function loadServers(epNumber) {
         return `
                     ${serversData.data.map(server => `
                         <div class="col">
-                        <button class="gen-button2" data-id="${server.id} onclick="">${server.name} ${server.lang}</button>
+                        <button class="gen-button2" data-id="${server.id}" onclick="watchAnime(${server.id})">${server.name} ${server.lang}</button>
                     </div>
                     `).join('')}`;
     } catch (error) {
         console.error("Erro ao carregar os servidores:", error);
         return `<div class="error-message">Erro ao carregar os servidores</div>`;
+    }
+}
+
+function displayError(message) {
+    hideLoading() 
+    const errorContainer = document.getElementById('error-container');
+    const errorText = errorContainer.querySelector('.error-text');
+    const closeButton = errorContainer.querySelector('.close-button');
+
+    // Define o texto da mensagem de erro
+    errorText.textContent = message;
+
+    // Exibe o container de erro
+    errorContainer.style.display = 'block';
+
+    // Fecha automaticamente após 4 segundos (4000 ms)
+    setTimeout(function () {
+        errorContainer.style.display = 'none';
+    }, 4000);
+
+    // Adiciona evento de clique ao botão de fechar
+    closeButton.addEventListener('click', function () {
+        errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
+    });
+}
+
+async function watchAnime(serverId) {
+    showLoading() 
+    const token = localStorage.getItem('token');
+    
+    // Verifica se o token existe
+    if (!token) {
+        displayError('Você precisa estar logado para assistir ao anime.');
+        return; // Para a execução se não houver token
+    }
+
+    try {
+        const response = await fetch(`${baseUrl}/anime/watch/${serverId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        // Converte a resposta para JSON
+        const data = await response.json();
+
+        // Verifica se a resposta da API foi ok
+        if (data.code !== 0) {
+            // Chama a função displayError se a requisição falhar
+            displayError(data.message); 
+            return; // Para a execução se a resposta não for ok
+        }
+
+        console.log(data);
+        const animeLink = data.media_Url;
+
+        // Redireciona o usuário para o proxy que adiciona os headers
+        window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+
+        // window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+
+    } catch (error) {
+        console.error('Erro ao assistir anime:', error);
+
+        // Se o erro tiver um status específico (por exemplo, se você receber um erro de rede),
+        // você pode querer exibir uma mensagem mais específica.
+        if (error instanceof TypeError) {
+            displayError('Ocorreu um erro de rede. Verifique sua conexão e tente novamente.');
+        } else if (error.message) {
+            // Se o erro tiver uma mensagem, exiba-a
+            displayError(`Erro: ${error.message}`);
+        } else {
+            // Mensagem padrão se não houver mensagem específica
+            displayError('Ocorreu um erro ao tentar assistir ao anime. Tente novamente mais tarde.');
+        }
+    } finally {
+        hideLoading(); // Garante que o loading será escondido
     }
 }
 
@@ -249,16 +350,6 @@ function setupVideoPlayer() {
         }
     }
 }
-
-// Armazenando o ID do servidor selecionado
-document.addEventListener("click", (event) => {
-    if (event.target.classList.contains("server-name")) {
-        serverId = event.target.getAttribute("data-id");
-        localStorage.setItem("selectedServerId", serverId);
-        console.log("Server ID armazenado:", serverId);
-    }
-});
-
 
 // Evento de clique no botão "Assistir Filme"
 const watchMovieButton = document.getElementById('watch-movie-btn');

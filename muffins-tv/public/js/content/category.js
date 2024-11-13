@@ -1,4 +1,4 @@
-const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/films/search'; // Substitua pela URL real da sua API
+const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/anime/list/category'; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
@@ -17,7 +17,7 @@ function hideLoading() {
 // Função para capturar o parâmetro "genre" da URL
 function getGenreFromURL() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('s');
+    return params.get('genre');
 }
 
 // Função para carregar filmes com base nos parâmetros de página e gênero
@@ -26,14 +26,14 @@ async function loadFilms(page = 1, selectedGenre = genre) {
     showLoading();
     try {
         // Montando a URL de requisição com os parâmetros de paginação e gênero
-        const url = `${baseUrl}?title=${genre}&limit=${limit}&page=${page}`;
+        const url = `${baseUrl}?limit=${limit}&page=${page}`;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
-            displayFilms(data.data.films); // Chama a função para exibir filmes
+            displayFilms(data.data); // Chama a função para exibir filmes
             updatePagination(Math.ceil(data.data.total / limit), page); // Atualiza a paginação
         } else {
             console.error(data.message);
@@ -47,7 +47,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
 
 // Função para exibir filmes no HTML
 function displayFilms(films) {
-    const container = document.querySelector('.movie-results');
+    const container = document.querySelector('.categories-container');
     if (!container) {
         console.error('Elemento .row_Movies não encontrado');
         return;
@@ -59,33 +59,14 @@ function displayFilms(films) {
     // Loop para adicionar cada filme ao container
     films.forEach(film => {
         const filmHTML = `
-            <div class="col-xl-3 col-lg-4 col-md-6">
-                <div class="gen-carousel-movies-style-3 movie-grid style-3">
-                    <div class="gen-movie-contain">
-                        <div class="gen-movie-img">
-                            <img src="${film.cover}" alt="${film.title}">
-                            <div class="gen-movie-add">
-                                <!-- Ações do filme como curtidas, compartilhamento, etc. -->
-                            </div>
-                            <div class="gen-movie-action">
-                                <a href="single-movie.html?id=${film.externalId}" class="gen-button">
-                                    <i class="fa fa-play"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="gen-info-contain">
-                            <div class="gen-movie-info">
-                                <h3><a href="single-movie.html?id=${film.externalId}">${film.title}</a></h3>
-                            </div>
-                            <div class="gen-movie-meta-holder">
-                                <ul>
-                                    <li>${film.duration}</li>
-                                    <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="anime-explore-container">
+                <ul class="anime">
+                    <li class="anime-item">
+                        <a href="/animes/category.html?id=${film.id}" aria-current="page">
+                            <span>${film.name}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         `;
         container.insertAdjacentHTML('beforeend', filmHTML);
@@ -99,6 +80,7 @@ document.querySelectorAll('.genre-link').forEach(link => {
         const selectedGenre = this.getAttribute('data-genre');
         currentPage = 1; // Reinicia a página para 1 ao mudar o gênero
         loadFilms(currentPage, selectedGenre); // Carrega filmes do gênero selecionado
+        window.location.href = "#gen-section-padding-3";
     });
 });
 
@@ -117,6 +99,7 @@ function updatePagination(totalPages, currentPage) {
     if (currentPage > 1) {
         paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">First</a></li>`;
     }
+
 
     // Adicionar botão de página anterior
     if (currentPage > 1) {
@@ -161,13 +144,17 @@ function updatePagination(totalPages, currentPage) {
 
             if (page) {
                 loadFilms(parseInt(page));
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Rolagem suave para o topo da página
             } else if (event.target.id === 'prevPage') {
                 prevPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             } else if (event.target.id === 'nextPage') {
                 nextPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         });
     });
+
 }
 
 // Funções para Paginação

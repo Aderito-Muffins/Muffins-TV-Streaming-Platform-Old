@@ -87,11 +87,11 @@
       <div class="container">
          <div class="row">
             <div class="col-xl-6 col-lg-6 col-md-6">
-               <h4 class="gen-heading-title">Actuais & Mais assistidos</h4>
+               <h4 class="gen-heading-title">Animes</h4>
             </div>
             <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
                <div class="gen-movie-action text-right">
-                  <a href="movies-pagination.html?genre=Action" class="gen-button gen-button-flat">
+                  <a href="/animes.html" class="gen-button gen-button-flat">
                      <span class="text">Ver Mais</span>
                   </a>
                </div>
@@ -100,7 +100,7 @@
          <div class="row mt-3">
             <div class="col-12">
                <div class="gen-style-2">
-                  <div class="owl-carousel owl-theme" id="all-time-hits-carousel" 
+                  <div class="owl-carousel owl-theme" id="animes-carrousel" 
                        data-dots="false" data-nav="true"
                        data-desk_num="4" data-lap_num="3" 
                        data-tab_num="2" data-mob_num="1" 
@@ -222,113 +222,6 @@
    <script src="js/script.js"></script>
    <script src="js/content.js"></script>
    <script src="js/header.js"></script>
-   <script>
-    const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/list-ads'; // Substitua pela URL real da sua API
-
-    // Função para mostrar e ocultar o loader
-    // function showLoading() {
-    //     document.querySelector('.loader-container').style.display = 'flex';
-    // }
-
-    // function hideLoading() {
-    //     document.querySelector('.loader-container').style.display = 'none';
-    // }
-
-    // Função para carregar anúncios
-    async function loadAds() {
-  try {
-      // Fazendo a requisição para a API
-      const response = await fetch(baseUrl);
-      const data = await response.json();
-
-      if (data.code === 0) {
-          displayAds(data.ads); // Chama a função para exibir anúncios
-      } else {
-          console.error(data.message);
-      }
-  } catch (error) {
-      console.error('Erro ao carregar anúncios:', error);
-  }
-}
-
-// Função para exibir anúncios no HTML
-function displayAds(ads) {
-  const container = document.querySelector('#addPost');
-  if (!container) {
-      console.error('Elemento .owl-carousel não encontrado');
-      return;
-  }
-
-  // Limpar conteúdo existente
-  container.innerHTML = '';
-
-  // Variável para controlar o carregamento das imagens
-  let imagesLoaded = 0;
-
-  // Função para inicializar o carrossel quando todas as imagens forem carregadas
-  function initializeCarousel() {
-      if (imagesLoaded === ads.length) {
-          // Inicializar o Owl Carousel após adicionar o conteúdo
-          $('#addPost').owlCarousel({
-              items: 1,
-              dots: true,
-              nav: false,
-              autoplay: true,
-              loop: true,
-              margin: 30
-          });
-      }
-  }
-
-  // Loop para adicionar cada anúncio ao container
-  ads.forEach(ad => {
-      const adHTML = `
-      <div class="item" style="background-image: url(${ad.imageUrl})">
-          <div class="gen-movie-contain h-100">
-              <div class="container h-100">
-                  <div class="row align-items-center h-100">
-                      <div class="col-xl-6">
-                          <div class="gen-movie-info">
-                              <h3>${ad.title}</h3>
-                          </div>
-                          <div class="gen-movie-meta-holder">
-                              <p>${ad.description}</p>
-                          </div>
-                          <div class="gen-movie-action">
-                              <div class="gen-btn-container">
-                                  <a href="${ad.link}" class="gen-button gen-button-dark">
-                                      <span class="text">VER MAIS</span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      `;
-
-      container.insertAdjacentHTML('beforeend', adHTML);
-
-      // Adicionar evento de carregamento para garantir que a imagem foi carregada
-      const img = new Image();
-      img.src = ad.imageUrl;
-      img.onload = function () {
-          imagesLoaded++;
-          initializeCarousel();
-      };
-      img.onerror = function () {
-          console.error('Erro ao carregar a imagem:', ad.imageUrl);
-          imagesLoaded++;
-          initializeCarousel();
-      };
-  });
-}
-
-// Carregar os anúncios na primeira vez que a página é aberta
-loadAds();
-
- </script>
 
 </body>
 </html>

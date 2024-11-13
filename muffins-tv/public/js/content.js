@@ -6,7 +6,6 @@ function hideLoading() {
     document.querySelector('.loader-container').style.display = 'none'; // Oculta o loader
 }
 
-
 document.addEventListener("DOMContentLoaded", async function () {
     let offset = 0;
     let limit = 13;
@@ -96,69 +95,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         }).join('');
     }
 
-    function createAllTimeHitsItems(films) {
-        if (!Array.isArray(films)) {
-            console.error('O objeto de filmes não é um array:', films);
-            return '';
-        }
-        return films.map(film => `
-        <div class="item">
-            <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-${film.type.toLowerCase()}">
-                <div class="gen-carousel-movies-style-2 movie-grid style-2">
-                    <div class="gen-movie-contain">
-                        <div class="gen-movie-img">
-                            <img src="${film.thumb}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
-                                <ul class="menu bottomRight">
-                                    <li class="share top">
-                                        <i class="fa fa-share-alt"></i>
-                                        <ul class="submenu">
-                                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
-                                            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="movie-actions--link_add-to-playlist dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
-                                    <div class="dropdown-menu mCustomScrollbar">
-                                        <div class="mCustomScrollBox">
-                                            <div class="mCSB_container">
-                                                <a class="login-link" href="register.html">Sign in to add this movie to a playlist.</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="gen-movie-action">
-                                <a href="/single-movie.html?id=${film.externalId}" class="gen-button">
-                                    <i class="fa fa-play"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="gen-info-contain">
-                            <div class="gen-movie-info">
-                                <h3><a href="#">${film.title}</a></h3>
-                            </div>
-                            <div class="gen-movie-meta-holder">
-                                <ul>
-                                    <li>${film.duration}</li>
-                                    <li><a href="#"><span>${film.hd_mode}</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        `).join('');
-    }
-
     function createMoviesHistory(films) {
         if (!Array.isArray(films)) {
             console.error('O objeto de filmes não é um array:', films);
@@ -220,6 +156,73 @@ document.addEventListener("DOMContentLoaded", async function () {
             </div>
         </div>
         `).join('');
+    }
+
+    function createAdBanner(films) {
+        if (!Array.isArray(films)) {
+            console.error('O objeto de filmes não é um array:', films);
+            return '';
+        }
+        return films.map(ad => `
+        <div class="item" style="background-image: url(${ad.imageUrl})">
+        <div class="gen-movie-contain h-100">
+            <div class="container h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-xl-6">
+                        <div class="gen-movie-info">
+                            <h3>${ad.title}</h3>
+                        </div>
+                        <div class="gen-movie-meta-holder">
+                            <p>${ad.description}</p>
+                        </div>
+                        <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                                <a href="${ad.link}" class="gen-button gen-button-dark">
+                                    <span class="text">VER MAIS</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        `).join('');
+    }
+
+    function createCarouselAnimes(posts) {
+        const limitedPosts = posts.slice(0, 10);
+        return limitedPosts.map(post => `
+            <div class="item">
+                <div class="movie type-movie status-publish has-post-thumbnail hentry ">
+                    <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                        <div class="gen-movie-contain">
+                            <div class="gen-movie-img position-relative">
+                                <img src="${post.poster}" alt="Movie Thumbnail" class="img-fluid">
+                                ${post.age === "18+" ? `
+                                    <div class="age-label position-absolute top-0 start-0 bg-danger text-white fw-bold p-1 rounded" style="margin: 10px;">
+                                        +18
+                                    </div>` : ''}
+                                <div class="gen-movie-add">
+                                    <div class="wpulike wpulike-heart">
+                                        <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+                                            <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="gen-movie-action">
+                                    <a href="/single-episode.html?animeId=${post.id}&title=${post.title}" class="gen-button">
+                                        <i class="fa fa-play"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        `
+    ).join('');
     }
 
     function createTvItems(films) {
@@ -323,12 +326,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
     
-    
 
-    async function loadMovies(url, callback) {
+    async function loadHomeContent(url, callback) {
         const data = await fetchAndProcessData(url);
         if (data) callback(data);
     }
+    
 
     function updateDOM(elementId, htmlContent, carouselOptions) {
         const element = document.querySelector(elementId);
@@ -340,46 +343,25 @@ document.addEventListener("DOMContentLoaded", async function () {
         }
     }
 
-    function updateCarousel(movies) {
-        const allTimeHitsHtml = createAllTimeHitsItems(movies);
-        updateDOM("#all-time-hits-carousel", allTimeHitsHtml, {
-            loop: true,
-            dots: false,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 6000,
-            margin: 30,
-            responsive: {
-                0: { items: 1, nav: true },
-                576: { items: 2, nav: false },
-                768: { items: 3, nav: true, loop: true },
-                992: { items: 4, nav: true, loop: true },
-                1200: { items: 5, nav: true, loop: true }
-            }
-        });
-    }
 
-    function updateHistoryCarousel(movies) {
-        const allTimeHitsHtml = createMoviesHistory(movies);
-        updateDOM("#movieshistory-carousel", allTimeHitsHtml, {
-            loop: true,
-            dots: false,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 6000,
-            margin: 30,
-            responsive: {
-                0: { items: 1, nav: true },
-                576: { items: 2, nav: false },
-                768: { items: 3, nav: true, loop: true },
-                992: { items: 4, nav: true, loop: true },
-                1200: { items: 5, nav: true, loop: true }
-            }
-        });
-    }
-
-    function updateTvCarousel(movies) {
-        const tvItems = createTvItems(movies);
+    function updateHomePage(content) {
+        const homeBanner = content.featured;
+        const watched = content.sections.watched.posts;
+        const tvshows = content.sections.tvs.posts;
+        const adsBanner = content.sections.ads.posts;
+        const anime = content.sections.animes.posts;
+    
+        // Configuração padrão para os carrosséis responsivos
+        const defaultResponsive = {
+            0: { items: 1, nav: true },
+            576: { items: 2, nav: false },
+            768: { items: 3, nav: true, loop: true },
+            992: { items: 4, nav: true, loop: true },
+            1200: { items: 5, nav: true, loop: true }
+        };
+    
+        // Atualização da seção de séries de TV
+        const tvItems = createTvItems(tvshows);
         updateDOM("#tv-carossel", tvItems, {
             loop: true,
             dots: false,
@@ -387,18 +369,22 @@ document.addEventListener("DOMContentLoaded", async function () {
             autoplay: true,
             autoplayTimeout: 6000,
             margin: 30,
-            responsive: {
-                0: { items: 1, nav: true },
-                576: { items: 2, nav: false },
-                768: { items: 3, nav: true, loop: true },
-                992: { items: 4, nav: true, loop: true },
-                1200: { items: 5, nav: true, loop: true }
-            }
+            responsive: defaultResponsive
         });
-    }
 
-    function updateBannerCarousel(data) {
-        const carouselHtml = createCarouselItems(data);
+        const animeItem = createCarouselAnimes(anime);
+        updateDOM("#animes-carrousel", animeItem, {
+            loop: true,
+            dots: false,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            margin: 30,
+            responsive: defaultResponsive
+        });
+    
+        // Atualização do banner principal (destaques)
+        const carouselHtml = createCarouselItems(homeBanner);
         updateDOM("#movie-carousel", carouselHtml, {
             loop: true,
             dots: false,
@@ -410,31 +396,43 @@ document.addEventListener("DOMContentLoaded", async function () {
             animateIn: 'fadeIn',
             animateOut: 'fadeOut'
         });
+    
+        // Atualização da seção de filmes assistidos
+        const allTimeHitsHtml = createMoviesHistory(watched);
+        updateDOM("#movieshistory-carousel", allTimeHitsHtml, {
+            loop: true,
+            dots: false,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 6000,
+            margin: 30,
+            responsive: defaultResponsive
+        });
+    
+        // Atualização do carrossel de anúncios
+        const adBanner = createAdBanner(adsBanner);
+        updateDOM("#addPost", adBanner, {
+            items: 1,
+            dots: true,
+            nav: false,
+            autoplay: true,
+            loop: true,
+            margin: 30
+        });
     }
+    
 
-    async function loadBannerMovies() {
-        const bannerUrl = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/recent?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMovies(bannerUrl, updateBannerCarousel);
+ 
+    async function loadHome() {
+        try {
+            const url = `https://app.muffinstv.wuaze.com/muffins/v1/films/home`;
+            await loadHomeContent(url, updateHomePage);
+        } catch (error) {
+            console.error("Erro ao carregar temporadas e episódios:", error);
+        } finally {
+            hideLoading(); // Garante que o loading será escondido
+        }
     }
-
-    async function loadAllTimeHits() {
-        const url = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/featured?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMovies(url, updateCarousel);
-    }
-
-    async function loadMoviesHistory() {
-        const url = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/watched?limit=12`;
-        loadMovies(url, updateHistoryCarousel);
-    }
-
-    async function loadTv() {
-        const url = `https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/tv/list?limit=${limit}&page=${page}&offset=${offset}`;
-        loadMovies(url, updateTvCarousel);
-    }
-
-    loadBannerMovies();
-    loadAllTimeHits();
-    loadMoviesHistory();
-    loadTv();
-    hideLoading();
+    
+    loadHome();
 });

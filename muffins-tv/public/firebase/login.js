@@ -23,7 +23,7 @@ async function loginUser(email, password) {
   try {
     const bodyData = { email, pass: password };
 
-    const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/login', {
+    const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(bodyData)

@@ -216,8 +216,120 @@
         </div>
     </div>
     <!--=========== Loader =============-->
+    <div id="error-container" class="error-container" style="display: none;">
+        <div class="error-message">
+          <span class="error-text"></span>
+          <button class="close-button">x</button>
+        </div>
+      </div>
+      <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!--=========== Loader =============-->
 
     <!--========== Header ==============-->
+    <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
+        <link rel="stylesheet" href="/css/header.css" />
+        <div class="gen-bottom-header">
+          <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <a class="navbar-brand" href="#">
+                <img class="img-fluid logo" src="/images/m.png" alt="streamlab-image">
+              </a>
+      
+              <!-- Botão responsivo para o menu -->
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+              </button>
+      
+              <!-- Menu colapsável -->
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                  <!-- Menu Início -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/index.html">Início</a>
+                  </li>
+      
+                  <!-- Menu Filmes com gêneros -->
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/animes.html" >Animes</a>
+                  </li>
+      
+                  <!-- Menu Animação -->
+                  <li class="nav-item ">
+                    <a class="nav-link" href="/categories.html">Categorias</a>
+                  </li>
+      
+      
+                  <!-- Menu Programas de TV -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/animes/latest.html">Recentes</a>
+                  </li>
+      
+                       <!-- Menu Programas de TV -->
+                    
+      
+      
+        
+                </ul>
+              </div>
+      
+              <!-- Botão de Pesquisa -->
+              <div class="gen-header-info-box d-flex align-items-center">
+                <div class="gen-menu-search-block">
+                  <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
+                  <div class="gen-search-form" id="search-form" style="display: none;">
+                    <form role="search" method="get" class="search-form" action="#">
+                      <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
+                      <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
+                    </form>
+                  </div>
+                </div>
+      
+              </div>
+            </nav>
+          </div>
+        </div>
+      
+        <style>
+          /* Media Queries para responsividade */
+          @media (max-width: 768px) {
+            .navbar-collapse {
+              text-align: center;
+            }
+      
+            .navbar-nav {
+              flex-direction: column;
+            }
+      
+            .gen-header-info-box {
+              margin-top: 10px;
+              justify-content: center;
+            }
+      
+            .gen-btn-container {
+              margin-top: 10px;
+            }
+      
+            .gen-menu-search-block {
+              margin-left: 15px;
+            }
+          }
+      
+          @media (max-width: 576px) {
+            .gen-header-info-box {
+              flex-direction: column;
+            }
+      
+            .gen-btn-container {
+              margin-top: 5px;
+            }
+      
+          }
+        </style>
+      
+      </header>
     <!--========== Header ==============-->
 
     <!-- Single Video Start -->
@@ -353,7 +465,9 @@
             <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
         </div>
         <!-- Back-to-Top end -->
-
+        <div id="go-to-bottom">
+            <a class="bottom" id="bottom" href="#bottom"> <i class="ion-ios-arrow-down"></i> </a>
+        </div>
         <!-- js-min -->
         <script src="js/jquery-3.6.0.min.js"></script>
         <script src="js/asyncloader.min.js"></script>
@@ -376,10 +490,39 @@
 
         <script src="js/streamlab-core.js"></script>
 
+
+
         <script src="js/script.js"></script>
-        <script src="js/header.js"></script>
         <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
         <script src="js/content/playerforanime.js"></script>
+        <script>
+          // Mover o formulário de pesquisa
+          const searchForm = document.getElementById('search-form');
+          if (searchForm) {
+            document.body.appendChild(searchForm);
+          }
+      
+          // Configurar o botão de busca e o formulário de pesquisa
+          const searchButton = document.getElementById('gen-search-btn');
+          if (searchButton && searchForm) {
+            searchButton.addEventListener('click', function () {
+              searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
+              searchForm.classList.toggle('active');
+            });
+      
+            // Configurar o comportamento do formulário de pesquisa
+            const searchFormElement = searchForm.querySelector('form');
+            if (searchFormElement) {
+              searchFormElement.addEventListener('submit', function (event) {
+                event.preventDefault(); // Impede o envio padrão do formulário
+                const searchValue = searchFormElement.querySelector('.search-field').value;
+                const searchUrl = `/animes/query.html?s=${encodeURIComponent(searchValue)}`;
+                window.location.href = searchUrl;
+              });
+            }
+          }
+        </script>
+            
 
 
 </body>

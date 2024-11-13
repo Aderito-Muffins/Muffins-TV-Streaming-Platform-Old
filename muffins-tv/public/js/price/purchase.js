@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     showLoading(); // Exibe o loader ao iniciar o carregamento
 
     try {
-        const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/plans/getPlans', {
+        const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/plans/getPlans', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -124,7 +124,7 @@ async function submitPuchase(method, planId, number) {
         showLoading(); // Exibe o loader ao iniciar o pagamento
 
         try {
-            const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/purchase/subscription', {
+            const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/purchase/subscription', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

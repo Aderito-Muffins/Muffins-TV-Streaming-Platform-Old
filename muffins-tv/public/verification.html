@@ -146,7 +146,7 @@ function displaySuccess(message) {
 
         if (code && email) {
             // Exemplo de integração com a sua API
-            fetch(`https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/verify-email?code=${code}&email=${email}`, {
+            fetch(`https://app.muffinstv.wuaze.com/muffins/v1/users/verify-email?code=${code}&email=${email}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

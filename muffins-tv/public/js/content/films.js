@@ -1,4 +1,4 @@
- const baseUrl = 'https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/films/genre'; // Substitua pela URL real da sua API
+ const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/films/genre'; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
@@ -119,6 +119,7 @@ function updatePagination(totalPages, currentPage) {
     if (currentPage > 1) {
         paginationContainer.innerHTML += `<li><a class="page-numbers" href="#" data-page="1">First</a></li>`;
     }
+
 
     // Adicionar botão de página anterior
     if (currentPage > 1) {

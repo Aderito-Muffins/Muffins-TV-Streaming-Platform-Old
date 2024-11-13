@@ -479,34 +479,31 @@ Section
 
 
 
-
-
 section,
 .gen-section-padding {
-    padding: 10px 0px 10px 0px;
+    padding: 40px 0; /* Aumentado para melhorar o espaçamento */
 }
 
 .gen-section-padding-2 {
-    padding: 90px 0px 60px 0px;
+    padding: 100px 0 70px; /* Ajustado para um espaçamento mais generoso */
 }
 
 .gen-section-padding-3 {
-    padding: 90px 0px 90px 0px;
+    padding: 100px 0 100px; /* Igualando os valores superior e inferior para consistência */
 }
 
-@media (max-width:767px) {
-
+@media (max-width: 767px) {
     section,
     .gen-section-padding {
-        padding: 60px 0px 60px 0px;
+        padding: 50px 0; /* Ajustado para um espaçamento mais equilibrado em telas pequenas */
+    }
+
+    .gen-section-padding-3 {
+        padding: 70px 0; /* Aumentado para maior espaçamento em telas pequenas */
     }
 }
 
-@media (max-width:767px) {
-    .gen-section-padding-3 {
-        padding: 60px 0px 60px 0px;
-    }
-}
+
 
 /*========================================= 
 Container 
@@ -602,6 +599,33 @@ Back to Top
     color: var(--white-color);
     border: 1px solid var(--primarydark-color);
 }
+
+/*================================================
+Go to Bottom
+================================================*/
+#go-to-bottom .bottom {
+    position: fixed;
+    bottom: 15px; /* Posiciona o botão um pouco abaixo do 'back-to-top' */
+    right: 30px;
+    margin: 0px;
+    color: var(--white-color);
+    background: var(--primary-color);
+    z-index: 999;
+    border: 1px solid var(--primary-color);
+    font-size: 26px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 0px;
+}
+
+#go-to-bottom .bottom:hover {
+    background: var(--primarydark-color);
+    color: var(--white-color);
+    border: 1px solid var(--primarydark-color);
+}
+
 
 
 /*================================================
@@ -4514,6 +4538,19 @@ Carousel Movies
     padding: 0;
     margin: 0;
     list-style-type: none;
+}
+
+.age-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(255, 0, 0, 0.8); /* Fundo vermelho com opacidade */
+    color: #fff; /* Cor do texto branca */
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    z-index: 10;
 }
 
 .gen-movie-add .menu li {

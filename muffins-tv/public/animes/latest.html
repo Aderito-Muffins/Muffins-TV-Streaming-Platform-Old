@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <!-- Meta tags para compatibilidade com vários navegadores -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Meta tags de SEO -->
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="author" content="MUFFINS TV" />
+
+    <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
+    <meta http-equiv="Content-Security-Policy" 
+    content="
+        default-src *;
+        script-src * 'unsafe-inline' 'unsafe-eval';
+        style-src * 'unsafe-inline';
+        font-src *;
+        connect-src *;
+        img-src * data:;
+        media-src *;
+        object-src 'none';
+        frame-ancestors 'none';
+        worker-src * 'self' blob:;
+        child-src *;
+    ">
+    <title>MUFFINS TV - Filmes, Series e Animes</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- Adicionando o script -->
+
+    <!-- CSS bootstrap-->
+    <!-- CSS bootstrap-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <!--  Style -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!--  Responsive -->
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <link rel="stylesheet" href="/css/load.css" />
+    <link rel="stylesheet" href="/css/tvs.css" />
+</head>
+
+<body>
+
+    <!--=========== Loader =============-->
+    <div id="gen-loading">
+        <div id="gen-loading-center">
+            <img src="/images/m.png" alt="loading">
+        </div>
+    </div>
+    <div class="loader-container">
+        <div class="loader"></div>
+    </div>
+    <!--=========== Loader =============-->
+    <div id="error-container" class="error-container" style="display: none;">
+        <div class="error-message">
+          <span class="error-text"></span>
+          <button class="close-button">x</button>
+        </div>
+      </div>
+      
+    <!--========== Header ==============-->
+    <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
+        <link rel="stylesheet" href="/css/header.css" />
+        <div class="gen-bottom-header">
+          <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <a class="navbar-brand" href="#">
+                <img class="img-fluid logo" src="/images/m.png" alt="streamlab-image">
+              </a>
+      
+              <!-- Botão responsivo para o menu -->
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+              </button>
+      
+              <!-- Menu colapsável -->
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                  <!-- Menu Início -->
+                  <li class="nav-item">
+                    <a class="nav-link" href="/index.html">Início</a>
+                  </li>
+      
+                  <!-- Menu Filmes com gêneros -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link" href="/animes.html" >Animes</a>
+                  </li>
+      
+                  <!-- Menu Animação -->
+                  <li class="nav-item ">
+                    <a class="nav-link" href="/categories.html">Categorias</a>
+                  </li>
+      
+      
+                  <!-- Menu Programas de TV -->
+                  <li class="nav-item active">
+                    <a class="nav-link" href="/animes/latest.html">Recentes</a>
+                  </li>
+      
+                       <!-- Menu Programas de TV -->
+                    
+      
+      
+                  <li class="nav-item d-lg-none"> <!-- Classe d-lg-none para esconder em telas grandes -->
+                    <a class="nav-link" href="/pricing.html">
+                      <div class="gen-button-block">
+                        <span class="gen-button-line-left"></span>
+                        <span class="gen-button-text bt-assine-class" id="text-Plan">Assine</span>
+                      </div>
+                    </a>
+                  </li>
+      
+                  <!-- Menu Conta do Usuário -->
+        
+                </ul>
+              </div>
+      
+              <!-- Botão de Pesquisa -->
+              <div class="gen-header-info-box d-flex align-items-center">
+                <div class="gen-menu-search-block">
+                  <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
+                  <div class="gen-search-form" id="search-form" style="display: none;">
+                    <form role="search" method="get" class="search-form" action="#">
+                      <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
+                      <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
+                    </form>
+                  </div>
+                </div>
+      
+              </div>
+            </nav>
+          </div>
+        </div>
+      
+        <style>
+          /* Media Queries para responsividade */
+          @media (max-width: 768px) {
+            .navbar-collapse {
+              text-align: center;
+            }
+      
+            .navbar-nav {
+              flex-direction: column;
+            }
+      
+            .gen-header-info-box {
+              margin-top: 10px;
+              justify-content: center;
+            }
+      
+            .gen-btn-container {
+              margin-top: 10px;
+            }
+      
+            .gen-menu-search-block {
+              margin-left: 15px;
+            }
+          }
+      
+          @media (max-width: 576px) {
+            .gen-header-info-box {
+              flex-direction: column;
+            }
+      
+            .gen-btn-container {
+              margin-top: 5px;
+            }
+      
+          }
+        </style>
+      
+      </header>
+    <!--========== Header ==============-->
+
+    <!-- breadcrumb -->
+    <div class="gen-breadcrumb" style="background-image: url('/images/background/animes.jpg');">
+      <div class="container rubb32">
+          <div class="row align-items-center">
+              <div class="col-lg-12">
+                  <nav aria-label="breadcrumb">
+                      <div class="gen-breadcrumb-title">
+                          <h1>
+                              Animes Recentes
+                          </h1>
+                      </div>
+                      <div class="gen-breadcrumb-container">
+                          <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="/animes.html"><i
+                                          class="fas fa-home mr-2"></i>Anime - Inicio</a></li>
+                              <li class="breadcrumb-item active">Recentes</li>
+                          </ol>
+                      </div>
+                  </nav>
+              </div>
+          </div>
+      </div>
+  </div>
+    <!-- breadcrumb -->
+
+    <!-- Section-1 Start -->
+    <section class="gen-section-padding-3">
+        <div class="container rubb32">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <!-- Contêiner para os filmes -->
+                        <div class="row row_Movies"> <!-- Certifique-se de que a classe está correta -->
+                            <!-- Conteúdo dos filmes será injetado aqui -->
+                        </div>
+                        
+                        <!-- Paginação -->
+                        <div class="col-lg-12 col-md-12">
+                            <div class="gen-pagination">
+                                <nav aria-label="Page navigation">
+                                    <ul class="page-numbers">
+                                        <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="gen-section-padding-2">
+        <div class="container rubb32">
+           <div class="row">
+              <div class="col-12">
+                 <!-- Código de anúncio -->
+                 <script async="async" data-cfasync="false" src="//pl24563162.cpmrevenuegate.com/f4fb9f4933f9597b8dcbf557ef51641f/invoke.js"></script>
+                 <div id="container-f4fb9f4933f9597b8dcbf557ef51641f"></div>
+              </div>
+           </div>
+        </div>
+     </section>
+
+    <!-- Section-1 End -->
+
+    <!-- footer start -->
+
+    <!-- footer End -->
+
+    <!-- Back-to-Top start -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> 
+            <i class="ion-ios-arrow-up"></i> 
+        </a>
+    </div>
+    
+    <!-- Back-to-Top end -->
+
+    <!-- js-min -->
+    <script>
+        // Exibe o botão de voltar ao topo após o usuário rolar 200px
+        window.onscroll = function() {
+            const backToTop = document.getElementById('back-to-top');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        };
+    </script>
+    
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/asyncloader.min.js"></script>
+    <!-- JS bootstrap -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- owl-carousel -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <!-- counter-js -->
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.counterup.min.js"></script>
+    <!-- popper-js -->
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <!-- Iscotop -->
+    <script src="/js/isotope.pkgd.min.js"></script>
+
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+
+    <script src="/js/slick.min.js"></script>
+
+    <script src="/js/streamlab-core.js"></script>
+
+    <script src="/js/script.js"></script>
+    <script src="js/listLatest.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+     crossorigin="anonymous"></script>
+     <script>
+      // Mover o formulário de pesquisa
+      const searchForm = document.getElementById('search-form');
+      if (searchForm) {
+        document.body.appendChild(searchForm);
+      }
+  
+      // Configurar o botão de busca e o formulário de pesquisa
+      const searchButton = document.getElementById('gen-search-btn');
+      if (searchButton && searchForm) {
+        searchButton.addEventListener('click', function () {
+          searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
+          searchForm.classList.toggle('active');
+        });
+  
+        // Configurar o comportamento do formulário de pesquisa
+        const searchFormElement = searchForm.querySelector('form');
+        if (searchFormElement) {
+          searchFormElement.addEventListener('submit', function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            const searchValue = searchFormElement.querySelector('.search-field').value;
+            const searchUrl = `/animes/query.html?s=${encodeURIComponent(searchValue)}`;
+            window.location.href = searchUrl;
+          });
+        }
+      }
+    </script>
+
+
+</body>
+
+</html>

@@ -1,10 +1,10 @@
-// Função para exibir e ocultar o loader
-// function showLoading() {
-//     document.querySelector('.loader-container').style.display = 'flex';
-// }
-// function hideLoading() {
-//     document.querySelector('.loader-container').style.display = 'none';
-// }
+
+function showLoading() {
+    document.querySelector('.loader-container').style.display = 'flex';
+}
+function hideLoading() {
+    document.querySelector('.loader-container').style.display = 'none';
+}
 
 // Inicializar o carrossel para cada seção
 function initializeCarousel(carouselClass, options) {
@@ -69,10 +69,10 @@ function createCarouselItems(posts) {
 
 // Função para exibir o conteúdo de cada seção
 async function loadHomeContent() {
-    // showLoading();
+    showLoading();
 
     try {
-        const response = await fetch("https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/anime/home");
+        const response = await fetch("https://app.muffinstv.wuaze.com/muffins/v1/anime/home");
         const data = await response.json();
         const contentContainer = document.querySelector('.content-container');
 
@@ -153,7 +153,7 @@ async function loadHomeContent() {
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
                                     <div class="gen-movie-action text-right">
-                                        <a href="movies-pagination.html?genre=Action" class="gen-button gen-button-flat">
+                                        <a href="/categories.html" class="gen-button gen-button-flat">
                                             <span class="text">Ver Mais</span>
                                         </a>
                                     </div>
@@ -199,7 +199,7 @@ async function loadHomeContent() {
     } catch (error) {
         console.error("Erro na requisição:", error);
     } finally {
-        // hideLoading();
+         hideLoading();
     }
 }
 

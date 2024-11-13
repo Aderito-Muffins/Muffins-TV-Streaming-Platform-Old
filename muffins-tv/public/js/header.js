@@ -74,7 +74,7 @@ function loadHeaderAndFooter() {
 
         if (token) {
             try {
-                const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/me', { 
+                const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/me', { 
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -97,6 +97,9 @@ function loadHeaderAndFooter() {
                     }
                 } else {
                     console.error("Error fetching user data:", data.message);
+                    localStorage.removeItem("token");
+                    window.location.href = "/log-in.html";
+                   
                 }
             } catch (error) {
                 console.error("Network error:", error);
@@ -157,7 +160,7 @@ function loadHeaderAndFooter() {
                 if (userConfirmed) {
                     const token = localStorage.getItem('token');
                     try {
-                        const response = await fetch('https://muffins-tv-api-2f0282275534.herokuapp.com/muffins/v1/users/logout', { 
+                        const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/logout', { 
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

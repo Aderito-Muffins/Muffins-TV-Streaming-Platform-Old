@@ -101,21 +101,49 @@ Design and Developed by: Gentechtree.com
         /*------------------------
                 Back To Top
         --------------------------*/
-        jQuery('#back-to-top').fadeOut();
-        jQuery(window).on("scroll", function() {
-            if (jQuery(this).scrollTop() > 250) {
-                jQuery('#back-to-top').fadeIn(1400);
-            } else {
-                jQuery('#back-to-top').fadeOut(400);
-            }
-        });
-        jQuery('#top').on('click', function() {
-            jQuery('top').tooltip('hide');
-            jQuery('body,html').animate({
-                scrollTop: 0
-            }, 800);
-            return false;
-        });
+  /*------------------------
+    Back To Top e Go To Bottom
+--------------------------*/
+
+// Ocultar ambos os botões inicialmente
+jQuery('#back-to-top, #go-to-bottom').fadeOut();
+
+// Controle de visibilidade para os botões ao rolar a página
+jQuery(window).on("scroll", function() {
+    // Mostra o botão 'back-to-top' se o usuário rolar mais de 250px
+    if (jQuery(this).scrollTop() > 250) {
+        jQuery('#back-to-top').fadeIn(1400);
+    } else {
+        jQuery('#back-to-top').fadeOut(400);
+    }
+
+    // Mostra o botão 'go-to-bottom' se o usuário ainda não está no fim da página
+    if (jQuery(this).scrollTop() + jQuery(window).height() < jQuery(document).height() - 250) {
+        jQuery('#go-to-bottom').fadeIn(1400);
+    } else {
+        jQuery('#go-to-bottom').fadeOut(400);
+    }
+});
+
+// Animação para 'scroll' até o topo ao clicar no 'back-to-top'
+jQuery('#top').on('click', function() {
+    jQuery('body,html').animate({
+        scrollTop: 0
+    }, 800);
+    return false;
+});
+
+// Animação para 'scroll' até o fundo ao clicar no 'go-to-bottom'
+jQuery('#bottom').on('click', function() {
+    jQuery('body,html').animate({
+        scrollTop: jQuery(document).height()
+    }, 800);
+    return false;
+});
+
+
+
+
 
         if(jQuery('.tv-show-back-data').length)
         {
