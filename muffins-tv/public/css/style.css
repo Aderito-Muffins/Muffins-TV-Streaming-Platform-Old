@@ -6336,14 +6336,19 @@ Play Button
 
 
 
-
-
 .gen-front-image {
     position: relative;
-    display: inline-block;
-    width: 100%;
+    display: flex;
+    border-radius: 10px; /* Alinhamento central */
+    justify-content: center;
+    align-items: center;
+    width: 55%; /* Ajuste o tamanho da imagem conforme necessário */
+    margin: 0 auto;
 }
 
+.gen-front-image img{
+    border-radius: 10px; /* Alinhamento central */
+}
 
 
 .gen-front-image:before {
@@ -6353,12 +6358,10 @@ Play Button
     left: 0;
     width: 100%;
     height: 100%;
-    display: inline-block;
     background: var(--dark-color);
     opacity: 0.4;
+    border-radius: 10px; /* Bordas arredondadas para um visual elegante */
 }
-
-
 
 .gen-front-image a {
     margin: auto;
@@ -6366,25 +6369,26 @@ Play Button
     position: absolute;
     top: 50%;
     left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
 .gen-front-image a svg {
-    height: 90px;
+    height: 70px; /* Reduz o tamanho do ícone */
     width: auto;
 }
 
 .gen-front-image a span {
     font-family: var(--title-fonts);
     color: var(--white-color);
-    margin: 15px 0 0 0;
-    padding: 0;
-    font-size: 24px;
-    line-height: normal;
-    display: flex;
+    margin-top: 15px;
+    font-size: 18px; /* Tamanho de fonte reduzido */
+    display: block;
+    text-align: center; /* Centraliza o texto */
 }
+
+
+
+
 
 .circle {
     stroke: var(--white-color);
