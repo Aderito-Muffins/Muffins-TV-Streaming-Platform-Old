@@ -2,11 +2,11 @@
 <html lang="pt">
 
 <head>
-    <!-- Meta tags para compatibilidade com vários navegadores -->
+  <!-- Meta tags para compatibilidade com vários navegadores -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
@@ -32,6 +32,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="/images/favicon.ico">
     <!-- Adicionando o script -->
+  
     <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -39,17 +40,13 @@
     <link rel="stylesheet" href="/css/style.css" />
     <!--  Responsive -->
     <link rel="stylesheet" href="/css/responsive.css" />
-
     <!--  Responsive -->
     <link rel="stylesheet" href="/css/player.css" />
 
     <link rel="stylesheet" href="/css/playbutton.css" />
 
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" /> 
     <link rel="stylesheet" href="/css/load.css" />
-    
-
-
     <style>
         /* Modal Styles */
         .modal {
@@ -148,64 +145,6 @@
             }
         }
     </style>
-    
-    <style>
-      .episode-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Espaçamento entre os blocos */
-    justify-content: center; /* Centraliza os blocos na linha */
-}
-
-.episode-item {
-    background-color: #ff9800; /* Cor de fundo do bloco */
-    border: 2px solid #ddd; /* Borda do bloco */
-    border-radius: 5px; /* Cantos arredondados */
-    padding: 5px; /* Espaçamento interno */
-    width: 80px; /* Largura fixa do bloco */
-    height: 80px; /* Altura fixa do bloco */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    text-align: center; /* Centraliza o texto */
-    transition: transform 0.2s; /* Animação suave ao passar o mouse */
-    position: relative; /* Necessário para o posicionamento do número */
-}
-
-.episode-item:hover {
-    transform: scale(1.1); /* Aumenta ligeiramente o bloco ao passar o mouse */
-}
-
-.gen-movie-img {
-    position: relative; /* Necessário para posicionar o número em relação à imagem */
-}
-
-.episode-number {
-    position: absolute; /* Permite centralizar o número em relação à imagem */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centraliza o número */
-    font-size: 18px; /* Tamanho da numeração */
-    font-weight: bold; /* Negrito para destaque */
-    color: white; /* Cor do número */
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente para destaque */
-    border-radius: 50%; /* Estilo arredondado para o número */
-    width: 30px; /* Largura do círculo */
-    height: 30px; /* Altura do círculo */
-    display: flex; /* Para centralizar o texto */
-    align-items: center; /* Alinhamento vertical */
-    justify-content: center; /* Alinhamento horizontal */
-}
-
-.episode-title {
-    margin-top: 5px; /* Espaço acima do título */
-    font-size: 12px; /* Tamanho do título */
-    color: #333; /* Cor do título */
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    overflow: hidden; /* Oculta o texto que excede a largura do bloco */
-    text-overflow: ellipsis; /* Adiciona reticências para texto muito longo */
-}
-
-    </style>
-    
 </head>
 
 <body>
@@ -226,19 +165,28 @@
       <div class="loader-container">
         <div class="loader"></div>
     </div>
-    <!--=========== Loader =============-->
-
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
-    <!-- Single Video Start -->
+<!-- Modal de Pagamento -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <p class="modal-title">Players:</p>
+        <div class="row button-grid " id="serverbs">
+            <!-- Botões de servidores -->
+        </div>
+    </div>
+</div>
 
-  
-    <section class="gen-section-padding anime">
+
+
+    <!-- Single movie Start -->
+    <section class="gen-section-padding gen-single-movie">
         <div class="container">
-            <div class="row">
+            <div class="row no-gutters">
                 <div class="col-lg-12">
-                    <div class="gen-episode-wrapper style-1">
+                    <div class="gen-single-movie-wrapper style-1">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="gen-video-holder" id="gen-video-holder" style="background-size: cover; background-position: center;">
@@ -274,14 +222,38 @@
     
                                     <!-- Botões para assistir -->
                                     <button id="watch-movie-btn" class="gen-button">Assistir Filme</button>
-                                    <div id="watch-servers-btn" class="gen-selection"></div>
-    
+                                    <!-- <button id="download-content-btn" class="gen-button">Baixar Filme</button> -->
+                                    <button id="watch-trailer-btn" class="gen-button">Assistir Trailer</button>
                                 </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="single-episode">
-                                    <div class="gen-single-tv-show-info">
-                                        <!-- Informações do anime serão inseridas dinamicamente aqui -->
+                          
+                                <div class="gen-single-movie-info">
+                                    <h2 class="gen-title">Título do Filme</h2>
+                                    <div class="gen-single-meta-holder">
+                                        <ul>
+                                            <li class="gen-sen-rating">Classificação</li>
+                                            <li><i class="fas fa-eye"></i><span>0 Views</span></li>
+                                        </ul>
+                                    </div>
+                                    <p class="gen-description">muffins</p>
+                                    <div class="gen-after-excerpt">
+                                        <div class="gen-extra-data">
+                                            <ul>
+                                                <li><span>Regiao :</span><span id="film-language">Idioma</span></li>
+                                                <li><span>Genero :</span><span id="film-genre">NULL</span></li>
+                                                <li><span>Elenco :</span><span id="film-actors"></span></li>
+                                                <li><span>Duracao :</span><span id="film-duration">0</span></li>
+                                                <li><span>Qualidade :</span><span id="film-quality">NULL</span></li>
+                                                <li><span>Lancamento :</span><span id="film-year">NULL</span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="gen-socail-share">
+                                            <h4 class="align-self-center">Compartilhe :</h4>
+                                            <ul class="social-inner">
+                                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                                <li><a href="#" class="facebook"><i class="fab fa-instagram"></i></a></li>
+                                                <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -291,68 +263,8 @@
             </div>
         </div>
     </section>
-    
-<!-- Modal de Pagamento -->
-<div id="paymentModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <p class="modal-title">Players:</p>
-        <div class="row button-grid " id="serverbs">
-            <!-- Botões de servidores -->
-        </div>
-    </div>
-</div>
-
 
     <section class="gen-section-padding anime">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6">
-                    <h4 class="gen-heading-title">Episódios</h4>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-                    <div class="gen-movie-action text-right">
-                        <!-- Ações para os episódios podem ser inseridas aqui -->
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="gen-style-2" id="eps">
-                        <!-- Itens dos episódios serão inseridos dinamicamente aqui -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section class="gen-section-padding anime">
-        <div class="container">
-           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6">
-                 <h4 class="gen-heading-title">Temporadas</h4>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-              </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12">
-                 <div class="gen-style-2">
-                    <div class="owl-carousel owl-theme" id="Season" 
-                         data-dots="false" data-nav="true"
-                         data-desk_num="4" data-lap_num="3" 
-                         data-tab_num="2" data-mob_num="1" 
-                         data-mob_sm="1" data-autoplay="false" 
-                         data-loop="false" data-margin="30">
-                       <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
-                    </div>
-                 </div>
-              </div>
-           </div>
-        </div>
-     </section>
-
-     <section class="gen-section-padding anime">
         <div class="container">
            <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-6">
@@ -377,52 +289,49 @@
            </div>
         </div>
      </section>
-
-        <!-- Single Video End -->
-
-        <!-- footer start -->
-
-        <!-- footer End -->
-
-        <!-- Back-to-Top start -->
-        <div id="back-to-top">
-            <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
-        </div>
-        <!-- Back-to-Top end -->
-        <div id="go-to-bottom">
-            <a class="bottom" id="bottom" href="#bottom"> <i class="ion-ios-arrow-down"></i> </a>
-        </div>
-        <!-- js-min -->
-        <script src="/js/jquery-3.6.0.min.js"></script>
-        <script src="/js/asyncloader.min.js"></script>
-        <!-- JS bootstrap -->
-        <script src="/js/bootstrap.min.js"></script>
-        <!-- owl-carousel -->
-        <script src="/js/owl.carousel.min.js"></script>
-        <!-- counter-js -->
-        <script src="/js/jquery.waypoints.min.js"></script>
-        <script src="/js/jquery.counterup.min.js"></script>
-        <!-- popper-js -->
-        <script src="/js/popper.min.js"></script>
-        <script src="/js/swiper-bundle.min.js"></script>
-        <!-- Iscotop -->
-        <script src="/js/isotope.pkgd.min.js"></script>
-
-        <script src="/js/jquery.magnific-popup.min.js"></script>
-
-        <script src="/js/slick.min.js"></script>
-
-        <script src="/js/streamlab-core.js"></script>
-
-
-        <script src="/js/header.js"></script>
-        <script src="/js/script.js"></script>
-        <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-        <script src="/episodes/js/player.js"></script>
     
-            
+    <!-- Single movie End -->
 
+    <!-- footer start -->
+
+    <!-- footer End -->
+
+    <!-- Back-to-Top start -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+
+
+    <!-- Back-to-Top end -->
+
+    <!-- js-min -->
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/asyncloader.min.js"></script>
+    <!-- JS bootstrap -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- owl-carousel -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <!-- counter-js -->
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.counterup.min.js"></script>
+    <!-- popper-js -->
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <!-- Iscotop -->
+    <script src="/js/isotope.pkgd.min.js"></script>
+
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+
+    <script src="/js/slick.min.js"></script>
+
+    <script src="/js/streamlab-core.js"></script>
+
+    <script src="/js/script.js"></script>
+    <script src="/js/header.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="/film/js/player.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+     crossorigin="anonymous"></script>
 
 </body>
-
 </html>

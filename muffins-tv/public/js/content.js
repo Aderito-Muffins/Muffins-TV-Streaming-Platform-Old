@@ -74,8 +74,10 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     </div>
                                     <div class="gen-movie-action">
                                         <div class="gen-btn-container">
-                                            <a href="/${movie.type.slug}/single-movie.html?id=${movie.id}" class="gen-button gen-button-dark">
-                                                <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
+                                     <a href="/${
+                                  ['series', 'animes', 'dorama'].includes(movie.type.slug) ? 'episodes' : 'film'
+                                  }/single-episode.html?i=${movie.id}&t=${movie.type.slug}" class="gen-button">
+                                 <i aria-hidden="true" class="fas fa-play"></i><span class="text">Assistir Agora</span>
                                             </a>
                                         </div>
                                     </div>
@@ -231,33 +233,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
                             <img src="${film.thumb}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
-                                <ul class="menu bottomRight">
-                                    <li class="share top">
-                                        <i class="fa fa-share-alt"></i>
-                                        <ul class="submenu">
-                                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                            <li><a href="#" class="instagram"><i class="fab fa-instagram"></i></a></li>
-                                            <li><a href="#" class="twitter"><i class="fab fa-twitter"></i></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="movie-actions--link_add-to-playlist dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown"><i class="fa fa-plus"></i></a>
-                                    <div class="dropdown-menu mCustomScrollbar">
-                                        <div class="mCustomScrollBox">
-                                            <div class="mCSB_container">
-                                                <a class="login-link" href="register.html">Sign in to add this movie to a playlist.</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="gen-movie-action">
                                 <a href="/single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
@@ -430,12 +406,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         const homeBanner = content.content.banners;
         const sections = content.content.sections;
         const episodes = content.content.episodes;
-        console.log(episodes)
-        const watched = content.sections.watched.posts;
+        
+        // const watched = content.sections.watched.posts;
         const tvshows = content.sections.tvs.posts;
         const adsBanner = content.sections.ads.posts;
         const anime = content.sections.animes.posts;
-
+   
         // Configuração padrão para os carrosséis responsivos
         const defaultResponsive = {
             0: { items: 1, nav: true },
@@ -453,7 +429,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="container">
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 col-md-6">
-                                <h4 class="gen-heading-title">Episodios</h4>
+                                <h4 class="gen-heading-title">Novos Episodios</h4>
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
                                 <div class="gen-movie-action text-right">
@@ -495,7 +471,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             </div>
                             <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
                                 <div class="gen-movie-action text-right">
-                                    <a href="/categories.html" class="gen-button gen-button-flat">
+                                    <a href="/movies-pagination.html?genre=1" class="gen-button gen-button-flat">
                                         <span class="text">Ver Mais</span>
                                     </a>
                                 </div>
@@ -588,16 +564,16 @@ document.addEventListener("DOMContentLoaded", async function () {
         });
 
 
-        const allTimeHitsHtml = createMoviesHistory(watched);
-        updateDOM("#movieshistory-carousel", allTimeHitsHtml, {
-            loop: true,
-            dots: false,
-            nav: true,
-            autoplay: true,
-            autoplayTimeout: 6000,
-            margin: 30,
-            responsive: defaultResponsive
-        });
+        // const allTimeHitsHtml = createMoviesHistory(watched);
+        // updateDOM("#movieshistory-carousel", allTimeHitsHtml, {
+        //     loop: true,
+        //     dots: false,
+        //     nav: true,
+        //     autoplay: true,
+        //     autoplayTimeout: 6000,
+        //     margin: 30,
+        //     responsive: defaultResponsive
+        // });
 
         const adBanner = createAdBanner(adsBanner);
         updateDOM("#addPost", adBanner, {
@@ -614,7 +590,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     async function loadHome() {
         try {
-            const url = `http://localhost:3000/muffins/v1/home`;
+            const url = `https://app.muffinstv.wuaze.com/muffins/v1/home`;
             await loadHomeContent(url, updateHomePage);
         } catch (error) {
             console.error("Erro ao carregar temporadas e episódios:", error);

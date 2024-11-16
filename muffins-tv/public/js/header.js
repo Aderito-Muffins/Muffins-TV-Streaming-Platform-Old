@@ -50,148 +50,181 @@ document.addEventListener("DOMContentLoaded", function () {
         if (menu) {
             menu.innerHTML = `
 <a class="dropdown-item" id="user-Profile" href="#"><i class="fas fa-sign-out-alt"></i> Sair (${userData.fullName})</a>
-<a class="dropdown-item" href="user-profile.html"><i class="fa fa-user"></i> Perfil</a>
-<a class="dropdown-item" href="library.html"><i class="fa fa-indent"></i> Biblioteca</a>
+<a class="dropdown-item" href="/user-profile.html"><i class="fa fa-user"></i> Perfil</a>
+<a class="dropdown-item" href="/library.html"><i class="fa fa-indent"></i> Biblioteca</a>
+            `;
+        }
+    }    
+    
+    function updateGenresMenu(datas) {
+        const menu = document.getElementById('menu-genres');
+        if (menu) {
+            // Gerar os itens dinamicamente com base nos dados fornecidos
+            const genresHtml = datas
+                .map(data => `<a class="dropdown-item" href="/movies-pagination.html?genre=${data.id}">${data.name}</a>`)
+                .join('');
+    
+            // Atualizar o conteúdo do menu com os itens gerados
+            menu.innerHTML = `
+                ${genresHtml}
             `;
         }
     }
+    
 
 // Função para carregar o header e o footer
-function loadHeaderAndFooter() {
+async function loadHeaderAndFooter() {
     // Carregar o header
-    loadHtmlResource('/html/header.html' , 'header', 'gen-header', async function (headerElement) {
+    loadHtmlResource('/html/header.html', 'header', 'gen-header', async (headerElement) => {
         const token = localStorage.getItem('token');
-        const currentPath = window.location.pathname; // Obter a URL da página atual
-        console.log(currentPath);
-
+        const currentPath = window.location.pathname; // URL da página atual
+    
         // Ocultar o botão "Assine" em páginas específicas
-        const pagesToHideButton = ['/single',  '/pricing'];
+        const pagesToHideButton = ['/single', '/pricing'];
         const subscribeButton = document.getElementById('bt-assine');
-
         if (subscribeButton && pagesToHideButton.some(path => currentPath.includes(path))) {
-            subscribeButton.style.display = 'none'; // Ocultar o botão "Assine"
+            subscribeButton.style.display = 'none';
         }
-
+    
         if (token) {
             try {
-                const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/me', { 
+                // Obter dados do usuário
+                const userResponse = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/me', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    }
+                        'Authorization': `Bearer ${token}`,
+                    },
                 });
-
-                const data = await response.json();
-
-                if (data.code === 0) { 
-                    updateAuthenticatedMenu(data.user);
-                    const { specialPackage, subscription } = data.user;
-                    const isSpecialActive = specialPackage.isActive;  
-                    const isPlanActive = subscription.status === 'active';  
+                const userData = await userResponse.json();
+    
+                if (userData.code === 0) {
+                    updateAuthenticatedMenu(userData.user);
+    
+                    // Atualizar texto dos planos
+                    const { specialPackage, subscription } = userData.user;
+                    const isSpecialActive = specialPackage?.isActive;
+                    const isPlanActive = subscription?.status === 'active';
                     const textPlans = document.getElementsByClassName('bt-assine-class');
-
-                    // Atualiza o texto dos planos
                     for (let textPlan of textPlans) {
                         textPlan.innerText = isPlanActive ? subscription.planName : (isSpecialActive ? 'ESPECIAL' : 'Assine');
                     }
                 } else {
-                    console.error("Error fetching user data:", data.message);
-                    localStorage.removeItem("token");
-                    window.location.href = "/log-in.html";
-                   
+                    handleAuthenticationError();
                 }
             } catch (error) {
-                console.error("Network error:", error);
+                console.error("Erro ao carregar dados do usuário:", error);
+                handleAuthenticationError();
             }
         }
-
-        // Mover o formulário de pesquisa
-        const searchForm = document.getElementById('search-form');
-        if (searchForm) {
-            document.body.appendChild(searchForm);
+    
+        // Carregar gêneros, independentemente do token
+        try {
+            const genresResponse = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/genres', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(token && { 'Authorization': `Bearer ${token}` }), // Adicionar cabeçalho Authorization apenas se o token existir
+                },
+            });
+            const genresData = await genresResponse.json();
+    
+            if (genresData.code === 0) {
+                updateGenresMenu(genresData.data);
+            }
+        } catch (error) {
+            console.error("Erro ao carregar gêneros:", error);
         }
+    
+        configureSearchBehavior();
+        configureLogoutBehavior();
+        configureSportsLinkBehavior();
+    });
+    
 
-        // Configurar o botão de busca e o formulário de pesquisa
-        const searchButton = document.getElementById('gen-search-btn');
-        const signOut = document.getElementById('user-Profile');
-        const sportsLink = document.getElementById('sportsLink');
+    // Carregar o footer
+    loadHtmlResource('/html/footer.html', 'footer', 'gen-footer', () => {
+        console.log("Footer carregado com sucesso!");
+    });
+}
 
-        // Verifica se a URL contém "sport" ou "sports"
-        const currentUrl = window.location.href;
+function configureSearchBehavior() {
+    const searchForm = document.getElementById('search-form');
+    const searchButton = document.getElementById('gen-search-btn');
 
+    if (searchForm && searchButton) {
+        searchButton.addEventListener('click', () => {
+            searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
+            searchForm.classList.toggle('active');
+        });
+
+        const searchFormElement = searchForm.querySelector('form');
+        if (searchFormElement) {
+            searchFormElement.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const searchValue = searchFormElement.querySelector('.search-field').value;
+                const baseUrl = `${window.location.origin}/movies-founds.html`; // Garante que é a raiz do site
+                const searchUrl = `${baseUrl}?s=${encodeURIComponent(searchValue)}`;
+                window.location.href = searchUrl;
+            });
+        }
+    }
+}
+
+
+function configureLogoutBehavior() {
+    const signOut = document.getElementById('user-Profile');
+
+    if (signOut) {
+        signOut.addEventListener('click', async () => {
+            const userConfirmed = confirm("Você tem certeza que deseja sair?");
+            if (userConfirmed) {
+                const token = localStorage.getItem('token');
+                try {
+                    const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`,
+                        },
+                    });
+
+                    if (response.ok) {
+                        localStorage.removeItem('token');
+                        window.location.href = "/index.html";
+                    } else {
+                        console.error("Erro no logout:", await response.json());
+                    }
+                } catch (error) {
+                    console.error("Erro de rede:", error);
+                }
+            }
+        });
+    }
+}
+
+function configureSportsLinkBehavior() {
+    const sportsLink = document.getElementById('sportsLink');
+    const currentUrl = window.location.href;
+
+    if (sportsLink) {
         if (currentUrl.includes('sport') || currentUrl.includes('sports')) {
-            sportsLink.classList.add('active'); // Adiciona a classe 'active' se a condição for verdadeira
-            console.log(currentUrl.includes('sport'));
+            sportsLink.classList.add('active');
         }
 
         sportsLink.addEventListener('click', () => {
-            // Remove a classe 'active' de todos os links (se houver)
             const allLinks = document.querySelectorAll('.nav-link');
             allLinks.forEach(link => link.classList.remove('active'));
-
-            // Adiciona a classe 'active' ao link de Sports
             sportsLink.classList.add('active');
         });
-
-        // Configurar o comportamento do botão de busca
-        if (searchButton && searchForm) {
-            searchButton.addEventListener('click', function() {
-                searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
-                searchForm.classList.toggle('active');
-            });
-
-            // Configurar o comportamento do formulário de pesquisa
-            const searchFormElement = searchForm.querySelector('form');
-            if (searchFormElement) {
-                searchFormElement.addEventListener('submit', function(event) {
-                    event.preventDefault(); // Impede o envio padrão do formulário
-                    const searchValue = searchFormElement.querySelector('.search-field').value;
-                    const searchUrl = `movies-founds.html?s=${encodeURIComponent(searchValue)}`;
-                    window.location.href = searchUrl;
-                });
-            }
-        }
-
-        // Configurar o comportamento de logout
-        if (signOut) {
-            signOut.addEventListener('click', async function() {
-                const userConfirmed = confirm("Você tem certeza que deseja sair?");
-                if (userConfirmed) {
-                    const token = localStorage.getItem('token');
-                    try {
-                        const response = await fetch('https://app.muffinstv.wuaze.com/muffins/v1/users/logout', { 
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${token}`
-                            }
-                        });
-
-                        const data = await response.json();
-
-                        if (response.ok) {
-                            localStorage.removeItem('token');
-                            window.location.href = "/index.html";
-                        } else {
-                            console.error("Erro no logout:", data.message || "Erro desconhecido");
-                        }
-                    } catch (error) {
-                        console.error("Erro de rede:", error);
-                    }
-                } else {
-                    console.log("Usuário cancelou o logout.");
-                }
-            });
-        }
-    });
-
-    // Carregar o footer
-    loadHtmlResource('html/footer.html', 'footer', 'gen-footer', function(footerElement) {
-        console.log("Footer carregado com sucesso!");
-        // Adicionar outros comportamentos para o footer, se necessário
-    });
+    }
 }
+
+function handleAuthenticationError() {
+    localStorage.removeItem("token");
+    window.location.href = "/log-in.html";
+}
+
 
 
     // Carregar o header e footer ao carregar a página

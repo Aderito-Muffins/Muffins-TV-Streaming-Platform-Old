@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/muffins/v1";
+const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1";
 let StrangeUrl;
 let serverId = "";
 let epNumber = "";
@@ -43,16 +43,24 @@ async function loadSeasonsAndEpisodes() {
 
 
         if (!s) {
-            const [seasonsHtml] = await Promise.all([
+            const [seasonsHtml, recommendHtml] = await Promise.all([
                 createSeasonItems(animeData.data.seasons),
+                createRecommendationsItems(animeData.data.recommendations.items)
             ]);
-            updateCarousel(seasonsHtml);
+            updateCarousel(seasonsHtml, '#Season');
+            updateCarousel(recommendHtml, '#Recommendations');
+   
         } else {
-            const [seasonsHtml, episodesHtml] = await Promise.all([
+            const [seasonsHtml, episodesHtml, recommendHtml] = await Promise.all([
                 createSeasonItems(animeData.data.seasons),
-                loadEpisodes(animeData.data)]);
-                updateCarousel(seasonsHtml);
+                loadEpisodes(animeData.data),
+                createRecommendationsItems(animeData.data.recommendations.items)
+            ]);
+            updateCarousel(seasonsHtml, '#Season');
+            updateCarousel(recommendHtml, '#Recommendations');
+                console.log(recommendHtml)
                 document.getElementById('eps').innerHTML = episodesHtml;
+  
         }
 
     
@@ -71,6 +79,11 @@ async function fetchContentData(i) {
     const response = await fetch(`${baseUrl}/post/${t}/${i}`);
     if (response.code == 0) throw new Error('Erro ao buscar dados do anime');
     return response.json();
+}
+
+function truncateText(text, limit) {
+    return text.length > limit ? `${text.substring(0, limit)}...` : text;
+
 }
 
 function updateContentInfo(animeData) {
@@ -121,7 +134,7 @@ async function createSeasonItems(seasons) {
     }
 
     const seasonItems = await Promise.all(seasons.map(async (season, index) => {
-
+       const name = truncateText(season.name,20);
 
         return `
         <div class="item ">
@@ -137,13 +150,64 @@ async function createSeasonItems(seasons) {
                             </div>
                         </div>
                         <div class="gen-info-contain">
-                            <h6><a href="#">${season.name}</a></h3>
+                            <h6><a href="#">${name}</a></h6>
                         </div>
                     </div>
                 </div>
             </div>
        
         </div>
+    `;
+    }));
+
+    return seasonItems.join('');
+}
+
+async function createRecommendationsItems(seasons) {
+    if (!Array.isArray(seasons)) {
+        console.error('O objeto de temporadas não é um array:', seasons);
+        return '';
+    }
+
+    const seasonItems = await Promise.all(seasons.map(async (post, index) => {
+        const name = truncateText(post.name,15);
+
+        return `
+          <div class="item">
+                <div class="movie type-movie status-publish has-post-thumbnail hentry ">
+                    <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                        <div class="gen-movie-contain">
+                            <div class="gen-movie-img position-relative">
+                                <img src="${post.poster}" alt="Movie Thumbnail" class="img-fluid">
+                                ${post.age === "18+" ? `
+                                    <div class="age-label position-absolute top-0 start-0 bg-danger text-white fw-bold p-1 rounded" style="margin: 10px;">
+                                        +18
+                                    </div>` : ''}
+                            <div class="gen-movie-action">
+                                <a href="/${
+                                  ['series', 'animes', 'dorama'].includes(post.type.slug) ? 'episodes' : 'film'
+                                  }/single-episode.html?i=${post.id}&t=${post.type.slug}" class="gen-button">
+                                 <i class="fa fa-play"></i>
+                                   </a>
+                                </div>
+
+                                        <div class="gen-info-contain">
+                            <div class="gen-movie-info">
+                                <h3><a href="#">${name}</a></h3>
+                            </div>
+                            <div class="gen-movie-meta-holder">
+                                <ul>
+                                    <li>${post.lang}</li>
+                                    <li>${post.type.name}</li>
+                                    <li>${post.year}</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     `;
     }));
 
@@ -180,14 +244,20 @@ async function loadServers(data) {
             return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
         }
 
-        return `
-            ${data.map(server => `
-                <div class="col">
-                    <button class="gen-button2" data-id="${server.id}" onclick="window.open('${server.url}', '_blank')">
-                        ${server.name} (${server.lang} ${server.type})
-                    </button>
-                </div>
-            `).join('')}`;
+        return data
+        .map(server => `
+            <div class="col">
+                <button 
+                    class="gen-button2" 
+                    data-id="${server.id}" 
+                    onclick="setupPlayer('${server.url}');">
+                    ${server.name} (${server.lang} ${server.type})
+                </button>
+            </div>
+        `)
+        
+    .join('');
+
     } catch (error) {
         console.error("Erro ao carregar os servidores:", error);
         return `<div class="error-message">Erro ao carregar os servidores</div>`;
@@ -218,6 +288,7 @@ function displayError(message) {
     });
 }
 
+
 async function watchAnime() {
     showLoading()
     const token = localStorage.getItem('token');
@@ -227,6 +298,12 @@ async function watchAnime() {
         displayError('Você precisa estar logado para assistir ao anime.');
         return; // Para a execução se não houver token
     }
+
+    if (!s || !epNumber) {
+        displayError('Selecione uma temporada e um episodio abaixo.');
+        return; // Para a execução se não houver token
+    }
+
 
     try {
         const response = await fetch(`${baseUrl}/player/episode?id=${epNumber}`, {
@@ -282,8 +359,8 @@ async function watchAnime() {
     }
 }
 
-async function updateCarousel(seasonsHtml) {
-    updateDOM("#Season", seasonsHtml, {
+async function updateCarousel(seasonsHtml, id) {
+    updateDOM(id, seasonsHtml, {
         loop: true,
         dots: false,
         nav: true,
@@ -320,12 +397,10 @@ async function initializeCarousel(carouselClass, options) {
         $(carousel).owlCarousel(options);
     });
 }
+const moviePlayer = document.getElementById('movie-player');
+const videoHolder = document.getElementById('gen-video-holder');
 
 function setupVideoPlayer() {
-    const moviePlayer = document.getElementById('movie-player');
-    const watchMovieButton = document.getElementById('watch-movie-btn');
-    const watchMovie = document.getElementById("playBut");
-    const videoHolder = document.getElementById('gen-video-holder');
 
     moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
 
@@ -348,31 +423,44 @@ function setupVideoPlayer() {
         watchMovie.addEventListener('click', watchAnime);
     }
 
-    async function setupPlayer() {
-        const player = videojs(moviePlayer);
-
-        try {
-            const response = await fetch(`${baseUrl}/anime/watch/${serverId}`);
-            if (!response.ok) throw new Error('Falha ao buscar a URL da mídia');
-            const mediaUrl = await response.json();
-
-            const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
-                mediaUrl.includes('.mpd') ? 'application/dash+xml' :
-                    'video/mp4';
-
-            player.src({ src: mediaUrl, type: sourceType });
-
-            watchMovie.style.display = 'none';
-            moviePlayer.style.display = 'block';
-            videoHolder.style.backgroundImage = 'none';
-            watchMovieButton.style.display = 'none';
-
-            player.ready(() => player.play());
-        } catch (error) {
-            console.error('Erro ao configurar o player:', error);
-        }
-    }
+    
+    
+    
+ 
+ 
 }
+function setupPlayer(url) {
+    // Inicializa o Video.js player, se ainda não estiver inicializado
+    const player = videojs(moviePlayer);
+    
+    // Verifica a URL e o tipo de mídia
+    const mediaUrl = url;
+    console.log("URL da mídia:", mediaUrl);
+    
+    // Verifica o tipo de mídia com base na URL
+    const sourceType = mediaUrl.includes('.txt') ? 'application/x-mpegURL' : 
+                       mediaUrl.includes('.mpd') ? 'application/dash+xml' : 
+                       'video/mp4';
+
+    // Atualiza a fonte do player com a URL e tipo de mídia
+    player.src({ src: mediaUrl, type: sourceType });
+
+    // Exibe o player de vídeo
+    watchMovie.style.display = 'none';
+    moviePlayer.style.display = 'block'; // Torna o player visível
+    videoHolder.style.backgroundImage = 'none'; // Remove o plano de fundo
+    paymentModal.style.display = 'none';
+    // Esconde os botões de assistir ao filme e trailer
+    watchMovieButton.style.display = 'none';
+
+    // Força a reprodução
+    player.ready(function () {
+        player.play();
+    });
+}
+
+
+
 
 // Evento de clique no botão "Assistir Filme"
 const watchMovieButton = document.getElementById('watch-movie-btn');

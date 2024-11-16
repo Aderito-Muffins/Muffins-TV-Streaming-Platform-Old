@@ -49,7 +49,7 @@ async function fetchMovieDetails(id) {
         }
 
         // Acessa o primeiro item do array
-        const movieData = result.data[0];
+        const movieData = result.data;
 
         return movieData;
 

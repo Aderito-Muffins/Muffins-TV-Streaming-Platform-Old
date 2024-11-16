@@ -1,4 +1,4 @@
-const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/films/search'; // Substitua pela URL real da sua API
+const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/search'; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
@@ -26,15 +26,15 @@ async function loadFilms(page = 1, selectedGenre = genre) {
     showLoading();
     try {
         // Montando a URL de requisição com os parâmetros de paginação e gênero
-        const url = `${baseUrl}?title=${genre}&limit=${limit}&page=${page}`;
+        const url = `${baseUrl}?type=&query=${genre}&page=1`;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
-            displayFilms(data.data.films); // Chama a função para exibir filmes
-            updatePagination(Math.ceil(data.data.total / limit), page); // Atualiza a paginação
+            displayFilms(data.data); // Chama a função para exibir filmes
+            updatePagination(data.pagination.pages, page); // Atualiza a paginação
         } else {
             console.error(data.message);
         }
@@ -63,24 +63,29 @@ function displayFilms(films) {
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
                         <div class="gen-movie-img">
-                            <img src="${film.cover}" alt="${film.title}">
+                            <img src="${film.poster}" alt="${film.name}">
                             <div class="gen-movie-add">
                                 <!-- Ações do filme como curtidas, compartilhamento, etc. -->
                             </div>
                             <div class="gen-movie-action">
-                                <a href="single-movie.html?id=${film.externalId}" class="gen-button">
+                                <a href="/${
+                                  ['series', 'animes', 'dorama'].includes(film.type.slug) ? 'episodes' : 'film'
+                                  }/single-episode.html?i=${film.id}&t=${film.type.slug}" class="gen-button">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                         </div>
                         <div class="gen-info-contain">
                             <div class="gen-movie-info">
-                                <h3><a href="single-movie.html?id=${film.externalId}">${film.title}</a></h3>
+                                <h3><a href="/${
+                                  ['series', 'animes', 'dorama'].includes(film.type.slug) ? 'episodes' : 'film'
+                                  }/single-episode.html?i=${film.id}&t=${film.type.slug}">${film.name}</a></h3>
                             </div>
                             <div class="gen-movie-meta-holder">
                                 <ul>
-                                    <li>${film.duration}</li>
-                                    <li><a href="genre.html?genre=${film.category[0]?.title}"><span>${film.category[0]?.title || 'N/A'}</span></a></li>
+                                <li>${film.type.name}</li>
+                                    <li>${film.year}</li>
+                                   <li>${film.lang}</li>
                                 </ul>
                             </div>
                         </div>

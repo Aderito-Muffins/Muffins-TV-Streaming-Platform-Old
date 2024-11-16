@@ -56,14 +56,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <!-- Ações do filme (ícone de coração, compartilhamento, etc.) -->
                                 </div>
                                 <div class="gen-movie-action">
-                                    <a href="single-video.html?id=${movie.id}" class="gen-button">
+                                    <a href="single-video.html?id=${movie.id}&title=${movie.title}" class="gen-button">
                                         <i class="fa fa-play"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="gen-info-contain">
                                 <div class="gen-movie-info">
-                                    <h3><a href="single-videos.html?id=${movie.id}">${movie.title}</a></h3>
+                                    <h3><a href="single-video.html?id=${movie.id}&title=${movie.title}">${movie.title}</a></h3>
                                 </div>
                                 <div class="gen-movie-meta-holder">
                                     <ul>

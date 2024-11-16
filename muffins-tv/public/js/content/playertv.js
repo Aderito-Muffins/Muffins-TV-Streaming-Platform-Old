@@ -49,7 +49,7 @@ async function fetchMovieDetails(id) {
         }
 
         // Acessa o primeiro item do array
-        const movieData = result.data[0];
+        const movieData = result.data;
 
         return movieData;
 
@@ -111,7 +111,7 @@ async function fetchContentDetails(id) {
         }
 
         // Acessa o primeiro item do array
-        const contentData = result.data[0];
+        const contentData = result.data;
         return contentData;
 
     } catch (error) {
@@ -214,6 +214,7 @@ function setupVideoPlayer(film) {
         const player = videojs(moviePlayer);
         // Verifica a URL e o tipo de mídia
         const mediaUrl = film.media_url;
+        console.log(mediaUrl)
         const sourceType = mediaUrl.includes('.m3u8') ? 'application/x-mpegURL' :
             mediaUrl.includes('.mpd') ? 'application/dash+xml' : 'video/mp4';
 
