@@ -1,4 +1,4 @@
-const baseUrl = 'http://localhost:3000/muffins/v1/explorer?type=canais&year='; // Substitua pela URL real da sua API
+const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/explorer?type=canais&year='; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite, categoria e país
 let currentPage = 1;
