@@ -1,4 +1,4 @@
-const baseUrl = 'https://app.muffinstv.wuaze.com/muffins/v1/explorer?type=canais&year='; // Substitua pela URL real da sua API
+const baseUrl = 'http://localhost:3000/muffins/v1/explorer?type=canais&year='; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite, categoria e país
 let currentPage = 1;
@@ -31,15 +31,15 @@ function getCountryFromURL() {
 async function loadChannels(page = 1, selectedCategory = category, selectedCountry = country) {
     showLoading();
     try {
-        let url = baseUrl
+        let url = baseUrl + "&page="+page;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);
         const data = await response.json();
 
         if (data.code === 0) { // Verifica se o código de sucesso é retornado
-            displayChannels(data.data.content); // Chama a função para exibir canais
-            updatePagination(Math.ceil(data.data.pagination.pages / limit), page); // Atualiza a paginação
+            displayChannels(data.data); // Chama a função para exibir canais
+            updatePagination(data.pagination.pages, page); // Atualiza a paginação
         } else {
             console.error(data.message);
         }
@@ -68,7 +68,7 @@ function displayChannels(channels) {
                 <div class="gen-carousel-movies-style-3 movie-grid style-3">
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
-                            <img src="/images/channel.png" alt="${channel.name}">
+                            <img src="${channel.poster}" alt="${channel.name}">
                             <div class="gen-movie-add">
                                 <!-- Ações do canal como curtidas, compartilhamento, etc. -->
                             </div>

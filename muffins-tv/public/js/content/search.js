@@ -26,7 +26,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
     showLoading();
     try {
         // Montando a URL de requisição com os parâmetros de paginação e gênero
-        const url = `${baseUrl}?type=&query=${genre}&page=1`;
+        const url = `${baseUrl}?type=&query=${genre}&page=${page}`;
 
         // Fazendo a requisição para a API
         const response = await fetch(url);

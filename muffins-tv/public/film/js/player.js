@@ -265,10 +265,12 @@ function displayFilmDetails(film) {
     if (genreElement) genreElement.textContent = film.genres?.map(category => category.name).join(', ') || 'N/A';
 
     const videoHolder = document.getElementById('gen-video-holder');
+    const background = film.backdrop || film.poster;
+
     if (videoHolder) {
-        videoHolder.style.backgroundImage = `url('${film.backdrop}')`;
+        videoHolder.style.backgroundImage = `url('${background}')`;
     }
-}
+} 
 function truncateText(text, limit) {
     return text.length > limit ? `${text.substring(0, limit)}...` : text;
 
