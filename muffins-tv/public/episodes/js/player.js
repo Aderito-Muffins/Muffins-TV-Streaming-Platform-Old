@@ -1,4 +1,5 @@
 const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1";
+
 let StrangeUrl;
 let serverId = "";
 let epNumber = "";
@@ -6,112 +7,109 @@ let t = "";
 let i = "";
 let s = "";
 let image;
-
+const sessionId = localStorage.getItem("sessionId");
 function showLoading() {
-    document.querySelector('.loader-container').style.display = 'flex';
+  document.querySelector(".loader-container").style.display = "flex";
 }
 
 function hideLoading() {
-    document.querySelector('.loader-container').style.display = 'none';
+  document.querySelector(".loader-container").style.display = "none";
 }
 
-const paymentModal = document.getElementById('paymentModal');
-const closeModal = document.getElementById('closeModal');
+const paymentModal = document.getElementById("paymentModal");
+const closeModal = document.getElementById("closeModal");
 
 document.addEventListener("DOMContentLoaded", loadSeasonsAndEpisodes);
 
 async function loadSeasonsAndEpisodes() {
-    showLoading()
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        i = urlParams.get('i');
-        s = urlParams.get('s');
-        t = urlParams.get('t');
+  showLoading();
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    i = urlParams.get("i");
+    s = urlParams.get("s");
+    t = urlParams.get("t");
 
-        epNumber = urlParams.get('ep');
+    epNumber = urlParams.get("ep");
 
-        if (!i) {
-            throw new Error("animeId não encontrado na URL.");
-        }
-
-        const animeData = await fetchContentData(i);
-        updateContentInfo(animeData);
-
-        // StrangeUrl = ''
-        // const activeAnimeId ="2"
-
-
-
-        if (!s) {
-            const [seasonsHtml, recommendHtml] = await Promise.all([
-                createSeasonItems(animeData.data.seasons),
-                createRecommendationsItems(animeData.data.recommendations.items)
-            ]);
-            updateCarousel(seasonsHtml, '#Season');
-            updateCarousel(recommendHtml, '#Recommendations');
-   
-        } else {
-            const [seasonsHtml, episodesHtml, recommendHtml] = await Promise.all([
-                createSeasonItems(animeData.data.seasons),
-                loadEpisodes(animeData.data),
-                createRecommendationsItems(animeData.data.recommendations.items)
-            ]);
-            updateCarousel(seasonsHtml, '#Season');
-            updateCarousel(recommendHtml, '#Recommendations');
-                console.log(recommendHtml)
-                document.getElementById('eps').innerHTML = episodesHtml;
-  
-        }
-
-    
-       
-
-        setupVideoPlayer();
-    } catch (error) {
-        console.error("Erro ao carregar temporadas e episódios:", error);
-    } finally {
-        hideLoading(); // Garante que o loading será escondido
+    if (!i) {
+      throw new Error("animeId não encontrado na URL.");
     }
 
+    const animeData = await fetchContentData(i);
+    updateContentInfo(animeData);
+
+    // StrangeUrl = ''
+    // const activeAnimeId ="2"
+
+    if (!s) {
+      const [seasonsHtml, recommendHtml] = await Promise.all([
+        createSeasonItems(animeData.data.seasons),
+        createRecommendationsItems(animeData.data.recommendations.items),
+      ]);
+      updateCarousel(seasonsHtml, "#Season");
+      updateCarousel(recommendHtml, "#Recommendations");
+    } else {
+      const [seasonsHtml, episodesHtml, recommendHtml] = await Promise.all([
+        createSeasonItems(animeData.data.seasons),
+        loadEpisodes(animeData.data),
+        createRecommendationsItems(animeData.data.recommendations.items),
+      ]);
+      updateCarousel(seasonsHtml, "#Season");
+      updateCarousel(recommendHtml, "#Recommendations");
+      console.log(recommendHtml);
+      document.getElementById("eps").innerHTML = episodesHtml;
+    }
+
+    setupVideoPlayer();
+  } catch (error) {
+    console.error("Erro ao carregar temporadas e episódios:", error);
+  } finally {
+    hideLoading(); // Garante que o loading será escondido
+  }
 }
 
 async function fetchContentData(i) {
-    const response = await fetch(`${baseUrl}/post/${t}/${i}`);
-    if (response.code == 0) throw new Error('Erro ao buscar dados do anime');
-    return response.json();
+  const response = await fetch(
+    `${baseUrl}/post/${t}/${i}?sessionId=${sessionId}`
+  );
+  if (response.code == 0) throw new Error("Erro ao buscar dados do anime");
+  return response.json();
 }
 
 function truncateText(text, limit) {
-    return text.length > limit ? `${text.substring(0, limit)}...` : text;
-
+  return text.length > limit ? `${text.substring(0, limit)}...` : text;
 }
 
 function updateContentInfo(animeData) {
-    console.log(animeData)
-    const title = animeData.data.name;
-    const poster = animeData.data.backdrop;
-    image = animeData.data.poster;
-    const premiered = animeData.data.year;
-    const views = animeData.data.total_views;
-    const overview = animeData.data.description;
-    const genres = animeData.data.genres.map(genre => ` ${genre.name}`);
-    const genresList = genres || "NULL";
-    const lang = animeData.data.lang;
-    const premieredValue = premiered || "NULL";
-    const moviePlayer = document.getElementById('movie-player');
-    moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
+  console.log(animeData);
+  const title = animeData.data.name;
+  const poster = animeData.data.backdrop;
+  image = animeData.data.poster;
+  const premiered = animeData.data.year;
+  const views = animeData.data.total_views;
+  const overview = animeData.data.description;
+  const genres = animeData.data.genres.map((genre) => ` ${genre.name}`);
+  const genresList = genres || "NULL";
+  const lang = animeData.data.lang;
+  const premieredValue = premiered || "NULL";
+  const moviePlayer = document.getElementById("movie-player");
+  moviePlayer.style.background = "rgba(0, 0, 0, 0.5)";
 
-    const videoHolder = document.getElementById('gen-video-holder');
-    if (videoHolder) {
-        videoHolder.style.backgroundImage = `url(${poster})`;
-    }
+  const videoHolder = document.getElementById("gen-video-holder");
+  if (videoHolder) {
+    videoHolder.style.backgroundImage = `url(${poster})`;
+  }
 
-    document.querySelector(".gen-single-tv-show-info").innerHTML += `
+  document.querySelector(".gen-single-tv-show-info").innerHTML += `
         <h2 class="gen-title">${title}</h2>
         <div class="gen-single-meta-holder">
             <ul>
-                <li class="gen-sen-rating">Classificação: ${animeData.data.rating.rating}</li>
-                <li><i class="fas fa-eye"></i><span>${views || 0} Views</span></li>
+                <li class="gen-sen-rating">Classificação: ${
+                  animeData.data.rating.rating
+                }</li>
+                <li><i class="fas fa-eye"></i><span>${
+                  views || 0
+                } Views</span></li>
             </ul>
         </div>
         <p class="gen-description">${overview}</p>
@@ -128,15 +126,16 @@ function updateContentInfo(animeData) {
 }
 
 async function createSeasonItems(seasons) {
-    if (!Array.isArray(seasons)) {
-        console.error('O objeto de temporadas não é um array:', seasons);
-        return '';
-    }
+  if (!Array.isArray(seasons)) {
+    console.error("O objeto de temporadas não é um array:", seasons);
+    return "";
+  }
 
-    const seasonItems = await Promise.all(seasons.map(async (season, index) => {
-       const name = truncateText(season.name,20);
+  const seasonItems = await Promise.all(
+    seasons.map(async (season, index) => {
+      const name = truncateText(season.name, 20);
 
-        return `
+      return `
         <div class="item ">
             <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-anime">
                 <div class="gen-carousel-movies-style-2 movie-grid style-2">
@@ -158,35 +157,49 @@ async function createSeasonItems(seasons) {
        
         </div>
     `;
-    }));
+    })
+  );
 
-    return seasonItems.join('');
+  return seasonItems.join("");
 }
 
 async function createRecommendationsItems(seasons) {
-    if (!Array.isArray(seasons)) {
-        console.error('O objeto de temporadas não é um array:', seasons);
-        return '';
-    }
+  if (!Array.isArray(seasons)) {
+    console.error("O objeto de temporadas não é um array:", seasons);
+    return "";
+  }
 
-    const seasonItems = await Promise.all(seasons.map(async (post, index) => {
-        const name = truncateText(post.name,15);
+  const seasonItems = await Promise.all(
+    seasons.map(async (post, index) => {
+      const name = truncateText(post.name, 15);
 
-        return `
+      return `
           <div class="item">
                 <div class="movie type-movie status-publish has-post-thumbnail hentry ">
                     <div class="gen-carousel-movies-style-2 movie-grid style-2">
                         <div class="gen-movie-contain">
                             <div class="gen-movie-img position-relative">
-                                <img src="${post.poster}" alt="Movie Thumbnail" class="img-fluid">
-                                ${post.age === "18+" ? `
+                                <img src="${
+                                  post.poster
+                                }" alt="Movie Thumbnail" class="img-fluid">
+                                ${
+                                  post.age === "18+"
+                                    ? `
                                     <div class="age-label position-absolute top-0 start-0 bg-danger text-white fw-bold p-1 rounded" style="margin: 10px;">
                                         +18
-                                    </div>` : ''}
+                                    </div>`
+                                    : ""
+                                }
                             <div class="gen-movie-action">
                                 <a href="/${
-                                  ['series', 'animes', 'dorama'].includes(post.type.slug) ? 'episodes' : 'film'
-                                  }/single-episode.html?i=${post.id}&t=${post.type.slug}" class="gen-button">
+                                  ["series", "animes", "dorama"].includes(
+                                    post.type.slug
+                                  )
+                                    ? "episodes"
+                                    : "film"
+                                }/single-episode.html?i=${post.id}&t=${
+        post.type.slug
+      }" class="gen-button">
                                  <i class="fa fa-play"></i>
                                    </a>
                                 </div>
@@ -209,22 +222,27 @@ async function createRecommendationsItems(seasons) {
                 </div>
             </div>
     `;
-    }));
+    })
+  );
 
-    return seasonItems.join('');
+  return seasonItems.join("");
 }
 
 async function loadEpisodes(anime) {
-    const episodesResponse = await fetch(`${baseUrl}/season/${s}/episodes`);
-    if (!episodesResponse.ok) throw new Error('Erro ao buscar episódios');
+  const episodesResponse = await fetch(
+    `${baseUrl}/season/${s}/episodes?sessionId=${sessionId}`
+  );
+  if (!episodesResponse.ok) throw new Error("Erro ao buscar episódios");
 
-    const episodesData = await episodesResponse.json();
+  const episodesData = await episodesResponse.json();
 
-    console.log(episodesData)
-    return `
+  console.log(episodesData);
+  return `
         <div class="tab-pane active show">
             <div class="episode-list">
-                ${episodesData.data.map(episode => `
+                ${episodesData.data
+                  .map(
+                    (episode) => `
                     <div class="episode-item">
                         <a href="single-episode.html?i=${i}&t=${t}&s=${s}&ep=${episode.id}">
                             <div class="gen-movie-img">
@@ -233,19 +251,22 @@ async function loadEpisodes(anime) {
                             </div>
                         </a>
                     </div>
-                `).join('')}
+                `
+                  )
+                  .join("")}
             </div>
         </div>`;
 }
 
 async function loadServers(data) {
-    try {
-        if (!data) {
-            return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
-        }
+  try {
+    if (!data) {
+      return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
+    }
 
-        return data
-        .map(server => `
+    return data
+      .map(
+        (server) => `
             <div class="col">
                 <button 
                     class="gen-button2" 
@@ -254,230 +275,224 @@ async function loadServers(data) {
                     ${server.name} (${server.lang} ${server.type})
                 </button>
             </div>
-        `)
-        
-    .join('');
+        `
+      )
 
-    } catch (error) {
-        console.error("Erro ao carregar os servidores:", error);
-        return `<div class="error-message">Erro ao carregar os servidores</div>`;
-    }
+      .join("");
+  } catch (error) {
+    console.error("Erro ao carregar os servidores:", error);
+    return `<div class="error-message">Erro ao carregar os servidores</div>`;
+  }
 }
-
 
 function displayError(message) {
-    hideLoading()
-    const errorContainer = document.getElementById('error-container');
-    const errorText = errorContainer.querySelector('.error-text');
-    const closeButton = errorContainer.querySelector('.close-button');
+  hideLoading();
+  const errorContainer = document.getElementById("error-container");
+  const errorText = errorContainer.querySelector(".error-text");
+  const closeButton = errorContainer.querySelector(".close-button");
 
-    // Define o texto da mensagem de erro
-    errorText.textContent = message;
+  // Define o texto da mensagem de erro
+  errorText.textContent = message;
 
-    // Exibe o container de erro
-    errorContainer.style.display = 'block';
+  // Exibe o container de erro
+  errorContainer.style.display = "block";
 
-    // Fecha automaticamente após 4 segundos (4000 ms)
-    setTimeout(function () {
-        errorContainer.style.display = 'none';
-    }, 4000);
+  // Fecha automaticamente após 4 segundos (4000 ms)
+  setTimeout(function () {
+    errorContainer.style.display = "none";
+  }, 4000);
 
-    // Adiciona evento de clique ao botão de fechar
-    closeButton.addEventListener('click', function () {
-        errorContainer.style.display = 'none'; // Esconde o container de erro quando clicado
-    });
+  // Adiciona evento de clique ao botão de fechar
+  closeButton.addEventListener("click", function () {
+    errorContainer.style.display = "none"; // Esconde o container de erro quando clicado
+  });
 }
 
-
 async function watchAnime() {
-    showLoading()
-    const token = localStorage.getItem('token');
+  showLoading();
+  const token = localStorage.getItem("token");
 
-    // Verifica se o token existe
-    if (!token) {
-        displayError('Você precisa estar logado para assistir ao anime.');
-        return; // Para a execução se não houver token
+  // Verifica se o token existe
+  if (!token) {
+    displayError("Você precisa estar logado para assistir ao anime.");
+    return; // Para a execução se não houver token
+  }
+
+  if (!s || !epNumber) {
+    displayError("Selecione uma temporada e um episodio abaixo.");
+    return; // Para a execução se não houver token
+  }
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/player/episode?id=${epNumber}&sessionId=${sessionId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Converte a resposta para JSON
+    const data = await response.json();
+
+    // Verifica se a resposta da API foi ok
+    if (data.code !== 0) {
+      // Chama a função displayError se a requisição falhar
+      displayError(data.message);
+      return; // Para a execução se a resposta não for ok
     }
 
-    if (!s || !epNumber) {
-        displayError('Selecione uma temporada e um episodio abaixo.');
-        return; // Para a execução se não houver token
+    watchMovieButton.style.display = "none";
+    watchMovie.style.display = "none";
+
+    document.getElementById("serverbs").innerHTML = await loadServers(
+      data.data
+    );
+
+    paymentModal.style.display = "block";
+    // console.log(data);
+    // const animeLink = data.media_Url;
+
+    // // Redireciona o usuário para o proxy que adiciona os headers
+    // window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+
+    // window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+  } catch (error) {
+    console.error("Erro ao assistir anime:", error);
+
+    // Se o erro tiver um status específico (por exemplo, se você receber um erro de rede),
+    // você pode querer exibir uma mensagem mais específica.
+    if (error instanceof TypeError) {
+      displayError(
+        "Ocorreu um erro de rede. Verifique sua conexão e tente novamente."
+      );
+    } else if (error.message) {
+      // Se o erro tiver uma mensagem, exiba-a
+      displayError(`Erro: ${error.message}`);
+    } else {
+      // Mensagem padrão se não houver mensagem específica
+      displayError(
+        "Ocorreu um erro ao tentar assistir ao anime. Tente novamente mais tarde."
+      );
     }
-
-
-    try {
-        const response = await fetch(`${baseUrl}/player/episode?id=${epNumber}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        });
-
-        // Converte a resposta para JSON
-        const data = await response.json();
-
-        // Verifica se a resposta da API foi ok
-        if (data.code !== 0) {
-
-
-            // Chama a função displayError se a requisição falhar
-            displayError(data.message);
-            return; // Para a execução se a resposta não for ok
-        }
-
-        watchMovieButton.style.display = 'none';
-        watchMovie.style.display = 'none';
-
-        document.getElementById('serverbs').innerHTML = await loadServers(data.data);
-
-        paymentModal.style.display = 'block'
-        // console.log(data);
-        // const animeLink = data.media_Url;
-
-        // // Redireciona o usuário para o proxy que adiciona os headers
-        // window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
-
-        // window.open(`https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
-
-    } catch (error) {
-        console.error('Erro ao assistir anime:', error);
-
-        // Se o erro tiver um status específico (por exemplo, se você receber um erro de rede),
-        // você pode querer exibir uma mensagem mais específica.
-        if (error instanceof TypeError) {
-            displayError('Ocorreu um erro de rede. Verifique sua conexão e tente novamente.');
-        } else if (error.message) {
-            // Se o erro tiver uma mensagem, exiba-a
-            displayError(`Erro: ${error.message}`);
-        } else {
-            // Mensagem padrão se não houver mensagem específica
-            displayError('Ocorreu um erro ao tentar assistir ao anime. Tente novamente mais tarde.');
-        }
-    } finally {
-        hideLoading(); // Garante que o loading será escondido
-    }
+  } finally {
+    hideLoading(); // Garante que o loading será escondido
+  }
 }
 
 async function updateCarousel(seasonsHtml, id) {
-    updateDOM(id, seasonsHtml, {
-        loop: true,
-        dots: false,
-        nav: true,
-        autoplay: true,
-        autoplayTimeout: 6000,
-        margin: 30,
-        responsive: {
-            0: { items: 1, nav: true },
-            576: { items: 2, nav: false },
-            768: { items: 3, nav: true, loop: true },
-            992: { items: 4, nav: true, loop: true },
-            1200: { items: 5, nav: true, loop: true }
-        }
-    });
+  updateDOM(id, seasonsHtml, {
+    loop: true,
+    dots: false,
+    nav: true,
+    autoplay: true,
+    autoplayTimeout: 6000,
+    margin: 30,
+    responsive: {
+      0: { items: 1, nav: true },
+      576: { items: 2, nav: false },
+      768: { items: 3, nav: true, loop: true },
+      992: { items: 4, nav: true, loop: true },
+      1200: { items: 5, nav: true, loop: true },
+    },
+  });
 }
 
 function updateDOM(elementId, htmlContent, carouselOptions) {
-    const element = document.querySelector(elementId);
-    if (element) {
-        element.innerHTML = htmlContent;
-        initializeCarousel(elementId, carouselOptions);
-    } else {
-        console.warn(`Elemento com o seletor ${elementId} não encontrado.`);
-    }
+  const element = document.querySelector(elementId);
+  if (element) {
+    element.innerHTML = htmlContent;
+    initializeCarousel(elementId, carouselOptions);
+  } else {
+    console.warn(`Elemento com o seletor ${elementId} não encontrado.`);
+  }
 }
 
 async function initializeCarousel(carouselClass, options) {
-    const carousels = document.querySelectorAll(carouselClass);
-    carousels.forEach(carousel => {
-        if ($(carousel).hasClass('owl-loaded')) {
-            $(carousel).trigger('destroy.owl.carousel');
-            $(carousel).removeClass('owl-loaded');
-        }
-        $(carousel).owlCarousel(options);
-    });
+  const carousels = document.querySelectorAll(carouselClass);
+  carousels.forEach((carousel) => {
+    if ($(carousel).hasClass("owl-loaded")) {
+      $(carousel).trigger("destroy.owl.carousel");
+      $(carousel).removeClass("owl-loaded");
+    }
+    $(carousel).owlCarousel(options);
+  });
 }
-const moviePlayer = document.getElementById('movie-player');
-const videoHolder = document.getElementById('gen-video-holder');
+const moviePlayer = document.getElementById("movie-player");
+const videoHolder = document.getElementById("gen-video-holder");
 
 function setupVideoPlayer() {
+  moviePlayer.style.background = "rgba(0, 0, 0, 0.5)";
 
-    moviePlayer.style.background = 'rgba(0, 0, 0, 0.5)';
+  const playMovie = () => {
+    if (moviePlayer && videoHolder) setupPlayer();
+  };
 
-    const playMovie = () => {
-        if (moviePlayer && videoHolder) setupPlayer();
-    };
+  const chooseServer = () => {
+    watchMovieButton.style.display = "none";
+    watchMovie.style.display = "none";
+    loadServers(epNumber);
+    paymentModal.style.display = "block";
+  };
 
-    const chooseServer = () => {
-        watchMovieButton.style.display = 'none';
-        watchMovie.style.display = 'none';
-        loadServers(epNumber);
-        paymentModal.style.display = 'block';
-    };
+  if (watchMovieButton) {
+    watchMovieButton.addEventListener("click", watchAnime);
+  }
 
-    if (watchMovieButton) {
-        watchMovieButton.addEventListener('click', watchAnime);
-    }
-
-    if (watchMovie) {
-        watchMovie.addEventListener('click', watchAnime);
-    }
-
-    
-    
-    
- 
- 
+  if (watchMovie) {
+    watchMovie.addEventListener("click", watchAnime);
+  }
 }
 function setupPlayer(url) {
-    // Inicializa o Video.js player, se ainda não estiver inicializado
-    const player = videojs(moviePlayer);
-    
-    // Verifica a URL e o tipo de mídia
-    const mediaUrl = url;
-    console.log("URL da mídia:", mediaUrl);
-    
-    // Verifica o tipo de mídia com base na URL
-    const sourceType = mediaUrl.includes('.txt') ? 'application/x-mpegURL' : 
-                       mediaUrl.includes('.mpd') ? 'application/dash+xml' : 
-                       'video/mp4';
+  // Inicializa o Video.js player, se ainda não estiver inicializado
+  const player = videojs(moviePlayer);
 
-    // Atualiza a fonte do player com a URL e tipo de mídia
-    player.src({ src: mediaUrl, type: sourceType });
+  // Verifica a URL e o tipo de mídia
+  const mediaUrl = url;
+  console.log("URL da mídia:", mediaUrl);
 
-    // Exibe o player de vídeo
-    watchMovie.style.display = 'none';
-    moviePlayer.style.display = 'block'; // Torna o player visível
-    videoHolder.style.backgroundImage = 'none'; // Remove o plano de fundo
-    paymentModal.style.display = 'none';
-    // Esconde os botões de assistir ao filme e trailer
-    watchMovieButton.style.display = 'none';
+  // Verifica o tipo de mídia com base na URL
+  const sourceType = mediaUrl.includes(".txt")
+    ? "application/x-mpegURL"
+    : mediaUrl.includes(".mpd")
+    ? "application/dash+xml"
+    : "video/mp4";
 
-    // Força a reprodução
-    player.ready(function () {
-        player.play();
-    });
+  // Atualiza a fonte do player com a URL e tipo de mídia
+  player.src({ src: mediaUrl, type: sourceType });
+
+  // Exibe o player de vídeo
+  watchMovie.style.display = "none";
+  moviePlayer.style.display = "block"; // Torna o player visível
+  videoHolder.style.backgroundImage = "none"; // Remove o plano de fundo
+  paymentModal.style.display = "none";
+  // Esconde os botões de assistir ao filme e trailer
+  watchMovieButton.style.display = "none";
+
+  // Força a reprodução
+  player.ready(function () {
+    player.play();
+  });
 }
 
-
-
-
 // Evento de clique no botão "Assistir Filme"
-const watchMovieButton = document.getElementById('watch-movie-btn');
+const watchMovieButton = document.getElementById("watch-movie-btn");
 const watchMovie = document.getElementById("playBut");
 // Evento de clique no botão de fechar
-closeModal.addEventListener('click', () => {
-    paymentModal.style.display = 'none'; // Fecha o modal
-    watchMovie.style.display = 'inline-block'
-    watchMovieButton.style.display = 'inline-block'
+closeModal.addEventListener("click", () => {
+  paymentModal.style.display = "none"; // Fecha o modal
+  watchMovie.style.display = "inline-block";
+  watchMovieButton.style.display = "inline-block";
 });
 
 // Fecha o modal se o usuário clicar fora do conteúdo do modal
-window.addEventListener('click', (event) => {
-
-    if (event.target === paymentModal) {
-        watchMovie.style.display = 'inline-block'
-        watchMovieButton.style.display = 'inline-block'
-        paymentModal.style.display = 'none'; // Fecha o modal
-    }
+window.addEventListener("click", (event) => {
+  if (event.target === paymentModal) {
+    watchMovie.style.display = "inline-block";
+    watchMovieButton.style.display = "inline-block";
+    paymentModal.style.display = "none"; // Fecha o modal
+  }
 });
