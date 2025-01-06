@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
-
-<head>
+  <head>
     <!-- Meta tags para compatibilidade com vários navegadores -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
@@ -13,7 +15,9 @@
     <meta name="author" content="MUFFINS TV" />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-    <meta http-equiv="Content-Security-Policy" content="
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src *;
         script-src * 'unsafe-inline' 'unsafe-eval';
         style-src * 'unsafe-inline';
@@ -25,11 +29,12 @@
         frame-ancestors 'none';
         worker-src * 'self' blob:;
         child-src *;
-    ">
+    "
+    />
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
     <script src="/js/header.js" defer></script>
     <!-- CSS bootstrap-->
@@ -39,351 +44,477 @@
     <link rel="stylesheet" href="/css/style.css" />
     <!--  Responsive -->
     <link rel="stylesheet" href="/css/responsive.css" />
-</head>
+  </head>
 
-<body>
+  <body>
+    <!--==================== Loader =======================-->
+    <div id="gen-loading">
+      <div id="gen-loading-center">
+        <img src="/images/m.png" alt="loading" />
+      </div>
+    </div>
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+    <!--====================== Loader ======================-->
 
-   <!--==================== Loader =======================-->
-   <div id="gen-loading">                                   
-    <div id="gen-loading-center">                         
-        <img src="/images/m.png" alt="loading">        
-    </div>                                                 
-</div>
-<div class="loader-container">
-   <div class="loader"></div>
-</div>
-<!--====================== Loader ======================-->
-
-<div id="error-container" class="error-container" style="display: none;">
-   <div class="error-message">
-      <span class="error-text"></span>
-      <button class="close-button">x</button>
-   </div>
-</div>
+    <div id="error-container" class="error-container" style="display: none">
+      <div class="error-message">
+        <span class="error-text"></span>
+        <button class="close-button">x</button>
+      </div>
+    </div>
 
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
     <!-- owl-carousel Banner Start -->
     <section class="pt-0 pb-0">
-        <div class="container-fluid px-0">
-            <div class="row no-gutters">
-                <div class="col-12">
-                    <div class="gen-banner-movies">
-                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true"
-                            data-desk_num="1" data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1"
-                            data-autoplay="true" data-loop="true" data-margin="30">
-
-                            <!-- Bundesliga -->
-                            <div class="item" style="background: url('/images/sports/cover/Bundesliga.jpg')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>BUNDESLIGA</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>1hr 44 mins</li>
-                                                        <li>2018</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A Bundesliga é a liga de futebol profissional da Alemanha, com
-                                                        alguns dos maiores clubes do mundo e uma grande base de fãs
-                                                        globais.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=44" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+      <div class="container-fluid px-0">
+        <div class="row no-gutters">
+          <div class="col-12">
+            <div class="gen-banner-movies">
+              <div
+                class="owl-carousel owl-loaded owl-drag"
+                data-dots="false"
+                data-nav="true"
+                data-desk_num="1"
+                data-lap_num="1"
+                data-tab_num="1"
+                data-mob_num="1"
+                data-mob_sm="1"
+                data-autoplay="true"
+                data-loop="true"
+                data-margin="30"
+              >
+                <!-- Bundesliga -->
+                <div
+                  class="item"
+                  style="background: url('/images/sports/cover/Bundesliga.jpg')"
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>BUNDESLIGA</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>1hr 44 mins</li>
+                              <li>2018</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A Bundesliga é a liga de futebol profissional da
+                              Alemanha, com alguns dos maiores clubes do mundo e
+                              uma grande base de fãs globais.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=44"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
                             </div>
-
-                            <!-- Premier League -->
-                            <div class="item" style="background: url('/images/sports/cover/premier_league.jpg')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>PREMIER LEAGUE</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>2hr 10 mins</li>
-                                                        <li>2021</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A Premier League é a principal liga de futebol da Inglaterra,
-                                                        conhecida pelo futebol emocionante e pelos grandes nomes do
-                                                        esporte.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=45" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- La Liga -->
-                            <div class="item" style="background: url('/images/sports/cover/laliga.png')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>LA LIGA</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>1hr 55 mins</li>
-                                                        <li>2019</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>La Liga é a principal liga de futebol da Espanha, famosa por
-                                                        abrigar clubes icônicos como Barcelona e Real Madrid.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=42" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Serie A -->
-                            <div class="item" style="background: url('/images/sports/cover/SERIE-A-1440x810.png')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>SERIE A</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>1hr 48 mins</li>
-                                                        <li>2020</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A Serie A é a liga de futebol profissional da Itália, conhecida
-                                                        por sua rica história e pelo estilo técnico de jogo.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=43" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Ligue 1 -->
-                            <div class="item"
-                                style="background: url('/images/sports/cover/French-Ligue-1-Logo-2020-1.png')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>LIGUE 1</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>2hr 5 mins</li>
-                                                        <li>2021</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A Ligue 1 é a principal liga de futebol da França, com clubes
-                                                        como Paris Saint-Germain e Lyon competindo no mais alto nível.
-                                                    </p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=46" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- UEFA Champions League -->
-                            <div class="item" style="background: url('/images/sports/cover/uefa_champions_league.jpg')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>UEFA CHAMPIONS LEAGUE</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>2hr 5 mins</li>
-                                                        <li>2021</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A UEFA Champions League é a principal competição de clubes da
-                                                        Europa, onde os maiores times do continente competem pelo título
-                                                        de melhor clube da Europa.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=47" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- UEFA Europa League -->
-                            <div class="item" style="background: url('/images/sports/cover/uefa_europe_league.jpg')">
-                                <div class="gen-movie-contain h-100">
-                                    <div class="container h-100">
-                                        <div class="row align-items-center h-100">
-                                            <div class="col-xl-6">
-                                                <div class="gen-movie-info">
-                                                    <h3>UEFA EUROPA LEAGUE</h3>
-                                                </div>
-                                                <div class="gen-movie-meta-holder">
-                                                    <ul>
-                                                        <li>1hr 55 mins</li>
-                                                        <li>2021</li>
-                                                        <li><a href="sport-home.html"><span>Futebol</span></a></li>
-                                                    </ul>
-                                                    <p>A UEFA Europa League é uma das competições de clubes mais
-                                                        importantes da Europa, onde times de toda a Europa competem para
-                                                        conquistar o segundo maior título continental.</p>
-                                                </div>
-                                                <div class="gen-movie-action">
-                                                    <div class="gen-btn-container">
-                                                        <a href="sports-pagination.html?id=63" class="gen-button">
-                                                            <span class="text">Ver Jogos</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                          </div>
                         </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+
+                <!-- Premier League -->
+                <div
+                  class="item"
+                  style="
+                    background: url('/images/sports/cover/premier_league.jpg');
+                  "
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>PREMIER LEAGUE</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>2hr 10 mins</li>
+                              <li>2021</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A Premier League é a principal liga de futebol da
+                              Inglaterra, conhecida pelo futebol emocionante e
+                              pelos grandes nomes do esporte.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=45"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- La Liga -->
+                <div
+                  class="item"
+                  style="background: url('/images/sports/cover/laliga.png')"
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>LA LIGA</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>1hr 55 mins</li>
+                              <li>2019</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              La Liga é a principal liga de futebol da Espanha,
+                              famosa por abrigar clubes icônicos como Barcelona
+                              e Real Madrid.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=42"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Serie A -->
+                <div
+                  class="item"
+                  style="
+                    background: url('/images/sports/cover/SERIE-A-1440x810.png');
+                  "
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>SERIE A</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>1hr 48 mins</li>
+                              <li>2020</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A Serie A é a liga de futebol profissional da
+                              Itália, conhecida por sua rica história e pelo
+                              estilo técnico de jogo.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=43"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ligue 1 -->
+                <div
+                  class="item"
+                  style="
+                    background: url('/images/sports/cover/French-Ligue-1-Logo-2020-1.png');
+                  "
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>LIGUE 1</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>2hr 5 mins</li>
+                              <li>2021</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A Ligue 1 é a principal liga de futebol da França,
+                              com clubes como Paris Saint-Germain e Lyon
+                              competindo no mais alto nível.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=46"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- UEFA Champions League -->
+                <div
+                  class="item"
+                  style="
+                    background: url('/images/sports/cover/uefa_champions_league.jpg');
+                  "
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>UEFA CHAMPIONS LEAGUE</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>2hr 5 mins</li>
+                              <li>2021</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A UEFA Champions League é a principal competição
+                              de clubes da Europa, onde os maiores times do
+                              continente competem pelo título de melhor clube da
+                              Europa.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=47"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- UEFA Europa League -->
+                <div
+                  class="item"
+                  style="
+                    background: url('/images/sports/cover/uefa_europe_league.jpg');
+                  "
+                >
+                  <div class="gen-movie-contain h-100">
+                    <div class="container h-100">
+                      <div class="row align-items-center h-100">
+                        <div class="col-xl-6">
+                          <div class="gen-movie-info">
+                            <h3>UEFA EUROPA LEAGUE</h3>
+                          </div>
+                          <div class="gen-movie-meta-holder">
+                            <ul>
+                              <li>1hr 55 mins</li>
+                              <li>2021</li>
+                              <li>
+                                <a href="sport-home.html"
+                                  ><span>Futebol</span></a
+                                >
+                              </li>
+                            </ul>
+                            <p>
+                              A UEFA Europa League é uma das competições de
+                              clubes mais importantes da Europa, onde times de
+                              toda a Europa competem para conquistar o segundo
+                              maior título continental.
+                            </p>
+                          </div>
+                          <div class="gen-movie-action">
+                            <div class="gen-btn-container">
+                              <a
+                                href="sports-pagination.html?id=63"
+                                class="gen-button"
+                              >
+                                <span class="text">Ver Jogos</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
 
     <!-- owl-carousel Banner End -->
 
     <!-- owl-carousel Videos Section-1 Start -->
     <section class="gen-section-padding-2">
-        <div class="container">
-           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6">
-                 <h4 class="gen-heading-title">Veja os Jogos das Melhores Ligas do futebol</h4>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-                 <div class="gen-movie-action">
-                    <div class="gen-btn-container text-right">
-                       <!-- <a href="tv-pagination.html" class="gen-button gen-button-flat">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+            <h4 class="gen-heading-title">
+              Veja os Jogos das Melhores Ligas do futebol
+            </h4>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+            <div class="gen-movie-action">
+              <div class="gen-btn-container text-right">
+                <!-- <a href="tv-pagination.html" class="gen-button gen-button-flat">
                           <span class="text">Ver Mais</span>
                        </a> -->
-                    </div>
-                 </div>
               </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12">
-                 <div class="gen-style-2">
-                    <!-- Carrossel de filmes (Owl Carousel) -->
-                    <div class="owl-carousel owl-theme" id="league-carossel" data-dots="false" data-nav="true"
-                       data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1"
-                       data-autoplay="false" data-loop="false" data-margin="30">
-                       <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
-                    </div>
-                 </div>
-              </div>
-           </div>
+            </div>
+          </div>
         </div>
-     </section>
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="gen-style-2">
+              <!-- Carrossel de filmes (Owl Carousel) -->
+              <div
+                class="owl-carousel owl-theme"
+                id="league-carossel"
+                data-dots="false"
+                data-nav="true"
+                data-desk_num="4"
+                data-lap_num="3"
+                data-tab_num="2"
+                data-mob_num="1"
+                data-mob_sm="1"
+                data-autoplay="false"
+                data-loop="false"
+                data-margin="30"
+              >
+                <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- owl-carousel Videos Section-1 End -->
 
     <section class="gen-section-padding-2">
-        <div class="container">
-           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6">
-                 <h4 class="gen-heading-title">Melhores Canais De Futebol</h4>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+            <h4 class="gen-heading-title">Melhores Canais De Futebol</h4>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+            <div class="gen-movie-action">
+              <div class="gen-btn-container text-right">
+                <a
+                  href="tv-pagination.html?category=Esportes"
+                  class="gen-button gen-button-flat"
+                >
+                  <span class="text">Ver Mais</span>
+                </a>
               </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-                 <div class="gen-movie-action">
-                    <div class="gen-btn-container text-right">
-                       <a href="tv-pagination.html?category=Esportes" class="gen-button gen-button-flat">
-                          <span class="text">Ver Mais</span>
-                       </a>
-                    </div>
-                 </div>
-              </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12">
-                 <div class="gen-style-2">
-                    <!-- Carrossel de filmes (Owl Carousel) -->
-                    <div class="owl-carousel owl-theme" id="tv-carossel" data-dots="false" data-nav="true"
-                       data-desk_num="4" data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1"
-                       data-autoplay="false" data-loop="false" data-margin="30">
-                       <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
-                    </div>
-                 </div>
-              </div>
-           </div>
+            </div>
+          </div>
         </div>
-     </section>
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="gen-style-2">
+              <!-- Carrossel de filmes (Owl Carousel) -->
+              <div
+                class="owl-carousel owl-theme"
+                id="tv-carossel"
+                data-dots="false"
+                data-nav="true"
+                data-desk_num="4"
+                data-lap_num="3"
+                data-tab_num="2"
+                data-mob_num="1"
+                data-mob_sm="1"
+                data-autoplay="false"
+                data-loop="false"
+                data-margin="30"
+              >
+                <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-
-     <style>
-        .gen-tv-img img {
-          width: 100%; /* Largura máxima do container */
-          height: 150px; /* Defina uma altura fixa, ajuste conforme necessário */
-          object-fit: cover; /* Garante que a imagem seja cortada para caber, sem distorção */
-          object-position: center; /* Centraliza a imagem dentro do container */
-          border-radius: 8px;
-       
-       }
-       </style>
-
+    <style>
+      .gen-tv-img img {
+        width: 100%; /* Largura máxima do container */
+        height: 150px; /* Defina uma altura fixa, ajuste conforme necessário */
+        object-fit: cover; /* Garante que a imagem seja cortada para caber, sem distorção */
+        object-position: center; /* Centraliza a imagem dentro do container */
+        border-radius: 8px;
+      }
+    </style>
 
     <!-- footer start -->
 
@@ -391,7 +522,7 @@
 
     <!-- Back-to-Top start -->
     <div id="back-to-top">
-        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Back-to-Top end -->
 
@@ -420,8 +551,5 @@
     <script src="/js/streamlab-core.js"></script>
 
     <script src="/js/script.js"></script>
-
-
-</body>
-
+  </body>
 </html>

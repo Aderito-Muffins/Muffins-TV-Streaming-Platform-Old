@@ -465,28 +465,61 @@ select.form-control {
 /*============================================ 
 Section 
 ==============================================*/
-
 section,
 .gen-section-padding {
-  padding: 40px 0; /* Aumentado para melhorar o espaçamento */
+  padding: 30px 0; /* Reduzido para um espaçamento mais equilibrado */
 }
 
 .gen-section-padding-2 {
-  padding: 100px 0 70px; /* Ajustado para um espaçamento mais generoso */
+  padding: 60px 0 40px; /* Ajustado para espaçamento consistente, sem exagero */
 }
 
 .gen-section-padding-3 {
-  padding: 100px 0 100px; /* Igualando os valores superior e inferior para consistência */
+  padding: 80px 0 80px; /* Mantendo proporcionalidade */
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1200px) {
   section,
   .gen-section-padding {
-    padding: 50px 0; /* Ajustado para um espaçamento mais equilibrado em telas pequenas */
+    padding: 25px 0; /* Reduzido para telas médias */
+  }
+
+  .gen-section-padding-2 {
+    padding: 50px 0 30px; /* Ajustado para telas médias */
   }
 
   .gen-section-padding-3 {
-    padding: 70px 0; /* Aumentado para maior espaçamento em telas pequenas */
+    padding: 60px 0 60px; /* Espaçamento proporcional */
+  }
+}
+
+@media (max-width: 768px) {
+  section,
+  .gen-section-padding {
+    padding: 20px 0; /* Mais compacto para telas pequenas */
+  }
+
+  .gen-section-padding-2 {
+    padding: 40px 0 20px; /* Reduzido para telas menores */
+  }
+
+  .gen-section-padding-3 {
+    padding: 50px 0 50px; /* Ajuste uniforme */
+  }
+}
+
+@media (max-width: 480px) {
+  section,
+  .gen-section-padding {
+    padding: 15px 0; /* Bem compacto para telas muito pequenas */
+  }
+
+  .gen-section-padding-2 {
+    padding: 30px 0 15px; /* Ajustado para telas muito pequenas */
+  }
+
+  .gen-section-padding-3 {
+    padding: 40px 0 40px; /* Proporcional */
   }
 }
 
@@ -574,7 +607,7 @@ Back to Top
   line-height: 50px;
   -webkit-border-radius: 00px;
   -moz-border-radius: 00px;
-  border-radius: 00px;
+  border-radius: 10px;
 }
 
 #back-to-top .top:hover {
@@ -600,7 +633,7 @@ Go to Bottom
   height: 50px;
   text-align: center;
   line-height: 50px;
-  border-radius: 0px;
+  border-radius: 10px;
 }
 
 #go-to-bottom .bottom:hover {
@@ -1007,6 +1040,7 @@ Login, Register
   position: fixed;
   top: 0;
   left: 0;
+  border-radius: 10px;
   display: inline-block;
   width: 100%;
   height: 100%;
@@ -1041,6 +1075,7 @@ Login, Register
 }
 
 #pms_login {
+  border-radius: 15px;
   padding: 30px;
   background: var(--dark-color);
   position: relative;
@@ -1096,6 +1131,10 @@ Login, Register
   font-size: 18px;
 }
 
+#pms_login p input {
+  border-radius: 15px;
+}
+
 /*==========*/
 .gen-pms-register .content-area .site-main {
   display: flex;
@@ -1108,6 +1147,7 @@ Login, Register
   padding: 30px;
   background: var(--dark-color);
   position: relative;
+  border-radius: 15px;
   z-index: 9;
   width: 750px;
   display: inline-block;
@@ -1121,6 +1161,10 @@ form#pms_register-form.pms-form ul.pms-form-fields-wrapper li label {
   font-weight: 400;
   line-height: 26px;
   font-size: 18px;
+}
+
+form#pms_register-form.pms-form input {
+  border-radius: 10px;
 }
 
 form#pms_register-form.pms-form ul.pms-form-fields-wrapper li {
@@ -3136,7 +3180,7 @@ header#gen-header.gen-header-style-1
     background: var(--primary-color);
     border: var(--primary-color);
     color: var(--white-color);
-    border-radius: 0;
+    border-radius: 10px;
   }
 
   header#gen-header .gen-bottom-header .navbar .navbar-collapse {
@@ -3144,11 +3188,12 @@ header#gen-header.gen-header-style-1
     position: absolute;
     left: 0;
     top: 100%;
-    background: var(--black-color);
+    background: var(--dark-color);
     -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
     -moz-box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
     box-shadow: 0px 5px 15px 0px rgba(0, 33, 85, 0.1);
     max-height: 330px;
+    border-radius: 15px;
     overflow-y: scroll;
     overflow-x: hidden;
   }
@@ -4581,13 +4626,50 @@ Carousel Movies
   margin-right: 14px;
 }
 
+/* Configurações padrão para telas grandes */
 .gen-carousel-movies-style-1 .gen-movie-contain .gen-movie-info h3 {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+/* Telas médias (até 1023px) */
+@media (max-width: 1023px) {
+  .gen-carousel-movies-style-1 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 18px; /* Fonte levemente reduzida */
+    line-height: 24px; /* Proporcional ao tamanho da fonte */
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+/* Telas pequenas (até 767px) */
+@media (max-width: 767px) {
+  .gen-carousel-movies-style-1 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 16px; /* Fonte ainda menor para telas pequenas */
+    line-height: 22px; /* Ajuste para melhor legibilidade */
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+
+/* Telas muito pequenas (até 479px) */
+@media (max-width: 479px) {
+  .gen-carousel-movies-style-1 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 14px; /* Fonte compacta para telas muito pequenas */
+    line-height: 20px; /* Mantém a legibilidade */
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
 
 .gen-carousel-movies-style-1 .gen-movie-contain .gen-movie-action .gen-button {
@@ -4800,7 +4882,7 @@ Carousel Movies
   padding: 0;
   margin: 0;
   border: none;
-  border-radius: 0;
+  border-radius: 10px;
   max-height: 130px;
 }
 
@@ -5058,13 +5140,50 @@ Carousel Movies
   z-index: 99;
 }
 
+/* Configurações padrão para telas grandes */
 .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 28px;
   font-weight: 400;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+/* Telas médias (até 1023px) */
+@media (max-width: 1023px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 18px; /* Fonte levemente reduzida */
+    line-height: 24px; /* Proporcional ao tamanho da fonte */
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+/* Telas pequenas (até 767px) */
+@media (max-width: 767px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 16px; /* Fonte menor para telas pequenas */
+    line-height: 22px; /* Ajuste para legibilidade */
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+/* Telas muito pequenas (até 479px) */
+@media (max-width: 479px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 10px; /* Fonte compacta para telas muito pequenas */
+    line-height: 20px; /* Proporção ajustada */
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-meta-holder ul {
@@ -5078,6 +5197,7 @@ Carousel Movies
   white-space: nowrap;
 }
 
+/* Configurações padrão para telas grandes */
 .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-meta-holder ul li {
   list-style: none;
   margin: 0 15px 0px 0;
@@ -5088,6 +5208,38 @@ Carousel Movies
   align-items: center;
   color: var(--secondary-color);
   position: relative;
+}
+
+/* Telas médias (até 1023px) */
+@media (max-width: 1023px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-meta-holder ul li {
+    margin: 0 10px 0px 0; /* Reduzido o espaçamento horizontal */
+    padding: 0 10px 0px 0; /* Ajuste proporcional ao espaçamento */
+    font-size: 13px; /* Fonte levemente reduzida */
+    line-height: 1.4; /* Melhor espaçamento para legibilidade */
+  }
+}
+
+/* Telas pequenas (até 767px) */
+@media (max-width: 767px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-meta-holder ul li {
+    margin: 0 8px 5px 0; /* Margem reduzida e espaçamento vertical adicionado */
+    padding: 0 8px 5px 0; /* Espaçamento menor */
+    font-size: 12px; /* Fonte menor para telas pequenas */
+    line-height: 1.3; /* Melhor ajuste para o layout */
+    display: block; /* Exibe itens em blocos para evitar sobreposição */
+  }
+}
+
+/* Telas muito pequenas (até 479px) */
+@media (max-width: 479px) {
+  .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-meta-holder ul li {
+    margin: 0 5px 5px 0; /* Margem ainda menor */
+    padding: 0 5px 5px 0; /* Ajuste proporcional ao espaçamento */
+    font-size: 11px; /* Fonte compactada para telas muito pequenas */
+    line-height: 1.2; /* Espaçamento proporcional */
+    text-align: left; /* Alinhamento para manter legibilidade */
+  }
 }
 
 .gen-carousel-movies-style-2
@@ -6106,47 +6258,46 @@ Banner
   height: 70vh;
   border-left: 3px solid var(--primary-color);
 }
-
 @media (max-width: 1699px) {
   .gen-movie-contain-style-3 a.playBut {
-    margin: 0 0 90px;
+    margin: 0 0 50px; /* Reduzido para espaçamento mais compacto */
   }
 }
 
 @media (max-width: 1399px) {
   .gen-movie-contain-style-3 a.playBut {
-    margin: 0 0 45px;
+    margin: 0 0 30px;
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-info h3 {
-    font-size: 54px;
-    line-height: 62px;
+    font-size: 36px; /* Reduzido para textos mais proporcionais */
+    line-height: 42px;
   }
 }
 
 @media (max-width: 1365px) {
   .gen-banner-movies .owl-carousel .owl-nav button.owl-prev {
-    left: 1%;
+    left: 2%;
   }
 
   .gen-banner-movies .owl-carousel .owl-nav button.owl-next {
-    right: 1%;
+    right: 2%;
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-info h3 {
-    font-size: 62px;
-    line-height: 70px;
+    font-size: 32px; /* Fonte menor para melhor encaixe */
+    line-height: 38px;
   }
 }
 
 @media (max-width: 1023px) {
   .gen-banner-movies .gen-movie-contain .gen-movie-info h3 {
-    font-size: 54px;
-    line-height: 62px;
+    font-size: 28px; /* Ideal para telas médias */
+    line-height: 34px;
   }
 
   .gen-banner-movies .owl-carousel .owl-nav {
-    display: none;
+    display: none; /* Esconde navegação */
   }
 }
 
@@ -6158,31 +6309,31 @@ Banner
 
 @media (max-width: 767px) {
   .gen-banner-movies .gen-movie-contain .gen-movie-info h3 {
-    font-size: 40px;
-    line-height: 48px;
+    font-size: 24px; /* Texto mais compacto */
+    line-height: 30px;
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-meta-holder p,
   .gen-banner-movies .gen-movie-contain .gen-movie-info p {
-    font-size: 16px;
+    font-size: 12px; /* Reduzido para dispositivos menores */
   }
 
   .gen-banner-movies .gen-movie-contain .gen-tag-line {
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 2px;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 1px;
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-meta-holder ul li img {
-    height: 22px;
+    height: 18px; /* Proporcional ao texto menor */
   }
 
   .gen-banner-movies .gen-movie-contain .gen-tag-img img {
-    height: 45px;
+    height: 35px;
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-action .gen-btn-container {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 
   .gen-banner-movies
@@ -6190,13 +6341,13 @@ Banner
     .gen-movie-action
     .gen-btn-container.button-1
     .gen-button {
-    padding: 12px 30px;
+    padding: 8px 20px; /* Botões mais compactos */
   }
 
   .gen-banner-movies .gen-movie-contain .gen-movie-meta-holder ul li {
-    font-size: 14px;
-    margin: 8px 0 0 10px;
-    padding: 0 0 0 10px;
+    font-size: 10px;
+    margin: 4px 0 0 5px;
+    padding: 0 0 0 5px;
   }
 }
 
@@ -6205,7 +6356,22 @@ Banner
     .gen-movie-contain
     .gen-movie-action
     .gen-btn-container.button-2 {
-    margin-top: 15px;
+    margin-top: 8px;
+  }
+
+  .gen-banner-movies .gen-movie-contain .gen-movie-info h3 {
+    font-size: 20px; /* Bem reduzido para telas muito pequenas */
+    line-height: 26px;
+  }
+
+  .gen-banner-movies .gen-movie-contain .gen-movie-meta-holder p {
+    font-size: 10px; /* Texto pequeno */
+  }
+
+  .gen-banner-movies .gen-movie-contain .gen-tag-line {
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 0.5px;
   }
 }
 

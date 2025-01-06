@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <!-- Meta tags para compatibilidade com vários navegadores -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-     <!-- Meta tags para compatibilidade com vários navegadores -->
-     <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-     
-     <!-- Meta tags de SEO -->
-     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-     <meta name="author" content="MUFFINS TV" />
- 
-     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-     <meta http-equiv="Content-Security-Policy" 
-     content="
+    <!-- Meta tags de SEO -->
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="author" content="MUFFINS TV" />
+
+    <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
          default-src *;
          script-src * 'unsafe-inline' 'unsafe-eval';
          style-src * 'unsafe-inline';
@@ -26,11 +29,12 @@
          frame-ancestors 'none';
          worker-src * 'self' blob:;
          child-src *;
-     ">
+     "
+    />
     <title>MUFFINS TV - Perfil do Usuário</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- CSS Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!-- Custom Style -->
@@ -40,18 +44,17 @@
     <link rel="stylesheet" href="css/tvs.css" />
     <link rel="stylesheet" href="css/user-profile.css" />
     <link rel="stylesheet" href="css/load.css" />
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!-- Loader -->
     <div id="gen-loading">
-        <div id="gen-loading-center">
-            <img src="images/m.png" alt="loading">
-        </div>
+      <div id="gen-loading-center">
+        <img src="images/m.png" alt="loading" />
+      </div>
     </div>
     <div class="loader-container">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
     <!-- Loader End -->
 
@@ -60,66 +63,91 @@
     <!-- Header End -->
 
     <!-- Breadcrumb -->
-    <div class="gen-breadcrumb" style="background-image: url('images/background/asset-25.jpeg');">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <nav aria-label="breadcrumb">
-                        <div class="gen-breadcrumb-title">
-                            <h1>Perfil do Usuário</h1>
-                        </div>
-                        <div class="gen-breadcrumb-container">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html"><i
-                                            class="fas fa-home mr-2"></i>Home</a></li>
-                                <li class="breadcrumb-item active">Perfil do Usuário</li>
-                            </ol>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+    <div
+      class="gen-breadcrumb"
+      style="background-image: url('images/background/asset-25.jpeg')"
+    >
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-12">
+            <nav aria-label="breadcrumb">
+              <div class="gen-breadcrumb-title">
+                <h1>Perfil do Usuário</h1>
+              </div>
+              <div class="gen-breadcrumb-container">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="index.html"
+                      ><i class="fas fa-home mr-2"></i>Home</a
+                    >
+                  </li>
+                  <li class="breadcrumb-item active">Perfil do Usuário</li>
+                </ol>
+              </div>
+            </nav>
+          </div>
         </div>
+      </div>
     </div>
     <!-- Breadcrumb End -->
 
     <!-- Section de Perfil do Usuário -->
     <section class="gen-section-padding-3">
-        <div class="container">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="row">
-                        <!-- Contêiner para o perfil do usuário -->
-                        <div class="col-lg-6">
-                            <div class="gen-user-profile">
-                                <h2>Dados do Usuário</h2>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><strong>Nome:</strong> John Doe</li>
-                                    <li class="list-group-item"><strong>Email:</strong> johndoe@example.com</li>
-                                    <li class="list-group-item"><strong>Numero de Telemovel:</strong>+2581234556</li>
-                                    <li class="list-group-item"><strong>Data de Cadastro:</strong> 01/01/2023</li>
-                                    <li class="list-group-item"><strong>Último Login:</strong> 05/09/2024</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Contêiner para as preferências do usuário -->
-                        <div class="col-lg-6">
-                            <div class="gen-user-preferences">
-                                <h2>Preferências</h2>
-                                <ul class="list-group">
-                                    <li class="list-group-item"><strong>Gêneros Favoritos:</strong> Ação, Drama, Anime</li>
-                                    <li class="list-group-item"><strong>Notificações:</strong> Ativadas</li>
-                                    <li class="list-group-item"><strong>Idioma Preferido:</strong> Português</li>
-                                    <li class="list-group-item"><strong>Plano de Assinatura:</strong> Nenhum</li>
-                                    <li class="list-group-item"><strong>Pacote Especial:</strong> Activo ate 01/12/2023</li>
-                
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+              <!-- Contêiner para o perfil do usuário -->
+              <div class="col-lg-6">
+                <div class="gen-user-profile">
+                  <h2>Dados do Usuário</h2>
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <strong>Nome:</strong> John Doe
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Email:</strong> johndoe@example.com
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Numero de Telemovel:</strong>+2581234556
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Data de Cadastro:</strong> 01/01/2023
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Último Login:</strong> 05/09/2024
+                    </li>
+                  </ul>
                 </div>
+              </div>
+
+              <!-- Contêiner para as preferências do usuário -->
+              <div class="col-lg-6">
+                <div class="gen-user-preferences">
+                  <h2>Preferências</h2>
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <strong>Gêneros Favoritos:</strong> Ação, Drama, Anime
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Notificações:</strong> Ativadas
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Idioma Preferido:</strong> Português
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Plano de Assinatura:</strong> Nenhum
+                    </li>
+                    <li class="list-group-item">
+                      <strong>Pacote Especial:</strong> Activo ate 01/12/2023
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Section de Perfil do Usuário End -->
 
@@ -129,7 +157,7 @@
 
     <!-- Back-to-Top -->
     <div id="back-to-top">
-        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Back-to-Top End -->
 
@@ -139,9 +167,10 @@
     <script src="js/script.js"></script>
     <script src="js/header.js"></script>
     <script src="js/content/user-profile.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-     crossorigin="anonymous"></script>
-    
-</body>
-
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

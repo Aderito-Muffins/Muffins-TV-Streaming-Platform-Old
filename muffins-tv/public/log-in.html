@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <!-- Meta tags para compatibilidade com vários navegadores -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-      <!-- Meta tags para compatibilidade com vários navegadores -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="author" content="MUFFINS TV" />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-    <meta http-equiv="Content-Security-Policy" 
-    content="
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src *;
         script-src * 'unsafe-inline' 'unsafe-eval';
         style-src * 'unsafe-inline';
@@ -26,12 +29,13 @@
         frame-ancestors 'none';
         worker-src * 'self' blob:;
         child-src *;
-    ">
+    "
+    />
 
     <title>MUFFINS TV - Filmes & Series</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
     <script src="js/header.js" defer></script>
     <!-- CSS bootstrap-->
@@ -44,87 +48,113 @@
 
     <link rel="stylesheet" href="css/loading.css" />
     <link rel="stylesheet" href="css/load.css" />
-</head>
+  </head>
 
-<body>
-    
+  <body>
     <!--=========== Loader =============-->
     <div id="gen-loading">
-        <div id="gen-loading-center">
-           <img src="images/m.png" alt="loading">
-        </div>
-     </div>
-    <!--=========== Loader =============-->
-    <div class="loader-container">
-        <div class="loader"></div>
+      <div id="gen-loading-center">
+        <img src="images/m.png" alt="loading" />
+      </div>
     </div>
     <!--=========== Loader =============-->
-    <div id="error-container" class="error-container" style="display: none;">
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+    <!--=========== Loader =============-->
+    <div id="error-container" class="error-container" style="display: none">
       <div class="error-message">
         <span class="error-text"></span>
         <button class="close-button">x</button>
       </div>
     </div>
-  
-    <div id="success-container" class="success-container" style="display: none;">
-      <div class="success-message">
-          <span class="success-text">Seu registro foi bem-sucedido!</span>
-          <button class="close-button">&times;</button>
-      </div>
-  </div>
-  
 
+    <div id="success-container" class="success-container" style="display: none">
+      <div class="success-message">
+        <span class="success-text">Seu registro foi bem-sucedido!</span>
+        <button class="close-button">&times;</button>
+      </div>
+    </div>
 
     <!-- Div para exibir mensagens de erro -->
- <!-- Container para exibir mensagens de erro -->
-  
-      
-  
+    <!-- Container para exibir mensagens de erro -->
+
     <!-- Login -->
     <section class="position-relative pb-0">
-        <div class="gen-login-page-background" style="background-image: url('images/background/asset-54.jpg');"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="text-center">
-                        <form name="pms_login" id="pms_login" action="" method="post">
-                            <h4>Entrar</h4>
-                            <p class="login-username">
-                                <label for="user_login">Endereço de E-mail</label>
-                                <input type="text" name="log" id="user_login" class="input" value="" size="20">
-                            </p>
-                            <p class="login-password">
-                                <label for="user_pass">Senha</label>
-                                <input type="password" name="pwd" id="user_pass" class="input" value="" size="20">
-                            </p>
-                            <p class="login-remember">
-                                <label>
-                                    <input name="rememberme" type="checkbox" id="rememberme" value="forever"> Lembrar de
-                                    Mim
-                                </label>
-                            </p>
-                            <p class="login-submit">
-                                <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary"
-                                    value="Entrar">
-                            </p>
-                            <div id="login-errors" class="error-message" style="color: red;"></div>
-                            <!-- Elemento para exibir mensagens de erro -->
-                            <input type="hidden" name="pms_login" value="1">
-                            <input type="hidden" name="pms_redirect">
-                            <a href="register.html">Cadastrar</a> | <a href="verify.html">Verificar a Conta</a> | <a href="recover-password.html">Perdeu sua
-                                senha?</a>
-                        </form>
-
-                    </div>
-                </div>
+      <div
+        class="gen-login-page-background"
+        style="background-image: url('images/background/asset-54.jpg')"
+      ></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="text-center">
+              <form name="pms_login" id="pms_login" action="" method="post">
+                <h4>Entrar</h4>
+                <p class="login-username">
+                  <label for="user_login">Endereço de E-mail</label>
+                  <input
+                    type="text"
+                    name="log"
+                    id="user_login"
+                    class="input"
+                    value=""
+                    size="20"
+                  />
+                </p>
+                <p class="login-password">
+                  <label for="user_pass">Senha</label>
+                  <input
+                    type="password"
+                    name="pwd"
+                    id="user_pass"
+                    class="input"
+                    value=""
+                    size="20"
+                  />
+                </p>
+                <p class="login-remember">
+                  <label>
+                    <input
+                      name="rememberme"
+                      type="checkbox"
+                      id="rememberme"
+                      value="forever"
+                    />
+                    Lembrar de Mim
+                  </label>
+                </p>
+                <p class="login-submit">
+                  <input
+                    type="submit"
+                    name="wp-submit"
+                    id="wp-submit"
+                    class="button button-primary"
+                    value="Entrar"
+                  />
+                </p>
+                <div
+                  id="login-errors"
+                  class="error-message"
+                  style="color: red"
+                ></div>
+                <!-- Elemento para exibir mensagens de erro -->
+                <input type="hidden" name="pms_login" value="1" />
+                <input type="hidden" name="pms_redirect" />
+                <a href="register.html">Cadastrar</a> |
+                <a href="verify.html">Verificar a Conta</a> |
+                <a href="recover-password.html">Perdeu sua senha?</a>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Login -->
 
     <!-- Voltar ao Topo -->
     <div id="back-to-top">
-        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Voltar ao Topo -->
 
@@ -154,9 +184,10 @@
 
     <script src="firebase/login.js" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-     crossorigin="anonymous"></script>
-
-</body>
-
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

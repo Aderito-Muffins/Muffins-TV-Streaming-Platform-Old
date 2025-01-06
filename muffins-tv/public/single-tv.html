@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <!-- Meta tags para compatibilidade com vários navegadores -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <!-- Meta tags para compatibilidade com vários navegadores -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="author" content="MUFFINS TV" />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-    <meta http-equiv="Content-Security-Policy" 
-    content="
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src *;
         script-src * 'unsafe-inline' 'unsafe-eval';
         style-src * 'unsafe-inline';
@@ -26,11 +29,12 @@
         frame-ancestors 'none';
         worker-src * 'self' blob:;
         child-src *;
-    ">
+    "
+    />
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
     <script src="js/header.js" defer></script>
     <!-- CSS bootstrap-->
@@ -45,120 +49,162 @@
     <link rel="stylesheet" href="css/load.css" />
     <link rel="stylesheet" href="css/playbutton.css" />
 
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" /> 
-</head>
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+  </head>
 
-<body>
-
+  <body>
     <!--=========== Loader =============-->
     <div id="gen-loading">
-        <div id="gen-loading-center">
-            <img src="images/m.png" alt="loading">
-        </div>
+      <div id="gen-loading-center">
+        <img src="images/m.png" alt="loading" />
+      </div>
     </div>
     <div class="loader-container">
-        <div class="loader"></div>
+      <div class="loader"></div>
     </div>
     <!--=========== Loader =============-->
-    <div id="error-container" class="error-container" style="display: none;">
-        <div class="error-message">
-          <span class="error-text"></span>
-          <button class="close-button">x</button>
-        </div>
+    <div id="error-container" class="error-container" style="display: none">
+      <div class="error-message">
+        <span class="error-text"></span>
+        <button class="close-button">x</button>
       </div>
-      
+    </div>
+
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
     <!-- Single movie Start -->
     <section class="gen-section-padding-3 gen-single-movie">
-        <div class="container">
-            <div class="row no-gutters">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-lg-12">
+            <div class="gen-single-movie-wrapper style-1">
+              <div class="row">
                 <div class="col-lg-12">
-                    <div class="gen-single-movie-wrapper style-1">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="gen-video-holder" id="gen-video-holder" style="background-size: cover; background-position: center;">
-                                    <!-- Player de vídeo para assistir ao filme -->
-                                    <video 
-                                    id="movie-player" 
-                                    class="gen-video-player video-js vjs-default-skin vjs-fluid"
-                                    controls 
-                                    preload="auto" 
-                                    width="100%" 
-                                    height="550" 
-                                    aria-label="Player de Vídeo"
-                                    data-setup='{}'>
-                                    <!-- Mensagem para navegadores que não suportam o elemento de vídeo -->
-                                    Seu navegador não suporta o elemento de vídeo.
-                                </video>
-                                <div class='containerPlay'>
-                                    <a href='#' id="playBut" class='playBut'>
-                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                             xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                             x="0px" y="0px" 
-                                             width="213.7px" height="213.7px" 
-                                             viewBox="0 0 213.7 213.7" 
-                                             xml:space="preserve">
-                                             <polygon class='triangle' fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
-                                             <circle class='circleP' fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                                        </svg>
-                                    </a>
-                                </div>
+                  <div
+                    class="gen-video-holder"
+                    id="gen-video-holder"
+                    style="background-size: cover; background-position: center"
+                  >
+                    <!-- Player de vídeo para assistir ao filme -->
+                    <video
+                      id="movie-player"
+                      class="gen-video-player video-js vjs-default-skin vjs-fluid"
+                      controls
+                      preload="auto"
+                      width="100%"
+                      height="550"
+                      aria-label="Player de Vídeo"
+                      data-setup="{}"
+                    >
+                      <!-- Mensagem para navegadores que não suportam o elemento de vídeo -->
+                      Seu navegador não suporta o elemento de vídeo.
+                    </video>
+                    <div class="containerPlay">
+                      <a href="#" id="playBut" class="playBut">
+                        <svg
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          width="213.7px"
+                          height="213.7px"
+                          viewBox="0 0 213.7 213.7"
+                          xml:space="preserve"
+                        >
+                          <polygon
+                            class="triangle"
+                            fill="none"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            points="73.5,62.5 148.5,105.8 73.5,149.1"
+                          />
+                          <circle
+                            class="circleP"
+                            fill="none"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            cx="106.8"
+                            cy="106.8"
+                            r="103.3"
+                          />
+                        </svg>
+                      </a>
+                    </div>
 
-                                <img src="images/m.png" id="video-logo" alt="Logo" class="video-logo">
-        
-                                    <!-- Botão para assistir ao filme -->
-                                    <button id="watch-movie-btn" class="gen-button">Assistir o Programa</button>
-                                    <!-- Botão para assistir ao trailer -->
-                                </div>
-                                
-                                <div class="gen-single-movie-info">
-                                    <!-- Título do filme -->
-                                    <h2 class="gen-title">Título do Programa de Tv</h2>
-                                    <div class="gen-single-meta-holder">
-                                        <ul>
-                                            <!-- Classificação do filme -->
-                                            <li class="gen-sen-rating">Classificação</li>
-                                            <li>
-                                                <i class="fas fa-eye"></i>
-                                                <!-- Visualizações do filme -->
-                                                <span>0 Views</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <p class="gen-description">muffins</p>
-                                    <div class="gen-after-excerpt">
-                                        <div class="gen-extra-data">
-                                            <ul>
-                                                <li>
-                                                    <!-- Linguagem do filme -->
-                                                    <span>Regiao :</span>
-                                                    <span id="film-language">N/A</span>
-                                                </li>
-                                                <li>
-                                                    <!-- Legendas do filme -->
-                                                    <span>Genero :</span>
-                                                    <span id="film-genre">NULL</span>
-                                                </li>
-                                          
-                                                
-                                            </ul>
-                                        </div>
-                                        <div class="gen-socail-share">
-                                            <h4 class="align-self-center">Compartilhe :</h4>
-                                            <ul class="social-inner">
-                                                <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
-                                                </li>
-                                                <li><a href="#" class="facebook"><i class="fab fa-instagram"></i></a>
-                                                </li>
-                                                <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-lg-12">
+                    <img
+                      src="images/m.png"
+                      id="video-logo"
+                      alt="Logo"
+                      class="video-logo"
+                    />
+
+                    <!-- Botão para assistir ao filme -->
+                    <button id="watch-movie-btn" class="gen-button">
+                      Assistir o Programa
+                    </button>
+                    <!-- Botão para assistir ao trailer -->
+                  </div>
+
+                  <div class="gen-single-movie-info">
+                    <!-- Título do filme -->
+                    <h2 class="gen-title">Título do Programa de Tv</h2>
+                    <div class="gen-single-meta-holder">
+                      <ul>
+                        <!-- Classificação do filme -->
+                        <li class="gen-sen-rating">Classificação</li>
+                        <li>
+                          <i class="fas fa-eye"></i>
+                          <!-- Visualizações do filme -->
+                          <span>0 Views</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <p class="gen-description">muffins</p>
+                    <div class="gen-after-excerpt">
+                      <div class="gen-extra-data">
+                        <ul>
+                          <li>
+                            <!-- Linguagem do filme -->
+                            <span>Regiao :</span>
+                            <span id="film-language">N/A</span>
+                          </li>
+                          <li>
+                            <!-- Legendas do filme -->
+                            <span>Genero :</span>
+                            <span id="film-genre">NULL</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="gen-socail-share">
+                        <h4 class="align-self-center">Compartilhe :</h4>
+                        <ul class="social-inner">
+                          <li>
+                            <a href="#" class="facebook"
+                              ><i class="fab fa-facebook-f"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#" class="facebook"
+                              ><i class="fab fa-instagram"></i
+                            ></a>
+                          </li>
+                          <li>
+                            <a href="#" class="facebook"
+                              ><i class="fab fa-twitter"></i
+                            ></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-lg-12">
                                 <div class="pm-inner">
                                     <div class="gen-more-like">
                                         <h5 class="gen-more-title">More Like This</h5>
@@ -250,11 +296,11 @@
                                     </div>
                                 </div>
                             </div> -->
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- Single movie End -->
 
@@ -264,7 +310,7 @@
 
     <!-- Back-to-Top start -->
     <div id="back-to-top">
-        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Back-to-Top end -->
 
@@ -295,8 +341,10 @@
     <script src="js/script.js"></script>
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     <script src="js/content/playertv.js"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-     crossorigin="anonymous"></script>
-
-</body>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

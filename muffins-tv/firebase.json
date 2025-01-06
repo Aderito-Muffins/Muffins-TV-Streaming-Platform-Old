@@ -1,11 +1,7 @@
 {
   "hosting": {
     "public": "public",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "headers": [
       {
         "source": "**/*.html",
@@ -91,16 +87,16 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      },
-      {
         "source": "/log-in",
         "destination": "/log-in.html"
       },
       {
         "source": "/sports/home",
         "destination": "/sport-home.html"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
       }
     ],
     "cleanUrls": true,
@@ -117,9 +113,7 @@
         "firebase-debug.*.log",
         "*.local"
       ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run lint"
-      ]
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run lint"]
     }
   ]
 }

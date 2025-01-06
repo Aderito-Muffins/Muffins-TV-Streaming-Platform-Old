@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Meta tags de SEO -->
+    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
+    <meta name="author" content="MUFFINS TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
 
-  <!-- Meta tags de SEO -->
-  <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-  <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-  <meta name="author" content="MUFFINS TV" />
-  <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb">
-
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="
+    <!-- Content Security Policy -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
             default-src *;
             script-src * 'unsafe-inline' 'unsafe-eval';
             style-src * 'unsafe-inline';
@@ -25,144 +29,168 @@
             frame-ancestors 'none';
             worker-src * 'self' blob:;
             child-src *;
-        ">
+        "
+    />
 
-  <title>MUFFINS TV - Filmes, Series e Animes</title>
+    <title>MUFFINS TV - Filmes, Series e Animes</title>
 
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="images/favicon.ico">
-  <!-- CSS bootstrap -->
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <!-- Custom Style -->
-  <link rel="stylesheet" href="css/style.css" />
-  <!-- Responsive Style -->
-  <link rel="stylesheet" href="css/responsive.css" />
-  <link rel="stylesheet" href="css/load.css" />
-</head>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
+    <!-- CSS bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Responsive Style -->
+    <link rel="stylesheet" href="css/responsive.css" />
+    <link rel="stylesheet" href="css/load.css" />
+  </head>
 
-<body>
-  <!--==================== Loader =======================-->
-  <div id="gen-loading">
-    <div id="gen-loading-center">
-      <img src="images/m.png" alt="loading">
+  <body>
+    <!--==================== Loader =======================-->
+    <div id="gen-loading">
+      <div id="gen-loading-center">
+        <img src="images/m.png" alt="loading" />
+      </div>
     </div>
-  </div>
-  <div class="loader-container">
-    <div class="loader"></div>
-  </div>
-  <!--====================== Loader ======================-->
-
-  <div id="error-container" class="error-container" style="display: none;">
-    <div class="error-message">
-      <span class="error-text"></span>
-      <button class="close-button">x</button>
+    <div class="loader-container">
+      <div class="loader"></div>
     </div>
-  </div>
+    <!--====================== Loader ======================-->
 
-  <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
-    <link rel="stylesheet" href="/css/header.css" />
-    <div class="gen-bottom-header">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <a class="navbar-brand" href="#">
-            <img class="img-fluid logo" src="/images/m.png" alt="streamlab-image">
-          </a>
-
-          <!-- Botão responsivo para o menu -->
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fas fa-bars"></i>
-          </button>
-
-          <!-- Menu colapsável -->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul id="gen-main-menu" class="navbar-nav ml-auto">
-              <!-- Menu Início -->
-              <li class="nav-item">
-                <a class="nav-link" href="/index.html">Início</a>
-              </li>
-
-              <!-- Menu Filmes com gêneros -->
-              <li class="nav-item active dropdown">
-                <a class="nav-link" href="/animes.html">Animes</a>
-              </li>
-
-              <!-- Menu Animação -->
-              <li class="nav-item ">
-                <a class="nav-link" href="/categories.html">Categorias</a>
-              </li>
-
-
-              <!-- Menu Programas de TV -->
-              <li class="nav-item ">
-                <a class="nav-link" href="/animes/latest.html">Recentes</a>
-              </li>
-
-              <!-- Menu Programas de TV -->
-
-            </ul>
-          </div>
-
-          <!-- Botão de Pesquisa -->
-          <div class="gen-header-info-box d-flex align-items-center">
-            <div class="gen-menu-search-block">
-              <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
-              <div class="gen-search-form" id="search-form" style="display: none;">
-                <form role="search" method="get" class="search-form" action="#">
-                  <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
-                  <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
-                </form>
-              </div>
-            </div>
-
-
-          </div>
-        </nav>
+    <div id="error-container" class="error-container" style="display: none">
+      <div class="error-message">
+        <span class="error-text"></span>
+        <button class="close-button">x</button>
       </div>
     </div>
 
-    <style>
-      /* Media Queries para responsividade */
-      @media (max-width: 768px) {
-        .navbar-collapse {
-          text-align: center;
+    <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
+      <link rel="stylesheet" href="/css/header.css" />
+      <div class="gen-bottom-header">
+        <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+              <img
+                class="img-fluid logo"
+                src="/images/m.png"
+                alt="streamlab-image"
+              />
+            </a>
+
+            <!-- Botão responsivo para o menu -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Menu colapsável -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                <!-- Menu Início -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/index.html">Início</a>
+                </li>
+
+                <!-- Menu Filmes com gêneros -->
+                <li class="nav-item active dropdown">
+                  <a class="nav-link" href="/animes.html">Animes</a>
+                </li>
+
+                <!-- Menu Animação -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/categories.html">Categorias</a>
+                </li>
+
+                <!-- Menu Programas de TV -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/animes/latest.html">Recentes</a>
+                </li>
+
+                <!-- Menu Programas de TV -->
+              </ul>
+            </div>
+
+            <!-- Botão de Pesquisa -->
+            <div class="gen-header-info-box d-flex align-items-center">
+              <div class="gen-menu-search-block">
+                <a href="javascript:void(0)" id="gen-search-btn"
+                  ><i class="fa fa-search"></i
+                ></a>
+                <div
+                  class="gen-search-form"
+                  id="search-form"
+                  style="display: none"
+                >
+                  <form
+                    role="search"
+                    method="get"
+                    class="search-form"
+                    action="#"
+                  >
+                    <input
+                      type="search"
+                      class="search-field"
+                      placeholder="Pesquisar …"
+                      name="s"
+                    />
+                    <button type="submit" class="search-submit">
+                      <span class="screen-reader-text"></span>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <style>
+        /* Media Queries para responsividade */
+        @media (max-width: 768px) {
+          .navbar-collapse {
+            text-align: center;
+          }
+
+          .navbar-nav {
+            flex-direction: column;
+          }
+
+          .gen-header-info-box {
+            margin-top: 10px;
+            justify-content: center;
+          }
+
+          .gen-btn-container {
+            margin-top: 10px;
+          }
+
+          .gen-menu-search-block {
+            margin-left: 15px;
+          }
         }
 
-        .navbar-nav {
-          flex-direction: column;
+        @media (max-width: 576px) {
+          .gen-header-info-box {
+            flex-direction: column;
+          }
+
+          .gen-btn-container {
+            margin-top: 5px;
+          }
         }
-
-        .gen-header-info-box {
-          margin-top: 10px;
-          justify-content: center;
-        }
-
-        .gen-btn-container {
-          margin-top: 10px;
-        }
-
-        .gen-menu-search-block {
-          margin-left: 15px;
-        }
-      }
-
-      @media (max-width: 576px) {
-        .gen-header-info-box {
-          flex-direction: column;
-        }
-
-        .gen-btn-container {
-          margin-top: 5px;
-        }
-
-      }
-    </style>
-
-  </header>
-  <div class="content-container"></div>
-  <!--========== Header ==============-->
-  <!-- Banner Start -->
-  <!-- <section class="pt-0 pb-0">
+      </style>
+    </header>
+    <div class="content-container"></div>
+    <!--========== Header ==============-->
+    <!-- Banner Start -->
+    <!-- <section class="pt-0 pb-0">
         <div class="container-fluid px-0">
             <div class="row no-gutters">
                 <div class="col-12">
@@ -173,10 +201,10 @@
             </div>
         </div>
     </section> -->
-  <!-- Banner End -->
+    <!-- Banner End -->
 
-  <!-- Section-1 Start -->
-  <!-- <section class="gen-section-padding-2">
+    <!-- Section-1 Start -->
+    <!-- <section class="gen-section-padding-2">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-6">
@@ -205,8 +233,8 @@
             </div>
         </div>
     </section> -->
-  <!-- Melhor Programas de TV Section -->
-  <!-- <section class="gen-section-padding-2">
+    <!-- Melhor Programas de TV Section -->
+    <!-- <section class="gen-section-padding-2">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-6">
@@ -233,8 +261,8 @@
         </div>
     </section> -->
 
-  <!-- Histórico de Filmes Assistidos -->
-  <!-- <section class="gen-section-padding-2">
+    <!-- Histórico de Filmes Assistidos -->
+    <!-- <section class="gen-section-padding-2">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -262,8 +290,8 @@
         </div>
     </section> -->
 
-  <!-- Images Carousel -->
-  <!-- <section class="pt-0 gen-section-padding-2 home-single-slider">
+    <!-- Images Carousel -->
+    <!-- <section class="pt-0 gen-section-padding-2 home-single-slider">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -278,50 +306,56 @@
         </div>
     </section> -->
 
-  <!-- Back-to-Top -->
-  <div id="back-to-top">
-    <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
-  </div>
+    <!-- Back-to-Top -->
+    <div id="back-to-top">
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
 
-  <!-- JavaScript -->
+    <!-- JavaScript -->
 
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/script.js"></script>
+    <!-- <script src="js/header.js"></script> -->
+    <script type="text/javascript" src="js/animehome.js"></script>
 
-  <script src="js/jquery-3.6.0.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/script.js"></script>
-  <!-- <script src="js/header.js"></script> -->
-  <script type="text/javascript" src="js/animehome.js"></script>
-
-  <script>
-    // Mover o formulário de pesquisa
-    const searchForm = document.getElementById('search-form');
-    if (searchForm) {
-      document.body.appendChild(searchForm);
-    }
-
-    // Configurar o botão de busca e o formulário de pesquisa
-    const searchButton = document.getElementById('gen-search-btn');
-    if (searchButton && searchForm) {
-      searchButton.addEventListener('click', function () {
-        searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
-        searchForm.classList.toggle('active');
-      });
-
-      // Configurar o comportamento do formulário de pesquisa
-      const searchFormElement = searchForm.querySelector('form');
-      if (searchFormElement) {
-        searchFormElement.addEventListener('submit', function (event) {
-          event.preventDefault(); // Impede o envio padrão do formulário
-          const searchValue = searchFormElement.querySelector('.search-field').value;
-          const searchUrl = `/animes/query.html?s=${encodeURIComponent(searchValue)}`;
-          window.location.href = searchUrl;
-        });
+    <script>
+      // Mover o formulário de pesquisa
+      const searchForm = document.getElementById("search-form");
+      if (searchForm) {
+        document.body.appendChild(searchForm);
       }
-    }
-  </script>
-  <!-- Inline CSS -->
-  <!-- <style>
+
+      // Configurar o botão de busca e o formulário de pesquisa
+      const searchButton = document.getElementById("gen-search-btn");
+      if (searchButton && searchForm) {
+        searchButton.addEventListener("click", function () {
+          searchForm.style.display =
+            searchForm.style.display === "none" ||
+            searchForm.style.display === ""
+              ? "flex"
+              : "none";
+          searchForm.classList.toggle("active");
+        });
+
+        // Configurar o comportamento do formulário de pesquisa
+        const searchFormElement = searchForm.querySelector("form");
+        if (searchFormElement) {
+          searchFormElement.addEventListener("submit", function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            const searchValue =
+              searchFormElement.querySelector(".search-field").value;
+            const searchUrl = `/animes/query.html?s=${encodeURIComponent(
+              searchValue
+            )}`;
+            window.location.href = searchUrl;
+          });
+        }
+      }
+    </script>
+    <!-- Inline CSS -->
+    <!-- <style>
         .gen-tv-img img {
             width: 100%;
             height: 150px;
@@ -339,7 +373,5 @@
             height: auto;
         }
     </style> -->
-
-</body>
-
+  </body>
 </html>

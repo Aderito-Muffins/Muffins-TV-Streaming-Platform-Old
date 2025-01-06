@@ -21,6 +21,15 @@ Design and Developed by: Gentechtree.com
   jQuery(window).on("load", function (e) {
     jQuery("p:empty").remove();
 
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/service-worker.js")
+        .then(() => console.log("Service Worker registrado com sucesso!"))
+        .catch((error) =>
+          console.error("Erro ao registrar o Service Worker:", error)
+        );
+    }
+
     /*------------------------
                 Page Loader
         --------------------------*/
