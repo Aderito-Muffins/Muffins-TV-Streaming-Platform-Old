@@ -3,8 +3,8 @@
   "short_name": "MUFFINS TV",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "background_color": "#0a0e16",
+  "theme_color": "#ff9800",
   "icons": [
     {
       "src": "/images/favicon/web-app-manifest-96x96.png",
@@ -19,7 +19,11 @@
     {
       "src": "/images/favicon/web-app-manifest-512x512.png",
       "sizes": "512x512",
-      "type": "image/svg"
+      "type": "image/png"
     }
-  ]
+  ],
+  "lang": "pt",
+  "id": "muffinstv",
+  "description": "Acesse uma vasta seleção de filmes, séries e vídeos com Muffins TV, onde e quando quiser.",
+  "categories": ["entertainment", "kids", "sports"]
 }
