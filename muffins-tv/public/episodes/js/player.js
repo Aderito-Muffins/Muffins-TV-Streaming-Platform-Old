@@ -345,6 +345,8 @@ async function watchAnime(isDownload = false) {
     watchMovieButton.style.display = "none";
     watchMovie.style.display = "none";
     downloadButton.style.display = "none";
+    moviePlayer.style.display = "block";
+    videoHolder.style.display = "block";
 
     document.getElementById("serverbs").innerHTML = await loadServers(
       data.data,

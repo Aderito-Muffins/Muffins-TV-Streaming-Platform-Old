@@ -50,7 +50,7 @@
 
     <link rel="stylesheet" href="/css/playbutton.css" />
     <link rel="stylesheet" href="/css/load.css" />
-    <link href="//vjs.zencdn.net/8.21.1/video-js.min.css" rel="stylesheet" />
+    <link href="/css/videojs.min.css" rel="stylesheet" />
 
     <script src="//vjs.zencdn.net/8.21.1/video.min.js"></script>
 
@@ -74,18 +74,45 @@
         background-color: rgba(0, 0, 0, 0.5);
       }
 
+      /* Modal Content Styles */
       .modal-content {
         background-color: #0a0e16;
-        margin: 5% auto;
         padding: 20px;
         border-radius: 10px;
-        width: 90%;
-        max-width: 500px; /* Aumente o máximo para um quadrado maior */
-        height: 500px; /* Altura igual à largura para um quadrado perfeito */
+        width: 90%; /* Responsivo: 90% da largura da tela */
+        max-width: 500px; /* Largura máxima */
+        height: auto; /* Ajusta automaticamente a altura */
+        min-height: 300px; /* Altura mínima */
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+
+        /* Centralização no meio da tela */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(
+          -50%,
+          -50%
+        ); /* Move o elemento 50% para cima e para a esquerda */
+      }
+
+      /* Responsividade para telas pequenas */
+      @media screen and (max-width: 600px) {
+        .modal-content {
+          width: 95%; /* Torna o modal maior em telas pequenas */
+          padding: 15px; /* Menos espaçamento em telas pequenas */
+          height: auto; /* Ajusta a altura conforme o conteúdo */
+        }
+      }
+
+      /* Responsividade para telas grandes */
+      @media screen and (min-width: 1200px) {
+        .modal-content {
+          width: 60%; /* Torna o modal mais estreito em telas grandes */
+          max-width: 600px; /* Aumenta a largura máxima em telas grandes */
+        }
       }
 
       .payment-logo {
@@ -174,8 +201,13 @@
         <button class="close-button">x</button>
       </div>
     </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
     <div class="loader-container">
-      <div class="loader"></div>
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
     </div>
     <!--========== Header ==============-->
     <!--========== Header ==============-->
@@ -220,42 +252,41 @@
                     </video>
 
                     <!-- playbutton -->
-                    <div class="containerPlay">
-                      <a href="#" id="playBut" class="playBut">
-                        <svg
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          x="0px"
-                          y="0px"
-                          width="213.7px"
-                          height="213.7px"
-                          viewBox="0 0 213.7 213.7"
-                          xml:space="preserve"
-                        >
-                          <polygon
-                            class="triangle"
-                            fill="none"
-                            stroke-width="7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            points="73.5,62.5 148.5,105.8 73.5,149.1"
-                          />
-                          <circle
-                            class="circleP"
-                            fill="none"
-                            stroke-width="7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            cx="106.8"
-                            cy="106.8"
-                            r="103.3"
-                          />
-                        </svg>
-                      </a>
-                    </div>
+
+                    <a href="#" id="playBut" class="playBut">
+                      <svg
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        x="0px"
+                        y="0px"
+                        width="213.7px"
+                        height="213.7px"
+                        viewBox="0 0 213.7 213.7"
+                        xml:space="preserve"
+                      >
+                        <polygon
+                          class="triangle"
+                          fill="none"
+                          stroke-width="7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          points="73.5,62.5 148.5,105.8 73.5,149.1"
+                        />
+                        <circle
+                          class="circleP"
+                          fill="none"
+                          stroke-width="7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          cx="106.8"
+                          cy="106.8"
+                          r="103.3"
+                        />
+                      </svg>
+                    </a>
 
                     <!-- Botões para assistir -->
                     <button id="watch-movie-btn" class="gen-button">

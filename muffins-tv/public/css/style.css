@@ -698,6 +698,57 @@ input[type="button"],
   border-radius: 0px;
 }
 
+/* Posicionamento específico dos botões */
+#watch-movie-btn,
+#download-movie-btn {
+  padding: 10px 20px;
+  position: absolute;
+  bottom: 10px; /* Ambos os botões a 10px da parte inferior */
+  transform: translateX(0); /* Remove centralização individual */
+}
+
+/* Botão "Watch Movie" alinhado à esquerda */
+#watch-movie-btn {
+  left: 10%; /* Alinhado à esquerda com margem de 10% */
+}
+
+/* Botão "Download Movie" alinhado à direita */
+#download-movie-btn {
+  right: 10%; /* Alinhado à direita com margem de 10% */
+}
+
+/* Ajustes de responsividade para telas menores */
+@media (max-width: 768px) {
+  #watch-movie-btn,
+  #download-movie-btn {
+    padding: 8px 15px; /* Reduz padding em telas menores */
+    font-size: 14px; /* Reduz tamanho da fonte */
+  }
+
+  #watch-movie-btn {
+    left: 8%; /* Ajusta alinhamento à esquerda */
+  }
+
+  #download-movie-btn {
+    right: 8%; /* Ajusta alinhamento à direita */
+  }
+}
+
+@media (max-width: 480px) {
+  #watch-movie-btn,
+  #download-movie-btn {
+    padding: 6px 10px; /* Padding ainda menor para telas muito pequenas */
+    font-size: 12px; /* Tamanho da fonte ainda menor */
+  }
+
+  #watch-movie-btn {
+    left: 5%; /* Alinha mais próximo do centro */
+  }
+
+  #download-movie-btn {
+    right: 5%; /* Alinha mais próximo do centro */
+  }
+}
 .gen-button-dark {
   background: #ff9800;
 }
@@ -924,7 +975,7 @@ Single Tv Season
   list-style: none;
   margin: 10px 15px 0px 0;
   padding: 0;
-  font-size: 14px;
+  font-size: 10px;
   line-height: normal;
   display: flex;
   align-items: center;
@@ -950,19 +1001,23 @@ Quote From
 .gen-form input[type="email"] {
   width: 100%;
   margin-bottom: 30px;
-}
-
-/*================================================
+} /*================================================
 Table
 ===============================================*/
 .gen-comparison-table .table.table-striped {
   margin: 0;
+  width: 100%; /* A tabela ocupa toda a largura disponível */
+  table-layout: fixed; /* Impede que as colunas se expandam excessivamente */
+  overflow-x: auto; /* Garante que a tabela seja rolável horizontalmente se necessário */
 }
 
 .gen-comparison-table .table th,
 .gen-comparison-table .table td {
-  padding: 15px 5px;
+  padding: 10px 5px; /* Reduzido para melhorar responsividade */
   color: var(--white-color);
+  word-wrap: break-word; /* Impede que o texto ultrapasse os limites da célula */
+  text-align: center; /* Centraliza o texto nas células */
+  font-size: 16px; /* Ajuste de tamanho de fonte para facilitar a leitura */
 }
 
 .gen-comparison-table .table-bordered th,
@@ -992,16 +1047,16 @@ Table
 .gen-comparison-table .table-striped thead tr th {
   font-weight: 600;
   font-family: var(--title-fonts);
-  font-size: 24px;
-  line-height: 30px;
+  font-size: 22px; /* Ajusta para telas grandes */
+  line-height: 28px;
   text-transform: uppercase;
 }
 
 .gen-comparison-table .table-striped tbody tr:first-child td span:first-child {
   font-weight: 600;
   font-family: var(--title-fonts);
-  font-size: 32px;
-  line-height: 40px;
+  font-size: 26px; /* Ajusta o tamanho da fonte para maior legibilidade */
+  line-height: 32px;
 }
 
 .gen-comparison-table .gen-button {
@@ -1009,21 +1064,63 @@ Table
 }
 
 .gen-comparison-table .cell-inner i {
-  font-size: 24px;
-  line-height: 32px;
+  font-size: 22px;
+  line-height: 30px;
 }
 
+/* Responsividade para telas médias (até 1023px) */
 @media (max-width: 1023px) {
   .gen-comparison-table .table th,
   .gen-comparison-table .table td {
-    padding: 15px;
+    padding: 12px 6px; /* Reduz o padding para telas médias */
+    font-size: 12px; /* Ajuste de tamanho da fonte */
+  }
+
+  .gen-comparison-table .table-striped thead tr th {
+    font-size: 12px; /* Ajuste para telas médias */
+  }
+
+  .gen-comparison-table
+    .table-striped
+    tbody
+    tr:first-child
+    td
+    span:first-child {
+    font-size: 28px; /* Ajusta o tamanho da fonte para o primeiro item */
   }
 
   .gen-comparison-table .table-bordered thead th:first-child {
-    min-width: 300px;
+    min-width: 180px; /* Diminui a largura mínima para telas médias */
     line-height: normal;
     display: inline-block;
-    min-height: 65px;
+    min-height: 50px; /* Ajusta a altura mínima da célula */
+  }
+}
+
+/* Responsividade para telas pequenas (menos de 600px) */
+@media (max-width: 600px) {
+  .gen-comparison-table .table th,
+  .gen-comparison-table .table td {
+    padding: 8px 4px; /* Reduz o padding em telas menores */
+    font-size: 8px; /* Diminui o tamanho da fonte */
+  }
+
+  .gen-comparison-table .table-striped thead tr th {
+    font-size: 8px; /* Ajusta o tamanho da fonte do cabeçalho para telas pequenas */
+  }
+
+  .gen-comparison-table
+    .table-striped
+    tbody
+    tr:first-child
+    td
+    span:first-child {
+    font-size: 24px; /* Ajusta o tamanho da fonte do primeiro item para telas pequenas */
+  }
+
+  .gen-comparison-table .table {
+    width: 100%; /* Garante que a tabela ocupe toda a largura */
+    overflow-x: auto; /* Permite rolagem horizontal, se necessário */
   }
 }
 
@@ -1550,6 +1647,7 @@ Blog Sidebar
   width: 54px;
   top: 0;
   right: 0;
+  border-radius: 10px;
   transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -2518,6 +2616,31 @@ header#gen-header .gen-bottom-header .navbar .navbar-brand img {
   }
 }
 
+/* Estilo padrão para telas grandes (Desktop) */
+.col-xl-6.col-lg-6.col-md-6 h4.gen-heading-title {
+  font-size: 24px;
+  text-align: left;
+  margin: 0;
+}
+
+/* Estilo para telas médias (Tablets) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .col-xl-6.col-lg-6.col-md-6 h4.gen-heading-title {
+    font-size: 20px;
+    text-align: center; /* Alinha o texto ao centro */
+    margin: 10px 0; /* Adiciona um pouco de espaço ao redor */
+  }
+}
+
+/* Estilo para telas pequenas (Smartphones) */
+@media (max-width: 768px) {
+  .col-xl-6.col-lg-6.col-md-6 h4.gen-heading-title {
+    font-size: 18px; /* Reduz o tamanho da fonte */
+    text-align: center; /* Centraliza o texto */
+    margin: 15px 0; /* Mais espaço entre os elementos */
+  }
+}
+
 /* Garantir que o botão não seja ocultado */
 #bt-assine {
   /* display: block !important; */
@@ -2797,7 +2920,7 @@ header#gen-header .gen-search-form {
   background: var(--black-color);
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
-  border-radius: 0;
+  border-radius: 15px;
 }
 
 header#gen-header .gen-button:hover .gen-button-line-left {
@@ -2807,6 +2930,7 @@ header#gen-header .gen-button:hover .gen-button-line-left {
 header#gen-header .gen-search-form .search-field {
   border-color: var(--dark-color);
   background: var(--dark-color);
+  border-radius: 10px;
 }
 
 /*===== Header Default =====*/
@@ -3176,7 +3300,7 @@ header#gen-header.gen-header-style-1
     line-height: normal;
     float: right;
     outline: none;
-    margin: 0 0 0 15px;
+    margin: 0 15px 0 15px;
     background: var(--primary-color);
     border: var(--primary-color);
     color: var(--white-color);
@@ -5049,6 +5173,7 @@ Carousel Movies
   position: relative;
   overflow: hidden;
   margin-bottom: 15px;
+  border-radius: 10px;
 }
 
 .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-img:before {
@@ -5102,12 +5227,17 @@ Carousel Movies
   transform: translate(-50%, -50%);
   z-index: 9;
   opacity: 0;
+
+  /* Garante que o elemento seja centralizado dentro de seu contêiner pai */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gen-carousel-movies-style-2 .gen-movie-contain:hover .gen-movie-action {
   opacity: 1;
 }
-
+/* Configuração padrão (para telas grandes) */
 .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-action .gen-button {
   padding: 0;
   width: 60px;
@@ -5121,6 +5251,7 @@ Carousel Movies
   border-radius: 900px;
 }
 
+/* Ícones dentro do botão */
 .gen-carousel-movies-style-2
   .gen-movie-contain
   .gen-movie-action
@@ -5128,6 +5259,30 @@ Carousel Movies
   i {
   margin: 0;
   padding: 0;
+}
+
+/* Para telas médias (768px a 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+  .gen-carousel-movies-style-2
+    .gen-movie-contain
+    .gen-movie-action
+    .gen-button {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+}
+
+/* Para telas pequenas (menos de 768px) */
+@media (max-width: 768px) {
+  .gen-carousel-movies-style-2
+    .gen-movie-contain
+    .gen-movie-action
+    .gen-button {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
 }
 
 .gen-carousel-movies-style-2 .gen-movie-contain .info-holder {
@@ -5153,7 +5308,7 @@ Carousel Movies
 /* Telas médias (até 1023px) */
 @media (max-width: 1023px) {
   .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
-    font-size: 18px; /* Fonte levemente reduzida */
+    font-size: 16px; /* Fonte levemente reduzida */
     line-height: 24px; /* Proporcional ao tamanho da fonte */
     font-weight: 400;
     text-overflow: ellipsis;
@@ -5165,7 +5320,7 @@ Carousel Movies
 /* Telas pequenas (até 767px) */
 @media (max-width: 767px) {
   .gen-carousel-movies-style-2 .gen-movie-contain .gen-movie-info h3 {
-    font-size: 16px; /* Fonte menor para telas pequenas */
+    font-size: 14px; /* Fonte menor para telas pequenas */
     line-height: 22px; /* Ajuste para legibilidade */
     font-weight: 400;
     text-overflow: ellipsis;
@@ -5333,7 +5488,6 @@ Carousel Movies
   a {
   color: var(--white-color);
 }
-
 /*===== Carousel Movies 3 =====*/
 .gen-carousel-movies-style-3 {
   margin-bottom: 30px;
@@ -5345,9 +5499,42 @@ Carousel Movies
   position: relative;
 }
 
+@media (max-width: 768px) {
+  .gen-carousel-movies-style-3 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .gen-carousel-movies-style-3 .gen-movie-contain {
+    width: 50%; /* ajusta a largura de cada filme para 25% */
+    margin: 10px; /* adiciona um espaçamento entre os filmes */
+  }
+}
+
+@media (max-width: 480px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain {
+    width: 33.33%; /* ajusta a largura de cada filme para 33.33% */
+    margin: 5px; /* reduz o espaçamento entre os filmes */
+  }
+}
 .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img {
   position: relative;
+  border-radius: 10px;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  transition: all 0.5s ease-in-out;
 }
 
 .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img:before {
@@ -5361,11 +5548,6 @@ Carousel Movies
   height: 100%;
   display: inline-block;
   transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out;
   background: #0b101766;
   background: -webkit-linear-gradient(top, #0b101766, #0b1017cc);
   background: -moz-linear-gradient(top, #0b101766, #0b1017cc);
@@ -5376,20 +5558,30 @@ Carousel Movies
   opacity: 1;
 }
 
-.gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img img {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-  transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out;
-}
-
 .gen-carousel-movies-style-3 .gen-movie-contain:hover .gen-movie-img img {
   -webkit-transform: scale(1.2);
   transform: scale(1.2);
+}
+
+@media (max-width: 1200px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-action {
@@ -5432,10 +5624,31 @@ Carousel Movies
 .gen-carousel-movies-style-3 .gen-movie-contain .gen-info-contain {
   display: inline-block;
   width: 100%;
-  padding: 15px;
+  padding: 1px;
+  border-radius: 5px;
   background: var(--black-color);
 }
 
+@media (max-width: 1200px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-info-contain {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-info-contain {
+    width: 100%;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-info-contain {
+    width: 100%;
+    padding: 5px;
+  }
+}
 .gen-carousel-movies-style-3 .gen-movie-contain .info-holder {
   position: absolute;
   padding: 15px;
@@ -5476,6 +5689,55 @@ Carousel Movies
   align-items: center;
   color: var(--secondary-color);
   position: relative;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .info-holder {
+    padding: 10px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-meta-holder ul li {
+    font-size: 12px;
+    margin: 0 10px 0px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .info-holder {
+    padding: 8px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-meta-holder ul li {
+    font-size: 11px;
+    margin: 0 8px 0px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .gen-carousel-movies-style-3 .gen-movie-contain .info-holder {
+    padding: 6px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-info h3 {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .gen-carousel-movies-style-3 .gen-movie-contain .gen-movie-meta-holder ul li {
+    font-size: 10px;
+    margin: 0 5px 0px 0;
+  }
 }
 
 .gen-carousel-movies-style-3
@@ -5569,7 +5831,6 @@ Carousel Movies
   a {
   color: var(--white-color);
 }
-
 /*================================================
 Movies Single
 ===============================================*/
@@ -5627,34 +5888,171 @@ Movies Single
   );
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0c111b', endColorstr='#0c111b', GradientType=0);
 }
-
-/*==========*/
-.gen-video-holder iframe {
-  width: 100% !important;
-  height: 70vh !important;
-  border: none;
-  float: left;
-  display: inline-block;
+.gen-video-holder {
+  position: relative;
+  border-radius: 20px;
+  width: 100%; /* Largura total do container */
+  height: auto; /* Ajusta a altura automaticamente com base no conteúdo */
+  aspect-ratio: 16 / 9; /* Proporção de aspecto 16:9 */
+  background-color: #000; /* Fundo preto para vídeos */
+}
+/* Container do vídeo */
+.gen-video-holder iframe,
+.gen-video-holder video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  object-fit: contain; /* Ajusta o conteúdo sem cortá-lo */
 }
 
-.gen-video-holder .wp-video .mejs-video,
-.gen-video-holder .wp-video-shortcode video,
-.gen-video-holder video.wp-video-shortcode {
+/* Iframe do vídeo */
+.gen-video-holder iframe {
   width: 100% !important;
   height: 100% !important;
   border: none;
-  overflow: hidden;
-  float: left;
-  display: inline-block;
-  margin-bottom: 20px;
+  display: block;
+  border-radius: 15px;
+}
+/* Estilos do botão de play */
+.gen-video-holder .playBut {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centraliza o botão */
+  display: flex; /* Centraliza o conteúdo do SVG se necessário */
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  max-width: 15vw; /* Limita a largura máxima do botão */
+  max-height: 15vw; /* Limita a altura máxima do botão */
+  width: 10vw; /* Largura responsiva */
+  height: 10vw; /* Altura responsiva */
+  z-index: 10; /* Garante que o botão fique acima do vídeo */
+  background: transparent; /* Remove qualquer fundo */
+  border: none; /* Remove borda se houver */
 }
 
-.gen-video-holder .wp-video {
-  width: 100% !important;
-  height: 70vh !important;
-  overflow: hidden;
-  display: inline-block;
-  float: left;
+/* Estilos do triângulo do botão de play */
+.gen-video-holder .playBut .triangle {
+  fill: none; /* Remove preenchimento interno */
+  stroke: #000; /* Cor da borda inicial */
+  stroke-width: 10; /* Define a largura do traço */
+  transition: all 0.7s ease-in-out;
+  stroke-dasharray: 240;
+  stroke-dashoffset: 480;
+}
+
+/* Efeito hover no triângulo */
+.gen-video-holder .playBut:hover .triangle {
+  stroke-dashoffset: 0; /* Animação de traço */
+  opacity: 1;
+  stroke: #f8aa28; /* Cor ao passar o mouse */
+  animation: nudge 0.7s ease-in-out;
+}
+
+/* Efeito hover no círculo */
+.gen-video-holder .playBut:hover .circleP {
+  stroke-dashoffset: 0; /* Animação de traço */
+  opacity: 1;
+}
+
+/* Estilos do círculo do botão de play */
+.gen-video-holder .circleP {
+  fill: none; /* Remove preenchimento interno */
+  stroke: #f8aa28; /* Cor inicial */
+  stroke-width: 10; /* Define a largura do traço */
+  stroke-dasharray: 650;
+  stroke-dashoffset: 650;
+  transition: all 0.5s ease-in-out;
+  opacity: 0.3; /* Opacidade inicial */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 600px) {
+  .gen-video-holder .playBut {
+    width: 25vw;
+    height: 25vw;
+  }
+}
+
+/* Responsividade para telas médias */
+@media (min-width: 600px) and (max-width: 1200px) {
+  .gen-video-holder .playBut {
+    width: 15vw;
+    height: 15vw;
+  }
+}
+
+/* Responsividade para telas grandes */
+@media (min-width: 1200px) {
+  .gen-video-holder .playBut {
+    width: 10vw;
+    height: 10vw;
+  }
+}
+
+/* Animação de "nudge" */
+@keyframes nudge {
+  0% {
+    transform: translateX(0);
+  }
+  30% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  70% {
+    transform: translateX(-2px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Exibe a marca d'água normalmente fora do modo de tela cheia */
+/* Exibe a marca d'água normalmente fora do modo de tela cheia */
+.vjs-watermark img {
+  display: block;
+  width: 150px;
+  height: auto;
+  opacity: 0.5; /* Ajuste a opacidade conforme necessário */
+}
+
+/* Oculta a marca d'água e as legendas fora do modo de tela cheia */
+.video-js:not(.vjs-fullscreen) .vjs-watermark img,
+.video-js:not(.vjs-fullscreen) .vjs-text-track-display {
+  display: none !important; /* Oculta fora do modo de tela cheia */
+}
+
+/* Player de vídeo oculto inicialmente */
+.gen-video-holder .gen-video-player .movie-player_html5_api {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: rgb(0, 0, 0); /* Fundo preto para o player de vídeo */
+  display: none; /* Player inicialmente oculto */
+  max-height: 550px; /* Limita a altura máxima do player */
+}
+
+/* Logo sobreposta */
+.video-logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 100px;
+  height: auto;
+  z-index: 10;
+  opacity: 0.8;
+}
+
+/* Remove o botão de play na interface do vídeo */
+.vjs-big-play-button {
+  display: none !important;
 }
 
 /*==========*/
@@ -5676,7 +6074,7 @@ Movies Single
     padding: 15px 0px;
   }
 }
-
+/* Estilo padrão */
 .gen-single-movie-info p,
 .gen-single-video-info p {
   display: inline-block;
@@ -5691,10 +6089,7 @@ Movies Single
   margin-bottom: 30px;
 }
 
-.gen-single-tv-show-info .gen-title {
-  margin-bottom: 5px;
-}
-
+.gen-single-tv-show-info .gen-title,
 .gen-single-movie-info .gen-title {
   margin-bottom: 5px;
 }
@@ -5706,7 +6101,7 @@ Movies Single
   padding: 0;
   display: flex;
   align-items: center;
-  float: left;
+  flex-wrap: wrap; /* Responsividade: permite quebra de linha */
 }
 
 .gen-single-movie-info .gen-single-meta-holder ul li,
@@ -5722,6 +6117,79 @@ Movies Single
   align-items: center;
   font-family: var(--title-fonts);
   border-right: 2px solid #ffffff;
+}
+
+.gen-single-movie-info .gen-single-meta-holder ul li:last-child,
+.gen-single-tv-show-info .gen-single-meta-holder ul li:last-child,
+.gen-single-video-info .gen-single-meta-holder ul li:last-child {
+  border-right: none; /* Remove borda do último item */
+}
+
+/* Responsividade para telas médias (768px ou menos) */
+@media (max-width: 768px) {
+  .gen-single-movie-info p,
+  .gen-single-video-info p,
+  .gen-single-tv-show-info p {
+    font-size: 16px;
+    text-align: justify;
+  }
+
+  .gen-single-movie-info .gen-single-meta-holder ul,
+  .gen-single-tv-show-info .gen-single-meta-holder ul,
+  .gen-single-video-info .gen-single-meta-holder ul {
+    justify-content: flex-start; /* Ajuste alinhamento para telas médias */
+  }
+
+  .gen-single-movie-info .gen-single-meta-holder ul li,
+  .gen-single-tv-show-info .gen-single-meta-holder ul li,
+  .gen-single-video-info .gen-single-meta-holder ul li {
+    font-size: 14px;
+    margin: 8px 10px 0 0;
+    padding: 0 10px 0 0;
+    border-right: none; /* Remove borda em telas médias */
+  }
+}
+
+/* Responsividade para telas pequenas (480px ou menos) */
+@media (max-width: 480px) {
+  .gen-single-movie-info p,
+  .gen-single-video-info p,
+  .gen-single-tv-show-info p {
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  .gen-single-movie-info .gen-single-meta-holder ul,
+  .gen-single-tv-show-info .gen-single-meta-holder ul,
+  .gen-single-video-info .gen-single-meta-holder ul {
+    justify-content: center; /* Centraliza conteúdo em telas pequenas */
+  }
+
+  .gen-single-movie-info .gen-single-meta-holder ul li,
+  .gen-single-tv-show-info .gen-single-meta-holder ul li,
+  .gen-single-video-info .gen-single-meta-holder ul li {
+    font-size: 12px;
+    margin: 5px 5px 0 0;
+    padding: 0 5px 0 0;
+    border-right: none; /* Remove bordas */
+  }
+}
+
+/* Responsividade para telas grandes (1200px ou mais) */
+@media (min-width: 1200px) {
+  .gen-single-movie-info p,
+  .gen-single-video-info p,
+  .gen-single-tv-show-info p {
+    font-size: 20px;
+  }
+
+  .gen-single-movie-info .gen-single-meta-holder ul li,
+  .gen-single-tv-show-info .gen-single-meta-holder ul li,
+  .gen-single-video-info .gen-single-meta-holder ul li {
+    font-size: 18px;
+    margin: 12px 18px 0 0;
+    padding: 0 18px 0 0;
+  }
 }
 
 .gen-single-movie-info .gen-single-meta-holder ul li a,
@@ -5758,6 +6226,7 @@ Movies Single
   padding: 0;
 }
 
+/* Estilo padrão */
 .gen-extra-data ul li {
   list-style: none;
   color: var(--secondary-color);
@@ -5765,10 +6234,61 @@ Movies Single
   font-size: 18px;
 }
 
+/* Responsividade para telas médias (768px ou menos) */
+@media (max-width: 768px) {
+  .gen-extra-data ul li {
+    font-size: 16px;
+    margin: 0 0 4px;
+  }
+}
+
+/* Responsividade para telas pequenas (480px ou menos) */
+@media (max-width: 480px) {
+  .gen-extra-data ul li {
+    font-size: 14px;
+    margin: 0 0 3px;
+    /* Centraliza o texto para facilitar a leitura */
+  }
+}
+
+/* Responsividade para telas grandes (1200px ou mais) */
+@media (min-width: 1200px) {
+  .gen-extra-data ul li {
+    font-size: 20px;
+    margin: 0 0 6px;
+  }
+}
+
+/* Estilo padrão */
 .gen-extra-data ul li span:first-child {
   display: inline-block;
   width: 175px;
   font-weight: 500;
+}
+
+/* Responsividade para telas médias (768px ou menos) */
+@media (max-width: 768px) {
+  .gen-extra-data ul li span:first-child {
+    width: 150px; /* Reduz a largura para caber melhor */
+    font-size: 14px; /* Ajusta o tamanho da fonte */
+  }
+}
+
+/* Responsividade para telas pequenas (480px ou menos) */
+@media (max-width: 480px) {
+  .gen-extra-data ul li span:first-child {
+    width: 120px; /* Reduz ainda mais a largura */
+    font-size: 12px; /* Tamanho menor para textos compactos */
+    text-align: center; /* Centraliza o texto */
+  }
+}
+
+/* Responsividade para telas grandes (1200px ou mais) */
+@media (min-width: 1200px) {
+  .gen-extra-data ul li span:first-child {
+    width: 200px; /* Aumenta a largura para telas grandes */
+    font-size: 16px; /* Fonte maior em telas maiores */
+  }
 }
 
 .gen-extra-data ul li span:last-child {
