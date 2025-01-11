@@ -1,4 +1,4 @@
-const baseUrl = "https://muffinstvapi.onrender.com/muffins/v1";
+const baseUrl = "https://app.muffinstv.com/muffins/v1";
 let StrangeUrl;
 let serverId = "";
 let epNumber = "";
@@ -358,9 +358,9 @@ async function watchAnime(isDownload = false) {
     // const animeLink = data.media_Url;
 
     // // Redireciona o usuário para o proxy que adiciona os headers
-    // window.open(`https://muffinstvapi.onrender.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+    // window.open(`https://app.muffinstv.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
 
-    // window.open(`https://muffinstvapi.onrender.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
+    // window.open(`https://app.muffinstv.com/muffins/v1/proxy-anime?url=${encodeURIComponent(animeLink)}`, '_blank');
   } catch (error) {
     console.error("Erro ao assistir anime:", error);
 
