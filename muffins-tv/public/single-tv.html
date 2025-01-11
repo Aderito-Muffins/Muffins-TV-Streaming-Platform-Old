@@ -49,7 +49,15 @@
     <link rel="stylesheet" href="css/load.css" />
     <link rel="stylesheet" href="css/playbutton.css" />
 
-    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <link href="/css/videojs.min.css" rel="stylesheet" />
+
+    <script src="//vjs.zencdn.net/8.21.1/video.min.js"></script>
+
+    <script src="/js/videojs-watermark-master/src/videojs.watermark.js"></script>
+    <link
+      href="/js/videojs-watermark-master/videojs.watermark.css"
+      rel="stylesheet"
+    />
   </head>
 
   <body>
@@ -79,7 +87,7 @@
     <!--========== Header ==============-->
 
     <!-- Single movie Start -->
-    <section class="gen-section-padding-3 gen-single-movie">
+    <section class="gen-section-padding gen-single-movie">
       <div class="container">
         <div class="row no-gutters">
           <div class="col-lg-12">
@@ -94,7 +102,7 @@
                     <!-- Player de vídeo para assistir ao filme -->
                     <video
                       id="movie-player"
-                      class="gen-video-player video-js vjs-default-skin vjs-fluid"
+                      class="gen-video-player video-js videojs vjs-default-skin vjs-fluid"
                       controls
                       preload="auto"
                       width="100%"
@@ -102,58 +110,51 @@
                       aria-label="Player de Vídeo"
                       data-setup="{}"
                     >
-                      <!-- Mensagem para navegadores que não suportam o elemento de vídeo -->
                       Seu navegador não suporta o elemento de vídeo.
                     </video>
-                    <div class="containerPlay">
-                      <a href="#" id="playBut" class="playBut">
-                        <svg
-                          version="1.1"
-                          xmlns="http://www.w3.org/2000/svg"
-                          xmlns:xlink="http://www.w3.org/1999/xlink"
-                          x="0px"
-                          y="0px"
-                          width="213.7px"
-                          height="213.7px"
-                          viewBox="0 0 213.7 213.7"
-                          xml:space="preserve"
-                        >
-                          <polygon
-                            class="triangle"
-                            fill="none"
-                            stroke-width="7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            points="73.5,62.5 148.5,105.8 73.5,149.1"
-                          />
-                          <circle
-                            class="circleP"
-                            fill="none"
-                            stroke-width="7"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="10"
-                            cx="106.8"
-                            cy="106.8"
-                            r="103.3"
-                          />
-                        </svg>
-                      </a>
-                    </div>
 
-                    <img
-                      src="images/m.png"
-                      id="video-logo"
-                      alt="Logo"
-                      class="video-logo"
-                    />
+                    <!-- playbutton -->
 
-                    <!-- Botão para assistir ao filme -->
+                    <a href="#" id="playBut" class="playBut">
+                      <svg
+                        version="1.1"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        x="0px"
+                        y="0px"
+                        width="213.7px"
+                        height="213.7px"
+                        viewBox="0 0 213.7 213.7"
+                        xml:space="preserve"
+                      >
+                        <polygon
+                          class="triangle"
+                          fill="none"
+                          stroke-width="7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          points="73.5,62.5 148.5,105.8 73.5,149.1"
+                        />
+                        <circle
+                          class="circleP"
+                          fill="none"
+                          stroke-width="7"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-miterlimit="10"
+                          cx="106.8"
+                          cy="106.8"
+                          r="103.3"
+                        />
+                      </svg>
+                    </a>
+
+                    <!-- Botões para assistir -->
                     <button id="watch-movie-btn" class="gen-button">
-                      Assistir o Programa
+                      Assistir TV
                     </button>
-                    <!-- Botão para assistir ao trailer -->
+                    <!-- <button id="download-content-btn" class="gen-button">Baixar Filme</button> -->
                   </div>
 
                   <div class="gen-single-movie-info">
@@ -344,12 +345,7 @@
     <script src="js/streamlab-core.js"></script>
 
     <script src="js/script.js"></script>
-    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+
     <script src="js/content/playertv.js"></script>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-      crossorigin="anonymous"
-    ></script>
   </body>
 </html>

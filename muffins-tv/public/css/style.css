@@ -2595,24 +2595,46 @@ header#gen-header .gen-top-header .gen-header-social ul li:last-child {
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/*===== Logo =====*/
+/*===== Logo =====*/ /* Estilo padrão */
 header#gen-header .gen-bottom-header .navbar .navbar-brand {
-  line-height: 80px;
+  line-height: 60px; /* Alinhamento vertical da logo */
 }
 
 header#gen-header .gen-bottom-header .navbar .navbar-brand img {
-  height: 50px;
+  height: 40px; /* Altura padrão da logo */
+  transition: height 0.3s ease, line-height 0.3s ease; /* Animação suave ao redimensionar */
 }
 
+/* Para telas menores (tablets) */
 @media (max-width: 768px) {
+  header#gen-header .gen-bottom-header .navbar .navbar-brand {
+    line-height: 60px; /* Ajuste o alinhamento para a nova altura da logo */
+  }
+
   header#gen-header .gen-bottom-header .navbar .navbar-brand img {
-    height: 40px;
+    height: 40px; /* Reduz a altura da logo */
   }
 }
 
+/* Para telas muito pequenas (celulares) */
 @media (max-width: 576px) {
+  header#gen-header .gen-bottom-header .navbar .navbar-brand {
+    line-height: 50px; /* Ajusta o alinhamento novamente */
+  }
+
   header#gen-header .gen-bottom-header .navbar .navbar-brand img {
-    height: 35px;
+    height: 30px; /* Reduz ainda mais a altura da logo */
+  }
+}
+
+/* Para telas extremamente pequenas (micro celulares) */
+@media (max-width: 360px) {
+  header#gen-header .gen-bottom-header .navbar .navbar-brand {
+    line-height: 40px; /* Linha reduzida para manter proporção */
+  }
+
+  header#gen-header .gen-bottom-header .navbar .navbar-brand img {
+    height: 25px; /* Altura mínima da logo */
   }
 }
 
@@ -2646,25 +2668,37 @@ header#gen-header .gen-bottom-header .navbar .navbar-brand img {
   /* display: block !important; */
   margin-left: auto;
 }
-
+/* Estilo padrão */
 #bt-assine .gen-button {
-  padding: 10px 20px;
-  font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+  padding: 12px 24px; /* Tamanho padrão */
+  font-size: 16px;
+  transition: all 0.3s ease; /* Transição suave para mudanças */
 }
 
+/* Para telas menores (tablets e similares) */
 @media (max-width: 768px) {
-  /* Reduz o tamanho do botão em telas menores */
   #bt-assine .gen-button {
-    padding: 8px 16px;
+    padding: 8px 16px; /* Reduzido para tablets */
     font-size: 14px;
+    border-radius: 6px; /* Ajusta bordas arredondadas */
   }
 }
 
+/* Para telas muito pequenas (celulares padrão) */
 @media (max-width: 576px) {
-  /* Ajuste adicional para telas muito pequenas */
   #bt-assine .gen-button {
-    padding: 6px 12px;
+    padding: 6px 12px; /* Redução maior para celulares */
     font-size: 12px;
+    border-radius: 4px; /* Bordas mais suaves */
+  }
+}
+
+/* Para telas extremamente pequenas (celulares pequenos e micro) */
+@media (max-width: 360px) {
+  #bt-assine .gen-button {
+    padding: 4px 10px; /* Ajuste mínimo */
+    font-size: 10px; /* Fonte menor */
+    border-radius: 3px; /* Reduz bordas */
   }
 }
 
@@ -2907,20 +2941,43 @@ header#gen-header .gen-menu-search-block a {
   font-size: 16px;
   width: 18px;
   display: inline-block;
+
+  right: 200px; /* Empurra o link para a direita */
 }
 
 header#gen-header .gen-search-form {
   position: absolute;
   top: 59px;
-  right: -30px;
-  width: 350px;
+  right: -100px;
+  width: 300px;
   padding: 15px;
   z-index: 999;
   display: none;
   background: var(--black-color);
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
   border-radius: 15px;
+}
+/* Ajuste para telas menores (tablets e celulares) */
+@media (max-width: 768px) {
+  header#gen-header .gen-search-form {
+    top: 50px; /* Mantém uma posição adequada */
+    right: 10px; /* Evita que o formulário ultrapasse o lado direito */
+    width: 200px; /* Garante que a largura se ajuste à tela */
+    max-width: 350px; /* Define uma largura máxima */
+    padding: 10px; /* Reduz o padding */
+    border-radius: 10px; /* Menor arredondamento */
+  }
+}
+
+/* Ajuste para telas muito pequenas (celulares menores) */
+@media (max-width: 480px) {
+  header#gen-header .gen-search-form {
+    top: 50px;
+
+    /* Adiciona margem no lado esquerdo */
+    width: 200px; /* Ocupa quase toda a largura disponível */
+    padding: 8px; /* Ajusta o padding para economizar espaço */
+    border-radius: 8px;
+  }
 }
 
 header#gen-header .gen-button:hover .gen-button-line-left {
@@ -3669,13 +3726,30 @@ footer#gen-footer .widget {
   border: none;
   margin-bottom: 45px;
 }
-
 footer#gen-footer .widget .footer-title {
   margin-bottom: 15px;
   padding: 0;
   font-size: 26px;
   position: relative;
   line-height: 34px;
+}
+
+@media (max-width: 768px) {
+  footer#gen-footer .widget .footer-title {
+    margin-bottom: 10px;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center; /* Centraliza o título */
+  }
+}
+
+@media (max-width: 480px) {
+  footer#gen-footer .widget .footer-title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center; /* Centraliza o título */
+  }
 }
 
 footer#gen-footer .widget ul {
@@ -3854,8 +3928,7 @@ footer#gen-footer .gen-widget-menu .gen-service li a:before {
 footer#gen-footer .widget #recentcomments--1 li.recentcomments span a {
   color: var(--primary-color);
 }
-
-/*=========*/
+/* Estilos gerais */
 footer#gen-footer .gen-footer-style-1 .widget .footer-title,
 footer#gen-footer .gen-footer-style-1 .widget ul.menu li a,
 footer#gen-footer .gen-footer-style-1 .gen-widget-menu .gen-service li a,
@@ -3880,24 +3953,29 @@ footer#gen-footer .gen-footer-style-1 .gen-copyright-footer {
   margin-bottom: 15px;
 }
 
+/* Menu principal no footer */
 footer#gen-footer .gen-footer-style-1 .widget ul.menu li {
   margin-bottom: 0;
   width: calc(50% - 2px);
   display: inline-block;
 }
+
+/* Texto e fontes gerais */
 footer#gen-footer p {
   font-size: 12px;
 }
 
+/* Estilização das redes sociais */
 #gen-footer .social-link {
-  margin: 0;
+  margin: 0 auto; /* Centralizado */
   padding: 0;
+  text-align: center;
 }
 
 #gen-footer .social-link li {
   list-style: none;
-  float: left;
-  margin-right: 30px;
+  display: inline-block; /* Centraliza melhor em telas pequenas */
+  margin-right: 15px;
 }
 
 #gen-footer .social-link li:last-child {
@@ -3907,34 +3985,80 @@ footer#gen-footer p {
 #gen-footer .social-link li a {
   color: var(--white-color);
   font-size: 18px;
-  line-height: normal;
   text-align: center;
   display: inline-block;
   margin-right: 0 !important;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0;
-}
-
-#gen-footer .social-link li a:last-child {
-  margin-right: 0px;
+  border-radius: 50%; /* Adicionado para destacar botões sociais */
+  transition: all 0.3s ease;
 }
 
 #gen-footer .social-link li a:hover {
   color: var(--primary-color);
 }
 
-.gen-playstore-logo {
-  height: 45px;
-  display: inline-block;
-  float: left;
-}
-
+/* Logos de aplicativos */
+.gen-playstore-logo,
 .gen-appstore-logo {
   height: 45px;
   display: inline-block;
-  float: left;
-  margin-left: 15px;
+  margin: 0 auto;
+}
+
+/* Ajustes para telas menores */
+@media (max-width: 768px) {
+  footer#gen-footer .gen-footer-style-1 .widget ul.menu li {
+    width: 100%; /* Cada item ocupa 100% da largura */
+    margin-bottom: 10px; /* Espaçamento entre os itens */
+  }
+
+  #gen-footer .gen-footer-style-1 .gen-footer-logo {
+    height: 50px; /* Reduz tamanho da logo */
+    margin-bottom: 10px;
+  }
+
+  #gen-footer .social-link li {
+    margin-right: 10px; /* Reduz espaçamento entre ícones */
+  }
+
+  .gen-playstore-logo,
+  .gen-appstore-logo {
+    height: 40px; /* Reduz altura das logos de apps */
+    margin: 5px auto; /* Adiciona espaçamento vertical */
+  }
+}
+
+@media (max-width: 576px) {
+  footer#gen-footer .gen-footer-style-1 .widget ul.menu li {
+    text-align: center; /* Centraliza os itens do menu */
+  }
+
+  #gen-footer .social-link li {
+    margin-right: 5px; /* Espaçamento menor para ícones sociais */
+  }
+
+  #gen-footer .gen-footer-style-1 .gen-footer-logo {
+    height: 40px; /* Reduz ainda mais a logo */
+  }
+
+  .gen-playstore-logo,
+  .gen-appstore-logo {
+    height: 35px; /* Ajusta tamanho das logos em telas menores */
+  }
+}
+
+@media (max-width: 360px) {
+  footer#gen-footer p {
+    font-size: 10px; /* Fonte menor para textos */
+  }
+
+  #gen-footer .social-link li {
+    margin-right: 5px; /* Margem mínima entre ícones */
+  }
+
+  .gen-playstore-logo,
+  .gen-appstore-logo {
+    height: 30px; /* Logos ainda menores */
+  }
 }
 
 /*================================================

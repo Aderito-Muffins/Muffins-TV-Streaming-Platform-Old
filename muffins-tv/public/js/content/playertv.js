@@ -235,7 +235,19 @@ function setupVideoPlayer(film) {
 
     // Esconde os botões de assistir ao filme e trailer
     watchMovieButton.style.display = "none";
-
+    player.watermark({
+      file: "/images/m.png",
+      xpos: 5,
+      ypos: 5,
+      xrepeat: 0,
+      opacity: 100,
+      clickable: false,
+      url: "",
+      className: "vjs-watermark",
+      text: false,
+      debug: false,
+      // Define o tamanho da imagem
+    });
     // Força a reprodução
     player.ready(function () {
       player.play();

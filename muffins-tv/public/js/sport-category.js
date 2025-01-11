@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       // Mostra o ícone de carregamento
       document.querySelector(".loadmore-icon").style.display = "inline-block";
-      document.querySelector(".button-text").textContent = "Loading...";
+      document.querySelector(".button-text").textContent = "Carregando...";
 
       // Faz requisição para sua API usando o ID
       const response = await fetch(

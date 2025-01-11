@@ -11,6 +11,27 @@
           />
         </a>
 
+        <!-- Botão de Pesquisa -->
+        <div class="gen-header-info-box d-flex align-items-center">
+          <div class="gen-menu-search-block">
+            <a href="javascript:void(0)" id="gen-search-btn"
+              ><i class="fa fa-search"></i
+            ></a>
+            <div class="gen-search-form" id="search-form" style="display: none">
+              <form role="search" method="get" class="search-form" action="#">
+                <input
+                  type="search"
+                  class="search-field"
+                  placeholder="Pesquisar …"
+                  name="s"
+                />
+                <button type="submit" class="search-submit">
+                  <span class="screen-reader-text"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
         <!-- Botão responsivo para o menu -->
         <button
           class="navbar-toggler"
@@ -219,77 +240,18 @@
             </li>
           </ul>
         </div>
-
-        <!-- Botão de Pesquisa -->
-        <div class="gen-header-info-box d-flex align-items-center">
-          <div class="gen-menu-search-block">
-            <a href="javascript:void(0)" id="gen-search-btn"
-              ><i class="fa fa-search"></i
-            ></a>
-            <div class="gen-search-form" id="search-form" style="display: none">
-              <form role="search" method="get" class="search-form" action="#">
-                <input
-                  type="search"
-                  class="search-field"
-                  placeholder="Pesquisar …"
-                  name="s"
-                />
-                <button type="submit" class="search-submit">
-                  <span class="screen-reader-text"></span>
-                </button>
-              </form>
+        <!-- Botão de Assinatura -->
+        <div class="gen-btn-container ml-3">
+          <a href="/pricing.html" class="gen-button" id="bt-assine">
+            <div class="gen-button-block" id="bt-assinev2">
+              <span class="gen-button-line-left"></span>
+              <span class="gen-button-text bt-assine-class" id="text-Plan"
+                >Assine</span
+              >
             </div>
-          </div>
-
-          <!-- Botão de Assinatura -->
-          <div class="gen-btn-container ml-3">
-            <a href="/pricing.html" class="gen-button" id="bt-assine">
-              <div class="gen-button-block" id="bt-assinev2">
-                <span class="gen-button-line-left"></span>
-                <span class="gen-button-text bt-assine-class" id="text-Plan"
-                  >Assine</span
-                >
-              </div>
-            </a>
-          </div>
+          </a>
         </div>
       </nav>
     </div>
   </div>
-
-  <style>
-    /* Media Queries para responsividade */
-    @media (max-width: 768px) {
-      .navbar-collapse {
-        text-align: center;
-      }
-
-      .navbar-nav {
-        flex-direction: column;
-      }
-
-      .gen-header-info-box {
-        margin-top: 10px;
-        justify-content: center;
-      }
-
-      .gen-btn-container {
-        margin-top: 10px;
-      }
-
-      .gen-menu-search-block {
-        margin-left: 15px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .gen-header-info-box {
-        flex-direction: column;
-      }
-
-      .gen-btn-container {
-        margin-top: 5px;
-      }
-    }
-  </style>
 </header>

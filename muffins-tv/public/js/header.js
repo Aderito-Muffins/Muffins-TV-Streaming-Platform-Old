@@ -83,16 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const token = localStorage.getItem("token");
         const currentPath = window.location.pathname; // URL da página atual
 
-        // Ocultar o botão "Assine" em páginas específicas
-        const pagesToHideButton = ["/single", "/pricing"];
-        const subscribeButton = document.getElementById("bt-assine");
-        if (
-          subscribeButton &&
-          pagesToHideButton.some((path) => currentPath.includes(path))
-        ) {
-          subscribeButton.style.display = "none";
-        }
-
         if (token) {
           try {
             // Obter dados do usuário

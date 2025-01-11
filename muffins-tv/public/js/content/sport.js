@@ -46,14 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
                             <img src="${film.thumb}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
                           
-                            </div>
                             <div class="gen-movie-action">
                                 <a href="/single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
@@ -67,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>Live</li>
-                                    <li><a href="#"><span>auto</span></a></li>
+                                
                                 </ul>
                             </div>
                         </div>
@@ -93,14 +86,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
                             <img src="${film.image_url}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
                           
-                            </div>
                             <div class="gen-movie-action">
                                 <a href="/sports-pagination.html?id=${film.id}" class="gen-button">
                                     <i class="fa fa-play"></i>
@@ -114,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>Live</li>
-                                    <li><a href="#"><span>auto</span></a></li>
+                           
                                 </ul>
                             </div>
                         </div>
