@@ -658,7 +658,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   async function loadHome() {
     try {
-      const url = `https://app.muffinstv.wuaze.com/muffins/v1/home`;
+      const url = `https://muffinstvapi.onrender.com/muffins/v1/home`;
       await loadHomeContent(url, updateHomePage);
     } catch (error) {
       console.error("Erro ao carregar temporadas e episódios:", error);

@@ -1,4 +1,4 @@
-const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1/genre"; // Substitua pela URL real da sua API
+const baseUrl = "https://muffinstvapi.onrender.com/muffins/v1/genre"; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;

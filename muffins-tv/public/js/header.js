@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
           try {
             // Obter dados do usuário
             const userResponse = await fetch(
-              "https://app.muffinstv.wuaze.com/muffins/v1/users/me",
+              "https://muffinstvapi.onrender.com/muffins/v1/users/me",
               {
                 method: "GET",
                 headers: {
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Carregar gêneros, independentemente do token
         try {
           const genresResponse = await fetch(
-            "https://app.muffinstv.wuaze.com/muffins/v1/genres",
+            "https://muffinstvapi.onrender.com/muffins/v1/genres",
             {
               method: "GET",
               headers: {
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const token = localStorage.getItem("token");
           try {
             const response = await fetch(
-              "https://app.muffinstv.wuaze.com/muffins/v1/users/logout",
+              "https://muffinstvapi.onrender.com/muffins/v1/users/logout",
               {
                 method: "POST",
                 headers: {

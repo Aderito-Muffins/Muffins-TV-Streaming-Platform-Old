@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Faz requisição para sua API usando o ID
       const response = await fetch(
-        `https://app.muffinstv.wuaze.com/muffins/v1/sports/category/list/${categoryId}&limit=${limit}&offset=${offset}`
+        `https://muffinstvapi.onrender.com/muffins/v1/sports/category/list/${categoryId}&limit=${limit}&offset=${offset}`
       );
       const result = await response.json();
 

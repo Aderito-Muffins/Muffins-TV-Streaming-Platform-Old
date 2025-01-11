@@ -24,7 +24,7 @@ async function loginUser(email, password) {
     const bodyData = { email, pass: password };
 
     const response = await fetch(
-      "https://app.muffinstv.wuaze.com/muffins/v1/users/login",
+      "https://muffinstvapi.onrender.com/muffins/v1/users/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
