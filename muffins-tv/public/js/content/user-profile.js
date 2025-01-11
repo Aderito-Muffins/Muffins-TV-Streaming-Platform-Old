@@ -1,6 +1,5 @@
 // URL base da API para obter os detalhes do filme
-const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";&sessionId=${sessionId}
-
+const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";
 
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex"; // Exibe o loader

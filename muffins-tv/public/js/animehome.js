@@ -48,13 +48,7 @@ function createCarouselItems(posts) {
                                 </div>`
                                 : ""
                             }
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
-                            </div>
+                         
                             <div class="gen-movie-action">
                                 <a href="/single-episode.html?animeId=${
                                   post.id
@@ -79,9 +73,8 @@ async function loadHomeContent() {
 
   try {
     const response = await fetch(
-      `https://app.muffinstv.wuaze.com/muffins/v1/anime/home?sessionId=${sessionId}`
+      "https://app.muffinstv.wuaze.com/muffins/v1/anime/home"
     );
-
     const data = await response.json();
     const contentContainer = document.querySelector(".content-container");
 
@@ -223,11 +216,11 @@ async function loadHomeContent() {
         autoplayTimeout: 6000,
         margin: 30,
         responsive: {
-          0: { items: 1, nav: true },
-          576: { items: 2, nav: false },
-          768: { items: 3, nav: true, loop: true },
-          992: { items: 4, nav: true, loop: true },
-          1200: { items: 5, nav: true, loop: true },
+          0: { items: 4, nav: true },
+          576: { items: 5, nav: false },
+          768: { items: 5, nav: true, loop: true },
+          992: { items: 5, nav: true, loop: true },
+          1200: { items: 6, nav: true, loop: true },
         },
       });
     } else {

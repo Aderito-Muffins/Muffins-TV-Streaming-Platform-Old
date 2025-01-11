@@ -13,7 +13,7 @@ function showLoading() {
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
-const sessionId = localStorage.getItem("sessionId");
+
 // Função para capturar o parâmetro "genre" da URL
 function getGenreFromURL() {
   const params = new URLSearchParams(window.location.search);
@@ -26,7 +26,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
   showLoading();
   try {
     // Montando a URL de requisição com os parâmetros de paginação e gênero
-    const url = `${baseUrl}?type=&query=${genre}&page=${page}&sessionId=${sessionId}`;
+    const url = `${baseUrl}?type=&query=${genre}&page=${page}`;
 
     // Fazendo a requisição para a API
     const response = await fetch(url);

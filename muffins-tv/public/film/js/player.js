@@ -7,23 +7,18 @@ function getTFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("t");
 }
-
 const paymentModal = document.getElementById("paymentModal");
 const closeModal = document.getElementById("closeModal");
 
-const sessionId = localStorage.getItem("sessionId");
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";
-
 const i = getIdFromURL();
 const t = getTFromURL();
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
   showLoading(); // Exibe o loader antes da requisição
   try {
-    const response = await fetch(
-      `${baseApiUrl}post/${t}/${id}?sessionId=${sessionId}`
-    );
+    const response = await fetch(`${baseApiUrl}post/${t}/${id}`);
     if (!response.ok) {
       throw new Error("Erro ao buscar dados do filme");
     }
@@ -134,16 +129,13 @@ async function fetchContentDetails(id) {
   }
 
   try {
-    const response = await fetch(
-      `${baseApiUrl}/player/${t}?id=${id}&sessionId=${sessionId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseApiUrl}/player/${t}?id=${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // if (!response.ok) {
     //     // Lida com qualquer erro relacionado ao status HTTP
@@ -200,7 +192,7 @@ function handleError(userMessage, logMessage, statusOrCode, id, token) {
   console.warn({
     message: logMessage,
     statusOrCode: statusOrCode,
-    url: `${baseApiUrl}post/${t}/${i}?sessionId=${sessionId}`,
+    url: `${baseApiUrl}post/${t}/${i}`,
     token: token.slice(0, 10) + "...", // Mostrar parte do token para segurança
   });
 }
@@ -245,11 +237,11 @@ async function updateCarousel(seasonsHtml, id) {
     autoplayTimeout: 6000,
     margin: 30,
     responsive: {
-      0: { items: 1, nav: true },
-      576: { items: 2, nav: false },
-      768: { items: 3, nav: true, loop: true },
-      992: { items: 4, nav: true, loop: true },
-      1200: { items: 5, nav: true, loop: true },
+      0: { items: 4, nav: true },
+      576: { items: 5, nav: false },
+      768: { items: 5, nav: true, loop: true },
+      992: { items: 5, nav: true, loop: true },
+      1200: { items: 6, nav: true, loop: true },
     },
   });
 }
@@ -315,27 +307,31 @@ function showLoading() {
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
-async function loadServers(data) {
+async function loadServers(data, isDownload = false) {
   try {
     if (!data) {
       return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
     }
 
     return `
-        ${data
-          .map(
-            (server) => `
-            <div class="col">
-                <button 
-                    class="gen-button2" 
-                    data-id="${server.id}" 
-                    onclick="handleServerClick('${server.url}', '${server.type}');">
-                    ${server.name} (${server.lang} ${server.type})
-                </button>
-            </div>
+    ${data
+      .map(
+        (server) => `
+          <div class="col">
+            <button 
+              class="gen-button2" 
+              data-id="${server.id}" 
+              onclick="${
+                isDownload
+                  ? `handleServerClick('${server.url}', '${server.type}', true)`
+                  : `handleServerClick('${server.url}', '${server.type}')`
+              }">
+              ${server.name} (${server.lang} ${server.type})
+            </button>
+          </div>
         `
-          )
-          .join("")}
+      )
+      .join("")}
     `;
   } catch (error) {
     console.error("Erro ao carregar os servidores:", error);
@@ -343,21 +339,72 @@ async function loadServers(data) {
   }
 }
 const moviePlayer = document.getElementById("movie-player");
-const downloadContentButton = document.getElementById("download-content-btn");
-const watchTrailerButton = document.getElementById("watch-trailer-btn");
+const downloadContentButton = document.getElementById("download-movie-btn");
+
 const videoHolder = document.getElementById("gen-video-holder");
 function setupVideoPlayer(film) {
   moviePlayer.style.background = "rgba(0, 0, 0, 0.5)";
   const token = localStorage.getItem("token");
 
-  async function setupPlayer() {
+  async function setupPlayer(isDownload = false) {
     const content = await fetchContentDetails(i);
 
     watchMovie.style.display = "none";
     watchMovieButton.style.display = "none";
-    watchTrailerButton.style.display = "none";
+    downloadContentButton.style.display = "none";
 
-    document.getElementById("serverbs").innerHTML = await loadServers(content);
+    document.getElementById("serverbs").innerHTML = await loadServers(
+      content,
+      isDownload
+    );
+
+    paymentModal.style.display = "block";
+    // downloadContentButton.style.display = 'none';
+
+    //     if (mediaUrl && downloadContentButton) {
+    //         downloadContentButton.style.display = 'inline-block'; // Exibe o botão de download
+    //         downloadContentButton.addEventListener('click', function () {
+    //             // Inicia o download usando a solução Blob
+    //             fetch(mediaUrl)
+    //                 .then(response => {
+    //                     if (!response.ok) throw new Error('Erro ao baixar o vídeo');
+    //                     return response.blob(); // Converte a resposta em um Blob
+    //                 })
+    //                 .then(blob => {
+    //                     const url = URL.createObjectURL(blob); // Cria um URL para o Blob
+    //                     const a = document.createElement('a'); // Cria um elemento <a>
+    //                     a.href = url; // Define o href para o URL do Blob
+    //                     a.download = film.title + '.mp4'; // Define o nome do arquivo para download
+    //                     document.body.appendChild(a); // Adiciona o elemento ao DOM
+    //                     a.click(); // Simula o clique no link
+    //                     a.remove(); // Remove o elemento <a> do DOM
+    //                     URL.revokeObjectURL(url); // Libera a memória do Blob
+    //                 })
+    //                 .catch(error => {
+    //                     displayError(error.message);
+    //                 });
+    //         });
+    //     }
+    //  else {
+    //         downloadContentButton.style.display = 'none'; // Esconde o botão de download se não houver URL
+    //     }
+
+    //     player.ready(function () {
+    //         player.play();
+    //     });
+  }
+  async function setupDownload() {
+    const content = await fetchContentDetails(i);
+
+    watchMovie.style.display = "none";
+    watchMovieButton.style.display = "none";
+
+    downloadContentButton.style.display - "none";
+
+    document.getElementById("serverbs").innerHTML = await loadServers(
+      content,
+      true
+    );
 
     paymentModal.style.display = "block";
     // downloadContentButton.style.display = 'none';
@@ -417,29 +464,44 @@ function setupVideoPlayer(film) {
       }
     });
   }
-
-  if (watchTrailerButton) {
-    watchTrailerButton.addEventListener("click", function () {
-      const title = film.title;
-      if (title) {
-        const searchQuery = encodeURIComponent(`${title} trailer`);
-        const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
-
-        window.open(youtubeSearchUrl, "_blank");
+  if (downloadContentButton) {
+    downloadContentButton.addEventListener("click", function () {
+      if (token) {
+        setupPlayer(true);
       } else {
-        alert("Título do filme não disponível para pesquisa.");
+        window.location.href = "/log-in.html";
       }
     });
   }
+
+  //   if (watchTrailerButton) {
+  //     watchTrailerButton.addEventListener("click", function () {
+  //       const title = film.title;
+  //       if (title) {
+  //         const searchQuery = encodeURIComponent(`${title} trailer`);
+  //         const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
+
+  //         window.open(youtubeSearchUrl, "_blank");
+  //       } else {
+  //         alert("Título do filme não disponível para pesquisa.");
+  //       }
+  //     });
+  //   }
 }
 
-function handleServerClick(url, type) {
+function handleServerClick(url, type, isDownload = false) {
   try {
     // Decodifica a URL para garantir que ela esteja correta
     const decodedUrl = decodeURIComponent(url);
     console.log("Abrindo URL decodificada:", decodedUrl); // Log para verificar a URL decodificada
 
-    if (type === "EMBED") {
+    if (type !== "EMBED" && isDownload) {
+      // Faz o download do arquivo
+      const link = document.createElement("a");
+      link.href = decodedUrl;
+      link.download = "movie"; // Você precisa especificar o nome do arquivo
+      link.click();
+    } else if (type === "EMBED") {
       // Verifique se a URL é válida antes de tentar abrir
       if (decodedUrl && decodedUrl.startsWith("http")) {
         // Tenta abrir a URL em uma nova aba
@@ -465,11 +527,10 @@ function setupPlayer(url) {
   // Inicializa o Video.js player, se ainda não estiver inicializado
   const player = videojs(moviePlayer);
 
+  // Seleciona o elemento da logo
+
   // Verifica a URL e o tipo de mídia
   const mediaUrl = url;
-  console.log("URL da mídia:", mediaUrl);
-
-  // Verifica o tipo de mídia com base na URL
   const sourceType = mediaUrl.includes(".txt")
     ? "application/x-mpegURL"
     : mediaUrl.includes(".mpd")
@@ -484,14 +545,29 @@ function setupPlayer(url) {
   moviePlayer.style.display = "block"; // Torna o player visível
   videoHolder.style.backgroundImage = "none"; // Remove o plano de fundo
   paymentModal.style.display = "none";
-  // Esconde os botões de assistir ao filme e trailer
-  watchMovieButton.style.display = "none";
+  watchMovieButton.style.display = "none"; // Esconde os botões de assistir ao filme e trailer
+
+  // Configura o plugin de watermark
+  player.watermark({
+    file: "/images/m.png",
+    xpos: 5,
+    ypos: 5,
+    xrepeat: 0,
+    opacity: 100,
+    clickable: false,
+    url: "",
+    className: "vjs-watermark",
+    text: false,
+    debug: false,
+    // Define o tamanho da imagem
+  });
 
   // Força a reprodução
-  player.ready(function () {
+  player.ready(() => {
     player.play();
   });
 }
+
 // Evento de clique no botão "Assistir Filme"
 const watchMovieButton = document.getElementById("watch-movie-btn");
 const watchMovie = document.getElementById("playBut");
@@ -500,6 +576,7 @@ closeModal.addEventListener("click", () => {
   paymentModal.style.display = "none"; // Fecha o modal
   watchMovie.style.display = "inline-block";
   watchMovieButton.style.display = "inline-block";
+  downloadContentButton.style.display = "inline-block";
 });
 
 // Fecha o modal se o usuário clicar fora do conteúdo do modal
@@ -508,6 +585,7 @@ window.addEventListener("click", (event) => {
     watchMovie.style.display = "inline-block";
     watchMovieButton.style.display = "inline-block";
     paymentModal.style.display = "none"; // Fecha o modal
+    downloadContentButton.style.display = "inline-block";
   }
 });
 // Inicialização ao carregar o DOM

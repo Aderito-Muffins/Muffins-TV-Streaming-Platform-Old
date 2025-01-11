@@ -5,7 +5,7 @@ function displayError(elementId, message) {
     errorElement.textContent = message;
   }
 }
-const sessionId = localStorage.getItem("sessionId");
+
 // Função para mostrar o loader
 function showLoading() {
   const loader = document.querySelector(".loader-container");
@@ -24,8 +24,7 @@ async function loginUser(email, password) {
     const bodyData = { email, pass: password };
 
     const response = await fetch(
-      `https://app.muffinstv.wuaze.com/muffins/v1/users/login?sessionId=${sessionId}`,
-
+      "https://app.muffinstv.wuaze.com/muffins/v1/users/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,7 +37,7 @@ async function loginUser(email, password) {
     if (response.ok && data.code === 0) {
       hideLoading();
       localStorage.setItem("token", data.token);
-      window.location.href = "index.html"; // Redireciona para a página principal
+      window.location.href = "/"; // Redireciona para a página principal
     } else {
       throw new Error(data.message || "Erro ao fazer login.");
     }
@@ -100,7 +99,7 @@ window.addEventListener("DOMContentLoaded", async () => {
           localStorage.removeItem("token");
           if (!isLoginPage) window.location.href = "/log-in";
         } else if (isLoginPage) {
-          window.location.href = "/index";
+          window.location.href = "/";
         }
       } catch (error) {
         console.error("Erro ao decodificar o token:", error);

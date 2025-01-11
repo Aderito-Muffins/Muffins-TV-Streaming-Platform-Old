@@ -34,9 +34,10 @@
 
 
    <title>MUFFINS TV - Filmes, Series e Animes</title>
+   <link rel="manifest" href="manifest.json">
 
    <!-- Favicon -->
-   <link rel="shortcut icon" href="images/favicon.ico">
+   <link rel="shortcut icon" href="images/muffinsTVonlyLogoWhite.svg">
    <!-- CSS bootstrap -->
    <link rel="stylesheet" href="css/bootstrap.min.css" />
    <!-- Custom Style -->
@@ -47,20 +48,20 @@
 </head>
 
 <body>
-   <div id="gen-header">                                   
-                                                     
-  </div>
-
-
    <!--==================== Loader =======================-->
    <div id="gen-loading">                                   
        <div id="gen-loading-center">                         
            <img src="images/m.png" alt="loading">        
        </div>                                                 
    </div>
-   <div class="loader-container">
-      <div class="loader"></div>
-  </div>
+   <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
+    <div class="loader-container">
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
+    </div>
    <!--====================== Loader ======================-->
 
    <div id="error-container" class="error-container" style="display: none;">
@@ -212,9 +213,7 @@
 }
 </style>
 </div>
-<div id="gen-footer">                                   
-                                                     
-</div>
+
    <!-- owl-carousel images End -->
    <!-- Back-to-Top start -->
    <div id="back-to-top">

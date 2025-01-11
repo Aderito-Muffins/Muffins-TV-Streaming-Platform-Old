@@ -34,7 +34,7 @@
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
 
     <!-- CSS bootstrap-->
@@ -51,11 +51,16 @@
     <!--=========== Loader =============-->
     <div id="gen-loading">
       <div id="gen-loading-center">
-        <img src="images/m.png" alt="loading" />
+        <img src="/images/muffinstv_vector_brand.svg" alt="loading" />
       </div>
     </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
     <div class="loader-container">
-      <div class="loader"></div>
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
     </div>
     <!--=========== Loader =============-->
     <div id="error-container" class="error-container" style="display: none">
@@ -225,98 +230,97 @@
     </div>
     <!-- Back-to-Top end -->
     <script>
-            // Funções para mostrar e ocultar o loader
-            function mostrarLoader() {
-              document.querySelector(".loader-container").style.display = "flex"; // Usa 'flex' para centralizar
-            }
+      // Funções para mostrar e ocultar o loader
+      function mostrarLoader() {
+        document.querySelector(".loader-container").style.display = "flex"; // Usa 'flex' para centralizar
+      }
 
-            function esconderLoader() {
-              document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
-            }
+      function esconderLoader() {
+        document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
+      }
 
-            // Função para exibir erros no HTML
-            function displayError(message) {
-              const errorContainer = document.getElementById("error-container");
-              const errorText = errorContainer.querySelector(".error-text");
-              const closeButton = errorContainer.querySelector(".close-button");
+      // Função para exibir erros no HTML
+      function displayError(message) {
+        const errorContainer = document.getElementById("error-container");
+        const errorText = errorContainer.querySelector(".error-text");
+        const closeButton = errorContainer.querySelector(".close-button");
 
-              errorText.textContent = message;
-              errorContainer.style.display = "block";
+        errorText.textContent = message;
+        errorContainer.style.display = "block";
 
-              setTimeout(function () {
-                errorContainer.style.display = "none";
-              }, 4000);
+        setTimeout(function () {
+          errorContainer.style.display = "none";
+        }, 4000);
 
-              closeButton.addEventListener("click", function () {
-                errorContainer.style.display = "none"; // Esconde o container de erro ao clicar no botão
-              });
-            }
+        closeButton.addEventListener("click", function () {
+          errorContainer.style.display = "none"; // Esconde o container de erro ao clicar no botão
+        });
+      }
 
-            // Função para exibir alerta de sucesso
-            function displaySuccess(message) {
-              const successContainer = document.getElementById("success-container");
-              const successText = successContainer.querySelector(".success-text");
-              const closeButton = successContainer.querySelector(".close-button");
+      // Função para exibir alerta de sucesso
+      function displaySuccess(message) {
+        const successContainer = document.getElementById("success-container");
+        const successText = successContainer.querySelector(".success-text");
+        const closeButton = successContainer.querySelector(".close-button");
 
-              successText.textContent = message;
-              successContainer.style.display = "block";
+        successText.textContent = message;
+        successContainer.style.display = "block";
 
-              setTimeout(function () {
-                successContainer.style.display = "none";
-              }, 4000);
+        setTimeout(function () {
+          successContainer.style.display = "none";
+        }, 4000);
 
-              closeButton.addEventListener("click", function () {
-                successContainer.style.display = "none"; // Esconde o container de sucesso ao clicar no botão
-              });
-            }
+        closeButton.addEventListener("click", function () {
+          successContainer.style.display = "none"; // Esconde o container de sucesso ao clicar no botão
+        });
+      }
 
-            document.addEventListener("DOMContentLoaded", function () {
-              const form = document.querySelector("form");
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
 
-              form.addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevenir o comportamento padrão de recarregar a página.
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevenir o comportamento padrão de recarregar a página.
 
-                mostrarLoader(); // Mostra o loader
+          mostrarLoader(); // Mostra o loader
 
-                // Capturar os dados do formulário
-                const formData = new FormData(form);
-                const data = {
-                  name: formData.get("first_name"),
-                  email: formData.get("your-email"),
-                  phone: formData.get("your-Cell-phone"),
-                  venue: formData.get("your-Venue"),
-                  message: formData.get("your-message"),
-                };
+          // Capturar os dados do formulário
+          const formData = new FormData(form);
+          const data = {
+            name: formData.get("first_name"),
+            email: formData.get("your-email"),
+            phone: formData.get("your-Cell-phone"),
+            venue: formData.get("your-Venue"),
+            message: formData.get("your-message"),
+          };
 
-                // Enviar os dados para a API usando fetch
-                fetch("https://app.muffinstv.wuaze.com
-      /muffins/v1/users/contact", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(data),
-                })
-                  .then((response) => response.json()) // Converte a resposta em JSON
-                  .then((result) => {
-                    esconderLoader(); // Esconde o loader
+          // Enviar os dados para a API usando fetch
+          fetch("https://app.muffinstv.wuaze.com/muffins/v1/users/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json()) // Converte a resposta em JSON
+            .then((result) => {
+              esconderLoader(); // Esconde o loader
 
-                    // Verifica o código da resposta (0 = sucesso, 1 = erro)
-                    if (result.code === 0) {
-                      displaySuccess(result.message); // Exibe a mensagem de sucesso da API
-                    } else {
-                      displayError(result.message); // Exibe a mensagem de erro da API
-                    }
-                  })
-                  .catch((error) => {
-                    esconderLoader(); // Esconde o loader após erro
-                    displayError(
-                      "Ocorreu um erro ao enviar o formulário. Tente novamente."
-                    ); // Mensagem de erro padrão
-                    console.error(error);
-                  });
-              });
+              // Verifica o código da resposta (0 = sucesso, 1 = erro)
+              if (result.code === 0) {
+                displaySuccess(result.message); // Exibe a mensagem de sucesso da API
+              } else {
+                displayError(result.message); // Exibe a mensagem de erro da API
+              }
+            })
+            .catch((error) => {
+              esconderLoader(); // Esconde o loader após erro
+              displayError(
+                "Ocorreu um erro ao enviar o formulário. Tente novamente."
+              ); // Mensagem de erro padrão
+              console.error(error);
             });
+        });
+      });
     </script>
 
     <!-- js-min -->

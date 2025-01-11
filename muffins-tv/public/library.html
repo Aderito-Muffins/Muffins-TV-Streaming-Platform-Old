@@ -34,7 +34,7 @@
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico" />
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <!--  Style -->
@@ -49,11 +49,16 @@
     <!--=========== Loader =============-->
     <div id="gen-loading">
       <div id="gen-loading-center">
-        <img src="images/m.png" alt="loading" />
+        <img src="/images/muffinstv_vector_brand.svg" alt="loading" />
       </div>
     </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
     <div class="loader-container">
-      <div class="loader"></div>
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
     </div>
     <!--=========== Loader =============-->
 
@@ -133,100 +138,98 @@
     <script src="js/script.js"></script>
 
     <script>
-            function showLoading() {
-              document.querySelector(".loader-container").style.display = "flex"; // Exibe o loader
+      function showLoading() {
+        document.querySelector(".loader-container").style.display = "flex"; // Exibe o loader
+      }
+
+      function hideLoading() {
+        document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
+      }
+
+      async function fetchWatchedFilms() {
+        showLoading(); // Exibe o loader ao iniciar a requisição
+        try {
+          const response = await fetch(
+            "https://app.muffinstv.wuaze.com/muffins/v1/films/all/watched",
+            {
+              method: "GET",
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"), // Inclui o token de autenticação
+              },
             }
+          );
 
-            function hideLoading() {
-              document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
-            }
+          if (!response.ok) {
+            throw new Error("Erro ao buscar o histórico de filmes");
+          }
 
-            async function fetchWatchedFilms() {
-              showLoading(); // Exibe o loader ao iniciar a requisição
-              try {
-                const response = await fetch(
-                  "https://app.muffinstv.wuaze.com
-      /muffins/v1/films/all/watched",&sessionId=${sessionId}
+          const data = await response.json();
+          displayWatchedFilms(data.data);
+        } catch (error) {
+          console.error(error);
+          document.getElementById("watched-films-container").innerHTML =
+            "<p>Erro ao carregar filmes assistidos.</p>";
+        } finally {
+          hideLoading(); // Oculta o loader após o fim da requisição
+        }
+      }
 
-                  {
-                    method: "GET",
-                    headers: {
-                      Authorization: "Bearer " + localStorage.getItem("token"), // Inclui o token de autenticação
-                    },
-                  }
-                );
+      function displayWatchedFilms(films) {
+        const container = document.getElementById("watched-films-container");
+        container.innerHTML = ""; // Limpa o conteúdo anterior
 
-                if (!response.ok) {
-                  throw new Error("Erro ao buscar o histórico de filmes");
-                }
+        if (films.length === 0) {
+          container.innerHTML = "<p>Nenhum filme assistido encontrado.</p>";
+          return;
+        }
 
-                const data = await response.json();
-                displayWatchedFilms(data.data);
-              } catch (error) {
-                console.error(error);
-                document.getElementById("watched-films-container").innerHTML =
-                  "<p>Erro ao carregar filmes assistidos.</p>";
-              } finally {
-                hideLoading(); // Oculta o loader após o fim da requisição
-              }
-            }
+        films.forEach((film) => {
+          const filmHTML = `
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="gen-carousel-movies-style-3 movie-grid style-3">
+                            <div class="gen-movie-contain">
+                                <div class="gen-movie-img">
+                                    <img src="${film.cover}" alt="${
+            film.title
+          }">
+                                    <div class="gen-movie-add">
+                                        <!-- Ações do filme como curtidas, compartilhamento, etc. -->
+                                    </div>
+                                    <div class="gen-movie-action">
+                                        <a href="single-movie.html?id=${
+                                          film.externalId
+                                        }" class="gen-button">
+                                            <i class="fa fa-play"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="gen-info-contain">
+                                    <div class="gen-movie-info">
+                                        <h3><a href="single-movie.html?id=${
+                                          film.externalId
+                                        }">${film.title}</a></h3>
+                                    </div>
+                                    <div class="gen-movie-meta-holder">
+                                        <ul>
+                                            <li>${film.duration}</li>
+                                            <li><a href="genre.html?genre=${
+                                              film.category[0]?.title
+                                            }"><span>${
+            film.category[0]?.title || "N/A"
+          }</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+          container.insertAdjacentHTML("beforeend", filmHTML);
+        });
+      }
 
-            function displayWatchedFilms(films) {
-              const container = document.getElementById("watched-films-container");
-              container.innerHTML = ""; // Limpa o conteúdo anterior
-
-              if (films.length === 0) {
-                container.innerHTML = "<p>Nenhum filme assistido encontrado.</p>";
-                return;
-              }
-
-              films.forEach((film) => {
-                const filmHTML = `
-                          <div class="col-xl-3 col-lg-4 col-md-6">
-                              <div class="gen-carousel-movies-style-3 movie-grid style-3">
-                                  <div class="gen-movie-contain">
-                                      <div class="gen-movie-img">
-                                          <img src="${film.cover}" alt="${
-                  film.title
-                }">
-                                          <div class="gen-movie-add">
-                                              <!-- Ações do filme como curtidas, compartilhamento, etc. -->
-                                          </div>
-                                          <div class="gen-movie-action">
-                                              <a href="single-movie.html?id=${
-                                                film.externalId
-                                              }" class="gen-button">
-                                                  <i class="fa fa-play"></i>
-                                              </a>
-                                          </div>
-                                      </div>
-                                      <div class="gen-info-contain">
-                                          <div class="gen-movie-info">
-                                              <h3><a href="single-movie.html?id=${
-                                                film.externalId
-                                              }">${film.title}</a></h3>
-                                          </div>
-                                          <div class="gen-movie-meta-holder">
-                                              <ul>
-                                                  <li>${film.duration}</li>
-                                                  <li><a href="genre.html?genre=${
-                                                    film.category[0]?.title
-                                                  }"><span>${
-                  film.category[0]?.title || "N/A"
-                }</span></a></li>
-                                              </ul>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      `;
-                container.insertAdjacentHTML("beforeend", filmHTML);
-              });
-            }
-
-            // Chama a função para buscar os filmes assistidos quando a página carregar
-            document.addEventListener("DOMContentLoaded", fetchWatchedFilms);
+      // Chama a função para buscar os filmes assistidos quando a página carregar
+      document.addEventListener("DOMContentLoaded", fetchWatchedFilms);
     </script>
   </body>
 </html>

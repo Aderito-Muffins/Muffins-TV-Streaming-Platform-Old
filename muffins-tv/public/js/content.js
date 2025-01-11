@@ -5,7 +5,7 @@ function showLoading() {
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
 }
-const sessionId = localStorage.getItem("sessionId");
+
 document.addEventListener("DOMContentLoaded", async function () {
   let offset = 0;
   let limit = 13;
@@ -385,13 +385,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     </div>`
                                     : ""
                                 }
-                                <div class="gen-movie-add">
-                                    <div class="wpulike wpulike-heart">
-                                        <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                            <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                        </div>
-                                    </div>
-                                </div>
+                            
                             <div class="gen-movie-action">
                                 <a href="/${
                                   ["series", "animes", "dorama"].includes(
@@ -497,11 +491,11 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Configuração padrão para os carrosséis responsivos
     const defaultResponsive = {
-      0: { items: 1, nav: true },
-      576: { items: 2, nav: false },
-      768: { items: 3, nav: true, loop: true },
-      992: { items: 4, nav: true, loop: true },
-      1200: { items: 5, nav: true, loop: true },
+      0: { items: 4, nav: true },
+      576: { items: 5, nav: false },
+      768: { items: 5, nav: true, loop: true },
+      992: { items: 5, nav: true, loop: true },
+      1200: { items: 6, nav: true, loop: true },
     };
 
     contentContainer.innerHTML += `
@@ -596,11 +590,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       autoplayTimeout: 6000,
       margin: 30,
       responsive: {
-        0: { items: 1, nav: true },
-        576: { items: 2, nav: false },
-        768: { items: 3, nav: true, loop: true },
-        992: { items: 4, nav: true, loop: true },
-        1200: { items: 5, nav: true, loop: true },
+        0: { items: 4, nav: true },
+        576: { items: 5, nav: false },
+        768: { items: 5, nav: true, loop: true },
+        992: { items: 5, nav: true, loop: true },
+        1200: { items: 6, nav: true, loop: true },
       },
     });
 
@@ -664,7 +658,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   async function loadHome() {
     try {
-      const url = `https://app.muffinstv.wuaze.com/muffins/v1/home?sessionId=${sessionId}`;
+      const url = `https://app.muffinstv.wuaze.com/muffins/v1/home`;
       await loadHomeContent(url, updateHomePage);
     } catch (error) {
       console.error("Erro ao carregar temporadas e episódios:", error);

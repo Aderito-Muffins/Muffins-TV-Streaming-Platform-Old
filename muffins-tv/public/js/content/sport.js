@@ -46,14 +46,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
                             <img src="${film.thumb}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
                           
-                            </div>
                             <div class="gen-movie-action">
                                 <a href="/single-tv.html?id=${film.id}&title=${film.title}" class="gen-button">
                                     <i class="fa fa-play"></i>
@@ -67,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>Live</li>
-                                    <li><a href="#"><span>auto</span></a></li>
+                                
                                 </ul>
                             </div>
                         </div>
@@ -93,14 +86,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     <div class="gen-movie-contain">
                         <div class="gen-tv-img">
                             <img src="${film.image_url}" alt="Movie Thumbnail">
-                            <div class="gen-movie-add">
-                                <div class="wpulike wpulike-heart">
-                                    <div class="wp_ulike_general_class wp_ulike_is_not_liked">
-                                        <button type="button" class="wp_ulike_btn wp_ulike_put_image"></button>
-                                    </div>
-                                </div>
                           
-                            </div>
                             <div class="gen-movie-action">
                                 <a href="/sports-pagination.html?id=${film.id}" class="gen-button">
                                     <i class="fa fa-play"></i>
@@ -114,7 +100,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                             <div class="gen-movie-meta-holder">
                                 <ul>
                                     <li>Live</li>
-                                    <li><a href="#"><span>auto</span></a></li>
+                           
                                 </ul>
                             </div>
                         </div>
@@ -192,11 +178,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       autoplayTimeout: 6000,
       margin: 30,
       responsive: {
-        0: { items: 1, nav: true },
-        576: { items: 2, nav: false },
-        768: { items: 3, nav: true, loop: true },
-        992: { items: 4, nav: true, loop: true },
-        1200: { items: 5, nav: true, loop: true },
+        0: { items: 4, nav: true },
+        576: { items: 5, nav: false },
+        768: { items: 5, nav: true, loop: true },
+        992: { items: 5, nav: true, loop: true },
+        1200: { items: 6, nav: true, loop: true },
       },
     });
   }
@@ -211,11 +197,11 @@ document.addEventListener("DOMContentLoaded", async function () {
       autoplayTimeout: 6000,
       margin: 30,
       responsive: {
-        0: { items: 1, nav: true },
-        576: { items: 2, nav: false },
-        768: { items: 3, nav: true, loop: true },
-        992: { items: 4, nav: true, loop: true },
-        1200: { items: 5, nav: true, loop: true },
+        0: { items: 4, nav: true },
+        576: { items: 5, nav: false },
+        768: { items: 5, nav: true, loop: true },
+        992: { items: 5, nav: true, loop: true },
+        1200: { items: 6, nav: true, loop: true },
       },
     });
   }

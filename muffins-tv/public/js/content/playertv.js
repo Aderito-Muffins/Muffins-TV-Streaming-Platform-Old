@@ -16,11 +16,8 @@ function showLoading() {
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
-const sessionId = localStorage.getItem("sessionId");
-
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";
-
 const filmId = getIdFromURL();
 const title = getTitleFromURL();
 
@@ -29,16 +26,13 @@ async function fetchMovieDetails(id) {
   showLoading();
   const token = localStorage.getItem("token"); // Exibe o loader antes da requisição
   try {
-    const response = await fetch(
-      `${baseApiUrl}tv/external/${id}?sessionId=${sessionId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseApiUrl}tv/external/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const result = await response.json();
 
     // Validações de erro na resposta da API
@@ -148,7 +142,7 @@ function displayFilmDetails(film) {
   // Atualiza o conteúdo dos elementos, se eles existirem
   if (titleElement) titleElement.textContent = title || "Título não disponível";
   if (descriptionElement)
-    descriptionElement.textContent = "Descrição não disponível";
+    descriptionElement.textContent = film.brief || "Descrição não disponível";
   if (ratingElement) ratingElement.textContent = film.age || "N/A";
   if (viewsElement) viewsElement.textContent = `${film.views || 0} Views`;
   if (languageElement) languageElement.textContent = film.nation || "N/A";
@@ -241,7 +235,19 @@ function setupVideoPlayer(film) {
 
     // Esconde os botões de assistir ao filme e trailer
     watchMovieButton.style.display = "none";
-
+    player.watermark({
+      file: "/images/m.png",
+      xpos: 5,
+      ypos: 5,
+      xrepeat: 0,
+      opacity: 100,
+      clickable: false,
+      url: "",
+      className: "vjs-watermark",
+      text: false,
+      debug: false,
+      // Define o tamanho da imagem
+    });
     // Força a reprodução
     player.ready(function () {
       player.play();

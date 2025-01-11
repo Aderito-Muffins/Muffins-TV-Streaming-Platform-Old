@@ -6,7 +6,6 @@ const limit = 12; // Número de canais por página
 let category = getCategoryFromURL(); // Categoria inicial selecionada
 let country = getCountryFromURL(); // País inicial selecionado
 
-const sessionId = localStorage.getItem("sessionId");
 // Função para mostrar e ocultar o loader
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex";
@@ -39,11 +38,11 @@ async function loadChannels(
     let url;
     // Montando a URL de requisição com os parâmetros de paginação, categoria e país
     if (selectedCountry) {
-      url = `${baseUrl}/country/${selectedCountry}?limit=${limit}&page=${page}&sessionId=${sessionId}`;
+      url = `${baseUrl}/country/${selectedCountry}?limit=${limit}&page=${page}`;
     } else if (selectedCategory) {
-      url = `${baseUrl}/category/${selectedCategory}?limit=${limit}&page=${page}&sessionId=${sessionId}`;
+      url = `${baseUrl}/category/${selectedCategory}?limit=${limit}&page=${page}`;
     } else {
-      url = `${baseUrl}?limit=${limit}&page=${page}&sessionId=${sessionId}`; // Para carregar todos os canais
+      url = `${baseUrl}?limit=${limit}&page=${page}`; // Para carregar todos os canais
     }
 
     // Fazendo a requisição para a API

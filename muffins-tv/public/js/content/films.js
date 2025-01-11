@@ -1,5 +1,5 @@
 const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1/genre"; // Substitua pela URL real da sua API
-const sessionId = localStorage.getItem("sessionId");
+
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;
 const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário
@@ -26,7 +26,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
   showLoading();
   try {
     // Montando a URL de requisição com os parâmetros de página e gênero
-    const url = `${baseUrl}/${genre}?page=${page}&sessionId=${sessionId}`;
+    const url = `${baseUrl}/${genre}?page=${page}`;
 
     // Fazendo a requisição para a API
     const response = await fetch(url);

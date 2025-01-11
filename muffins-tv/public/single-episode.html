@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt">
-
-<head>
+  <head>
     <!-- Meta tags para compatibilidade com vários navegadores -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
@@ -13,7 +15,9 @@
     <meta name="author" content="MUFFINS TV" />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-    <meta http-equiv="Content-Security-Policy" content="
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src *;
         script-src * 'unsafe-inline' 'unsafe-eval';
         style-src * 'unsafe-inline';
@@ -25,11 +29,12 @@
         frame-ancestors 'none';
         worker-src * 'self' blob:;
         child-src *;
-    ">
+    "
+    />
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
     <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
@@ -46,485 +51,556 @@
 
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/load.css" />
-    
-
 
     <style>
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-content {
+        background-color: #0a0e16;
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 10px;
+        width: 90%;
+        max-width: 500px; /* Aumente o máximo para um quadrado maior */
+        height: 500px; /* Altura igual à largura para um quadrado perfeito */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+
+      .payment-logo {
+        display: block;
+        margin: 0 auto 20px;
+        max-width: 150px;
+        border-radius: 15px;
+      }
+
+      .modal-title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        color: white;
+      }
+
+      /* Grid System */
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .row {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+        margin-top: 10px;
+        flex-wrap: wrap; /* Flexível para alinhar em telas menores */
+      }
+
+      .col {
+        flex: 1 1 45%; /* Botões ocupam metade da largura em cada linha */
+        max-width: 45%;
+        text-align: center;
+        margin: 5px;
+      }
+
+      /* Buttons */
+      .gen-button2 {
+        background-color: #007bff;
+        color: white;
+        padding: 15px 0; /* Ajuste o preenchimento para botões maiores */
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%; /* Ocupa toda a largura da coluna */
+        cursor: pointer;
+      }
+
+      .gen-button2:hover {
+        background-color: #0056b3;
+      }
+
+      /* Responsive Media Queries */
+      @media (max-width: 768px) {
         .modal-content {
-            background-color: #0a0e16;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px; /* Aumente o máximo para um quadrado maior */
-            height: 500px; /* Altura igual à largura para um quadrado perfeito */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-evenly;
+          width: 95%;
+          height: auto; /* Permite que o conteúdo se ajuste melhor em telas menores */
         }
-        
-        .payment-logo {
-            display: block;
-            margin: 0 auto 20px;
-            max-width: 150px;
-            border-radius: 15px;
-        }
-    
-        .modal-title {
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-            color: white;
-        }
-    
-        /* Grid System */
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    
+
         .row {
-            display: flex;
-            width: 100%;
-            justify-content: space-around;
-            margin-top: 10px;
-            flex-wrap: wrap; /* Flexível para alinhar em telas menores */
+          flex-direction: column;
+          align-items: center;
         }
-    
+
         .col {
-            flex: 1 1 45%; /* Botões ocupam metade da largura em cada linha */
-            max-width: 45%;
-            text-align: center;
-            margin: 5px;
+          max-width: 100%;
+          margin: 10px 0;
         }
-    
-        /* Buttons */
-        .gen-button2 {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 0; /* Ajuste o preenchimento para botões maiores */
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 100%; /* Ocupa toda a largura da coluna */
-            cursor: pointer;
-        }
-    
-        .gen-button2:hover {
-            background-color: #0056b3;
-        }
-    
-        /* Responsive Media Queries */
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                height: auto; /* Permite que o conteúdo se ajuste melhor em telas menores */
-            }
-    
-            .row {
-                flex-direction: column;
-                align-items: center;
-            }
-    
-            .col {
-                max-width: 100%;
-                margin: 10px 0;
-            }
-        }
+      }
     </style>
-    
+
     <style>
       .episode-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px; /* Espaçamento entre os blocos */
-    justify-content: center; /* Centraliza os blocos na linha */
-}
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px; /* Espaçamento entre os blocos */
+        justify-content: center; /* Centraliza os blocos na linha */
+      }
 
-.episode-item {
-    background-color: #ff9800; /* Cor de fundo do bloco */
-    border: 2px solid #ddd; /* Borda do bloco */
-    border-radius: 5px; /* Cantos arredondados */
-    padding: 5px; /* Espaçamento interno */
-    width: 80px; /* Largura fixa do bloco */
-    height: 80px; /* Altura fixa do bloco */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
-    text-align: center; /* Centraliza o texto */
-    transition: transform 0.2s; /* Animação suave ao passar o mouse */
-    position: relative; /* Necessário para o posicionamento do número */
-}
+      .episode-item {
+        background-color: #ff9800; /* Cor de fundo do bloco */
+        border: 2px solid #ddd; /* Borda do bloco */
+        border-radius: 5px; /* Cantos arredondados */
+        padding: 5px; /* Espaçamento interno */
+        width: 80px; /* Largura fixa do bloco */
+        height: 80px; /* Altura fixa do bloco */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+        text-align: center; /* Centraliza o texto */
+        transition: transform 0.2s; /* Animação suave ao passar o mouse */
+        position: relative; /* Necessário para o posicionamento do número */
+      }
 
-.episode-item:hover {
-    transform: scale(1.1); /* Aumenta ligeiramente o bloco ao passar o mouse */
-}
+      .episode-item:hover {
+        transform: scale(
+          1.1
+        ); /* Aumenta ligeiramente o bloco ao passar o mouse */
+      }
 
-.gen-movie-img {
-    position: relative; /* Necessário para posicionar o número em relação à imagem */
-}
+      .gen-movie-img {
+        position: relative; /* Necessário para posicionar o número em relação à imagem */
+      }
 
-.episode-number {
-    position: absolute; /* Permite centralizar o número em relação à imagem */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centraliza o número */
-    font-size: 18px; /* Tamanho da numeração */
-    font-weight: bold; /* Negrito para destaque */
-    color: white; /* Cor do número */
-    background-color: rgba(0, 0, 0, 0.6); /* Fundo semi-transparente para destaque */
-    border-radius: 50%; /* Estilo arredondado para o número */
-    width: 30px; /* Largura do círculo */
-    height: 30px; /* Altura do círculo */
-    display: flex; /* Para centralizar o texto */
-    align-items: center; /* Alinhamento vertical */
-    justify-content: center; /* Alinhamento horizontal */
-}
+      .episode-number {
+        position: absolute; /* Permite centralizar o número em relação à imagem */
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Centraliza o número */
+        font-size: 18px; /* Tamanho da numeração */
+        font-weight: bold; /* Negrito para destaque */
+        color: white; /* Cor do número */
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.6
+        ); /* Fundo semi-transparente para destaque */
+        border-radius: 50%; /* Estilo arredondado para o número */
+        width: 30px; /* Largura do círculo */
+        height: 30px; /* Altura do círculo */
+        display: flex; /* Para centralizar o texto */
+        align-items: center; /* Alinhamento vertical */
+        justify-content: center; /* Alinhamento horizontal */
+      }
 
-.episode-title {
-    margin-top: 5px; /* Espaço acima do título */
-    font-size: 12px; /* Tamanho do título */
-    color: #333; /* Cor do título */
-    white-space: nowrap; /* Impede que o texto quebre em várias linhas */
-    overflow: hidden; /* Oculta o texto que excede a largura do bloco */
-    text-overflow: ellipsis; /* Adiciona reticências para texto muito longo */
-}
-
+      .episode-title {
+        margin-top: 5px; /* Espaço acima do título */
+        font-size: 12px; /* Tamanho do título */
+        color: #333; /* Cor do título */
+        white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+        overflow: hidden; /* Oculta o texto que excede a largura do bloco */
+        text-overflow: ellipsis; /* Adiciona reticências para texto muito longo */
+      }
     </style>
-    
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!--=========== Loader =============-->
     <div id="gen-loading">
-        <div id="gen-loading-center">
-            <img src="images/m.png" alt="loading">
-        </div>
+      <div id="gen-loading-center">
+        <img src="/images/muffinstv_vector_brand.svg" alt="loading" />
+      </div>
     </div>
     <!--=========== Loader =============-->
-    <div id="error-container" class="error-container" style="display: none;">
-        <div class="error-message">
-          <span class="error-text"></span>
-          <button class="close-button">x</button>
-        </div>
+    <div id="error-container" class="error-container" style="display: none">
+      <div class="error-message">
+        <span class="error-text"></span>
+        <button class="close-button">x</button>
       </div>
-      <div class="loader-container">
-        <div class="loader"></div>
+    </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
+    <div class="loader-container">
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
     </div>
     <!--=========== Loader =============-->
 
     <!--========== Header ==============-->
     <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
-        <link rel="stylesheet" href="/css/header.css" />
-        <div class="gen-bottom-header">
-          <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-              <a class="navbar-brand" href="#">
-                <img class="img-fluid logo" src="/images/m.png" alt="streamlab-image">
-              </a>
-      
-              <!-- Botão responsivo para o menu -->
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-              </button>
-      
-              <!-- Menu colapsável -->
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul id="gen-main-menu" class="navbar-nav ml-auto">
-                  <!-- Menu Início -->
-                  <li class="nav-item">
-                    <a class="nav-link" href="/index.html">Início</a>
-                  </li>
-      
-                  <!-- Menu Filmes com gêneros -->
-                  <li class="nav-item active">
-                    <a class="nav-link" href="/animes.html" >Animes</a>
-                  </li>
-      
-                  <!-- Menu Animação -->
-                  <li class="nav-item ">
-                    <a class="nav-link" href="/categories.html">Categorias</a>
-                  </li>
-      
-      
-                  <!-- Menu Programas de TV -->
-                  <li class="nav-item">
-                    <a class="nav-link" href="/animes/latest.html">Recentes</a>
-                  </li>
-      
-                       <!-- Menu Programas de TV -->
-                    
-      
-      
-        
-                </ul>
-              </div>
-      
-              <!-- Botão de Pesquisa -->
-              <div class="gen-header-info-box d-flex align-items-center">
-                <div class="gen-menu-search-block">
-                  <a href="javascript:void(0)" id="gen-search-btn"><i class="fa fa-search"></i></a>
-                  <div class="gen-search-form" id="search-form" style="display: none;">
-                    <form role="search" method="get" class="search-form" action="#">
-                      <input type="search" class="search-field" placeholder="Pesquisar …" name="s">
-                      <button type="submit" class="search-submit"><span class="screen-reader-text"></span></button>
-                    </form>
-                  </div>
+      <link rel="stylesheet" href="/css/header.css" />
+      <div class="gen-bottom-header">
+        <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="#">
+              <img
+                class="img-fluid logo"
+                src="/images/m.png"
+                alt="streamlab-image"
+              />
+            </a>
+
+            <!-- Botão responsivo para o menu -->
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Menu colapsável -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                <!-- Menu Início -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/index.html">Início</a>
+                </li>
+
+                <!-- Menu Filmes com gêneros -->
+                <li class="nav-item active">
+                  <a class="nav-link" href="/animes.html">Animes</a>
+                </li>
+
+                <!-- Menu Animação -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/categories.html">Categorias</a>
+                </li>
+
+                <!-- Menu Programas de TV -->
+                <li class="nav-item">
+                  <a class="nav-link" href="/animes/latest.html">Recentes</a>
+                </li>
+
+                <!-- Menu Programas de TV -->
+              </ul>
+            </div>
+
+            <!-- Botão de Pesquisa -->
+            <div class="gen-header-info-box d-flex align-items-center">
+              <div class="gen-menu-search-block">
+                <a href="javascript:void(0)" id="gen-search-btn"
+                  ><i class="fa fa-search"></i
+                ></a>
+                <div
+                  class="gen-search-form"
+                  id="search-form"
+                  style="display: none"
+                >
+                  <form
+                    role="search"
+                    method="get"
+                    class="search-form"
+                    action="#"
+                  >
+                    <input
+                      type="search"
+                      class="search-field"
+                      placeholder="Pesquisar …"
+                      name="s"
+                    />
+                    <button type="submit" class="search-submit">
+                      <span class="screen-reader-text"></span>
+                    </button>
+                  </form>
                 </div>
-      
               </div>
-            </nav>
-          </div>
+            </div>
+          </nav>
         </div>
-      
-        <style>
-          /* Media Queries para responsividade */
-          @media (max-width: 768px) {
-            .navbar-collapse {
-              text-align: center;
-            }
-      
-            .navbar-nav {
-              flex-direction: column;
-            }
-      
-            .gen-header-info-box {
-              margin-top: 10px;
-              justify-content: center;
-            }
-      
-            .gen-btn-container {
-              margin-top: 10px;
-            }
-      
-            .gen-menu-search-block {
-              margin-left: 15px;
-            }
+      </div>
+
+      <style>
+        /* Media Queries para responsividade */
+        @media (max-width: 768px) {
+          .navbar-collapse {
+            text-align: center;
           }
-      
-          @media (max-width: 576px) {
-            .gen-header-info-box {
-              flex-direction: column;
-            }
-      
-            .gen-btn-container {
-              margin-top: 5px;
-            }
-      
+
+          .navbar-nav {
+            flex-direction: column;
           }
-        </style>
-      
-      </header>
+
+          .gen-header-info-box {
+            margin-top: 10px;
+            justify-content: center;
+          }
+
+          .gen-btn-container {
+            margin-top: 10px;
+          }
+
+          .gen-menu-search-block {
+            margin-left: 15px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .gen-header-info-box {
+            flex-direction: column;
+          }
+
+          .gen-btn-container {
+            margin-top: 5px;
+          }
+        }
+      </style>
+    </header>
     <!--========== Header ==============-->
 
     <!-- Single Video Start -->
 
-  
     <section class="gen-section-padding anime">
-        <div class="container">
-            <div class="row">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="gen-episode-wrapper style-1">
+              <div class="row">
                 <div class="col-lg-12">
-                    <div class="gen-episode-wrapper style-1">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="gen-video-holder" id="gen-video-holder" style="background-size: cover; background-position: center;">
-                                    <!-- Player de vídeo para assistir ao filme -->
-                                    <video 
-                                        id="movie-player" 
-                                        class="gen-video-player video-js vjs-default-skin vjs-fluid"
-                                        controls 
-                                        preload="auto" 
-                                        width="100%" 
-                                        height="550" 
-                                        aria-label="Player de Vídeo"
-                                        data-setup='{}'>
-                                        Seu navegador não suporta o elemento de vídeo.
-                                    </video>
-    
-                                    <!-- playbutton -->
-                                    <div class='containerPlay'>
-                                        <a href='#' id="playBut" class='playBut'>
-                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                                 xmlns:xlink="http://www.w3.org/1999/xlink" 
-                                                 x="0px" y="0px" 
-                                                 width="213.7px" height="213.7px" 
-                                                 viewBox="0 0 213.7 213.7" 
-                                                 xml:space="preserve">
-                                                 <polygon class='triangle' fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"/>
-                                                 <circle class='circleP' fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-    
-                                    <img src="images/m.png" id="video-logo" alt="Logo" class="video-logo">
-    
-                                    <!-- Botões para assistir -->
-                                    <button id="watch-movie-btn" class="gen-button">Assistir Filme</button>
-                                    <div id="watch-servers-btn" class="gen-selection"></div>
-    
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="single-episode">
-                                    <div class="gen-single-tv-show-info">
-                                        <!-- Informações do anime serão inseridas dinamicamente aqui -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                  <div
+                    class="gen-video-holder"
+                    id="gen-video-holder"
+                    style="background-size: cover; background-position: center"
+                  >
+                    <!-- Player de vídeo para assistir ao filme -->
+                    <video
+                      id="movie-player"
+                      class="gen-video-player video-js vjs-default-skin vjs-fluid"
+                      controls
+                      preload="auto"
+                      width="100%"
+                      height="550"
+                      aria-label="Player de Vídeo"
+                      data-setup="{}"
+                    >
+                      Seu navegador não suporta o elemento de vídeo.
+                    </video>
+
+                    <!-- playbutton -->
+                    <div class="containerPlay">
+                      <a href="#" id="playBut" class="playBut">
+                        <svg
+                          version="1.1"
+                          xmlns="http://www.w3.org/2000/svg"
+                          xmlns:xlink="http://www.w3.org/1999/xlink"
+                          x="0px"
+                          y="0px"
+                          width="213.7px"
+                          height="213.7px"
+                          viewBox="0 0 213.7 213.7"
+                          xml:space="preserve"
+                        >
+                          <polygon
+                            class="triangle"
+                            fill="none"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            points="73.5,62.5 148.5,105.8 73.5,149.1"
+                          />
+                          <circle
+                            class="circleP"
+                            fill="none"
+                            stroke-width="7"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-miterlimit="10"
+                            cx="106.8"
+                            cy="106.8"
+                            r="103.3"
+                          />
+                        </svg>
+                      </a>
                     </div>
+
+                    <img
+                      src="images/m.png"
+                      id="video-logo"
+                      alt="Logo"
+                      class="video-logo"
+                    />
+
+                    <!-- Botões para assistir -->
+                    <button id="watch-movie-btn" class="gen-button">
+                      Assistir Filme
+                    </button>
+                    <div id="watch-servers-btn" class="gen-selection"></div>
+                  </div>
                 </div>
+                <div class="col-lg-12">
+                  <div class="single-episode">
+                    <div class="gen-single-tv-show-info">
+                      <!-- Informações do anime serão inseridas dinamicamente aqui -->
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
-    
-<!-- Modal de Pagamento -->
-<div id="paymentModal" class="modal">
-    <div class="modal-content">
+
+    <!-- Modal de Pagamento -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
         <span class="close" id="closeModal">&times;</span>
         <p class="modal-title">Players:</p>
-        <div class="row button-grid " id="serverbs">
-            <!-- Botões de servidores -->
+        <div class="row button-grid" id="serverbs">
+          <!-- Botões de servidores -->
         </div>
+      </div>
     </div>
-</div>
-
 
     <section class="gen-section-padding anime">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-6">
-                    <h4 class="gen-heading-title">Episódios</h4>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-                    <div class="gen-movie-action text-right">
-                        <!-- Ações para os episódios podem ser inseridas aqui -->
-                    </div>
-                </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+            <h4 class="gen-heading-title">Episódios</h4>
+          </div>
+          <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+            <div class="gen-movie-action text-right">
+              <!-- Ações para os episódios podem ser inseridas aqui -->
             </div>
-            <div class="row mt-3">
-                <div class="col-12">
-                    <div class="gen-style-2" id="eps">
-                        <!-- Itens dos episódios serão inseridos dinamicamente aqui -->
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="gen-style-2" id="eps">
+              <!-- Itens dos episódios serão inseridos dinamicamente aqui -->
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
-    
+
     <section class="gen-section-padding anime">
-        <div class="container">
-           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-6">
-                 <h4 class="gen-heading-title">Temporadas</h4>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
-              </div>
-           </div>
-           <div class="row mt-3">
-              <div class="col-12">
-                 <div class="gen-style-2">
-                    <div class="owl-carousel owl-theme" id="Season" 
-                         data-dots="false" data-nav="true"
-                         data-desk_num="4" data-lap_num="3" 
-                         data-tab_num="2" data-mob_num="1" 
-                         data-mob_sm="1" data-autoplay="false" 
-                         data-loop="false" data-margin="30">
-                       <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
-                    </div>
-                 </div>
-              </div>
-           </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6">
+            <h4 class="gen-heading-title">Temporadas</h4>
+          </div>
+          <div
+            class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block"
+          ></div>
         </div>
-     </section>
-
-
-        <!-- Single Video End -->
-
-        <!-- footer start -->
-
-        <!-- footer End -->
-
-        <!-- Back-to-Top start -->
-        <div id="back-to-top">
-            <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="gen-style-2">
+              <div
+                class="owl-carousel owl-theme"
+                id="Season"
+                data-dots="false"
+                data-nav="true"
+                data-desk_num="4"
+                data-lap_num="3"
+                data-tab_num="2"
+                data-mob_num="1"
+                data-mob_sm="1"
+                data-autoplay="false"
+                data-loop="false"
+                data-margin="30"
+              >
+                <!-- Os itens do carrossel serão inseridos dinamicamente pelo JavaScript -->
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- Back-to-Top end -->
-        <div id="go-to-bottom">
-            <a class="bottom" id="bottom" href="#bottom"> <i class="ion-ios-arrow-down"></i> </a>
-        </div>
-        <!-- js-min -->
-        <script src="js/jquery-3.6.0.min.js"></script>
-        <script src="js/asyncloader.min.js"></script>
-        <!-- JS bootstrap -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- owl-carousel -->
-        <script src="js/owl.carousel.min.js"></script>
-        <!-- counter-js -->
-        <script src="js/jquery.waypoints.min.js"></script>
-        <script src="js/jquery.counterup.min.js"></script>
-        <!-- popper-js -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/swiper-bundle.min.js"></script>
-        <!-- Iscotop -->
-        <script src="js/isotope.pkgd.min.js"></script>
+      </div>
+    </section>
 
-        <script src="js/jquery.magnific-popup.min.js"></script>
+    <!-- Single Video End -->
 
-        <script src="js/slick.min.js"></script>
+    <!-- footer start -->
 
-        <script src="js/streamlab-core.js"></script>
+    <!-- footer End -->
 
+    <!-- Back-to-Top start -->
+    <div id="back-to-top">
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+    <!-- Back-to-Top end -->
+    <div id="go-to-bottom">
+      <a class="bottom" id="bottom" href="#bottom">
+        <i class="ion-ios-arrow-down"></i>
+      </a>
+    </div>
+    <!-- js-min -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/asyncloader.min.js"></script>
+    <!-- JS bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- owl-carousel -->
+    <script src="js/owl.carousel.min.js"></script>
+    <!-- counter-js -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <!-- popper-js -->
+    <script src="js/popper.min.js"></script>
+    <script src="js/swiper-bundle.min.js"></script>
+    <!-- Iscotop -->
+    <script src="js/isotope.pkgd.min.js"></script>
 
+    <script src="js/jquery.magnific-popup.min.js"></script>
 
-        <script src="js/script.js"></script>
-        <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
-        <script src="js/content/playerforanime.js"></script>
-        <script>
-          // Mover o formulário de pesquisa
-          const searchForm = document.getElementById('search-form');
-          if (searchForm) {
-            document.body.appendChild(searchForm);
-          }
-      
-          // Configurar o botão de busca e o formulário de pesquisa
-          const searchButton = document.getElementById('gen-search-btn');
-          if (searchButton && searchForm) {
-            searchButton.addEventListener('click', function () {
-              searchForm.style.display = (searchForm.style.display === 'none' || searchForm.style.display === '') ? 'flex' : 'none';
-              searchForm.classList.toggle('active');
-            });
-      
-            // Configurar o comportamento do formulário de pesquisa
-            const searchFormElement = searchForm.querySelector('form');
-            if (searchFormElement) {
-              searchFormElement.addEventListener('submit', function (event) {
-                event.preventDefault(); // Impede o envio padrão do formulário
-                const searchValue = searchFormElement.querySelector('.search-field').value;
-                const searchUrl = `/animes/query.html?s=${encodeURIComponent(searchValue)}`;
-                window.location.href = searchUrl;
-              });
-            }
-          }
-        </script>
-            
+    <script src="js/slick.min.js"></script>
 
+    <script src="js/streamlab-core.js"></script>
 
-</body>
+    <script src="js/script.js"></script>
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    <script src="js/content/playerforanime.js"></script>
+    <script>
+      // Mover o formulário de pesquisa
+      const searchForm = document.getElementById("search-form");
+      if (searchForm) {
+        document.body.appendChild(searchForm);
+      }
 
+      // Configurar o botão de busca e o formulário de pesquisa
+      const searchButton = document.getElementById("gen-search-btn");
+      if (searchButton && searchForm) {
+        searchButton.addEventListener("click", function () {
+          searchForm.style.display =
+            searchForm.style.display === "none" ||
+            searchForm.style.display === ""
+              ? "flex"
+              : "none";
+          searchForm.classList.toggle("active");
+        });
+
+        // Configurar o comportamento do formulário de pesquisa
+        const searchFormElement = searchForm.querySelector("form");
+        if (searchFormElement) {
+          searchFormElement.addEventListener("submit", function (event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            const searchValue =
+              searchFormElement.querySelector(".search-field").value;
+            const searchUrl = `/animes/query.html?s=${encodeURIComponent(
+              searchValue
+            )}`;
+            window.location.href = searchUrl;
+          });
+        }
+      }
+    </script>
+  </body>
 </html>

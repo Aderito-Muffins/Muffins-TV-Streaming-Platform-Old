@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Extrai o ID da URL
   const urlParams = new URLSearchParams(window.location.search);
   const categoryId = urlParams.get("id") || 3; // Altere 'id' para o nome correto do parâmetro na URL
-  const sessionId = localStorage.getItem("sessionId");
+
   // Verifica se o ID é válido
   if (!categoryId) {
     console.error("Category ID is missing in the URL");
@@ -17,11 +17,11 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       // Mostra o ícone de carregamento
       document.querySelector(".loadmore-icon").style.display = "inline-block";
-      document.querySelector(".button-text").textContent = "Loading...";
+      document.querySelector(".button-text").textContent = "Carregando...";
 
       // Faz requisição para sua API usando o ID
       const response = await fetch(
-        `https://app.muffinstv.wuaze.com/muffins/v1/sports/category/list/${categoryId}?limit=${limit}&offset=${offset}&sessionId=${sessionId}`
+        `https://app.muffinstv.wuaze.com/muffins/v1/sports/category/list/${categoryId}&limit=${limit}&offset=${offset}`
       );
       const result = await response.json();
 

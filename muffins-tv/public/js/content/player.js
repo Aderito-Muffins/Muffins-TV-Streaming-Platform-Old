@@ -3,19 +3,16 @@ function getIdFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get("id");
 }
-const sessionId = localStorage.getItem("sessionId");
+
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";
-
 const filmId = getIdFromURL();
 
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
   showLoading(); // Exibe o loader antes da requisição
   try {
-    const response = await fetch(
-      `${baseApiUrl}films/id/${id}?sessionId=${sessionId}`
-    );
+    const response = await fetch(`${baseApiUrl}films/id/${id}`);
     if (!response.ok) {
       throw new Error("Erro ao buscar dados do filme");
     }
@@ -61,16 +58,13 @@ async function fetchContentDetails(id) {
   }
 
   try {
-    const response = await fetch(
-      `${baseApiUrl}films/external/${id}?sessionId=${sessionId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseApiUrl}films/external/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // if (!response.ok) {
     //     // Lida com qualquer erro relacionado ao status HTTP

@@ -18,7 +18,6 @@ function hideLoading() {
 }
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = "https://app.muffinstv.wuaze.com/muffins/v1/";
-
 const filmId = getIdFromURL();
 const title = getTitleFromURL();
 
@@ -27,16 +26,13 @@ async function fetchMovieDetails(id) {
   showLoading();
   const token = localStorage.getItem("token"); // Exibe o loader antes da requisição
   try {
-    const response = await fetch(
-      `${baseApiUrl}sports/detail/${id}?sessionId=${sessionId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseApiUrl}sports/detail/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     const result = await response.json();
 
     // Validações de erro na resposta da API

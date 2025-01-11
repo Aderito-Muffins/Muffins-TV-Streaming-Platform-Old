@@ -5,7 +5,7 @@ const baseUrl =
 let currentPage = 1;
 const limit = 12; // Número de filmes por página, você pode modificar este valor conforme necessário
 let genre = getGenreFromURL() || "Action"; // Gênero inicial selecionado
-const sessionId = localStorage.getItem("sessionId");
+
 // Função para mostrar e ocultar o loader
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex";
@@ -27,7 +27,7 @@ async function loadFilms(page = 1, selectedGenre = genre) {
   showLoading();
   try {
     // Montando a URL de requisição com os parâmetros de paginação e gênero
-    const url = `${baseUrl}?limit=${limit}&page=${page}&sessionId=${sessionId}`;
+    const url = `${baseUrl}?limit=${limit}&page=${page}`;
 
     // Fazendo a requisição para a API
     const response = await fetch(url);

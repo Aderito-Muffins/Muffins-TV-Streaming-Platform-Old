@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
+  <head>
+    <!-- Meta tags para compatibilidade com vários navegadores -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-  <!-- Meta tags para compatibilidade com vários navegadores -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
     <!-- Meta tags de SEO -->
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="author" content="MUFFINS TV" />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
-    <meta http-equiv="Content-Security-Policy" 
-    content="
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
         default-src *;
         script-src * 'unsafe-inline' 'unsafe-eval';
         style-src * 'unsafe-inline';
@@ -26,13 +29,14 @@
         frame-ancestors 'none';
         worker-src * 'self' blob:;
         child-src *;
-    ">
+    "
+    />
     <title>MUFFINS TV - Filmes, Series e Animes</title>
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="/images/muffinsTVonlyLogoWhite.svg" />
     <!-- Adicionando o script -->
-    
+
     <!-- CSS bootstrap-->
     <!-- CSS bootstrap-->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -42,96 +46,106 @@
     <link rel="stylesheet" href="/css/responsive.css" />
     <link rel="stylesheet" href="/css/load.css" />
     <link rel="stylesheet" href="/css/tvs.css" />
-</head>
+  </head>
 
-<body>
-
+  <body>
     <!--=========== Loader =============-->
     <div id="gen-loading">
-        <div id="gen-loading-center">
-            <img src="/images/m.png" alt="loading">
-        </div>
+      <div id="gen-loading-center">
+        <img src="/images/m.png" alt="loading" />
+      </div>
     </div>
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
+    ></script>
+
     <div class="loader-container">
-        <div class="loader"></div>
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
     </div>
     <!--=========== Loader =============-->
-    <div id="error-container" class="error-container" style="display: none;">
-        <div class="error-message">
-          <span class="error-text"></span>
-          <button class="close-button">x</button>
-        </div>
+    <div id="error-container" class="error-container" style="display: none">
+      <div class="error-message">
+        <span class="error-text"></span>
+        <button class="close-button">x</button>
       </div>
-      
+    </div>
+
     <!--========== Header ==============-->
     <!--========== Header ==============-->
 
     <!-- breadcrumb -->
-    <div class="gen-breadcrumb" style="background-image: url('/images/background/asset-25.jpeg');">
-        <div class="container rubb32">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <nav aria-label="breadcrumb">
-                        <div class="gen-breadcrumb-title">
-                            <h1>
-                                Programas de Tv
-                            </h1>
-                        </div>
-                        <div class="gen-breadcrumb-container">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="/index.html"><i
-                                            class="fas fa-home mr-2"></i>Home</a></li>
-                                <li class="breadcrumb-item active">Tv</li>
-                            </ol>
-                        </div>
-                    </nav>
-                </div>
-            </div>
+    <div
+      class="gen-breadcrumb"
+      style="background-image: url('/images/background/asset-25.jpeg')"
+    >
+      <div class="container rubb32">
+        <div class="row align-items-center">
+          <div class="col-lg-12">
+            <nav aria-label="breadcrumb">
+              <div class="gen-breadcrumb-title">
+                <h1>Programas de Tv</h1>
+              </div>
+              <div class="gen-breadcrumb-container">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">
+                    <a href="/index.html"
+                      ><i class="fas fa-home mr-2"></i>Home</a
+                    >
+                  </li>
+                  <li class="breadcrumb-item active">Tv</li>
+                </ol>
+              </div>
+            </nav>
+          </div>
         </div>
+      </div>
     </div>
     <!-- breadcrumb -->
 
     <!-- Section-1 Start -->
-<section class="gen-section-padding-3">
-    <div class="container rubb32">
+    <section class="gen-section-padding-3">
+      <div class="container rubb32">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="row">
-                    <!-- Contêiner para os filmes -->
-                    <div class="row row_Movies" id="movies-container"> <!-- Adicionado ID para manipulação com JavaScript -->
-                        <!-- Conteúdo dos filmes será injetado aqui -->
-                    </div>
+          <div class="col-lg-12">
+            <div class="row">
+              <!-- Contêiner para os filmes -->
+              <div class="row row_Movies" id="movies-container">
+                <!-- Adicionado ID para manipulação com JavaScript -->
+                <!-- Conteúdo dos filmes será injetado aqui -->
+              </div>
 
-                    <!-- Paginação -->
-                    <div class="col-lg-12 col-md-12">
-                        <div class="gen-pagination">
-                            <nav aria-label="Page navigation">
-                                <ul class="page-numbers" id="pagination-container">
-                                    <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-
+              <!-- Paginação -->
+              <div class="col-lg-12 col-md-12">
+                <div class="gen-pagination">
+                  <nav aria-label="Page navigation">
+                    <ul class="page-numbers" id="pagination-container">
+                      <!-- Paginação será preenchida dinamicamente pelo JavaScript -->
+                    </ul>
+                  </nav>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="gen-section-padding-2">
-    <div class="container rubb32">
-       <div class="row">
-          <div class="col-12">
-             <!-- Código de anúncio -->
-             <script async="async" data-cfasync="false" src="//pl24563162.cpmrevenuegate.com/f4fb9f4933f9597b8dcbf557ef51641f/invoke.js"></script>
-             <div id="container-f4fb9f4933f9597b8dcbf557ef51641f"></div>
           </div>
-       </div>
-    </div>
- </section>
+        </div>
+      </div>
+    </section>
 
-    
+    <section class="gen-section-padding-2">
+      <div class="container rubb32">
+        <div class="row">
+          <div class="col-12">
+            <!-- Código de anúncio -->
+            <script
+              async="async"
+              data-cfasync="false"
+              src="//pl24563162.cpmrevenuegate.com/f4fb9f4933f9597b8dcbf557ef51641f/invoke.js"
+            ></script>
+            <div id="container-f4fb9f4933f9597b8dcbf557ef51641f"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Section-1 End -->
 
@@ -141,7 +155,7 @@
 
     <!-- Back-to-Top start -->
     <div id="back-to-top">
-        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
     <!-- Back-to-Top end -->
 
@@ -170,10 +184,10 @@
     <script src="/js/script.js"></script>
     <script src="/tv/js/tvs.js"></script>
     <script src="/js/header.js" defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-     crossorigin="anonymous"></script>
-
-
-</body>
-
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

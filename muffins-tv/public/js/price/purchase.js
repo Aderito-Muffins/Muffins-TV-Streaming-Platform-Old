@@ -57,8 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://app.muffinstv.wuaze.com/muffins/v1/plans/getPlans",&sessionId=${sessionId}
-
+      "https://app.muffinstv.wuaze.com/muffins/v1/plans/getPlans",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -69,26 +68,44 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (result.code === 0) {
       const plans = result.data;
-      const tableBody = document.querySelector("tbody");
-
+      const tableBody = document.getElementById("prices");
+      console.log(tableBody);
       const planRowTemplate = plans
         .map(
           (plan) => `
-                <tr>
-                    <td><div class="class-tag">${plan.name}</div></td>
-                    <td>${plan.price} MZN / ${plan.category}</td>
-                    <td>${plan.maxDevices}</td>
-                    <td>${
-                      plan.deviceDownload.isActive ? "Todos" : "Nenhum"
-                    }</td>
-                    <td><i class="far ${
-                      plan.isActive ? "fa-check-circle" : "fa-times-circle"
-                    }"></i></td>
-                    <td>${plan.withAds ? "Com Anúncios" : "Sem Anúncios"}</td>
-                    <td><button class="gen-button" onclick='openPaymentModal(${JSON.stringify(
-                      plan
-                    )})'>PAGAR</button></td>
-                </tr>
+            <div class="col-xl-4 col-lg-4 col-md-4 mt-3 mt-md-0">
+              <div class="gen-price-block text-center ">
+                <div class="gen-price-detail">
+                  <span class="gen-price-title">${plan.name}</span>
+                  <h2 class="price">${plan.price} MZN</h2>
+                  <p class="gen-price-duration">/ Por ${
+                    plan.durationInDays
+                  } Dias</p>
+                  <div class="gen-bg-effect">
+                    <img
+                      src="images/background/asset-54.jpg"
+                      alt="imagem-architek"
+                    />
+                  </div>
+                </div>
+                <ul class="gen-list-info">
+                  <li>Número de Telas: ${plan.maxDevices}</li>
+                  <li>Em quantos dispositivos pode fazer download: ${
+                    plan.deviceDownload.isActive ? "Todos" : "Nenhum"
+                  }</li>
+                  <li>Séries e filmes ilimitados: ${plan.category}</li>
+                </ul>
+                <div class="gen-btn-container button-1">
+                  <button class="gen-button" onclick='openPaymentModal(${JSON.stringify(
+                    plan
+                  )})'>
+                    <span class="text">${
+                      plan.isActive ? "Comprar agora" : "Plano Inativo"
+                    }</span>
+                  </button>
+                </div>
+              </div>
+            </div>
             `
         )
         .join("");
@@ -137,8 +154,7 @@ async function submitPuchase(method, planId, number) {
 
     try {
       const response = await fetch(
-        "https://app.muffinstv.wuaze.com/muffins/v1/purchase/subscription",&sessionId=${sessionId}
-
+        "https://app.muffinstv.wuaze.com/muffins/v1/purchase/subscription",
         {
           method: "POST",
           headers: {

@@ -11,7 +11,7 @@ let country = getCountryFromURL(); // País inicial selecionado
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex";
 }
-const sessionId = localStorage.getItem("sessionId");
+
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
@@ -36,7 +36,7 @@ async function loadChannels(
 ) {
   showLoading();
   try {
-    let url = baseUrl + "&page=" + page + ` &sessionId=${sessionId}`;
+    let url = baseUrl + "&page=" + page;
 
     // Fazendo a requisição para a API
     const response = await fetch(url);

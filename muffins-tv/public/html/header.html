@@ -6,11 +6,32 @@
         <a class="navbar-brand" href="#">
           <img
             class="img-fluid logo"
-            src="/images/m.png"
+            src="/images/muffinstv_vector_brand.svg"
             alt="streamlab-image"
           />
         </a>
 
+        <!-- Botão de Pesquisa -->
+        <div class="gen-header-info-box d-flex align-items-center">
+          <div class="gen-menu-search-block">
+            <a href="javascript:void(0)" id="gen-search-btn"
+              ><i class="fa fa-search"></i
+            ></a>
+            <div class="gen-search-form" id="search-form" style="display: none">
+              <form role="search" method="get" class="search-form" action="#">
+                <input
+                  type="search"
+                  class="search-field"
+                  placeholder="Pesquisar …"
+                  name="s"
+                />
+                <button type="submit" class="search-submit">
+                  <span class="screen-reader-text"></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
         <!-- Botão responsivo para o menu -->
         <button
           class="navbar-toggler"
@@ -103,11 +124,11 @@
             </li>
 
             <!-- Menu Animação -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="/animes.html" id="navbarDropdownTVShows"
                 >Animes</a
               >
-            </li>
+            </li> -->
 
             <!-- Menu Programas de TV -->
             <li class="nav-item dropdown">
@@ -177,28 +198,12 @@
               >
             </li>
 
-            <li class="nav-item d-lg-none">
-              <!-- Classe d-lg-none para esconder em telas grandes -->
-              <a class="nav-link" href="/pricing.html">
-                <div class="gen-button-block">
-                  <span class="gen-button-line-left"></span>
-                  <span class="gen-button-text bt-assine-class" id="text-Plan"
-                    >Assine</span
-                  >
-                </div>
-              </a>
-            </li>
-
             <!-- Menu Conta do Usuário -->
-            <li
-              class="nav-item dropdown"
-              id="login-inMenu"
-              style="display: flex"
-            >
+            <li class="nav-item dropdown">
               <a
                 class="nav-link dropdown-toggle"
                 href="#"
-                id="navbarDropdownUserMenu2"
+                id="navbarDropdownUserMenu"
                 role="button"
                 data-toggle="dropdown"
                 aria-haspopup="true"
@@ -207,7 +212,7 @@
               >
               <div
                 class="dropdown-menu"
-                id="login-inMenu"
+                id="menu-acc"
                 aria-labelledby="navbarDropdownUserMenu"
               >
                 <a class="dropdown-item" href="/log-in.html"
@@ -220,95 +225,33 @@
                   ><i class="fa fa-indent"></i> Biblioteca</a
                 >
               </div>
-              <div
-                class="dropdown-menu"
-                id="login-outMenu"
-                aria-labelledby="navbarDropdownUserMenu"
-              >
-                <a class="dropdown-item" href="/logout.html"
-                  ><i class="fas fa-sign-in-alt"></i> Sair ()</a
-                >
-                <a class="dropdown-item" href="/user-profile.html"
-                  ><i class="fa fa-user"></i> Perfil</a
-                >
-                <a class="dropdown-item" href="/library.html"
-                  ><i class="fa fa-indent"></i> Biblioteca</a
-                >
-              </div>
+            </li>
+
+            <li class="nav-item d-lg-none">
+              <!-- Classe d-lg-none para esconder em telas grandes -->
+              <a class="nav-link" href="/pricing.html">
+                <div class="gen-button-block">
+                  <span class="gen-button-line-left"></span>
+                  <span class="gen-button-text bt-assine-class" id="text-Plan"
+                    >Assine</span
+                  >
+                </div>
+              </a>
             </li>
           </ul>
         </div>
-
-        <!-- Botão de Pesquisa -->
-        <div class="gen-header-info-box d-flex align-items-center">
-          <div class="gen-menu-search-block">
-            <a href="javascript:void(0)" id="gen-search-btn"
-              ><i class="fa fa-search"></i
-            ></a>
-            <div class="gen-search-form" id="search-form" style="display: none">
-              <form role="search" method="get" class="search-form" action="#">
-                <input
-                  type="search"
-                  class="search-field"
-                  placeholder="Pesquisar …"
-                  name="s"
-                />
-                <button type="submit" class="search-submit">
-                  <span class="screen-reader-text"></span>
-                </button>
-              </form>
+        <!-- Botão de Assinatura -->
+        <div class="gen-btn-container ml-3">
+          <a href="/pricing.html" class="gen-button" id="bt-assine">
+            <div class="gen-button-block" id="bt-assinev2">
+              <span class="gen-button-line-left"></span>
+              <span class="gen-button-text bt-assine-class" id="text-Plan"
+                >Assine</span
+              >
             </div>
-          </div>
-
-          <!-- Botão de Assinatura -->
-          <div class="gen-btn-container ml-3">
-            <a href="/pricing.html" class="gen-button" id="bt-assine">
-              <div class="gen-button-block" id="bt-assinev2">
-                <span class="gen-button-line-left"></span>
-                <span class="gen-button-text bt-assine-class" id="text-Plan"
-                  >Assine</span
-                >
-              </div>
-            </a>
-          </div>
+          </a>
         </div>
       </nav>
     </div>
   </div>
-
-  <style>
-    /* Media Queries para responsividade */
-    @media (max-width: 768px) {
-      .navbar-collapse {
-        text-align: center;
-      }
-
-      .navbar-nav {
-        flex-direction: column;
-      }
-
-      .gen-header-info-box {
-        margin-top: 10px;
-        justify-content: center;
-      }
-
-      .gen-btn-container {
-        margin-top: 10px;
-      }
-
-      .gen-menu-search-block {
-        margin-left: 15px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      .gen-header-info-box {
-        flex-direction: column;
-      }
-
-      .gen-btn-container {
-        margin-top: 5px;
-      }
-    }
-  </style>
 </header>

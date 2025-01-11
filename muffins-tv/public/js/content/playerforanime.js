@@ -1,9 +1,8 @@
 const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1";
-
 let StrangeUrl;
 let serverId = null;
 let epNumber = null;
-const sessionId = localStorage.getItem("sessionId");
+
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex";
 }
@@ -57,9 +56,7 @@ async function loadSeasonsAndEpisodes() {
 }
 
 async function fetchAnimeData(animeId) {
-  const response = await fetch(
-    `${baseUrl}/anime/list/${animeId}?sessionId=${sessionId}`
-  );
+  const response = await fetch(`${baseUrl}/anime/list/${animeId}`);
   if (response.code == 0) throw new Error("Erro ao buscar dados do anime");
   return response.json();
 }
@@ -130,7 +127,9 @@ async function createSeasonItems(seasons, activeAnimeId) {
                             </div>
                         </div>
                         <div class="gen-info-contain">
-                            <h6><a href="#">${season.title}</a></h3>
+                            <div class="gen-movie-info">
+                                <h3><a href="#">${season.title}</a></h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -260,7 +259,7 @@ async function watchAnime(serverId) {
 
     // Redireciona o usuário para o proxy que adiciona os headers
     window.open(
-      `https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?sessionId=${sessionId}&url=${encodeURIComponent(
+      `https://app.muffinstv.wuaze.com/muffins/v1/proxy-anime?url=${encodeURIComponent(
         animeLink
       )}`,
       "_blank"
@@ -299,11 +298,11 @@ async function updateCarousel(seasonsHtml) {
     autoplayTimeout: 6000,
     margin: 30,
     responsive: {
-      0: { items: 1, nav: true },
-      576: { items: 2, nav: false },
-      768: { items: 3, nav: true, loop: true },
-      992: { items: 4, nav: true, loop: true },
-      1200: { items: 5, nav: true, loop: true },
+      0: { items: 4, nav: true },
+      576: { items: 5, nav: false },
+      768: { items: 5, nav: true, loop: true },
+      992: { items: 5, nav: true, loop: true },
+      1200: { items: 6, nav: true, loop: true },
     },
   });
 }

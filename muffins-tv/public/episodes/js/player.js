@@ -1,5 +1,4 @@
 const baseUrl = "https://app.muffinstv.wuaze.com/muffins/v1";
-
 let StrangeUrl;
 let serverId = "";
 let epNumber = "";
@@ -7,7 +6,7 @@ let t = "";
 let i = "";
 let s = "";
 let image;
-const sessionId = localStorage.getItem("sessionId");
+
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex";
 }
@@ -56,7 +55,7 @@ async function loadSeasonsAndEpisodes() {
       ]);
       updateCarousel(seasonsHtml, "#Season");
       updateCarousel(recommendHtml, "#Recommendations");
-      console.log(recommendHtml);
+
       document.getElementById("eps").innerHTML = episodesHtml;
     }
 
@@ -69,9 +68,7 @@ async function loadSeasonsAndEpisodes() {
 }
 
 async function fetchContentData(i) {
-  const response = await fetch(
-    `${baseUrl}/post/${t}/${i}?sessionId=${sessionId}`
-  );
+  const response = await fetch(`${baseUrl}/post/${t}/${i}`);
   if (response.code == 0) throw new Error("Erro ao buscar dados do anime");
   return response.json();
 }
@@ -148,8 +145,10 @@ async function createSeasonItems(seasons) {
                                 </a>
                             </div>
                         </div>
-                        <div class="gen-info-contain">
-                            <h6><a href="#">${name}</a></h6>
+                           <div class="gen-info-contain">
+                            <div class="gen-movie-info">
+                                <h3><a href="#">${name}</a></h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -229,9 +228,7 @@ async function createRecommendationsItems(seasons) {
 }
 
 async function loadEpisodes(anime) {
-  const episodesResponse = await fetch(
-    `${baseUrl}/season/${s}/episodes?sessionId=${sessionId}`
-  );
+  const episodesResponse = await fetch(`${baseUrl}/season/${s}/episodes`);
   if (!episodesResponse.ok) throw new Error("Erro ao buscar episódios");
 
   const episodesData = await episodesResponse.json();
@@ -258,27 +255,30 @@ async function loadEpisodes(anime) {
         </div>`;
 }
 
-async function loadServers(data) {
+async function loadServers(data, isDownload = false) {
   try {
     if (!data) {
       return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
     }
-
-    return data
-      .map(
-        (server) => `
-            <div class="col">
-                <button 
-                    class="gen-button2" 
-                    data-id="${server.id}" 
-                    onclick="setupPlayer('${server.url}');">
-                    ${server.name} (${server.lang} ${server.type})
-                </button>
-            </div>
-        `
-      )
-
-      .join("");
+    const buttonTemplate = (server) => `
+        <div class="col">
+            <button 
+                class="gen-button2" 
+                data-id="${server.id}" 
+                onclick="${
+                  isDownload
+                    ? `setupDownload('${server.url}')`
+                    : `setupPlayer('${server.url}')`
+                }">
+                ${server.name} (${server.lang} ${server.type})
+            </button>
+        </div>
+      `;
+    if (!isDownload) {
+      return data.map(buttonTemplate).join("");
+    } else {
+      return data.map(buttonTemplate);
+    }
   } catch (error) {
     console.error("Erro ao carregar os servidores:", error);
     return `<div class="error-message">Erro ao carregar os servidores</div>`;
@@ -308,7 +308,7 @@ function displayError(message) {
   });
 }
 
-async function watchAnime() {
+async function watchAnime(isDownload = false) {
   showLoading();
   const token = localStorage.getItem("token");
 
@@ -324,16 +324,13 @@ async function watchAnime() {
   }
 
   try {
-    const response = await fetch(
-      `${baseUrl}/player/episode?id=${epNumber}&sessionId=${sessionId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await fetch(`${baseUrl}/player/episode?id=${epNumber}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     // Converte a resposta para JSON
     const data = await response.json();
@@ -347,9 +344,13 @@ async function watchAnime() {
 
     watchMovieButton.style.display = "none";
     watchMovie.style.display = "none";
+    downloadButton.style.display = "none";
+    moviePlayer.style.display = "block";
+    videoHolder.style.display = "block";
 
     document.getElementById("serverbs").innerHTML = await loadServers(
-      data.data
+      data.data,
+      isDownload
     );
 
     paymentModal.style.display = "block";
@@ -392,11 +393,11 @@ async function updateCarousel(seasonsHtml, id) {
     autoplayTimeout: 6000,
     margin: 30,
     responsive: {
-      0: { items: 1, nav: true },
-      576: { items: 2, nav: false },
-      768: { items: 3, nav: true, loop: true },
-      992: { items: 4, nav: true, loop: true },
-      1200: { items: 5, nav: true, loop: true },
+      0: { items: 4, nav: true },
+      576: { items: 5, nav: false },
+      768: { items: 5, nav: true, loop: true },
+      992: { items: 5, nav: true, loop: true },
+      1200: { items: 6, nav: true, loop: true },
     },
   });
 }
@@ -434,16 +435,18 @@ function setupVideoPlayer() {
   const chooseServer = () => {
     watchMovieButton.style.display = "none";
     watchMovie.style.display = "none";
+    downloadButton.style.display = "none";
     loadServers(epNumber);
     paymentModal.style.display = "block";
   };
-
-  if (watchMovieButton) {
-    watchMovieButton.addEventListener("click", watchAnime);
+  if (downloadButton) {
+    downloadButton.addEventListener("click", () => watchAnime(true));
   }
-
+  if (watchMovieButton) {
+    watchMovieButton.addEventListener("click", () => watchAnime());
+  }
   if (watchMovie) {
-    watchMovie.addEventListener("click", watchAnime);
+    watchMovie.addEventListener("click", () => watchAnime());
   }
 }
 function setupPlayer(url) {
@@ -452,7 +455,6 @@ function setupPlayer(url) {
 
   // Verifica a URL e o tipo de mídia
   const mediaUrl = url;
-  console.log("URL da mídia:", mediaUrl);
 
   // Verifica o tipo de mídia com base na URL
   const sourceType = mediaUrl.includes(".txt")
@@ -471,21 +473,53 @@ function setupPlayer(url) {
   paymentModal.style.display = "none";
   // Esconde os botões de assistir ao filme e trailer
   watchMovieButton.style.display = "none";
-
+  downloadButton.style.display = "none";
+  // Configura o plugin de watermark
+  player.watermark({
+    file: "/images/m.png",
+    xpos: 5,
+    ypos: 5,
+    xrepeat: 0,
+    opacity: 100,
+    clickable: false,
+    url: "",
+    className: "vjs-watermark",
+    text: false,
+    debug: false,
+    // Define o tamanho da imagem
+  });
   // Força a reprodução
   player.ready(function () {
     player.play();
   });
 }
 
+function setupDownload(url) {
+  // Verifica a URL e o tipo de mídia
+  const mediaUrl = url;
+
+  // Extrai o nome do arquivo da URL
+  const fileName = mediaUrl.split("/").pop();
+
+  // Cria um elemento de link (<a>) para iniciar o download
+  const downloadLink = document.createElement("a");
+  downloadLink.href = mediaUrl;
+  downloadLink.download = fileName; // Define o nome do arquivo de download
+
+  // Dispara o evento de clique no elemento de link para iniciar o download
+  downloadLink.click();
+}
+
 // Evento de clique no botão "Assistir Filme"
 const watchMovieButton = document.getElementById("watch-movie-btn");
 const watchMovie = document.getElementById("playBut");
+const downloadButton = document.querySelector(".gen-icon");
 // Evento de clique no botão de fechar
 closeModal.addEventListener("click", () => {
   paymentModal.style.display = "none"; // Fecha o modal
   watchMovie.style.display = "inline-block";
   watchMovieButton.style.display = "inline-block";
+  downloadButton.style.display = "inline-block";
 });
 
 // Fecha o modal se o usuário clicar fora do conteúdo do modal
@@ -494,5 +528,6 @@ window.addEventListener("click", (event) => {
     watchMovie.style.display = "inline-block";
     watchMovieButton.style.display = "inline-block";
     paymentModal.style.display = "none"; // Fecha o modal
+    downloadButton.style.display = "inline-block";
   }
 });
