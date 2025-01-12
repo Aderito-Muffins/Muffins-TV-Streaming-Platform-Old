@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     const response = await fetch(
-      "https://app.muffinstv.com/muffins/v1/plans/getPlans",
+      " https://muffinstvapi.onrender.com/muffins/v1/plans/getPlans",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -154,7 +154,7 @@ async function submitPuchase(method, planId, number) {
 
     try {
       const response = await fetch(
-        "https://app.muffinstv.com/muffins/v1/purchase/subscription",
+        " https://muffinstvapi.onrender.com/muffins/v1/purchase/subscription",
         {
           method: "POST",
           headers: {

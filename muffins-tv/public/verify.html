@@ -167,13 +167,16 @@
             mostrarLoader(); // Mostra o loader antes de fazer o fetch
 
             // Enviar o e-mail para a API para gerar e enviar o código
-            fetch("https://app.muffinstv.com/muffins/v1/users/verify2", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email: email }),
-            })
+            fetch(
+              " https://muffinstvapi.onrender.com/muffins/v1/users/verify2",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email }),
+              }
+            )
               .then((response) => response.json())
               .then((data) => {
                 esconderLoader(); // Esconde o loader após a resposta

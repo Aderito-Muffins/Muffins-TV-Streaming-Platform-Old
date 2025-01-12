@@ -17,7 +17,7 @@ function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
 // URL base da API para obter os detalhes do filme
-const baseApiUrl = "https://app.muffinstv.com/muffins/v1/";
+const baseApiUrl = " https://muffinstvapi.onrender.com/muffins/v1/";
 const filmId = getIdFromURL();
 const title = getTitleFromURL();
 

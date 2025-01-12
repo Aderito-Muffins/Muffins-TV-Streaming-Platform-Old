@@ -207,12 +207,12 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
 
   async function loadTv() {
-    const url = `https://app.muffinstv.com/muffins/v1/tv/list/category/Esportes?limit=${limit}&page=${page}&offset=${offset}`;
+    const url = ` https://muffinstvapi.onrender.com/muffins/v1/tv/list/category/Esportes?limit=${limit}&page=${page}&offset=${offset}`;
     loadMovies(url, updateTvCarousel);
   }
 
   async function loadSportCategory() {
-    const url = `https://app.muffinstv.com/muffins/v1/sports/category/list?limit=${limit}&page=${page}&offset=${offset}`;
+    const url = ` https://muffinstvapi.onrender.com/muffins/v1/sports/category/list?limit=${limit}&page=${page}&offset=${offset}`;
     loadMovies(url, updateSportCarousel);
   }
   loadSportCategory();

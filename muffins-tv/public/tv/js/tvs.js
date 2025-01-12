@@ -1,5 +1,5 @@
 const baseUrl =
-  "https://app.muffinstv.com/muffins/v1/explorer?type=canais&year="; // Substitua pela URL real da sua API
+  " https://muffinstvapi.onrender.com/muffins/v1/explorer?type=canais&year="; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite, categoria e país
 let currentPage = 1;
