@@ -73,7 +73,7 @@ async function loadHomeContent() {
 
   try {
     const response = await fetch(
-      " https://muffinstvapi.onrender.com/muffins/v1/anime/home"
+      " https://app.muffinstv.com/muffins/v1/anime/home"
     );
     const data = await response.json();
     const contentContainer = document.querySelector(".content-container");

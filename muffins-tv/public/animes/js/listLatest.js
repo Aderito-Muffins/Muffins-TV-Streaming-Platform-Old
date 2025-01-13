@@ -1,5 +1,4 @@
-const baseUrl =
-  " https://muffinstvapi.onrender.com/muffins/v1/anime/latest/list"; // Substitua pela URL real da sua API
+const baseUrl = " https://app.muffinstv.com/muffins/v1/anime/latest/list"; // Substitua pela URL real da sua API
 
 // Variáveis globais para controle de página, limite e gênero
 let currentPage = 1;

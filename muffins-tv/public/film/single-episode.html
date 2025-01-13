@@ -416,7 +416,37 @@
     <div id="back-to-top">
       <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
     </div>
+    <script>
+      const player = videojs("movie-player");
 
+      player.on("error", function () {
+        // Captura o tempo atual de reprodução
+        const currentTime = player.currentTime();
+
+        // Exibe uma mensagem de erro
+        const errorDisplay = document.querySelector(".vjs-error-display");
+        errorDisplay.innerHTML = `
+          <p>Erro na reprodução. Tentando novamente em <span id="retry-timer">3</span> segundos...</p>
+        `;
+
+        // Temporizador de 3 segundos
+        let countdown = 3;
+        const timerElement = document.getElementById("retry-timer");
+        const timerInterval = setInterval(() => {
+          countdown--;
+          if (timerElement) timerElement.textContent = countdown;
+
+          // Quando o tempo acabar, reinicia o vídeo
+          if (countdown <= 0) {
+            clearInterval(timerInterval); // Limpa o intervalo
+            player.error(null); // Remove o estado de erro
+            player.load(); // Recarrega o vídeo
+            player.currentTime(currentTime); // Retorna ao mesmo ponto
+            player.play(); // Tenta reproduzir novamente
+          }
+        }, 1000);
+      });
+    </script>
     <!-- Back-to-Top end -->
     <script>
       // Identificar o vídeo e a logo

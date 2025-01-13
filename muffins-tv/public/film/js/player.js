@@ -11,7 +11,7 @@ const paymentModal = document.getElementById("paymentModal");
 const closeModal = document.getElementById("closeModal");
 
 // URL base da API para obter os detalhes do filme
-const baseApiUrl = " https://muffinstvapi.onrender.com/muffins/v1/";
+const baseApiUrl = " https://app.muffinstv.com/muffins/v1/";
 const i = getIdFromURL();
 const t = getTFromURL();
 // Função para buscar os detalhes do filme da API

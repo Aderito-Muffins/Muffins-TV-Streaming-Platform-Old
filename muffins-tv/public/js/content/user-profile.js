@@ -1,5 +1,5 @@
 // URL base da API para obter os detalhes do filme
-const baseApiUrl = " https://muffinstvapi.onrender.com/muffins/v1/";
+const baseApiUrl = " https://app.muffinstv.com/muffins/v1/";
 
 function showLoading() {
   document.querySelector(".loader-container").style.display = "flex"; // Exibe o loader
