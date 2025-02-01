@@ -32,7 +32,7 @@
     "
     />
     <title>MUFFINS TV - Filmes, Series e Animes</title>
-
+    <link rel="manifest" href="manifest.json" />
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -132,21 +132,6 @@
       </div>
     </section>
 
-    <section class="gen-section-padding-2">
-      <div class="container rubb32">
-        <div class="row">
-          <div class="col-12">
-            <!-- Código de anúncio -->
-            <script
-              async="async"
-              data-cfasync="false"
-              src="//pl24563162.cpmrevenuegate.com/f4fb9f4933f9597b8dcbf557ef51641f/invoke.js"
-            ></script>
-            <div id="container-f4fb9f4933f9597b8dcbf557ef51641f"></div>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Section de Pesquisa End -->
 
     <!-- Footer -->
@@ -164,11 +149,7 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
     <script src="js/search.js"></script>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-      crossorigin="anonymous"
-    ></script>
+
     <!-- Script para Pesquisa e Paginação -->
     <script>
       // Mover o formulário de pesquisa
@@ -203,6 +184,18 @@
           });
         }
       }
+    </script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
     </script>
   </body>
 </html>

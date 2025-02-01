@@ -77,7 +77,8 @@ document.addEventListener("DOMContentLoaded", async () => {
               <div class="gen-price-block text-center ">
                 <div class="gen-price-detail">
                   <span class="gen-price-title">${plan.name}</span>
-                  <h2 class="price">${plan.price} MZN</h2>
+                  <h2 class="price">${plan.price} MZN <br>$${plan.priceDolar}
+          </br></h2>
                   <p class="gen-price-duration">/ Por ${
                     plan.durationInDays
                   } Dias</p>
@@ -140,21 +141,23 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function submitPuchase(method, planId, number) {
   const token = localStorage.getItem("token");
   const phoneNumber = number;
-  // Obtém o planId do campo oculto
 
   if (!token) {
-    displayError(`token inexistente, faca o login novamente!`);
+    displayError(`Token inexistente, faça o login novamente!`);
+    setTimeout(() => {
+      window.location.href = "/log-in.html";
+    }, 4200);
     return;
   }
 
-  if (phoneNumber) {
-    const formattedPhoneNumber = phoneNumber; // Adiciona o prefixo e remove qualquer prefixo existente
-
+  // Se o método for PayPal
+  if (method === "Paypal") {
     showLoading(); // Exibe o loader ao iniciar o pagamento
 
     try {
+      // Chamada para o backend para criar o pedido PayPal
       const response = await fetch(
-        " https://app.muffinstv.com/muffins/v1/purchase/subscription",
+        "https://app.muffinstv.com/muffins/v1/purchase/subscription",
         {
           method: "POST",
           headers: {
@@ -162,7 +165,7 @@ async function submitPuchase(method, planId, number) {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            msisdn: formattedPhoneNumber, // Usa o número formatado com o prefixo
+            msisdn: phoneNumber,
             planId: planId,
             paymentOption: method,
           }),
@@ -171,24 +174,71 @@ async function submitPuchase(method, planId, number) {
 
       const result = await response.json();
       if (result.code === 0) {
-        displaySuccess(result.message);
-        closeMpesaModal();
-        setTimeout(() => {
-          window.location.href = "/index.html";
-        }, 4200);
+        // O backend retornou um link de aprovação do PayPal
+        const approvalLink = result.data.approvalLink;
+
+        if (approvalLink) {
+          // Redireciona o usuário para o PayPal para aprovação
+          window.location.href = approvalLink;
+        } else {
+          displayError("Não foi possível obter o link de aprovação.");
+        }
       } else {
-        displayError(`transação malsucedida`);
+        displayError("Transação malsucedida");
       }
     } catch (error) {
-      console.error("Erro na requisição de pagamento:", error);
+      console.error("Erro na requisição de pagamento PayPal:", error);
       displayError(
         "Ocorreu um erro ao processar o pagamento. Por favor, tente novamente."
       );
     } finally {
-      hideLoading(); // Esconde o loader após a operação, independentemente do resultado
+      hideLoading(); // Esconde o loader após a operação
     }
   } else {
-    displayError("Por favor, insira um número de celular válido.");
+    // Caso o método de pagamento seja diferente de PayPal
+    if (phoneNumber) {
+      const formattedPhoneNumber = phoneNumber; // Adiciona o prefixo e remove qualquer prefixo existente
+
+      showLoading(); // Exibe o loader ao iniciar o pagamento
+
+      try {
+        const response = await fetch(
+          "https://app.muffinstv.com/muffins/v1/purchase/subscription",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              msisdn: formattedPhoneNumber,
+              planId: planId,
+              paymentOption: method,
+            }),
+          }
+        );
+
+        const result = await response.json();
+        if (result.code === 0) {
+          displaySuccess(result.message);
+          closeMpesaModal();
+          setTimeout(() => {
+            window.location.href = "/index.html";
+          }, 4200);
+        } else {
+          displayError(result.message);
+        }
+      } catch (error) {
+        console.error("Erro na requisição de pagamento:", error);
+        displayError(
+          "Ocorreu um erro ao processar o pagamento. Por favor, tente novamente."
+        );
+      } finally {
+        hideLoading(); // Esconde o loader após a operação
+      }
+    } else {
+      displayError("Por favor, insira um número de celular válido.");
+    }
   }
 }
 
@@ -226,11 +276,26 @@ function openEmolaModal() {
   document.getElementById("emolaPlanId").value = window.selectedPlan.id;
 }
 
+function openPayPalModal() {
+  // Fecha o modal de escolha
+  closePaymentModal();
+  document.getElementById("payModal").style.display = "block";
+
+  // Preenche os detalhes do plano no modal e-Mola
+  document.getElementById("planNamePay").textContent = window.selectedPlan.name;
+  document.getElementById("planPricePay").textContent =
+    window.selectedPlan.priceDolar + " USD";
+  document.getElementById("payPlanId").value = window.selectedPlan.id;
+}
+
 function closeEmolaModal() {
   document.getElementById("emolaModal").style.display = "none";
 }
 function closeMpesaModal() {
   document.getElementById("mpesaModal").style.display = "none";
+}
+function closePayPalModal() {
+  document.getElementById("payModal").style.display = "none";
 }
 
 async function submitMpesa() {
@@ -249,4 +314,12 @@ async function submitEmola() {
   let method = "Emola";
   // Enviar dados para o servidor...
   await submitPuchase(method, planId, phoneNumber);
+}
+
+async function submitPay() {
+  // Implementar lógica de pagamento com e-Mola
+  let planId = document.getElementById("payPlanId").value;
+  let method = "Paypal";
+  // Enviar dados para o servidor...
+  await submitPuchase(method, planId, "85000000");
 }

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Muffins TV</title>
+    <style>
+      /* Estilos inline para melhor compatibilidade */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: #fff;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #d0cece;
+      }
+
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 45px 30px 60px;
+        background: #0a0e16;
+        background-image: url(https://www.muffinstv.com/images/background/asset-54.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: top center;
+      }
+
+      .header img {
+        height: 30px;
+        display: block;
+      }
+
+      .header span {
+        font-size: 16px;
+        color: #ffffff;
+        text-align: right;
+      }
+
+      .main {
+        margin-top: 70px;
+        padding: 92px 30px 115px;
+        background: #141b29;
+        border-radius: 30px;
+        text-align: center;
+      }
+
+      .content {
+        max-width: 489px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+
+      p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .otp {
+        margin-top: 60px;
+        font-size: 40px;
+        font-weight: 600;
+        letter-spacing: 25px;
+        color: #ff9800;
+      }
+
+      .footer {
+        max-width: 490px;
+        margin: 20px auto 0;
+        text-align: center;
+        border-top: 1px solid #e6ebf1;
+        padding-top: 20px;
+      }
+
+      .footer .title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #ff9800;
+        margin-bottom: 16px;
+      }
+
+      .footer .copy {
+        font-size: 14px;
+        color: #c1c1c1c8;
+        margin-bottom: 16px;
+      }
+
+      .footer a {
+        color: #ff9800;
+        text-decoration: none;
+      }
+
+      /* Responsividade com tabelas */
+      @media screen and (max-width: 600px) {
+        .container {
+          padding: 30px 20px;
+        }
+
+        .header img {
+          height: 25px;
+        }
+
+        .header span {
+          font-size: 14px;
+        }
+
+        .main {
+          margin-top: 50px;
+          padding: 60px 20px 80px;
+        }
+
+        h1 {
+          font-size: 22px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+
+        .otp {
+          font-size: 32px;
+          letter-spacing: 20px;
+        }
+
+        .footer .title {
+          font-size: 14px;
+        }
+
+        .footer .copy {
+          font-size: 14px;
+        }
+      }
+
+      @media screen and (max-width: 480px) {
+        .container {
+          padding: 20px 15px;
+        }
+
+        .header img {
+          height: 20px;
+        }
+
+        .header span {
+          font-size: 12px;
+        }
+
+        .main {
+          margin-top: 30px;
+          padding: 50px 15px 70px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+
+        p {
+          font-size: 12px;
+        }
+
+        .otp {
+          font-size: 28px;
+          letter-spacing: 15px;
+        }
+
+        .footer .title {
+          font-size: 12px;
+        }
+
+        .footer .copy {
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <table class="header" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td>
+            <img
+              alt="Muffins TV"
+              src="https://www.muffinstv.com/images/m.png"
+              style="height: 30px; display: block"
+            />
+          </td>
+          <td align="right">
+            <span style="font-size: 16px; color: #ffffff">
+              ${new Date().toLocaleString("pt-PT", { weekday: "long", year:
+              "numeric", month: "long", day: "numeric", hour: "2-digit", minute:
+              "2-digit", second: "2-digit", })}
+            </span>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Main Content -->
+      <table class="main" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="center">
+            <table class="content" width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <h1 style="font-size: 24px; color: #ffffff; margin: 0">
+                    Redefinição de Senha
+                  </h1>
+                  <p style="font-size: 16px; margin: 0">Olá, ${fullName},</p>
+                  <p style="font-size: 16px; margin: 0">
+                    Recebemos uma solicitação para redefinir a senha da sua
+                    conta na Muffins TV. Clique no link abaixo para criar uma
+                    nova senha:
+                  </p>
+                  <p style="font-size: 16px; margin: 20px 0">
+                    <a
+                      href="${resetLink}"
+                      style="
+                        background-color: #ff9800;
+                        color: #ffffff;
+                        padding: 10px 20px;
+                        text-decoration: none;
+                        border-radius: 5px;
+                        display: inline-block;
+                      "
+                    >
+                      Redefinir Senha
+                    </a>
+                  </p>
+                  <p style="font-size: 14px; margin: 0; color: #c1c1c1c8">
+                    Se você não solicitou a redefinição de senha, ignore este
+                    e-mail ou entre em contato com o suporte.
+                  </p>
+                  <p style="font-size: 14px; margin: 20px 0; color: #c1c1c1c8">
+                    Este link é válido por
+                    <span style="font-weight: 600; color: #ff9800"
+                      >24 horas</span
+                    >.
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Footer -->
+      <table class="footer" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td align="center">
+            <p
+              class="title"
+              style="
+                font-size: 16px;
+                font-weight: 600;
+                color: #ff9800;
+                margin: 0;
+              "
+            >
+              MUFFINS TV
+            </p>
+            <p
+              class="copy"
+              style="font-size: 14px; color: #c1c1c1c8; margin: 16px 0"
+            >
+              Copyright © 2025 Muffins TV. Todos os direitos reservados.
+            </p>
+            <p style="font-size: 14px; margin: 0">
+              Precisa de ajuda? Entre em contato pelo e-mail
+              <a
+                href="mailto:suporte@muffinstv.com"
+                style="color: #ff9800; text-decoration: none"
+                >suporte@muffinstv.com</a
+              >
+              ou visite nosso
+              <a
+                href="https://www.muffinstv.com/help"
+                target="_blank"
+                style="color: #ff9800; text-decoration: none"
+                >Centro de Ajuda</a
+              >
+            </p>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

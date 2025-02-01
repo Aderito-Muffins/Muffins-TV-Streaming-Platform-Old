@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cancelamento de Pagamento</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .payment-info {
+        margin-top: 20px;
+      }
+
+      .payment-info ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .payment-info li {
+        margin-bottom: 10px;
+      }
+
+      .payment-info li strong {
+        font-weight: bold;
+      }
+
+      .btn {
+        background-color: #ff9800;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .btn:hover {
+        background-color: #e08900;
+      }
+
+      .btn-success {
+        background-color: #ff9800;
+      }
+    </style>
+    <div class="container">
+      <h1>Cancelamento de Pagamento</h1>
+      <p>Seu pagamento foi cancelado com sucesso.</p>
+
+      <p>
+        Se você tiver alguma dúvida ou precisar de ajuda, por favor, entre em
+        contato conosco atraves do nosso email: suporte@muffinstv.com.
+      </p>
+      <a
+        href="https://www.muffinstv.com"
+        class="btn btn-success"
+        id="back-button"
+        style="display: none"
+        >Voltar para a MUFFINS TV</a
+      >
+      <script>
+        // Cria um contador de 5 segundos
+        let countdown = 5;
+
+        // Cria o elemento para exibir o tempo restante
+        const countdownElement = document.createElement("div");
+        countdownElement.id = "countdown";
+        countdownElement.textContent = `Redirecionando em ${countdown} segundos...`;
+        document.body.appendChild(countdownElement); // Adiciona o contador na página
+
+        // Função para atualizar o contador
+        const timer = setInterval(() => {
+          countdown--;
+          countdownElement.textContent = `Redirecionando em ${countdown} segundos...`;
+
+          // Se o contador chegar a 0, exibe o botão e redireciona
+          if (countdown === 0) {
+            clearInterval(timer); // Para o contador
+            document.getElementById("back-button").style.display =
+              "inline-block"; // Exibe o botão
+            setTimeout(() => {
+              window.location.href = "https://www.muffinstv.com"; // Redireciona após 5 segundos
+            }, 5000); // Espera 5 segundos antes de redirecionar
+          }
+        }, 1000); // Atualiza a cada 1 segundo
+      </script>
+    </div>
+  </body>
+</html>

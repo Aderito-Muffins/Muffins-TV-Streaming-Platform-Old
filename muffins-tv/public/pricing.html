@@ -9,10 +9,47 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Preços e Assinaturas -->
+    <meta
+      name="keywords"
+      content="Muffins TV, Preços Muffins TV, Assinaturas Muffins TV, Planos Muffins TV, Streaming de Filmes, Streaming de Séries, Streaming de Animes, Filmes e séries online, Assista animes online, Planos de assinatura Muffins TV"
+    />
+    <meta
+      name="description"
+      content="Explore nossos planos e preços de assinatura no Muffins TV. Escolha o plano ideal e aproveite uma vasta seleção de filmes, séries e animes online, com conteúdos exclusivos e atualizados."
+    />
+    <meta name="author" content="Muffins TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      property="og:title"
+      content="Muffins TV - Preços e Assinaturas de Filmes, Séries e Animes"
+    />
+    <meta
+      property="og:description"
+      content="Descubra os planos e preços da Muffins TV. Assista aos melhores filmes, séries e animes com conteúdos exclusivos, a qualquer hora e em qualquer lugar."
+    />
+    <meta
+      property="og:image"
+      content="https://www.muffinstv.com/images/background/cover/1muffinstv.png"
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/pricing" />
+    <meta
+      name="twitter:card"
+      content="https://www.muffinstv.com/images/background/cover/pricing.png"
+    />
+    <meta
+      name="twitter:title"
+      content="Muffins TV - Preços e Assinaturas de Filmes, Séries e Animes"
+    />
+    <meta
+      name="twitter:description"
+      content="Veja nossos planos de assinatura e aproveite conteúdos exclusivos no Muffins TV. Acesso ilimitado a filmes, séries e animes."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.muffinstv.com/images/background/cover/pricing.png"
+    />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
     <meta
@@ -31,8 +68,8 @@
         child-src *;
     "
     />
-    <title>MUFFINS TV - Filmes, Series e Animes</title>
-
+    <title>MUFFINS TV - Assinaturas</title>
+    <link rel="manifest" href="manifest.json" />
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -59,16 +96,48 @@
         height: 100%;
         overflow: auto;
         background-color: rgba(0, 0, 0, 0.5);
-        z-index: 999;
+        z-index: 99;
       }
 
+      /* Modal Content Styles */
       .modal-content {
         background-color: #0a0e16;
-        margin: 10% auto;
         padding: 20px;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 400px;
+        border-radius: 10px;
+        width: 90%; /* Responsivo: 90% da largura da tela */
+        max-width: 500px; /* Largura máxima */
+        height: auto; /* Ajusta automaticamente a altura */
+        min-height: 300px; /* Altura mínima */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        z-index: 99;
+        /* Centralização no meio da tela */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(
+          -50%,
+          -50%
+        ); /* Move o elemento 50% para cima e para a esquerda */
+      }
+
+      /* Responsividade para telas pequenas */
+      @media screen and (max-width: 600px) {
+        .modal-content {
+          width: 95%; /* Torna o modal maior em telas pequenas */
+          padding: 15px; /* Menos espaçamento em telas pequenas */
+          height: auto; /* Ajusta a altura conforme o conteúdo */
+        }
+      }
+
+      /* Responsividade para telas grandes */
+      @media screen and (min-width: 1200px) {
+        .modal-content {
+          width: 60%; /* Torna o modal mais estreito em telas grandes */
+          max-width: 600px; /* Aumenta a largura máxima em telas grandes */
+        }
       }
 
       .payment-logo {
@@ -78,14 +147,11 @@
         border-radius: 15px;
       }
 
-      .full-width {
-        width: 100%;
-        margin: 10px 0;
-      }
-
       .modal-title {
         text-align: center;
         font-weight: bold;
+        font-size: 18px;
+        color: white;
       }
 
       /* Grid System */
@@ -100,24 +166,46 @@
         width: 100%;
         justify-content: space-around;
         margin-top: 10px;
+        flex-wrap: wrap; /* Flexível para alinhar em telas menores */
       }
 
       .col {
-        flex: 1;
+        flex: 1 1 45%; /* Botões ocupam metade da largura em cada linha */
+        max-width: 45%;
         text-align: center;
+        margin: 5px;
+      }
+
+      /* Buttons */
+      .gen-button2 {
+        background-color: #007bff;
+        color: white;
+        padding: 15px 0; /* Ajuste o preenchimento para botões maiores */
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        width: 100%; /* Ocupa toda a largura da coluna */
+        cursor: pointer;
+      }
+
+      .gen-button2:hover {
+        background-color: #0056b3;
       }
 
       /* Responsive Media Queries */
       @media (max-width: 768px) {
         .modal-content {
           width: 95%;
+          height: auto; /* Permite que o conteúdo se ajuste melhor em telas menores */
         }
 
         .row {
           flex-direction: column;
+          align-items: center;
         }
 
         .col {
+          max-width: 100%;
           margin: 10px 0;
         }
       }
@@ -208,6 +296,11 @@
               e-Mola
             </button>
           </div>
+          <div class="col">
+            <button class="gen-button full-width" onclick="openPayPalModal()">
+              PayPal
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -262,6 +355,22 @@
       </div>
     </div>
 
+    <!-- Modal PayPal -->
+    <div id="payModal" class="modal">
+      <div class="modal-content container">
+        <span class="close" onclick="closePayPalModal()">&times;</span>
+        <img src="/images/Paypal.png" alt="e-Mola" class="payment-logo" />
+        <p class="modal-title">Você está prestes a assinar o seguinte plano:</p>
+        <div id="selectedPlanDetailsPay">
+          <p><strong>Plano:</strong> <span id="planNamePay"></span></p>
+          <p><strong>Preço:</strong> <span id="planPricePay"></span></p>
+        </div>
+        <input type="hidden" id="payPlanId" />
+        <button class="gen-button full-width" onclick="submitPay()">
+          Pagar com PayPal
+        </button>
+      </div>
+    </div>
     <!-- Pricing Plan End -->
 
     <!-- footer start -->
@@ -299,5 +408,17 @@
     <script src="js/streamlab-core.js"></script>
 
     <script src="js/script.js"></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

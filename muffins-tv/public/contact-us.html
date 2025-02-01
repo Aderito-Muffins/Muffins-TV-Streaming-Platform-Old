@@ -31,7 +31,7 @@
         child-src *;
     "
     />
-    <title>MUFFINS TV - Filmes, Series e Animes</title>
+    <title>Contacte-nos - MUFFINS TV</title>
 
     <!-- Favicon -->
     <link
@@ -144,7 +144,7 @@
                 <h3 class="pt-icon-box-title mb-2">
                   <span>Contacte-nos</span>
                 </h3>
-                <p class="gen-icon-box-description">(+258) 85-8782-674</p>
+                <p class="gen-icon-box-description">(+258) 83-4149-006</p>
               </div>
             </div>
           </div>
@@ -159,9 +159,8 @@
                 <h3 class="pt-icon-box-title mb-2">
                   <span>Envie-nos um email</span>
                 </h3>
-                <p class="gen-icon-box-description">muffinstv@gmail.com</p>
+                <p class="gen-icon-box-description">suporte@muffinstv.com</p>
               </div>
-            </div>
           </div>
         </div>
       </div>
@@ -350,9 +349,16 @@
     <script src="js/header.js"></script>
     <script src="js/script.js"></script>
     <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
-      crossorigin="anonymous"
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
     ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

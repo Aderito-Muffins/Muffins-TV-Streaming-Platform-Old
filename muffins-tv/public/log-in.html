@@ -9,10 +9,41 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Login -->
+    <meta
+      name="keywords"
+      content="Muffins TV Login, Entrar Muffins TV, Acesso Muffins TV, Plataforma de Streaming, Filmes online, Séries online, Animes online, Conta Muffins TV"
+    />
+    <meta
+      name="description"
+      content="Faça login na sua conta Muffins TV e aproveite uma vasta seleção de filmes, séries e animes. Acesse sua conta de qualquer lugar, a qualquer hora."
+    />
+    <meta name="author" content="Muffins TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="index, nofollow" />
+    <meta property="og:title" content="Login - Muffins TV" />
+    <meta
+      property="og:description"
+      content="Entre na sua conta Muffins TV para acessar conteúdos exclusivos de filmes, séries e animes. Aproveite a melhor experiência de streaming."
+    />
+    <meta
+      property="og:image"
+      content="https://www.muffinstv.com/images/background/cover/login_muffinstv.png"
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/log-in" />
+    <meta
+      name="twitter:card"
+      content="https://www.muffinstv.com/images/background/cover/login_muffinstv.png"
+    />
+    <meta name="twitter:title" content="Login - Muffins TV" />
+    <meta
+      name="twitter:description"
+      content="Acesse sua conta Muffins TV e explore conteúdos exclusivos de filmes, séries e animes. Login rápido e seguro."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.muffinstv.com/images/background/cover/login_muffinstv.png"
+    />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
     <meta
@@ -32,8 +63,8 @@
     "
     />
 
-    <title>MUFFINS TV - Filmes & Series</title>
-
+    <title>Login - MUFFINS TV</title>
+    <link rel="manifest" href="manifest.json" />
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -94,8 +125,8 @@
         style="background-image: url('images/background/asset-54.jpg')"
       ></div>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
+        <div class="row justify-content-center align-items-center min-vh-100">
+          <div class="col-lg-6 col-md-8 col-sm-10">
             <div class="text-center">
               <form name="pms_login" id="pms_login" action="" method="post">
                 <h4>Entrar</h4>
@@ -150,7 +181,7 @@
                 <input type="hidden" name="pms_login" value="1" />
                 <input type="hidden" name="pms_redirect" />
                 <a href="register.html">Cadastrar</a> |
-                <a href="verify.html">Verificar a Conta</a> |
+                <a href="verify.html">Verificar a conta</a> |
                 <a href="recover-password.html">Perdeu sua senha?</a>
               </form>
             </div>
@@ -197,5 +228,17 @@
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2091258141429129"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

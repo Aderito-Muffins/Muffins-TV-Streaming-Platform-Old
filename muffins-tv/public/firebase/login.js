@@ -6,6 +6,33 @@ function displayError(elementId, message) {
   }
 }
 
+function displaySuccess(message) {
+  const successContainer = document.getElementById("success-container");
+  const errorContainer = document.getElementById("error-container");
+  const successText = successContainer.querySelector(".success-text");
+  const closeButton = successContainer.querySelector(".close-button");
+
+  // Limpa mensagens anteriores
+  errorContainer.style.display = "none"; // Oculta o contêiner de erro
+  successText.textContent = ""; // Limpa o texto de sucesso anterior
+
+  // Define o texto da nova mensagem de sucesso
+  successText.textContent = message;
+
+  // Exibe o container de sucesso
+  successContainer.style.display = "block";
+
+  // Fecha automaticamente após 4 segundos (4000 ms)
+  setTimeout(function () {
+    successContainer.style.display = "none";
+  }, 4000);
+
+  // Fecha manualmente ao clicar no botão de fechar
+  closeButton.addEventListener("click", function () {
+    successContainer.style.display = "none";
+  });
+}
+
 // Função para mostrar o loader
 function showLoading() {
   const loader = document.querySelector(".loader-container");
@@ -24,7 +51,7 @@ async function loginUser(email, password) {
     const bodyData = { email, pass: password };
 
     const response = await fetch(
-      " https://app.muffinstv.com/muffins/v1/users/login",
+      "https://app.muffinstv.com/muffins/v1/users/login",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -36,8 +63,17 @@ async function loginUser(email, password) {
 
     if (response.ok && data.code === 0) {
       hideLoading();
+      displaySuccess(data.message || "Login realizado com sucesso!");
       localStorage.setItem("token", data.token);
-      window.location.href = "/"; // Redireciona para a página principal
+      setTimeout(() => {
+        window.location.href = "/"; // Redireciona para a página de verificação
+      }, 3000);
+    } else if (data.message === "Conta não verificada") {
+      hideLoading();
+      showError(data.message);
+      setTimeout(() => {
+        window.location.href = `/verify.html?email=${email}`; // Redireciona para a página de verificação
+      }, 3000);
     } else {
       throw new Error(data.message || "Erro ao fazer login.");
     }

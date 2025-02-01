@@ -1,0 +1,25 @@
+User-agent: *
+Disallow: /log-in
+Disallow: /register
+Disallow: /terms
+Disallow: /privacy
+Disallow: /contact-us
+Disallow: /account
+Disallow: /admin
+Disallow: /checkout
+Disallow: /payment
+
+# Permitir indexação das páginas públicas
+Allow: /movies-pagination
+Allow: /movies-founds
+Allow: /sports-pagination
+Allow: /animes
+Allow: /categories
+Allow: /single-video
+Allow: /single-episode
+Allow: /film/single-episode
+Allow: /episodes/single-episode
+Allow: /pricing
+
+# Sitemap location
+Sitemap: https://www.muffinstv.com/sitemap.xml

@@ -37,6 +37,14 @@ async function fetchMovieDetails(id) {
 
     // Validações de erro na resposta da API
     if (result.code !== 0) {
+      if (
+        result.message ===
+        'Acesso negado. Para continuar, clique no botão "Assine" e escolha uma assinatura válida.'
+      ) {
+        setTimeout(() => {
+          window.location.href = "/pricing.html"; // Substitua "/login" pela URL da tela de login
+        }, 2000);
+      }
       displayError(result.message || "Erro ao buscar o filme");
       throw new Error(result.message || "Erro ao buscar o filme");
     }
@@ -67,6 +75,14 @@ function displayError(message) {
 
   // Define o texto da mensagem de erro
   errorText.textContent = message;
+
+  if (
+    message === "Sessão inválida ou expirada. Por favor, faça login novamente."
+  ) {
+    setTimeout(() => {
+      window.location.href = "/log-in.html"; // Substitua "/login" pela URL da tela de login
+    }, 2000);
+  }
 
   // Exibe o container de erro
   errorContainer.style.display = "block";
@@ -99,6 +115,14 @@ async function fetchContentDetails(id) {
     // Validações de erro na resposta da API
     if (result.code !== 0) {
       displayError(result.message || "Erro ao buscar o conteúdo");
+      if (
+        result.message ===
+        'Acesso negado. Para continuar, clique no botão "Assine" e escolha uma assinatura válida.'
+      ) {
+        setTimeout(() => {
+          window.location.href = "/pricing.html"; // Substitua "/login" pela URL da tela de login
+        }, 2000);
+      }
       throw new Error(result.message || "Erro ao buscar o conteúdo");
     }
 
@@ -124,6 +148,7 @@ async function fetchContentDetails(id) {
 // Função para exibir os detalhes do filme no HTML
 function displayFilmDetails(film) {
   // Verificações para garantir que os elementos existem antes de acessá-los
+  const webtitle = document.querySelector("#web-title");
   const titleElement = document.querySelector(".gen-title");
   const descriptionElement = document.querySelector(".gen-description");
   const ratingElement = document.querySelector(".gen-sen-rating");
@@ -140,6 +165,9 @@ function displayFilmDetails(film) {
   const btPlay = document.querySelector(".vjs-icon-placeholder");
 
   // Atualiza o conteúdo dos elementos, se eles existirem
+  if (webtitle)
+    webtitle.textContent =
+      "Assistir " + title + " na MUFFINS TV" || "MUFFINS TV";
   if (titleElement) titleElement.textContent = title || "Título não disponível";
   if (descriptionElement)
     descriptionElement.textContent = film.brief || "Descrição não disponível";

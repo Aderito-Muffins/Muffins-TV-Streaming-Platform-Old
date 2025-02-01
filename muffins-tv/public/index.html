@@ -232,7 +232,18 @@
    <!-- Back-to-Top end -->
    
   
-  
+   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function(OneSignal) {
+    await OneSignal.init({
+      appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+    });
+  });
+</script>
+
+
+
    <script src="js/jquery-3.6.0.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
    <script src="js/owl.carousel.min.js"></script>

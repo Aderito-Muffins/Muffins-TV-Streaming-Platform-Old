@@ -480,15 +480,20 @@ document.addEventListener("DOMContentLoaded", async function () {
   function updateHomePage(content) {
     const contentContainer = document.querySelector(".content-container");
     console.log(content);
-    const homeBanner = content.content.banners;
+    const homeBanner = content.content.banners.filter(
+      (banner) => banner.id >= 0
+    );
+
     const sections = content.content.sections;
     const episodes = content.content.episodes;
 
     // const watched = content.sections.watched.posts;
     const tvshows = content.sections.tvs.posts;
     const adsBanner = content.sections.ads.posts;
-    const anime = content.sections.animes.posts;
-
+    let anime;
+    if (content.sections.animes) {
+      anime = content.sections.animes.posts;
+    }
     // Configuração padrão para os carrosséis responsivos
     const defaultResponsive = {
       0: { items: 4, nav: true },
@@ -608,18 +613,18 @@ document.addEventListener("DOMContentLoaded", async function () {
       margin: 30,
       responsive: defaultResponsive,
     });
-
-    const animeItem = createCarouselAnimes(anime);
-    updateDOM("#animes-carrousel", animeItem, {
-      loop: true,
-      dots: false,
-      nav: true,
-      autoplay: true,
-      autoplayTimeout: 6000,
-      margin: 30,
-      responsive: defaultResponsive,
-    });
-
+    if (anime) {
+      const animeItem = createCarouselAnimes(anime);
+      updateDOM("#animes-carrousel", animeItem, {
+        loop: true,
+        dots: false,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 6000,
+        margin: 30,
+        responsive: defaultResponsive,
+      });
+    }
     // Atualização do banner principal (destaques)
     const carouselHtml = createCarouselItems(homeBanner);
     updateDOM("#movie-carousel", carouselHtml, {

@@ -9,10 +9,41 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Registro -->
+    <meta
+      name="keywords"
+      content="Muffins TV Registro, Criar Conta Muffins TV, Cadastro Muffins TV, Plataforma de Streaming, Filmes online, Séries online, Animes online, Criar Conta Streaming"
+    />
+    <meta
+      name="description"
+      content="Crie sua conta no Muffins TV e tenha acesso a uma ampla seleção de filmes, séries e animes. Registre-se agora e aproveite conteúdos exclusivos online."
+    />
+    <meta name="author" content="Muffins TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="index, nofollow" />
+    <meta property="og:title" content="Registro - Muffins TV" />
+    <meta
+      property="og:description"
+      content="Registre-se no Muffins TV e descubra uma vasta seleção de filmes, séries e animes. Tenha acesso ilimitado ao melhor conteúdo de streaming."
+    />
+    <meta
+      property="og:image"
+      content="https://www.muffinstv.com/images/background/cover/register_muffinstv.png"
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/register" />
+    <meta
+      name="twitter:card"
+      content="https://www.muffinstv.com/images/background/cover/register_muffinstv.png"
+    />
+    <meta name="twitter:title" content="Registro - Muffins TV" />
+    <meta
+      name="twitter:description"
+      content="Crie sua conta no Muffins TV para assistir a filmes, séries e animes exclusivos. Registro rápido e seguro."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.muffinstv.com/images/background/cover/register_muffinstv.png"
+    />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
     <meta
@@ -31,7 +62,8 @@
          child-src *;
      "
     />
-    <title>MUFFINS TV - Filmes & Series</title>
+    <link rel="manifest" href="manifest.json" />
+    <title>MUFFINS TV - Cadastrar</title>
 
     <!-- Favicon -->
     <link
@@ -80,7 +112,7 @@
 
     <div id="success-container" class="success-container" style="display: none">
       <div class="success-message">
-        <span class="success-text">Seu registro foi bem-sucedido!</span>
+        <span class="success-text"></span>
         <button class="close-button">&times;</button>
       </div>
     </div>
@@ -92,8 +124,8 @@
         style="background-image: url('images/background/asset-3.jpeg')"
       ></div>
       <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
+        <div class="row justify-content-center align-items-center min-vh-100">
+          <div class="col-lg-6 col-md-8 col-sm-10">
             <div class="text-center">
               <form id="pms_register-form" class="pms-form">
                 <h4>Registrar</h4>
@@ -215,5 +247,17 @@
       src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9135677043483070"
       crossorigin="anonymous"
     ></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

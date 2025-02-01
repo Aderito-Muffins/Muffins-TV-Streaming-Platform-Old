@@ -76,6 +76,7 @@ async function fetchContentData(i) {
 function truncateText(text, limit) {
   return text.length > limit ? `${text.substring(0, limit)}...` : text;
 }
+const doctitle = document.querySelector("#web-title");
 
 function updateContentInfo(animeData) {
   console.log(animeData);
@@ -96,6 +97,10 @@ function updateContentInfo(animeData) {
   if (videoHolder) {
     videoHolder.style.backgroundImage = `url(${poster})`;
   }
+
+  if (doctitle)
+    doctitle.textContent =
+      "Assistir " + title + " na MUFFINS TV" || "MUFFINS TV";
 
   document.querySelector(".gen-single-tv-show-info").innerHTML += `
         <h2 class="gen-title">${title}</h2>
@@ -128,6 +133,10 @@ async function createSeasonItems(seasons) {
     return "";
   }
 
+  // Obtenha o parâmetro `s` da URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentSeason = urlParams.get("s");
+
   const seasonItems = await Promise.all(
     seasons.map(async (season, index) => {
       const name = truncateText(season.name, 20);
@@ -137,15 +146,19 @@ async function createSeasonItems(seasons) {
             <div class="movie type-movie status-publish has-post-thumbnail hentry movie_genre-anime">
                 <div class="gen-carousel-movies-style-2 movie-grid style-2">
                     <div class="gen-movie-contain">
-                        <div class="gen-movie-img position-relative">
-                         <img src="${image}" alt="Movie Thumbnail" class="img-fluid">
+                        <div class="gen-movie-img ${
+                          currentSeason == season.id ? "active" : ""
+                        } position-relative">
+                            <img src="${image}" alt="Movie Thumbnail" class="img-fluid">
                             <div class="gen-movie-action">
-                                <a href="/episodes/single-episode.html?i=${i}&t=${t}&s=${season.id}" class="gen-button">
+                                <a href="/episodes/single-episode.html?i=${i}&t=${t}&s=${
+        season.id
+      }" class="gen-button">
                                     <i class="fa fa-play"></i>
                                 </a>
                             </div>
                         </div>
-                           <div class="gen-info-contain">
+                        <div class="gen-info-contain">
                             <div class="gen-movie-info">
                                 <h3><a href="#">${name}</a></h3>
                             </div>
@@ -153,7 +166,6 @@ async function createSeasonItems(seasons) {
                     </div>
                 </div>
             </div>
-       
         </div>
     `;
     })
@@ -234,6 +246,11 @@ async function loadEpisodes(anime) {
   const episodesData = await episodesResponse.json();
 
   console.log(episodesData);
+
+  // Obtenha o parâmetro `epNumber` da URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const epNumber = urlParams.get("ep");
+
   return `
         <div class="tab-pane active show">
             <div class="episode-list">
@@ -241,10 +258,18 @@ async function loadEpisodes(anime) {
                   .map(
                     (episode) => `
                     <div class="episode-item">
-                        <a href="single-episode.html?i=${i}&t=${t}&s=${s}&ep=${episode.id}">
-                            <div class="gen-movie-img">
-                                <img src="${anime.poster}" alt="${anime.name}" class="img-fluid">
-                                <span class="episode-number">${episode.episode_number}</span>
+                        <a href="single-episode.html?i=${i}&t=${t}&s=${s}&ep=${
+                      episode.id
+                    }">
+                            <div class="gen-movie-img ${
+                              epNumber == episode.id ? "active" : ""
+                            }">
+                                <img src="${anime.poster}" alt="${
+                      anime.name
+                    }" class="img-fluid">
+                                <span class="episode-number">${
+                                  episode.episode_number
+                                }</span>
                             </div>
                         </a>
                     </div>
@@ -312,10 +337,17 @@ async function watchAnime(isDownload = false) {
   showLoading();
   const token = localStorage.getItem("token");
 
-  // Verifica se o token existe
   if (!token) {
+    // Exibir mensagem de erro
     displayError("Você precisa estar logado para assistir ao anime.");
-    return; // Para a execução se não houver token
+    console.warn("Tentativa de requisição sem token. Requer login do usuário.");
+
+    // Redirecionar para a tela de login após 3 segundos
+    setTimeout(() => {
+      window.location.href = "/log-in.html"; // Substitua "/login" pela URL da tela de login
+    }, 2000);
+
+    return null;
   }
 
   if (!s || !epNumber) {
@@ -339,6 +371,15 @@ async function watchAnime(isDownload = false) {
     if (data.code !== 0) {
       // Chama a função displayError se a requisição falhar
       displayError(data.message);
+      // Redirecionar para a tela de login após 3 segundos
+      if (
+        data.message ===
+        'Acesso negado. Para continuar, clique no botão "Assine" e escolha uma assinatura válida.'
+      ) {
+        setTimeout(() => {
+          window.location.href = "/pricing.html"; // Substitua "/login" pela URL da tela de login
+        }, 2000);
+      }
       return; // Para a execução se a resposta não for ok
     }
 
@@ -386,18 +427,18 @@ async function watchAnime(isDownload = false) {
 
 async function updateCarousel(seasonsHtml, id) {
   updateDOM(id, seasonsHtml, {
-    loop: true,
+    loop: false,
     dots: false,
     nav: true,
     autoplay: true,
     autoplayTimeout: 6000,
     margin: 30,
     responsive: {
-      0: { items: 4, nav: true },
+      0: { items: 4, nav: false },
       576: { items: 5, nav: false },
-      768: { items: 5, nav: true, loop: true },
-      992: { items: 5, nav: true, loop: true },
-      1200: { items: 6, nav: true, loop: true },
+      768: { items: 5, nav: true, loop: false },
+      992: { items: 5, nav: true, loop: false },
+      1200: { items: 6, nav: true, loop: false },
     },
   });
 }
@@ -453,27 +494,44 @@ function setupPlayer(url) {
   // Inicializa o Video.js player, se ainda não estiver inicializado
   const player = videojs(moviePlayer);
 
-  // Verifica a URL e o tipo de mídia
-  const mediaUrl = url;
+  // Função para determinar o tipo de mídia com base na URL
+  const determineSourceType = (mediaUrl) => {
+    // Remove parâmetros da URL (query string) para analisar apenas o caminho principal
+    const cleanUrl = mediaUrl.split("?")[0];
 
-  // Verifica o tipo de mídia com base na URL
-  const sourceType = mediaUrl.includes(".txt")
-    ? "application/x-mpegURL"
-    : mediaUrl.includes(".mpd")
-    ? "application/dash+xml"
-    : "video/mp4";
+    if (/\.m3u8$/i.test(cleanUrl)) {
+      return "application/x-mpegURL"; // HLS
+    } else if (/\.mpd$/i.test(cleanUrl)) {
+      return "application/dash+xml"; // MPEG-DASH
+    } else if (/\.mp4$/i.test(cleanUrl)) {
+      return "video/mp4"; // MP4
+    } else if (/\.txt$/i.test(cleanUrl)) {
+      // Possivelmente uma lista de reprodução; tratar como HLS por padrão
+      return "application/x-mpegURL";
+    } else {
+      console.warn(
+        "Tipo de arquivo não reconhecido. Assumindo MP4 como padrão."
+      );
+      return "application/x-mpegURL"; // Tipo padrão para arquivos desconhecidos
+    }
+  };
+
+  // Determina o tipo da mídia
+  const sourceType = determineSourceType(url);
 
   // Atualiza a fonte do player com a URL e tipo de mídia
-  player.src({ src: mediaUrl, type: sourceType });
+  player.src({ src: url, type: sourceType });
 
-  // Exibe o player de vídeo
+  // Configura o layout do player
   watchMovie.style.display = "none";
   moviePlayer.style.display = "block"; // Torna o player visível
   videoHolder.style.backgroundImage = "none"; // Remove o plano de fundo
   paymentModal.style.display = "none";
+
   // Esconde os botões de assistir ao filme e trailer
   watchMovieButton.style.display = "none";
   downloadButton.style.display = "none";
+
   // Configura o plugin de watermark
   player.watermark({
     file: "/images/m.png",
@@ -486,11 +544,15 @@ function setupPlayer(url) {
     className: "vjs-watermark",
     text: false,
     debug: false,
-    // Define o tamanho da imagem
   });
-  // Força a reprodução
+
+  // Força a reprodução quando o player estiver pronto
   player.ready(function () {
-    player.play();
+    try {
+      player.play();
+    } catch (error) {
+      console.error("Erro ao iniciar reprodução:", error);
+    }
   });
 }
 

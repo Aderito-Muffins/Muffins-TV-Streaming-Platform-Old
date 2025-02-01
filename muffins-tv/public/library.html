@@ -234,5 +234,19 @@
       // Chama a função para buscar os filmes assistidos quando a página carregar
       document.addEventListener("DOMContentLoaded", fetchWatchedFilms);
     </script>
+    <script
+      src="https://cdn.by.wonderpush.com/sdk/1.1/wonderpush-loader.min.js"
+      async
+    ></script>
+    <script>
+      window.WonderPush = window.WonderPush || [];
+      WonderPush.push([
+        "init",
+        {
+          webKey:
+            "66d27621103366246fc73ad7c8697ff4133a502764cf39638aff1cf2031f3d99",
+        },
+      ]);
+    </script>
   </body>
 </html>

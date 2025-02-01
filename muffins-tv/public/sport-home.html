@@ -9,10 +9,41 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Futebol -->
+    <meta
+      name="keywords"
+      content="Futebol no Muffins TV, Transmissões de Futebol, Jogos ao vivo, Futebol online, Assistir futebol, Campeonato de futebol, Streaming de futebol, Esportes online, Futebol ao vivo"
+    />
+    <meta
+      name="description"
+      content="Assista a transmissões de futebol ao vivo no Muffins TV. Acompanhe os principais campeonatos e jogos do seu time favorito, em qualquer lugar e a qualquer hora."
+    />
+    <meta name="author" content="Muffins TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Futebol ao Vivo - Muffins TV" />
+    <meta
+      property="og:description"
+      content="Acompanhe jogos de futebol ao vivo no Muffins TV. Transmissões de campeonatos e partidas exclusivas, para você não perder nenhum lance."
+    />
+    <meta
+      property="og:image"
+      content="https://www.muffinstv.com/images/background/cover/futebol_muffinstv.png"
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/sport-home" />
+    <meta
+      name="twitter:card"
+      content="https://www.muffinstv.com/images/background/cover/futebol_muffinstv.png"
+    />
+    <meta name="twitter:title" content="Futebol ao Vivo - Muffins TV" />
+    <meta
+      name="twitter:description"
+      content="Veja jogos ao vivo e acompanhe campeonatos de futebol no Muffins TV. Streaming de futebol com qualidade e praticidade."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.muffinstv.com/images/background/cover/futebol_muffinstv.png"
+    />
 
     <!-- Meta tag de Content Security Policy para compatibilidade com navegadores -->
     <meta
@@ -31,7 +62,8 @@
         child-src *;
     "
     />
-    <title>MUFFINS TV - Filmes, Series e Animes</title>
+    <link rel="manifest" href="manifest.json" />
+    <title>Setor Desportivo - MUFFINS TV</title>
 
     <!-- Favicon -->
     <link
@@ -559,5 +591,17 @@
     <script src="/js/streamlab-core.js"></script>
 
     <script src="/js/script.js"></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

@@ -7,10 +7,29 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Termos de Uso -->
+    <meta
+      name="keywords"
+      content="Termos de Uso Muffins TV, Regras Muffins TV, Condições de Uso Muffins TV, Política de Uso, Streaming de Filmes Termos, Animes e Séries Regras, Muffins TV Direitos e Deveres"
+    />
+    <meta
+      name="description"
+      content="Confira os Termos de Uso do Muffins TV e saiba como utilizar nossa plataforma de maneira responsável e segura. Leia as condições e políticas aplicáveis."
+    />
+    <meta name="author" content="Muffins TV" />
+    <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta property="og:title" content="Termos de Uso - Muffins TV" />
+    <meta
+      property="og:description"
+      content="Leia os Termos de Uso do Muffins TV e entenda as regras e condições para aproveitar a melhor experiência de streaming com responsabilidade."
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/terms" />
+    <meta name="twitter:title" content="Termos de Uso - Muffins TV" />
+    <meta
+      name="twitter:description"
+      content="Conheça os Termos de Uso do Muffins TV. Saiba como utilizar nossa plataforma respeitando as condições e políticas de uso."
+    />
 
     <title>MUFFINS TV - Termos de Serviço</title>
     <link
@@ -137,8 +156,7 @@
             <p class="text-justify">
               Se você tiver dúvidas sobre estes Termos, entre em contato conosco
               através de
-              <a href="mailto:muffinstv.mz@gmail.com">muffinstv.mz@gmail.com</a
-              >.
+              <a href="mailto:suporte@muffinstv.com">suporte@muffinstv.com</a>.
             </p>
             <p class="text-justify">Atualizado: 05/10/2024 às 18:48.</p>
           </div>
@@ -148,5 +166,17 @@
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

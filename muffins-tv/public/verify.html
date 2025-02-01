@@ -7,125 +7,223 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
     <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
     <meta name="author" content="MUFFINS TV" />
-
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="
-        default-src *;
-        script-src * 'unsafe-inline' 'unsafe-eval';
-        style-src * 'unsafe-inline';
-        font-src *;
-        connect-src *;
-        img-src * data:;
-        media-src *;
-        object-src 'none';
-        frame-ancestors 'none';
-        worker-src * 'self' blob:;
-        child-src *;
-    "
-    />
-
     <title>Verificar Conta - MUFFINS TV</title>
 
-    <link
-      rel="shortcut icon"
-      href="/images/favicon/web-app-manifest-512x512.png"
-    />
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/responsive.css" />
-    <link rel="stylesheet" href="css/load.css" />
+    <style>
+      /* Estilos globais */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #0a0e16;
+        color: #ffffff85;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      #send-code-btn:hover {
+        color: #ff9800;
+      }
+      .loader-container {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+      }
+
+      .error-container,
+      .success-container {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px;
+        border-radius: 5px;
+        color: #fff;
+        z-index: 1000;
+      }
+
+      .error-container {
+        background-color: #ff4444;
+      }
+
+      .success-container {
+        background-color: #00c851;
+      }
+
+      .close-button {
+        margin-left: 15px;
+        cursor: pointer;
+      }
+
+      .verify-section {
+        background-color: #141b29;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .verify-section h4 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #ff9800;
+      }
+
+      .verify-section label {
+        display: block;
+        margin-bottom: 10px;
+        font-size: 14px;
+        color: #d0cece;
+      }
+
+      .verify-section input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        background-color: #1e2535;
+        color: #ffffff;
+        font-size: 14px;
+      }
+
+      .verify-section input:focus {
+        border-color: #ff9800;
+        outline: none;
+      }
+
+      .verify-section button {
+        width: 100%;
+        padding: 10px;
+        background-color: #ff9800;
+        border: none;
+        border-radius: 5px;
+        color: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .verify-section button:hover {
+        background-color: #e68900;
+      }
+
+      .verify-section a {
+        display: block;
+        margin-top: 15px;
+        color: #ff9800;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      .verify-section a:hover {
+        text-decoration: underline;
+      }
+
+      /* Responsividade */
+      @media (max-width: 480px) {
+        .verify-section {
+          padding: 20px;
+        }
+
+        .verify-section h4 {
+          font-size: 20px;
+        }
+
+        .verify-section input {
+          font-size: 12px;
+        }
+
+        .verify-section button {
+          font-size: 14px;
+        }
+      }
+    </style>
   </head>
 
   <body>
     <!-- Loader -->
-    <!--=========== Loader =============-->
+    <div class="loader-container">
+      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
+    </div>
+
+    <!-- Mensagens de erro e sucesso -->
+    <div id="error-container" class="error-container">
+      <span class="error-text"></span>
+      <button class="close-button">×</button>
+    </div>
+    <div id="success-container" class="success-container">
+      <span class="success-text"></span>
+      <button class="close-button">×</button>
+    </div>
+
+    <!-- Seção de Verificação -->
+    <section class="verify-section">
+      <h4>Verificar Conta</h4>
+      <form id="verify-form" method="post">
+        <label for="email">Endereço de E-mail</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="input"
+          placeholder="Digite seu e-mail"
+          required
+        />
+        <label for="otp">Código OTP</label>
+        <input
+          type="text"
+          name="otp"
+          id="otp"
+          class="input"
+          placeholder="Digite seu OTP"
+          required
+        />
+        <button type="button" id="verify-otp-btn" class="button button-primary">
+          Verificar OTP
+        </button>
+        <p
+          type="button"
+          id="send-code-btn"
+          class="button button-primary"
+          style="margin-top: 20px"
+        >
+          Reenviar Código
+        </p>
+
+        <a href="log-in.html" style="margin-top: 60px">Voltar ao Login</a>
+      </form>
+    </section>
+
+    <!-- Scripts -->
     <script
       type="module"
       src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/dotWave.js"
     ></script>
-
-    <div class="loader-container">
-      <l-dot-wave size="65" speed="1" color="#ff9800"></l-dot-wave>
-    </div>
-    <!--=========== Loader =============-->
-    <div id="error-container" class="error-container" style="display: none">
-      <div class="error-message">
-        <span class="error-text"></span>
-        <button class="close-button">x</button>
-      </div>
-    </div>
-    <div id="success-container" class="success-container" style="display: none">
-      <div class="success-message">
-        <span class="success-text">Seu registro foi bem-sucedido!</span>
-        <button class="close-button">&times;</button>
-      </div>
-    </div>
-
-    <!-- Seção de Verificação -->
-    <section class="position-relative pb-0">
-      <div
-        class="gen-login-page-background"
-        style="background-image: url('images/background/asset-54.jpg')"
-      ></div>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="text-center">
-              <form id="verify-form" method="post">
-                <h4>Verificar Conta</h4>
-                <p>
-                  <label for="email">Endereço de E-mail</label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    class="input"
-                    required
-                  />
-                </p>
-                <p>
-                  <button
-                    type="button"
-                    id="send-code-btn"
-                    class="button button-primary"
-                  >
-                    Enviar Código
-                  </button>
-                </p>
-                <div id="message" style="color: red"></div>
-                <a href="log-in.html">Voltar ao Login</a>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Voltar ao Topo -->
-    <div id="back-to-top">
-      <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
-    </div>
-
-    <!-- JS -->
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
     <script>
       // Funções para mostrar e ocultar o loader
       function mostrarLoader() {
-        document.querySelector(".loader-container").style.display = "flex"; // Usa 'flex' para centralizar
+        document.querySelector(".loader-container").style.display = "flex";
       }
 
       function esconderLoader() {
-        document.querySelector(".loader-container").style.display = "none"; // Oculta o loader
+        document.querySelector(".loader-container").style.display = "none";
       }
 
-      // Função para exibir erros no HTML
+      // Função para exibir erros
       function displayError(message) {
         const errorContainer = document.getElementById("error-container");
         const errorText = errorContainer.querySelector(".error-text");
@@ -134,16 +232,16 @@
         errorText.textContent = message;
         errorContainer.style.display = "block";
 
-        setTimeout(function () {
+        setTimeout(() => {
           errorContainer.style.display = "none";
         }, 4000);
 
-        closeButton.addEventListener("click", function () {
-          errorContainer.style.display = "none"; // Esconde o container de erro ao clicar no botão
+        closeButton.addEventListener("click", () => {
+          errorContainer.style.display = "none";
         });
       }
 
-      // Função para exibir alerta de sucesso
+      // Função para exibir sucesso
       function displaySuccess(message) {
         const successContainer = document.getElementById("success-container");
         const successText = successContainer.querySelector(".success-text");
@@ -152,48 +250,104 @@
         successText.textContent = message;
         successContainer.style.display = "block";
 
-        setTimeout(function () {
+        setTimeout(() => {
           successContainer.style.display = "none";
         }, 4000);
 
-        closeButton.addEventListener("click", function () {
-          successContainer.style.display = "none"; // Esconde o container de sucesso ao clicar no botão
+        closeButton.addEventListener("click", () => {
+          successContainer.style.display = "none";
         });
       }
 
-      // Enviar código de verificação ao clicar no botão
+      // Verifica se há um e-mail na query da URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const emailFromQuery = urlParams.get("email");
+
+      if (emailFromQuery) {
+        // Preenche o campo de e-mail automaticamente
+        document.getElementById("email").value = emailFromQuery;
+        // Oculta o campo de e-mail para evitar edição
+        document.getElementById("email").style.display = "none";
+        document.querySelector('label[for="email"]').style.display = "none";
+      }
+
+      // Enviar código de verificação
       document
         .getElementById("send-code-btn")
         .addEventListener("click", function () {
           const email = document.getElementById("email").value;
-          if (email) {
-            mostrarLoader(); // Mostra o loader antes de fazer o fetch
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            // Enviar o e-mail para a API para gerar e enviar o código
-            fetch(" https://app.muffinstv.com/muffins/v1/users/verify2", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ email: email }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                esconderLoader(); // Esconde o loader após a resposta
-
-                if (data.code == 0) {
-                  displaySuccess("Código enviado para o seu e-mail!");
-                } else {
-                  displayError("Erro ao enviar o código. Tente novamente.");
-                }
-              })
-              .catch((error) => {
-                esconderLoader(); // Esconde o loader em caso de erro
-                displayError("Erro ao enviar o código. Verifique sua conexão.");
-              });
-          } else {
+          if (!emailRegex.test(email)) {
             displayError("Por favor, insira um e-mail válido.");
+            return;
           }
+
+          mostrarLoader();
+
+          fetch("https://app.muffinstv.com/muffins/v1/users/sendOTP", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              esconderLoader();
+              if (data.code == 0) {
+                displaySuccess(data.message);
+              } else {
+                displayError(data.message);
+              }
+            })
+            .catch((error) => {
+              esconderLoader();
+              displayError("Erro ao enviar o código. Verifique sua conexão.");
+            });
+        });
+
+      // Verificar código OTP
+      document
+        .getElementById("verify-otp-btn")
+        .addEventListener("click", function () {
+          const email = document.getElementById("email").value;
+          const otp = document.getElementById("otp").value;
+
+          if (!email || !otp) {
+            displayError("Por favor, preencha todos os campos.");
+            return;
+          }
+
+          mostrarLoader();
+
+          fetch("https://app.muffinstv.com/muffins/v1/users/verifyOTP", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email, otp: otp }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              esconderLoader();
+              if (data.code == 0) {
+                localStorage.setItem("token", data.token);
+                displaySuccess(data.message);
+                // Redireciona para a página inicial após 2 segundos
+                setTimeout(() => {
+                  window.location.href = "index.html";
+                }, 2000);
+              } else {
+                displayError(data.message);
+              }
+            })
+            .catch((error) => {
+              esconderLoader();
+              displayError(
+                "Erro ao verificar o código. Verifique sua conexão."
+              );
+            });
         });
     </script>
   </body>

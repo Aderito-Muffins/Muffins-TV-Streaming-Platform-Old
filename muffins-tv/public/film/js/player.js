@@ -121,10 +121,17 @@ async function fetchContentDetails(id) {
   const token = localStorage.getItem("token");
 
   if (!token) {
+    // Exibir mensagem de erro
     displayError(
       "Token de autenticação não encontrado. Por favor, faça login."
     );
     console.warn("Tentativa de requisição sem token. Requer login do usuário.");
+
+    // Redirecionar para a tela de login após 3 segundos
+    setTimeout(() => {
+      window.location.href = "/log-in"; // Substitua "/login" pela URL da tela de login
+    }, 3000);
+
     return null;
   }
 
@@ -156,6 +163,14 @@ async function fetchContentDetails(id) {
         id,
         token
       );
+      if (
+        result.message ===
+        'Acesso negado. Para continuar, clique no botão "Assine" e escolha uma assinatura válida.'
+      ) {
+        setTimeout(() => {
+          window.location.href = "/pricing.html"; // Substitua "/login" pela URL da tela de login
+        }, 2000);
+      }
       return null;
     }
 
@@ -261,6 +276,7 @@ function displayFilmDetails(film) {
     return;
   }
 
+  const title = document.querySelector("#web-title");
   const titleElement = document.querySelector(".gen-title");
   const descriptionElement = document.querySelector(".gen-description");
   const ratingElement = document.querySelector(".gen-sen-rating");
@@ -278,6 +294,9 @@ function displayFilmDetails(film) {
 
   if (titleElement)
     titleElement.textContent = film.name || "Título não disponível";
+  if (title)
+    title.textContent =
+      "Assistir " + film.name + " na MUFFINS TV" || "MUFFINS TV";
   if (descriptionElement)
     descriptionElement.textContent =
       film.description || "Descrição não disponível";
@@ -495,25 +514,12 @@ function handleServerClick(url, type, isDownload = false) {
     const decodedUrl = decodeURIComponent(url);
     console.log("Abrindo URL decodificada:", decodedUrl); // Log para verificar a URL decodificada
 
-    if (type !== "EMBED" && isDownload) {
+    if (isDownload) {
       // Faz o download do arquivo
       const link = document.createElement("a");
       link.href = decodedUrl;
       link.download = "movie"; // Você precisa especificar o nome do arquivo
       link.click();
-    } else if (type === "EMBED") {
-      // Verifique se a URL é válida antes de tentar abrir
-      if (decodedUrl && decodedUrl.startsWith("http")) {
-        // Tenta abrir a URL em uma nova aba
-        const newTab = window.open(decodedUrl, "_blank");
-        if (!newTab) {
-          console.error(
-            "Não foi possível abrir a nova aba. O navegador pode ter bloqueado."
-          );
-        }
-      } else {
-        console.error("URL inválida:", decodedUrl);
-      }
     } else {
       // Caso contrário, chama a função setupPlayer
       setupPlayer(decodedUrl);
@@ -527,18 +533,32 @@ function setupPlayer(url) {
   // Inicializa o Video.js player, se ainda não estiver inicializado
   const player = videojs(moviePlayer);
 
-  // Seleciona o elemento da logo
+  // Determina o tipo de mídia com base na URL
+  const determineSourceType = (mediaUrl) => {
+    // Remove query string da URL
+    const cleanUrl = mediaUrl.split("?")[0];
 
-  // Verifica a URL e o tipo de mídia
-  const mediaUrl = url;
-  const sourceType = mediaUrl.includes(".txt")
-    ? "application/x-mpegURL"
-    : mediaUrl.includes(".mpd")
-    ? "application/dash+xml"
-    : "video/mp4";
+    // Verifica extensões conhecidas
+    if (/\.m3u8$/i.test(cleanUrl)) {
+      return "application/x-mpegURL"; // HLS
+    } else if (/\.mpd$/i.test(cleanUrl)) {
+      return "application/dash+xml"; // MPEG-DASH
+    } else if (/\.mp4$/i.test(cleanUrl)) {
+      return "video/mp4"; // MP4
+    } else if (/\.txt$/i.test(cleanUrl)) {
+      return "application/x-mpegURL"; // Assumir como uma playlist .m3u
+    } else {
+      console.warn(
+        "Tipo de arquivo não reconhecido. Assumindo MP4 como padrão."
+      );
+      return "application/x-mpegURL"; // Tipo padrão
+    }
+  };
+
+  const sourceType = determineSourceType(url);
 
   // Atualiza a fonte do player com a URL e tipo de mídia
-  player.src({ src: mediaUrl, type: sourceType });
+  player.src({ src: url, type: sourceType });
 
   // Exibe o player de vídeo
   watchMovie.style.display = "none";
@@ -559,12 +579,15 @@ function setupPlayer(url) {
     className: "vjs-watermark",
     text: false,
     debug: false,
-    // Define o tamanho da imagem
   });
 
   // Força a reprodução
   player.ready(() => {
-    player.play();
+    try {
+      player.play();
+    } catch (error) {
+      console.error("Erro ao iniciar reprodução:", error);
+    }
   });
 }
 

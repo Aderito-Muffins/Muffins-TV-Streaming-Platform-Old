@@ -7,12 +7,41 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-
-    <!-- Meta tags de SEO -->
-    <meta name="keywords" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="description" content="MUFFINS TV - Filmes, Series, Animes" />
-    <meta name="author" content="MUFFINS TV" />
+    <!-- Meta tags de SEO otimizadas para a página de Animes -->
+    <meta
+      name="keywords"
+      content="Animes no Muffins TV, Streaming de Animes, Assistir Animes Online, Melhores Animes, Animes Legendados, Animes Dublados, Episódios de Animes, Catálogo de Animes, Plataforma de Animes"
+    />
+    <meta
+      name="description"
+      content="Descubra os melhores animes no Muffins TV. Assista a episódios legendados e dublados, com um catálogo atualizado e acessível de qualquer lugar."
+    />
+    <meta name="author" content="Muffins TV" />
     <meta name="pushsdk" content="2eb356be5cc05ec8771838db4c23ddfb" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="Animes - Muffins TV" />
+    <meta
+      property="og:description"
+      content="Explore um vasto catálogo de animes no Muffins TV. Assista online com legendas ou dublagens, onde e quando quiser."
+    />
+    <meta
+      property="og:image"
+      content="https://www.muffinstv.com/images/background/cover/animes_muffinstv.png"
+    />
+    <meta property="og:url" content="https://www.muffinstv.com/animes" />
+    <meta
+      name="twitter:card"
+      content="https://www.muffinstv.com/images/background/cover/animes_muffinstv.png"
+    />
+    <meta name="twitter:title" content="Animes - Muffins TV" />
+    <meta
+      name="twitter:description"
+      content="Aproveite os melhores animes no Muffins TV. Episódios dublados e legendados disponíveis a qualquer momento."
+    />
+    <meta
+      name="twitter:image"
+      content="https://www.muffinstv.com/images/background/cover/animes_muffinstv.png"
+    />
 
     <!-- Content Security Policy -->
     <meta
@@ -33,7 +62,7 @@
     />
 
     <title>MUFFINS TV - Filmes, Series e Animes</title>
-
+    <link rel="manifest" href="manifest.json" />
     <!-- Favicon -->
     <link
       rel="shortcut icon"
@@ -381,5 +410,17 @@
             height: auto;
         }
     </style> -->
+    <script
+      src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js"
+      defer
+    ></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function (OneSignal) {
+        await OneSignal.init({
+          appId: "5ceff576-e404-46e9-853f-a3ffe8e2f28d",
+        });
+      });
+    </script>
   </body>
 </html>

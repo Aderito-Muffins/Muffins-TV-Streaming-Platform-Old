@@ -124,10 +124,12 @@ Design and Developed by: Gentechtree.com
 
     // Ouvinte de evento para detectar pressionamento de tecla
     document.addEventListener("keydown", function (event) {
-      // Pausar com a tecla Backspace
+      // Impede que outros elementos capturem o evento
+      event.stopImmediatePropagation();
 
+      // Pausar com a tecla Espaço
       if (event.code === "Space") {
-        // Pausar ou retomar o vídeo
+        event.preventDefault(); // Previne rolagem da página
         if (player.paused()) {
           player.play();
         } else {
@@ -137,16 +139,69 @@ Design and Developed by: Gentechtree.com
 
       // Avançar 10 segundos com a seta direita
       if (event.key === "ArrowRight") {
+        event.preventDefault();
         var currentTime = player.currentTime();
         player.currentTime(currentTime + 10); // Avança 10 segundos
       }
 
-      // Retroceder 10 segundos com a seta esquerda (opcional)
+      // Retroceder 10 segundos com a seta esquerda
       if (event.key === "ArrowLeft") {
+        event.preventDefault();
         var currentTime = player.currentTime();
         player.currentTime(currentTime - 10); // Retrocede 10 segundos
       }
+
+      // Aumentar volume com a seta para cima
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+        let currentVolume = player.volume();
+        player.volume(Math.min(currentVolume + 0.1, 1)); // Máximo de 1 (100%)
+      }
+
+      // Diminuir volume com a seta para baixo
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        let currentVolume = player.volume();
+        player.volume(Math.max(currentVolume - 0.1, 0)); // Mínimo de 0 (mudo)
+      }
+
+      // Entrar ou sair da tela cheia com a tecla F
+      if (event.key === "f" || event.key === "F") {
+        event.preventDefault();
+        const videoElement = player.el(); // Obtém o elemento do player
+        if (document.fullscreenElement) {
+          document.exitFullscreen(); // Sai da tela cheia
+        } else if (videoElement) {
+          videoElement.requestFullscreen(); // Entra em tela cheia
+        }
+      }
     });
+
+    // Controle absoluto com o scroll (apenas em tela cheia)
+    document.addEventListener("wheel", function (event) {
+      event.stopImmediatePropagation(); // Garante que o evento seja tratado aqui primeiro
+
+      // Verifica se o player está em tela cheia
+      if (
+        document.fullscreenElement &&
+        document.fullscreenElement === player.el()
+      ) {
+        event.preventDefault(); // Previne outros comportamentos padrão do scroll
+
+        // Pega o volume atual
+        let currentVolume = player.volume();
+
+        // Ajuste do volume: para cima aumenta, para baixo diminui
+        if (event.deltaY < 0) {
+          // Rolagem para cima aumenta o volume
+          player.volume(Math.min(currentVolume + 0.1, 1)); // Máximo de 1 (100%)
+        } else if (event.deltaY > 0) {
+          // Rolagem para baixo diminui o volume
+          player.volume(Math.max(currentVolume - 0.1, 0)); // Mínimo de 0 (mudo)
+        }
+      }
+    });
+
     // Ocultar ambos os botões inicialmente
     jQuery("#back-to-top, #go-to-bottom").fadeOut();
 
