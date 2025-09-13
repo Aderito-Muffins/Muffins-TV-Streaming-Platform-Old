@@ -195,43 +195,47 @@ async function submitPuchase(method, planId, number) {
       hideLoading(); // Esconde o loader após a operação
     }
   } else {
-    // Caso o método de pagamento seja diferente de PayPal
+    // Caso o método de pagamento seja WhatsApp
     if (phoneNumber) {
-      const formattedPhoneNumber = phoneNumber; // Adiciona o prefixo e remove qualquer prefixo existente
-
-      showLoading(); // Exibe o loader ao iniciar o pagamento
+      showLoading(); // Exibe o loader ao iniciar o processo
 
       try {
-        const response = await fetch(
-          "https://app.muffinstv.com/muffins/v1/purchase/subscription",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              msisdn: formattedPhoneNumber,
-              planId: planId,
-              paymentOption: method,
-            }),
-          }
-        );
+        // Busca os detalhes completos do plano (assumindo que você tem acesso a essa informação)
 
-        const result = await response.json();
-        if (result.code === 0) {
-          displaySuccess(result.message);
-          closeMpesaModal();
-          setTimeout(() => {
-            window.location.href = "/index.html";
-          }, 4200);
-        } else {
-          displayError(result.message);
+        if (!planId) {
+          throw new Error("Detalhes do plano não encontrados");
         }
+
+        // Verifica se o número tem o código do país (ajuste conforme necessário)
+        const whatsappNumber = "258858782674";
+
+        // Cria mensagem detalhada para o WhatsApp
+        const message = `📋 *SOLICITAÇÃO DE ASSINATURA* 📋
+
+📌 *Plano:* ${planId}
+📱 *Meu Número:* ${phoneNumber}
+
+Por favor, envie as instruções para concluir o pagamento.`;
+
+        // Cria o link do WhatsApp
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+
+        // Abre o WhatsApp em nova janela
+        window.open(whatsappUrl, "_blank");
+
+        // Feedback para o usuário
+        displaySuccess("Redirecionando para o WhatsApp...");
+
+        // Fecha o modal após um breve delay
+        setTimeout(() => {
+          closeMpesaModal();
+        }, 2000);
       } catch (error) {
-        console.error("Erro na requisição de pagamento:", error);
+        console.error("Erro ao processar pedido via WhatsApp:", error);
         displayError(
-          "Ocorreu um erro ao processar o pagamento. Por favor, tente novamente."
+          error.message || "Erro ao abrir WhatsApp. Por favor, tente novamente."
         );
       } finally {
         hideLoading(); // Esconde o loader após a operação
@@ -298,11 +302,36 @@ function closePayPalModal() {
   document.getElementById("payModal").style.display = "none";
 }
 
+function openWhatsappModal() {
+  // Fecha o modal de escolha
+  closePaymentModal();
+  document.getElementById("whatsappModal").style.display = "block";
+
+  // Preenche os detalhes do plano no modal e-Mola
+  document.getElementById("planNameWhatsapp").textContent =
+    window.selectedPlan.name;
+  document.getElementById("planPriceWhatsapp").textContent =
+    window.selectedPlan.priceDolar + " USD";
+  document.getElementById("whatsappPlanId").value = window.selectedPlan.id;
+}
+function closeWhatsappModal() {
+  document.getElementById("whatsappModal").style.display = "none";
+}
+
 async function submitMpesa() {
   // Implementar lógica de pagamento com M-Pesa
   let phoneNumber = document.getElementById("mpesaPhoneNumber").value;
   let planId = document.getElementById("mpesaPlanId").value;
   let method = "Mpesa";
+  // Enviar dados para o servidor...
+  await submitPuchase(method, planId, phoneNumber);
+}
+
+async function submitWhatsapp() {
+  // Implementar lógica de pagamento com M-Pesa
+  let phoneNumber = document.getElementById("whatsappPhoneNumber").value;
+  let planId = document.getElementById("whatsappPlanId").value;
+  let method = "Whatsapp";
   // Enviar dados para o servidor...
   await submitPuchase(method, planId, phoneNumber);
 }

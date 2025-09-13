@@ -158,6 +158,16 @@ document.addEventListener("DOMContentLoaded", function () {
   function configureSearchBehavior() {
     const searchForm = document.getElementById("search-form");
     const searchButton = document.getElementById("gen-search-btn");
+    const searchField = document.getElementById("dynamic-search");
+    const suggestionsContainer = document.getElementById("search-suggestions");
+    const loadingSpinner = document.getElementById("loading-spinner");
+
+    // Função para truncar texto
+    function truncateText(text, maxLength) {
+      return text.length > maxLength
+        ? `${text.substring(0, maxLength)}...`
+        : text;
+    }
 
     if (searchForm && searchButton) {
       searchButton.addEventListener("click", () => {
@@ -168,19 +178,79 @@ document.addEventListener("DOMContentLoaded", function () {
         searchForm.classList.toggle("active");
       });
 
-      const searchFormElement = searchForm.querySelector("form");
-      if (searchFormElement) {
-        searchFormElement.addEventListener("submit", (event) => {
-          event.preventDefault();
-          const searchValue =
-            searchFormElement.querySelector(".search-field").value;
-          const baseUrl = `${window.location.origin}/movies-founds.html`; // Garante que é a raiz do site
-          const searchUrl = `${baseUrl}?s=${encodeURIComponent(searchValue)}`;
-          window.location.href = searchUrl;
+      if (searchField) {
+        searchField.addEventListener("input", async (event) => {
+          const query = event.target.value.trim();
+          if (query.length >= 2) {
+            // Exibe o spinner de carregamento
+            loadingSpinner.style.display = "block";
+
+            try {
+              const response = await fetch(
+                `https://app.muffinstv.com/muffins/v1/search?type=&query=${encodeURIComponent(
+                  query
+                )}`
+              );
+              const result = await response.json();
+
+              // Esconde o spinner de carregamento
+              loadingSpinner.style.display = "none";
+
+              if (result.code === 0 && result.data) {
+                suggestionsContainer.innerHTML = "";
+                result.data.forEach((item) => {
+                  const suggestionItem = document.createElement("div");
+                  suggestionItem.classList.add("suggestion-item");
+
+                  suggestionItem.innerHTML = `
+                    <img src="${item.poster}" alt="${item.name}" />
+                    <div>
+                      <p><strong>${truncateText(item.name, 30)}</strong></p>
+                      <p>${item.year}</p>
+                    </div>
+                  `;
+
+                  suggestionItem.addEventListener("click", () => {
+                    window.location.href = `/movies-founds.html?s=${encodeURIComponent(
+                      item.name
+                    )}`;
+                  });
+
+                  suggestionsContainer.appendChild(suggestionItem);
+                });
+
+                const seeAll = document.createElement("div");
+                seeAll.classList.add("see-all");
+                seeAll.textContent = "Ver tudo";
+                seeAll.addEventListener("click", () => {
+                  window.location.href = `/movies-founds.html?s=${encodeURIComponent(
+                    query
+                  )}`;
+                });
+
+                suggestionsContainer.appendChild(seeAll);
+                suggestionsContainer.classList.add("active");
+              } else {
+                suggestionsContainer.classList.remove("active");
+              }
+            } catch (error) {
+              console.error("Erro ao buscar sugestões:", error);
+              loadingSpinner.style.display = "none";
+            }
+          } else {
+            suggestionsContainer.classList.remove("active");
+          }
+        });
+
+        searchField.addEventListener("blur", () => {
+          setTimeout(() => {
+            suggestionsContainer.classList.remove("active");
+          }, 300); // Dá mais tempo para interações
         });
       }
     }
   }
+
   function footerPWA() {
     let deferredPrompt;
 

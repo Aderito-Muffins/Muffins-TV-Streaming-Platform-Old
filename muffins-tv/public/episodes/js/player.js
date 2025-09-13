@@ -79,7 +79,7 @@ function truncateText(text, limit) {
 const doctitle = document.querySelector("#web-title");
 
 function updateContentInfo(animeData) {
-  console.log(animeData);
+  console.log(animeData.data.backdrop);
   const title = animeData.data.name;
   const poster = animeData.data.backdrop;
   image = animeData.data.poster;
@@ -357,7 +357,7 @@ async function watchAnime(isDownload = false) {
 
   try {
     const response = await fetch(`${baseUrl}/player/episode?id=${epNumber}`, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

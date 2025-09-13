@@ -79,7 +79,31 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/load.css" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TTN3KF61MY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TTN3KF61MY");
+    </script>
+    <script
+      src="https://www.muffinstv.com"
+      data-zone="142632"
+      async
+      data-cfasync="false"
+    ></script>
     <link rel="stylesheet" href="css/style.css" />
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2852362343954067"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="css/responsive.css" />
   </head>
 
@@ -234,6 +258,19 @@
     </div>
 
     <!--=========== Loader =============-->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TTN3KF61MY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-TTN3KF61MY");
+    </script>
     <div id="gen-loading">
       <div id="gen-loading-center">
         <img src="/images/muffinstv_vector_brand.svg" alt="loading" />
@@ -301,6 +338,11 @@
               PayPal
             </button>
           </div>
+          <div class="col">
+            <button class="gen-button full-width" onclick="openWhatsappModal()">
+              WhatsApp
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -326,6 +368,29 @@
         <input type="hidden" id="mpesaPlanId" />
         <button class="gen-button full-width" onclick="submitMpesa()">
           Pagar com M-Pesa
+        </button>
+      </div>
+    </div>
+
+    <div id="whatsappModal" class="modal">
+      <div class="modal-content container">
+        <span class="close" onclick="closewhatsappModal()">&times;</span>
+        <p class="modal-title">Você está prestes a assinar o seguinte plano:</p>
+        <div id="selectedPlanDetailsWhatsapp">
+          <p><strong>Plano:</strong> <span id="planNameWhatsapp"></span></p>
+          <p><strong>Preço:</strong> <span id="planPriceWhatsapp"></span></p>
+        </div>
+        <p>Digite o seu número de celular:</p>
+        <input
+          type="text"
+          id="whatsappPhoneNumber"
+          class="full-width"
+          placeholder="84XXXXXXX"
+          required
+        />
+        <input type="hidden" id="whatsappPlanId" />
+        <button class="gen-button full-width" onclick="submitWhatsapp()">
+          Pagar com WhatsApp
         </button>
       </div>
     </div>

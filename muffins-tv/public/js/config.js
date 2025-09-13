@@ -6,6 +6,6 @@
 // };
 
 const config = {
-  API_URL: " https://app.muffinstv.com/muffins/v1",
+  API_URL: "https://app.muffinstv.com/muffins/v1",
 };
 export default config;

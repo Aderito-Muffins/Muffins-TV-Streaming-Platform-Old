@@ -136,8 +136,8 @@ async function fetchContentDetails(id) {
   }
 
   try {
-    const response = await fetch(`${baseApiUrl}/player/${t}?id=${id}`, {
-      method: "POST",
+    const response = await fetch(`${baseApiUrl}player/${t}?id=${id}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,

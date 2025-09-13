@@ -14,9 +14,9 @@
         <!-- Botão de Pesquisa -->
         <div class="gen-header-info-box d-flex align-items-center">
           <div class="gen-menu-search-block">
-            <a href="javascript:void(0)" id="gen-search-btn"
-              ><i class="fa fa-search"></i
-            ></a>
+            <a href="javascript:void(0)" id="gen-search-btn">
+              <i class="fa fa-search"></i>
+            </a>
             <div class="gen-search-form" id="search-form" style="display: none">
               <form role="search" method="get" class="search-form" action="#">
                 <input
@@ -24,14 +24,21 @@
                   class="search-field"
                   placeholder="Pesquisar …"
                   name="s"
+                  id="dynamic-search"
                 />
                 <button type="submit" class="search-submit">
                   <span class="screen-reader-text"></span>
                 </button>
               </form>
+              <div class="suggestions" id="search-suggestions">
+                <div id="loading-spinner" style="display: none">
+                  Carregando...
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
         <!-- Botão responsivo para o menu -->
         <button
           class="navbar-toggler"

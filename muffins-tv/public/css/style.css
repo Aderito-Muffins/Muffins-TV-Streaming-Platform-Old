@@ -4468,6 +4468,109 @@ OWL Carousel
   background: var(--primary-color);
   opacity: 1;
 }
+#loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #999;
+  margin: 10px 0;
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%; /* Alinha abaixo do campo de busca */
+  left: 0;
+  background-color: var(--dark-color);
+  border: 1px solid var(--black-color);
+  border-radius: 6px;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.suggestions.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.suggestions .suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid var(--black-color);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.suggestions .suggestion-item:hover {
+  background-color: var(--black-color);
+}
+
+.suggestions .suggestion-item img {
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  margin-right: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--black-color);
+}
+
+.suggestions .suggestion-item p {
+  margin: 0;
+  color: var(--light-color);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.suggestions .suggestion-item p strong {
+  font-size: 16px;
+  color: var(--primary-color);
+}
+
+.suggestions .see-all {
+  text-align: center;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.suggestions .see-all:hover {
+  background-color: var(--black-color);
+  color: var(--light-color);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .suggestions {
+    max-height: 200px;
+  }
+
+  .suggestions .suggestion-item {
+    padding: 10px;
+  }
+
+  .suggestions .suggestion-item img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .suggestions .suggestion-item p strong {
+    font-size: 14px;
+  }
+
+  .suggestions .suggestion-item p {
+    font-size: 12px;
+  }
+}
 
 /*================================================
 Gen Slick
