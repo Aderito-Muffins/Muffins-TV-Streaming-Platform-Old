@@ -1,0 +1,53 @@
+[debug] [2025-09-13T18:23:44.651Z] ----------------------------------------------------------------------
+[debug] [2025-09-13T18:23:44.660Z] Command:       /Users/mac/.nvm/versions/node/v22.14.0/bin/node /Users/mac/.nvm/versions/node/v22.14.0/bin/firebase deploy
+[debug] [2025-09-13T18:23:44.660Z] CLI Version:   13.32.0
+[debug] [2025-09-13T18:23:44.660Z] Platform:      darwin
+[debug] [2025-09-13T18:23:44.661Z] Node Version:  v22.14.0
+[debug] [2025-09-13T18:23:44.661Z] Time:          Sat Sep 13 2025 20:23:44 GMT+0200 (Central Africa Time)
+[debug] [2025-09-13T18:23:44.661Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-09-13T18:23:45.029Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-09-13T18:23:45.030Z] > authorizing via signed-in user (mufumeaderito@gmail.com)
+[debug] [2025-09-13T18:23:45.030Z] [iam] checking project muffins-tv for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2025-09-13T18:23:45.031Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:23:45.031Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:23:45.032Z] > refreshing access token with scopes: []
+[debug] [2025-09-13T18:23:45.034Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-09-13T18:23:45.034Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:23:53.304Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-09-13T18:23:53.305Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:23:53.305Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions [none]
+[debug] [2025-09-13T18:23:53.305Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions x-goog-quota-user=projects/muffins-tv
+[debug] [2025-09-13T18:23:53.305Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2025-09-13T18:23:59.628Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions 401
+[debug] [2025-09-13T18:23:59.629Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"ACCESS_TOKEN_TYPE_UNSUPPORTED","metadata":{"method":"google.cloudresourcemanager.v1.Projects.TestIamPermissions","service":"cloudresourcemanager.googleapis.com"}}]}}
+[debug] [2025-09-13T18:23:59.629Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2025-09-13T18:23:59.629Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:23:59.629Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:23:59.629Z] > refreshing access token with scopes: []
+[debug] [2025-09-13T18:23:59.629Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-09-13T18:23:59.629Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:04.658Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-09-13T18:24:04.658Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:04.658Z] [iam] error while checking permissions, command may fail: Request to https://cloudresourcemanager.googleapis.com/v1/projects/muffins-tv:testIamPermissions had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[debug] [2025-09-13T18:24:04.659Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:24:04.659Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:24:04.659Z] > refreshing access token with scopes: []
+[debug] [2025-09-13T18:24:04.660Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-09-13T18:24:04.660Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:09.196Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-09-13T18:24:09.196Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:09.197Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/muffins-tv [none]
+[debug] [2025-09-13T18:24:10.544Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/muffins-tv 401
+[debug] [2025-09-13T18:24:10.544Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/muffins-tv {"error":{"code":401,"message":"Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.","status":"UNAUTHENTICATED"}}
+[debug] [2025-09-13T18:24:10.544Z] Got a 401 Unauthenticated error for a call that required authentication. Refreshing tokens.
+[debug] [2025-09-13T18:24:10.544Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:24:10.544Z] Checked if tokens are valid: false, expires at: 1750352262658
+[debug] [2025-09-13T18:24:10.545Z] > refreshing access token with scopes: []
+[debug] [2025-09-13T18:24:10.545Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-09-13T18:24:10.545Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:11.157Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 400
+[debug] [2025-09-13T18:24:11.157Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-09-13T18:24:11.157Z] Request to https://firebase.googleapis.com/v1beta1/projects/muffins-tv had HTTP Error: 401, Request had invalid authentication credentials. Expected OAuth 2 access token, login cookie or other valid authentication credential. See https://developers.google.com/identity/sign-in/web/devconsole-project.
+[error] 
+[error] Error: Assertion failed: resolving hosting target of a site with no site name or target name. This should have caused an error earlier
