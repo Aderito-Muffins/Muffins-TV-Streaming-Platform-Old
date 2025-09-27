@@ -1,6 +1,6 @@
 Muffins TV
 
-Muffins TV is a lightweight streaming platform that delivers entertainment, education, and cultural content with speed and simplicity. Built with HTML, CSS, and JavaScript, Muffins TV ensures fast performance, easy deployment, and maximum compatibility across browsers and devices.
+Muffins TV is a lightweight streaming platform that delivers entertainment, movies, series content with speed and simplicity. Built with HTML, CSS, and JavaScript, Muffins TV ensures fast performance, easy deployment, and maximum compatibility across browsers and devices.
 
 ✨ Features
 
