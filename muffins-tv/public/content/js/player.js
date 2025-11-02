@@ -1,24 +1,27 @@
 // Função para obter o parâmetro 'id' da URL
-function getIdFromURL() {
+function getParamFromURL(param) {
   const params = new URLSearchParams(window.location.search);
-  return params.get("i");
+  return params.get(param);
 }
-function getTFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("t");
-}
+
+// Obter parâmetros da URL
+const id = getParamFromURL("id");
+const type = getParamFromURL("type");
+const server = getParamFromURL("server")
+  ? decodeURIComponent(getParamFromURL("server"))
+  : null;
+
 const paymentModal = document.getElementById("paymentModal");
 const closeModal = document.getElementById("closeModal");
 
 // URL base da API para obter os detalhes do filme
 const baseApiUrl = " https://app.muffinstv.com/muffins/v1/";
-const i = getIdFromURL();
-const t = getTFromURL();
+
 // Função para buscar os detalhes do filme da API
 async function fetchMovieDetails(id) {
   showLoading(); // Exibe o loader antes da requisição
   try {
-    const response = await fetch(`${baseApiUrl}post/${t}/${id}`);
+    const response = await fetch(`${baseApiUrl}post/${type}/${id}`);
     if (!response.ok) {
       throw new Error("Erro ao buscar dados do filme");
     }
@@ -233,33 +236,7 @@ function displayError(message) {
     errorContainer.style.display = "none"; // Esconde o container de erro quando clicado
   });
 }
-async function initializeCarousel(carouselClass, options) {
-  const carousels = document.querySelectorAll(carouselClass);
-  carousels.forEach((carousel) => {
-    if ($(carousel).hasClass("owl-loaded")) {
-      $(carousel).trigger("destroy.owl.carousel");
-      $(carousel).removeClass("owl-loaded");
-    }
-    $(carousel).owlCarousel(options);
-  });
-}
-async function updateCarousel(seasonsHtml, id) {
-  updateDOM(id, seasonsHtml, {
-    loop: true,
-    dots: false,
-    nav: true,
-    autoplay: true,
-    autoplayTimeout: 6000,
-    margin: 30,
-    responsive: {
-      0: { items: 4, nav: true },
-      576: { items: 5, nav: false },
-      768: { items: 5, nav: true, loop: true },
-      992: { items: 5, nav: true, loop: true },
-      1200: { items: 6, nav: true, loop: true },
-    },
-  });
-}
+
 function updateDOM(elementId, htmlContent, carouselOptions) {
   const element = document.querySelector(elementId);
   if (element) {
@@ -326,209 +303,11 @@ function showLoading() {
 function hideLoading() {
   document.querySelector(".loader-container").style.display = "none";
 }
-async function loadServers(data, isDownload = false) {
-  try {
-    if (!data) {
-      return `<div class="error-message">Selecione um episódio, em baixo primeiro!</div>`;
-    }
 
-    return `
-    ${data
-      .map(
-        (server) => `
-          <div class="col">
-            <button 
-              class="gen-button2" 
-              data-id="${server.id}" 
-              onclick="${
-                isDownload
-                  ? `handleServerClick('${server.url}', '${server.type}', true)`
-                  : `handleServerClick('${server.url}', '${server.type}')`
-              }">
-              ${server.name} (${server.lang} ${server.type})
-            </button>
-          </div>
-        `
-      )
-      .join("")}
-    `;
-  } catch (error) {
-    console.error("Erro ao carregar os servidores:", error);
-    return `<div class="error-message">Erro ao carregar os servidores</div>`;
-  }
-}
 const moviePlayer = document.getElementById("movie-player");
 const downloadContentButton = document.getElementById("download-movie-btn");
 
 const videoHolder = document.getElementById("gen-video-holder");
-function setupVideoPlayer(film) {
-  moviePlayer.style.background = "rgba(0, 0, 0, 0.5)";
-  const token = localStorage.getItem("token");
-
-  async function setupPlayer(isDownload = false) {
-    const content = await fetchContentDetails(i);
-
-    watchMovie.style.display = "none";
-    watchMovieButton.style.display = "none";
-    downloadContentButton.style.display = "none";
-
-    document.getElementById("serverbs").innerHTML = await loadServers(
-      content,
-      isDownload
-    );
-
-    paymentModal.style.display = "block";
-    // downloadContentButton.style.display = 'none';
-
-    //     if (mediaUrl && downloadContentButton) {
-    //         downloadContentButton.style.display = 'inline-block'; // Exibe o botão de download
-    //         downloadContentButton.addEventListener('click', function () {
-    //             // Inicia o download usando a solução Blob
-    //             fetch(mediaUrl)
-    //                 .then(response => {
-    //                     if (!response.ok) throw new Error('Erro ao baixar o vídeo');
-    //                     return response.blob(); // Converte a resposta em um Blob
-    //                 })
-    //                 .then(blob => {
-    //                     const url = URL.createObjectURL(blob); // Cria um URL para o Blob
-    //                     const a = document.createElement('a'); // Cria um elemento <a>
-    //                     a.href = url; // Define o href para o URL do Blob
-    //                     a.download = film.title + '.mp4'; // Define o nome do arquivo para download
-    //                     document.body.appendChild(a); // Adiciona o elemento ao DOM
-    //                     a.click(); // Simula o clique no link
-    //                     a.remove(); // Remove o elemento <a> do DOM
-    //                     URL.revokeObjectURL(url); // Libera a memória do Blob
-    //                 })
-    //                 .catch(error => {
-    //                     displayError(error.message);
-    //                 });
-    //         });
-    //     }
-    //  else {
-    //         downloadContentButton.style.display = 'none'; // Esconde o botão de download se não houver URL
-    //     }
-
-    //     player.ready(function () {
-    //         player.play();
-    //     });
-  }
-  async function setupDownload() {
-    const content = await fetchContentDetails(i);
-
-    watchMovie.style.display = "none";
-    watchMovieButton.style.display = "none";
-
-    downloadContentButton.style.display - "none";
-
-    document.getElementById("serverbs").innerHTML = await loadServers(
-      content,
-      true
-    );
-
-    paymentModal.style.display = "block";
-    // downloadContentButton.style.display = 'none';
-
-    //     if (mediaUrl && downloadContentButton) {
-    //         downloadContentButton.style.display = 'inline-block'; // Exibe o botão de download
-    //         downloadContentButton.addEventListener('click', function () {
-    //             // Inicia o download usando a solução Blob
-    //             fetch(mediaUrl)
-    //                 .then(response => {
-    //                     if (!response.ok) throw new Error('Erro ao baixar o vídeo');
-    //                     return response.blob(); // Converte a resposta em um Blob
-    //                 })
-    //                 .then(blob => {
-    //                     const url = URL.createObjectURL(blob); // Cria um URL para o Blob
-    //                     const a = document.createElement('a'); // Cria um elemento <a>
-    //                     a.href = url; // Define o href para o URL do Blob
-    //                     a.download = film.title + '.mp4'; // Define o nome do arquivo para download
-    //                     document.body.appendChild(a); // Adiciona o elemento ao DOM
-    //                     a.click(); // Simula o clique no link
-    //                     a.remove(); // Remove o elemento <a> do DOM
-    //                     URL.revokeObjectURL(url); // Libera a memória do Blob
-    //                 })
-    //                 .catch(error => {
-    //                     displayError(error.message);
-    //                 });
-    //         });
-    //     }
-    //  else {
-    //         downloadContentButton.style.display = 'none'; // Esconde o botão de download se não houver URL
-    //     }
-
-    //     player.ready(function () {
-    //         player.play();
-    //     });
-  }
-
-  if (watchMovieButton) {
-    watchMovieButton.addEventListener("click", function () {
-      if (moviePlayer && videoHolder) {
-        if (token) {
-          setupPlayer();
-        } else {
-          window.location.href = "/log-in.html";
-        }
-      }
-    });
-  }
-  if (watchMovie) {
-    watchMovie.addEventListener("click", function () {
-      if (moviePlayer && videoHolder) {
-        if (token) {
-          setupPlayer();
-        } else {
-          window.location.href = "/log-in.html";
-        }
-      }
-    });
-  }
-  if (downloadContentButton) {
-    downloadContentButton.addEventListener("click", function () {
-      if (token) {
-        setupPlayer(true);
-      } else {
-        window.location.href = "/log-in.html";
-      }
-    });
-  }
-
-  //   if (watchTrailerButton) {
-  //     watchTrailerButton.addEventListener("click", function () {
-  //       const title = film.title;
-  //       if (title) {
-  //         const searchQuery = encodeURIComponent(`${title} trailer`);
-  //         const youtubeSearchUrl = `https://www.youtube.com/results?search_query=${searchQuery}`;
-
-  //         window.open(youtubeSearchUrl, "_blank");
-  //       } else {
-  //         alert("Título do filme não disponível para pesquisa.");
-  //       }
-  //     });
-  //   }
-}
-
-function handleServerClick(url, type, isDownload = false) {
-  try {
-    // Decodifica a URL para garantir que ela esteja correta
-    const decodedUrl = decodeURIComponent(url);
-    console.log("Abrindo URL decodificada:", decodedUrl); // Log para verificar a URL decodificada
-
-    if (isDownload) {
-      // Faz o download do arquivo
-      const link = document.createElement("a");
-      link.href = decodedUrl;
-      link.download = "movie"; // Você precisa especificar o nome do arquivo
-      link.click();
-    } else {
-      // Caso contrário, chama a função setupPlayer
-      setupPlayer(decodedUrl);
-    }
-  } catch (error) {
-    console.error("Erro ao tentar abrir a URL:", error);
-  }
-}
-
 function setupPlayer(url) {
   // Inicializa o Video.js player, se ainda não estiver inicializado
   const player = videojs(moviePlayer);
@@ -590,6 +369,29 @@ function setupPlayer(url) {
     }
   });
 }
+function setupVideoPlayer(film) {
+  moviePlayer.style.background = "rgba(0, 0, 0, 0.5)";
+
+  if (watchMovieButton) {
+    watchMovieButton.addEventListener("click", function () {
+      if (moviePlayer && videoHolder) {
+        setupPlayer(server);
+      }
+    });
+  }
+  if (watchMovie) {
+    watchMovie.addEventListener("click", function () {
+      if (moviePlayer && videoHolder) {
+        setupPlayer(server);
+      }
+    });
+  }
+  if (downloadContentButton) {
+    downloadContentButton.addEventListener("click", function () {
+      setupPlayer(true);
+    });
+  }
+}
 
 // Evento de clique no botão "Assistir Filme"
 const watchMovieButton = document.getElementById("watch-movie-btn");
@@ -614,11 +416,8 @@ window.addEventListener("click", (event) => {
 // Inicialização ao carregar o DOM
 document.addEventListener("DOMContentLoaded", async function () {
   showLoading();
-  const film = await fetchMovieDetails(i);
-  updateCarousel(
-    await createRecommendationsItems(film.recommendations.items),
-    "#Recommendations"
-  );
+  const film = await fetchMovieDetails(id);
+
   displayFilmDetails(film);
 
   setupVideoPlayer(film);
